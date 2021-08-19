@@ -1,7 +1,11 @@
+# Normal functions:
+
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount)
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str)
+
+# Stdin functions:
 
 ## err
 
