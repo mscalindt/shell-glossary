@@ -1,5 +1,6 @@
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount)
+* [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
 
 ## err
 
@@ -69,5 +70,24 @@ fcount() {
 
     [ -e "$iii" ] && printf "%d" "$ii" && return 0
     return 1
+}
+```
+
+## get_fpath
+
+```sh
+# Description:
+# Convert relative path to absolute path
+#
+# Parameters:
+# <"$1"> - path
+#
+# Returns:
+# (0) absolute path
+# (1) path is already absolute
+#
+get_fpath() {
+    case "$1" in "/"*) printf "%s" "$1" && return 1 ;; esac
+    printf "%s/%s" "$PWD" "$1" && return 0
 }
 ```
