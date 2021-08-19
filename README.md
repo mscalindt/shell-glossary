@@ -11,6 +11,7 @@
 * [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltr_substr1)
 * [PARSE()](https://github.com/mscalindt/shell-glossary#parse)
 * [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
+* [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
 
 # Stdin functions:
 
@@ -929,5 +930,38 @@ pline_fd1() {
     done
 
     return 1
+}
+```
+
+## remchars
+
+```sh
+# Description:
+# Remove specific character(s) in string
+#
+# Parameters:
+# <'$1'> - character(s)
+# <"$2"> - string
+#
+# Returns:
+# $2 without $1 characters,
+# $2
+#
+remchars() {
+    set -f
+
+    i=$IFS
+
+    IFS=$1
+    set -- $2
+
+    IFS=
+    set -- $*
+
+    printf "%s\n" "$*"
+
+    IFS=$i
+
+    set +f
 }
 ```
