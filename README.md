@@ -16,6 +16,7 @@
 
 * [GREP_STR_FD1()](https://github.com/mscalindt/shell-glossary#grep_str_fd1)
 * [PARSE_FD1()](https://github.com/mscalindt/shell-glossary#parse_fd1)
+* [PLINE_FD1()](https://github.com/mscalindt/shell-glossary#pline_fd1)
 
 ## err
 
@@ -901,6 +902,31 @@ pline() {
         x=$((x + 1))
         [ $x -eq $1 ] && printf "%s" "$LINE" && return 0
     done < "$2"
+
+    return 1
+}
+```
+
+## pline_fd1
+
+```sh
+# Description:
+# Print specific line in stdin
+#
+# Parameters:
+# <$1> - line number
+#
+# Returns:
+# (0) line's content | line empty
+# (1) line does not exist
+#
+pline_fd1() {
+    x=0
+
+    while read -r LINE || [ -n "$LINE" ]; do
+        x=$((x + 1))
+        [ $x -eq $1 ] && printf "%s" "$LINE" && return 0
+    done
 
     return 1
 }
