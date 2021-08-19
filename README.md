@@ -10,6 +10,7 @@
 * [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltr_substr0)
 * [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltr_substr1)
 * [PARSE()](https://github.com/mscalindt/shell-glossary#parse)
+* [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
 
 # Stdin functions:
 
@@ -876,5 +877,31 @@ parse_fd1() {
     esac
 
     return 0
+}
+```
+
+## pline
+
+```sh
+# Description:
+# Print specific line in file
+#
+# Parameters:
+# <$1> - line number
+# <"$2"> - file
+#
+# Returns:
+# (0) line's content | line empty
+# (1) line does not exist | file permission error
+#
+pline() {
+    x=0
+
+    while read -r LINE || [ -n "$LINE" ]; do
+        x=$((x + 1))
+        [ $x -eq $1 ] && printf "%s" "$LINE" && return 0
+    done < "$2"
+
+    return 1
 }
 ```
