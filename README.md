@@ -4,6 +4,7 @@
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount)
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str)
+* [INFO()](https://github.com/mscalindt/shell-glossary#info)
 
 # Stdin functions:
 
@@ -171,5 +172,19 @@ grep_str_fd1() {
     fi
 
     return 1
+}
+```
+
+## info
+
+```sh
+# Description:
+# Print info
+#
+# Parameters:
+# <"$1+"> - text
+#
+info() {
+    printf "%bINFO:%b %s\n" "\033[1;37m" "\033[0m" "$*"
 }
 ```
