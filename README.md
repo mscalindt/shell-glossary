@@ -14,6 +14,7 @@
 # Stdin functions:
 
 * [GREP_STR_FD1()](https://github.com/mscalindt/shell-glossary#grep_str_fd1)
+* [PARSE_FD1()](https://github.com/mscalindt/shell-glossary#parse_fd1)
 
 ## err
 
@@ -826,5 +827,54 @@ parse() {
     esac
 
     return $?
+}
+```
+
+## parse_fd1
+
+```sh
+# Description:
+# Parse the content of stdin
+#
+# Parameters:
+# <$1> - mode('0' - one-to-one copy,
+#             '1' - wrap parsed lines in one leading/trailing whitespace char,
+#             '2' - wrap parsed lines in two leading/trailing whitespace chars,
+#             '3' - skip empty lines,
+#             '4' - strip trailing/leading whitespace chars)
+#
+# Returns:
+# (0) output | empty output (stdin)
+#
+parse_fd1() {
+    case $1 in
+        0)
+            while IFS= read -r LINE || [ -n "$LINE" ]; do
+                printf "%s\n" "$LINE"
+            done
+        ;;
+        1)
+            while IFS= read -r LINE || [ -n "$LINE" ]; do
+                printf " %s \n" "$LINE"
+            done
+        ;;
+        2)
+            while IFS= read -r LINE || [ -n "$LINE" ]; do
+                printf "  %s  \n" "$LINE"
+            done
+        ;;
+        3)
+            while IFS= read -r LINE || [ -n "$LINE" ]; do
+                [ -n "$LINE" ] && printf "%s\n" "$LINE"
+            done
+        ;;
+        4)
+            while read -r LINE || [ -n "$LINE" ]; do
+                printf "%s\n" "$LINE"
+            done
+        ;;
+    esac
+
+    return 0
 }
 ```
