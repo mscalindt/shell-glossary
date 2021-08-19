@@ -13,6 +13,8 @@
 * [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
 * [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
 * [REMSTRING()](https://github.com/mscalindt/shell-glossary#remstring)
+* [WARN()](https://github.com/mscalindt/shell-glossary#warn)
+
 
 # Stdin functions:
 
@@ -1059,5 +1061,19 @@ remstring() {
     fi
 
     printf "%s\n" "$i"
+}
+```
+
+## warn
+
+```sh
+# Description:
+# Print a warning
+#
+# Parameters:
+# <"$1+"> - text
+#
+warn() {
+    printf "%bWARNING:%b %s\n" "\033[1;33m" "\033[0m" "$*"
 }
 ```
