@@ -12,6 +12,7 @@
 * [PARSE()](https://github.com/mscalindt/shell-glossary#parse)
 * [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
 * [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
+* [REMSTRING()](https://github.com/mscalindt/shell-glossary#remstring)
 
 # Stdin functions:
 
@@ -963,5 +964,100 @@ remchars() {
     IFS=$i
 
     set +f
+}
+```
+
+## remstring
+
+```sh
+# Description:
+# Remove a positional substring of a string
+#
+# Parameters:
+# <'$1'> - substring
+# <"$2"> - string
+# <$3> - mode('0' - remove the first occurrence,
+#             '1' - remove the last occurrence,
+#             '2' - remove all occurrences)
+# [$4] - mode('3' - whitespace is delimiter)
+#
+# Returns:
+# (0) stripped string
+# (1) $1 is, on its own, $2
+# (2) $1 not present in $2
+#
+remstring() {
+    case "$2" in
+        "$1") return 1 ;;
+        *"$1"*) : ;;
+        *) return 2 ;;
+    esac
+
+    if [ $3 -eq 0 ] || [ $3 -eq 2 ]; then
+        i="${2%%"$1"*}"
+        if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
+            case "$2" in
+                *" $1 "*) i="${i% }" ;;
+                *"$1"*" $1") : ;;
+                *" $1") i="${i% }" ;;
+            esac
+        fi
+
+        ii="${2#*"$1"}"
+        if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
+            case "$2" in "$1 "*) ii="${ii# }" ;; esac
+        fi
+
+        if [ -n "$i" ] && [ -n "$ii" ]; then
+            i="$i$ii"
+        elif [ -n "$ii" ]; then
+            i="$ii"
+        fi
+    elif [ $3 -eq 1 ]; then
+        i="${2%"$1"*}" && [ $# -eq 4 ] && [ $4 -eq 3 ] && i="${i% }"
+
+        ii="${2##*"$1"}"
+        if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
+            case "$2" in "$1 "*"$1"*) : ;; "$1 "*) ii="${ii# }" ;; esac
+        fi
+
+        if [ -n "$i" ] && [ -n "$ii" ]; then
+            i="$i$ii"
+        elif [ -n "$ii" ]; then
+            i="$ii"
+        fi
+    fi
+
+    if [ $3 -eq 2 ]; then
+        while :; do case "$i" in
+            "$1") return 1 ;;
+            *"$1"*)
+                ii="${i%%"$1"*}"
+                if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
+                    case "$i" in
+                        *" $1 "*) ii="${ii% }" ;;
+                        *"$1"*" $1") : ;;
+                        *" $1") ii="${ii% }" ;;
+                    esac
+                fi
+
+                iii="${i#*"$1"}"
+                if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
+                    case "$i" in "$1 "*) iii="${iii# }" ;; esac
+                fi
+
+                if [ -n "$ii" ] && [ -n "$iii" ]; then
+                    i="$ii$iii"
+                elif [ -n "$ii" ]; then
+                    i="$ii"
+                elif [ -n "$iii" ]; then
+                    i="$iii"
+                fi
+            ;;
+            *) break ;;
+        esac done
+    fi
+
+    printf "%s\n" "$i"
 }
 ```
