@@ -1,6 +1,7 @@
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount)
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
+* [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str)
 
 ## err
 
@@ -89,5 +90,39 @@ fcount() {
 get_fpath() {
     case "$1" in "/"*) printf "%s" "$1" && return 1 ;; esac
     printf "%s/%s" "$PWD" "$1" && return 0
+}
+```
+
+## grep_str
+
+```sh
+# Description:
+# Check the existence/position of a substring in string
+#
+# Parameters:
+# <'$1'> - substring
+# <"$2"> - string
+# [$3] - mode('1' - $1 is first character(s) of $2,
+#             '2' - $1 is last character(s) of $2,
+#             '3' - $1 is, on its own, $2)
+#
+# Returns:
+# (0) substring exists
+# (1) no substring
+#
+grep_str() {
+    if [ $# -eq 3 ]; then
+        if [ $3 -eq 1 ]; then
+            case "$2" in "$1"*) grep_str=0 && return 0 ;; esac
+        elif [ $3 -eq 2 ]; then
+            case "$2" in *"$1") grep_str=0 && return 0 ;; esac
+        elif [ $3 -eq 3 ]; then
+            case "$2" in "$1") grep_str=0 && return 0 ;; esac
+        fi
+    else
+        case "$2" in *"$1"*) grep_str=0 && return 0 ;; esac
+    fi
+
+    return 1
 }
 ```
