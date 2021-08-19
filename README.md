@@ -9,6 +9,7 @@
 * [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1)
 * [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltr_substr0)
 * [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltr_substr1)
+* [PARSE()](https://github.com/mscalindt/shell-glossary#parse)
 
 # Stdin functions:
 
@@ -774,5 +775,56 @@ ltr_substr1() {
     fi
 
     return 1
+}
+```
+
+## parse
+
+```sh
+# Description:
+# Parse the content of file
+#
+# Parameters:
+# <$1> - mode('0' - one-to-one copy,
+#             '1' - wrap parsed lines in one leading/trailing whitespace char,
+#             '2' - wrap parsed lines in two leading/trailing whitespace chars,
+#             '3' - skip empty lines,
+#             '4' - strip trailing/leading whitespace chars)
+# <"$2"> - file
+#
+# Returns:
+# (0) output | empty output (file)
+# (1) file does not exist | file permission error
+#
+parse() {
+    case $1 in
+        0)
+            while IFS= read -r LINE || [ -n "$LINE" ]; do
+                printf "%s\n" "$LINE"
+            done < "$2"
+        ;;
+        1)
+            while IFS= read -r LINE || [ -n "$LINE" ]; do
+                printf " %s \n" "$LINE"
+            done < "$2"
+        ;;
+        2)
+            while IFS= read -r LINE || [ -n "$LINE" ]; do
+                printf "  %s  \n" "$LINE"
+            done < "$2"
+        ;;
+        3)
+            while IFS= read -r LINE || [ -n "$LINE" ]; do
+                [ -n "$LINE" ] && printf "%s\n" "$LINE"
+            done < "$2"
+        ;;
+        4)
+            while read -r LINE || [ -n "$LINE" ]; do
+                printf "%s\n" "$LINE"
+            done < "$2"
+        ;;
+    esac
+
+    return $?
 }
 ```
