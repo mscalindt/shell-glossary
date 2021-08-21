@@ -961,7 +961,7 @@ remchars() {
     IFS=
     set -- $*
 
-    printf "%s\n" "$*"
+    printf "%s" "$*"
 
     IFS=$i
 
