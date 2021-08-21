@@ -12,7 +12,7 @@
 * [PARSE()](https://github.com/mscalindt/shell-glossary#parse)
 * [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
 * [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
-* [REMSTRING()](https://github.com/mscalindt/shell-glossary#remstring)
+* [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr)
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
 
 
@@ -969,7 +969,7 @@ remchars() {
 }
 ```
 
-## remstring
+## remstr
 
 ```sh
 # Description:
@@ -988,7 +988,7 @@ remchars() {
 # (1) $1 is, on its own, $2
 # (2) $1 not present in $2
 #
-remstring() {
+remstr() {
     case "$2" in
         "$1") return 1 ;;
         *"$1"*) : ;;
