@@ -13,6 +13,7 @@
 * [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
 * [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr)
+* [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr)
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
 
 
@@ -1056,6 +1057,50 @@ remstr() {
                     i="$iii"
                 fi
             ;;
+            *) break ;;
+        esac done
+    fi
+
+    printf "%s" "$i"
+}
+```
+
+## replstr
+
+```sh
+# Description:
+# Replace a substring of a string with character(s)
+#
+# Parameters:
+# <'$1'> - substring
+# <"$2"> - string
+# <'$3'> - character(s)
+# <$4> - mode('0' - replace the first occurrence,
+#             '1' - replace the last occurrence,
+#             '2' - replace all occurrences)
+#
+# Returns:
+# (0) replaced string
+# (1) $1 is, on its own, $2
+# (2) $1 not present in $2
+#
+replstr() {
+    case "$2" in
+        "$1") return 1 ;;
+        *"$1"*) : ;;
+        *) return 2 ;;
+    esac
+
+    if [ $4 -eq 0 ]; then
+        i="${2%%"$1"*}$3${2#*"$1"}"
+    elif [ $4 -eq 1 ]; then
+        i="${2%"$1"*}$3${2##*"$1"}"
+    fi
+
+    if [ $4 -eq 2 ]; then
+        while :; do case "$i" in
+            "$1") return 1 ;;
+            *"$1"*) i="${i%%"$1"*}$3${i#*"$1"}" ;;
             *) break ;;
         esac done
     fi
