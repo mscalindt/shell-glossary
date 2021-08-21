@@ -1060,7 +1060,7 @@ remstr() {
         esac done
     fi
 
-    printf "%s\n" "$i"
+    printf "%s" "$i"
 }
 ```
 
