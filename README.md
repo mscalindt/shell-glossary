@@ -5,6 +5,7 @@
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str)
 * [INFO()](https://github.com/mscalindt/shell-glossary#info)
+* [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip)
 * [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltl_substr0)
 * [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1)
 * [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltr_substr0)
@@ -199,6 +200,29 @@ grep_str_fd1() {
 #
 info() {
     printf "%bINFO:%b %s\n" "\033[1;37m" "\033[0m" "$*"
+}
+```
+
+## lstrip
+
+```sh
+# Description:
+# Strip character(s) from left of string
+#
+# Parameters:
+# <'$1'> - character(s)
+# <"$2"> - string
+#
+# Returns:
+# (0) stripped string
+# (1) no $1 at the start of $2
+#
+lstrip() {
+    case "$2" in
+        "$1"*) printf "%s" "${2#"$1"}" && return 0 ;;
+    esac
+
+    return 1
 }
 ```
 
