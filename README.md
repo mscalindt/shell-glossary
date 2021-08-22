@@ -15,6 +15,7 @@
 * [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr)
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr)
+* [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip)
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
 
 
@@ -1130,6 +1131,29 @@ replstr() {
     fi
 
     printf "%s" "$i"
+}
+```
+
+## rstrip
+
+```sh
+# Description:
+# Strip character(s) from right of string
+#
+# Parameters:
+# <'$1'> - character(s)
+# <"$2"> - string
+#
+# Returns:
+# (0) stripped string
+# (1) no $1 at the end of $2
+#
+rstrip() {
+    case "$2" in
+        *"$1") printf "%s" "${2%"$1"}" && return 0 ;;
+    esac
+
+    return 1
 }
 ```
 
