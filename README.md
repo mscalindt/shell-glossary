@@ -17,7 +17,7 @@
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr)
 * [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip)
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
-
+* [WARN_PX()](https://github.com/mscalindt/shell-glossary#warn_px)
 
 # Stdin functions:
 
@@ -1168,5 +1168,21 @@ rstrip() {
 #
 warn() {
     printf "%bWARNING:%b %s\n" "\033[1;33m" "\033[0m" "$*"
+}
+```
+
+### warn_px
+
+```sh
+# Description:
+# Print a warning with printf prefix before text
+#
+# Parameters:
+# <"$1"> - printf prefix
+# <"$2+"> - text
+#
+warn_px() {
+    i="$1" && shift
+    printf "%bWARNING:%b $i%s\n" "\033[1;33m" "\033[0m" "$*"
 }
 ```
