@@ -5,6 +5,7 @@
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str)
 * [INFO()](https://github.com/mscalindt/shell-glossary#info)
+* [INFO_PX()](https://github.com/mscalindt/shell-glossary#info_px)
 * [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip)
 * [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltl_substr0)
 * [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1)
@@ -201,6 +202,22 @@ grep_str_fd1() {
 #
 info() {
     printf "%bINFO:%b %s\n" "\033[1;37m" "\033[0m" "$*"
+}
+```
+
+## info_px
+
+```sh
+# Description:
+# Print info with printf prefix before text
+#
+# Parameters:
+# <"$1"> - printf prefix
+# <"$2+"> - text
+#
+info_px() {
+    i="$1" && shift
+    printf "%bINFO:%b $i%s\n" "\033[1;37m" "\033[0m" "$*"
 }
 ```
 
