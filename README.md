@@ -1152,6 +1152,10 @@ replstr() {
         *) return 2 ;;
     esac
 
+    if [ "$1" = "$3" ]; then
+        printf "%s" "$2" && return 0
+    fi
+
     if [ $4 -eq 0 ]; then
         i="${2%%"$1"*}$3${2#*"$1"}"
     elif [ $4 -eq 1 ]; then
