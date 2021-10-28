@@ -1163,9 +1163,18 @@ replstr() {
     fi
 
     if [ $4 -eq 2 ]; then
+        i="$2"
+        ii="${i%%"$1"*}$3"
+        i="${ii}${i#*"$1"}"
+
         while :; do case "$i" in
-            "$1") return 1 ;;
-            *"$1"*) i="${i%%"$1"*}$3${i#*"$1"}" ;;
+            "$ii"*"$1"*)
+                iii="${i#*"$ii"}" && iii="${iii%%"$1"*}"
+                ii="${ii}${iii}"
+                iii="${i#*"$ii"}"
+                i="${ii}$3${iii#*"$1"}"
+                ii="${ii}$3"
+            ;;
             *) break ;;
         esac done
     fi
