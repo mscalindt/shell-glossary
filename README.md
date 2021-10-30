@@ -1053,6 +1053,7 @@ remchars() {
 remstr() {
     case "$2" in
         "$1") return 1 ;;
+        " $1 ") return 1 ;;
         *"$1"*) : ;;
         *) return 2 ;;
     esac
@@ -1095,6 +1096,7 @@ remstr() {
     if [ $3 -eq 2 ]; then
         while :; do case "$i" in
             "$1") return 1 ;;
+            " $1 ") return 1 ;;
             *"$1"*)
                 ii="${i%%"$1"*}"
                 if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
