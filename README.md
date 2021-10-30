@@ -1053,10 +1053,15 @@ remchars() {
 remstr() {
     case "$2" in
         "$1") return 1 ;;
-        " $1 ") return 1 ;;
         *"$1"*) : ;;
         *) return 2 ;;
     esac
+
+    if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
+        case "$2" in
+            " $1 ") return 1 ;;
+        esac
+    fi
 
     if [ $3 -eq 0 ] || [ $3 -eq 2 ]; then
         i="${2%%"$1"*}"
@@ -1096,8 +1101,13 @@ remstr() {
     if [ $3 -eq 2 ]; then
         while :; do case "$i" in
             "$1") return 1 ;;
-            " $1 ") return 1 ;;
             *"$1"*)
+                if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
+                    case "$i" in
+                        " $1 ") return 1 ;;
+                    esac
+                fi
+
                 ii="${i%%"$1"*}"
                 if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
                     case "$i" in
