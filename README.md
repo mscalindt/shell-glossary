@@ -14,7 +14,7 @@
 * [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltr_substr1) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/1.2
 * [PARSE()](https://github.com/mscalindt/shell-glossary#parse)
 * [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
-* [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
+* [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/5
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/3.2
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/4
 * [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip)
