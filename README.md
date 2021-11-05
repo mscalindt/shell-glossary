@@ -1019,11 +1019,7 @@ remchars() {
 
     IFS=$1
     set -- $2
-
-    IFS=
-    set -- $*
-
-    printf "%s" "$*"
+    printf "%s" "$@"
 
     IFS=$i
 
