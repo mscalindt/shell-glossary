@@ -1012,6 +1012,14 @@ pline_fd1() {
 # $2 without $1 characters,
 # $2
 #
+# Caveats:
+# 1. Multibyte characters are not suitable as a delimiter ($1), as the removal
+#    of the characters is done by IFS splitting. Since IFS is read by characters
+#    and not bytes, any characters in a multibyte character will be stripped
+#    from the string. Essentially, this means that, for example, a multibyte
+#    character consisting of a space character will remove all the spaces in the
+#    string ($2).
+#
 remchars() {
     set -f
 
