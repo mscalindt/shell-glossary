@@ -1,3 +1,5 @@
+A collection of reusable pure POSIX `sh` functions with no external binary calls (on somewhat modern shells where `printf` and `read` are builtins). 
+
 # Normal functions:
 
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
