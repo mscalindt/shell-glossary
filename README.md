@@ -1019,8 +1019,9 @@ pline_fd1() {
 #    of the characters is done by IFS splitting. Since IFS is read by characters
 #    and not bytes, any characters in a multibyte character will be stripped
 #    from the string. Essentially, this means that, for example, a multibyte
-#    character consisting of a space character will remove all the spaces in the
-#    string ($2).
+#    character consisting of a whitespace character will remove all the
+#    whitespace characters in the string ($2).
+#    Fix: none; shell limitation.
 #
 remchars() {
     set -f
