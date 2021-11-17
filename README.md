@@ -1022,6 +1022,10 @@ pline_fd1() {
 #    character consisting of a whitespace character will remove all the
 #    whitespace characters in the string ($2).
 #    Fix: none; shell limitation.
+# 2. If the delimiter ($1) contains <whitespace> (' ') and the string ($2)
+#    contains multibyte characters consisting of a whitespace character, the
+#    multibyte characters will be rendered incorrect, resulting in a bad string.
+#    Fix: none; shell limitation.
 #
 remchars() {
     set -f
