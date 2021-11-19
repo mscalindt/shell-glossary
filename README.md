@@ -20,6 +20,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/3.3
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/4.1
 * [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip)
+* [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars)
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
 * [WARN_PX()](https://github.com/mscalindt/shell-glossary#warn_px)
 
@@ -1226,6 +1227,111 @@ rstrip() {
     esac
 
     return 1
+}
+```
+
+## str_to_chars
+
+```sh
+# Description:
+# Convert a string to whitespace-separated characters
+#
+# Parameters:
+# <'$1'> - string
+# [$2] - mode('0' - remove duplicate characters)
+#
+# Returns:
+# (0) characters
+# (1) $1 is, on its own, a character
+# (2) no characters in $1
+#
+# Caveats:
+# 1. A character is considered to be any character (except whitespace) in the
+#    printable set of characters ('[:print:]'). This means that characters
+#    outside this set will not be printed.
+#    Fix: none; shell limitation.
+#
+str_to_chars() {
+    iiiiii=$LC_CTYPE
+    LC_CTYPE=C
+    iii=1$2
+    set -f
+    ii=$IFS
+    IFS=" "
+    set -- $1
+    i=$(printf "%s" "$@")
+    IFS=$ii
+    set +f
+
+    [ -z "$i" ] && return 2
+    [ "${#i}" -eq 1 ] && return 1
+
+    if [ $iii -eq 10 ]; then
+        i=$(
+            ii="${i#?}"
+            iii="${i%"$ii"}"
+            iiii="$iii"
+            case "$iii" in
+                [[:print:]]) printf "%s" "$iii" && iiiii=1 ;;
+                *) iiiii=0 ;;
+            esac
+            i="$ii"
+
+            while [ -n "$i" ]; do
+                ii="${i#?}"
+                iii="${i%"$ii"}"
+                case "$iii" in
+                    [[:print:]])
+                        case "$iiii" in
+                            *"$iii"*) : ;;
+                            *)
+                                if [ $iiiii -eq 1 ]; then
+                                    printf " %s" "$iii"
+                                else
+                                    printf "%s" "$iii"
+                                    iiiii=1
+                                fi
+                            ;;
+                        esac
+                    ;;
+                    *) : ;;
+                esac
+                iiii="$iiii$iii"
+                i="$ii"
+            done
+        )
+    else
+        i=$(
+            ii="${i#?}"
+            iii="${i%"$ii"}"
+            case "$iii" in
+                [[:print:]]) printf "%s" "$iii" && iiii=1 ;;
+                *) iiii=0 ;;
+            esac
+            i="$ii"
+
+            while [ -n "$i" ]; do
+                ii="${i#?}"
+                iii="${i%"$ii"}"
+                case "$iii" in
+                    [[:print:]])
+                        if [ $iiii -eq 1 ]; then
+                            printf " %s" "$iii"
+                        else
+                            printf "%s" "$iii"
+                            iiii=1
+                        fi
+                    ;;
+                    *) : ;;
+                esac
+                i="$ii"
+            done
+        )
+    fi
+
+    LC_CTYPE=$iiiiii
+
+    printf "%s" "$i" && return 0
 }
 ```
 
