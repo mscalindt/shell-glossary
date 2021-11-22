@@ -1017,11 +1017,10 @@ pline_fd1() {
 #
 # Caveats:
 # 1. Multibyte characters are not suitable as a delimiter ($1), as the removal
-#    of the characters is done by IFS splitting. Since IFS is read by characters
-#    and not bytes, any characters in a multibyte character will be stripped
-#    from the string. Essentially, this means that, for example, a multibyte
-#    character consisting of a whitespace character will remove all the
-#    whitespace characters in the string ($2).
+#    of the characters is done by IFS splitting; any characters in a multibyte
+#    character will be stripped from the string. Essentially, this means that,
+#    for example, a multibyte character consisting of a whitespace character
+#    will remove all the whitespace characters in the string ($2).
 #    Fix: none; shell limitation.
 # 2. If the delimiter ($1) contains <whitespace> (' ') and the string ($2)
 #    contains multibyte characters consisting of a whitespace character, the
