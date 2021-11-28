@@ -84,6 +84,15 @@ err_px() {
 # (1) directory is empty
 # (2) not a directory / does not exist
 #
+# Caveats:
+# 1. The number of files/directories the function (i.e. system) can process
+#    varies. The files/directories are stored as arguments, which means that the
+#    amount of things that can be processed depends on the system and version,
+#    on the number of files and their respective argument size, and on the
+#    number and size of environment variable names. For more information,
+#    related limits shall be checked: ARG_MAX.
+#    Fix: none; not applicable.
+#
 fcount() {
     [ -d "$1" ] && i="$1" || return 2
 
