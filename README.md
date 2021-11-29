@@ -168,7 +168,7 @@ get_fpath() {
 #
 # Returns:
 # (0) substring exists
-# (1) no substring
+# (1) no match
 #
 grep_str() {
     if [ $# -eq 3 ]; then
