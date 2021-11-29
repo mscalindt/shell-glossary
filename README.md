@@ -1251,9 +1251,10 @@ rstrip() {
 # Parameters:
 # <'$1'> - string
 # ['$2'] - mode('0X' - escape only specified "X" character(s))
+# [$3] - mode('1' - strip the characters)
 #
 # Returns:
-# (0) escaped string
+# (0) escaped/stripped string
 # (1) no meta characters in $1
 #
 # Caveats:
@@ -1261,11 +1262,12 @@ rstrip() {
 #
 safe_str() {
     i="$1"
+    ii="${2#?}" && ii="${2%"$ii"}"
     unset iiii
 
     set -f
 
-    if [ $# -eq 2 ]; then
+    if [ $# -ge 2 ] && [ $ii -eq 0 ]; then
         iii="${2#?}"
         if [ ${#iii} -ne 1 ]; then
             iii=$(
@@ -1315,19 +1317,38 @@ safe_str() {
             *) continue ;;
         esac
 
-        iiii="${i%%"$ii"*}\\$ii"
-        i="${iiii}${i#*"$ii"}"
+        if [ $# -ge 2 ] && [ $2 = 1 ] || \
+           [ $# -eq 3 ]; then
+            iiii="${i%%"$ii"*}"
+            i="${iiii}${i#*"$ii"}"
+        else
+            iiii="${i%%"$ii"*}\\$ii"
+            i="${iiii}${i#*"$ii"}"
+        fi
 
-        while :; do case "$i" in
-            "$iiii"*"$ii"*)
-                iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                iiii="${iiii}${iiiii}"
-                iiiii="${i#*"$iiii"}"
-                i="${iiii}\\$ii${iiiii#*"$ii"}"
-                iiii="${iiii}\\$ii"
-            ;;
-            *) break ;;
-        esac done
+        if [ $# -ge 2 ] && [ $2 = 1 ] || \
+           [ $# -eq 3 ]; then
+            while :; do case "$i" in
+                "$iiii"*"$ii"*)
+                    iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                    iiii="${iiii}${iiiii}"
+                    iiiii="${i#*"$iiii"}"
+                    i="${iiii}${iiiii#*"$ii"}"
+                ;;
+                *) break ;;
+            esac done
+        else
+            while :; do case "$i" in
+                "$iiii"*"$ii"*)
+                    iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                    iiii="${iiii}${iiiii}"
+                    iiiii="${i#*"$iiii"}"
+                    i="${iiii}\\$ii${iiiii#*"$ii"}"
+                    iiii="${iiii}\\$ii"
+                ;;
+                *) break ;;
+            esac done
+        fi
     ;;
     esac
 
@@ -1341,19 +1362,38 @@ safe_str() {
             *) continue ;;
         esac
 
-        iiii="${i%%"$ii"*}\\$ii"
-        i="${iiii}${i#*"$ii"}"
+        if [ $# -ge 2 ] && [ $2 = 1 ] || \
+           [ $# -eq 3 ]; then
+            iiii="${i%%"$ii"*}"
+            i="${iiii}${i#*"$ii"}"
+        else
+            iiii="${i%%"$ii"*}\\$ii"
+            i="${iiii}${i#*"$ii"}"
+        fi
 
-        while :; do case "$i" in
-            "$iiii"*"$ii"*)
-                iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                iiii="${iiii}${iiiii}"
-                iiiii="${i#*"$iiii"}"
-                i="${iiii}\\$ii${iiiii#*"$ii"}"
-                iiii="${iiii}\\$ii"
-            ;;
-            *) break ;;
-        esac done
+        if [ $# -ge 2 ] && [ $2 = 1 ] || \
+           [ $# -eq 3 ]; then
+            while :; do case "$i" in
+                "$iiii"*"$ii"*)
+                    iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                    iiii="${iiii}${iiiii}"
+                    iiiii="${i#*"$iiii"}"
+                    i="${iiii}${iiiii#*"$ii"}"
+                ;;
+                *) break ;;
+            esac done
+        else
+            while :; do case "$i" in
+                "$iiii"*"$ii"*)
+                    iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                    iiii="${iiii}${iiiii}"
+                    iiiii="${i#*"$iiii"}"
+                    i="${iiii}\\$ii${iiiii#*"$ii"}"
+                    iiii="${iiii}\\$ii"
+                ;;
+                *) break ;;
+            esac done
+        fi
     done
 
     set +f
