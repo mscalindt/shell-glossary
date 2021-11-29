@@ -141,12 +141,15 @@ fcount() {
 # <"$1"> - path
 #
 # Returns:
-# (0) absolute path
-# (1) path is already absolute
+# (0) absolute path / path is already absolute
 #
 get_fpath() {
-    case "$1" in "/"*) printf "%s" "$1" && return 1 ;; esac
-    printf "%s/%s" "$PWD" "$1" && return 0
+    case "$1" in
+        "/"*) printf "%s" "$1" ;;
+        *) printf "%s/%s" "$PWD" "$1" ;;
+    esac
+
+    return 0
 }
 ```
 
