@@ -5,7 +5,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
 * [ERR_PX()](https://github.com/mscalindt/shell-glossary#err_px)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount)
-* [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
+* [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str)
 * [INFO()](https://github.com/mscalindt/shell-glossary#info)
 * [INFO_PX()](https://github.com/mscalindt/shell-glossary#info_px)
