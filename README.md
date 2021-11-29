@@ -83,7 +83,7 @@ err_px() {
 # Returns:
 # (0) count
 # (1) directory is empty
-# (2) not a directory / does not exist
+# (2) not a directory | directory does not exist
 #
 # Caveats:
 # 1. The number of files/directories the function (i.e. system) can process
