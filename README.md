@@ -201,7 +201,7 @@ grep_str() {
 #
 # Returns:
 # (0) substring exists
-# (1) no substring
+# (1) no match
 #
 grep_str_fd1() {
     if [ $# -eq 2 ]; then
