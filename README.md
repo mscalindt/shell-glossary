@@ -20,6 +20,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/3.3
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/4.1
 * [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip)
+* [SAFE_STR()](https://github.com/mscalindt/shell-glossary#safe_str)
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars)
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
 * [WARN_PX()](https://github.com/mscalindt/shell-glossary#warn_px)
@@ -1237,6 +1238,128 @@ rstrip() {
     esac
 
     return 1
+}
+```
+
+## safe_str
+
+```sh
+# Description:
+# Escape all POSIX-defined shell meta characters in a string; characters are:
+# \ | & ; < > ( ) $ ` " ' * ? [ ] # ~ = %
+#
+# Parameters:
+# <'$1'> - string
+# ['$2'] - mode('0X' - escape only specified "X" character(s))
+#
+# Returns:
+# (0) escaped string
+# (1) no meta characters in $1
+#
+# Caveats:
+# 1. Only printable ASCII characters shall be specified and escaped.
+#
+safe_str() {
+    i="$1"
+    unset iiii
+
+    set -f
+
+    if [ $# -eq 2 ]; then
+        iii="${2#?}"
+        if [ ${#iii} -ne 1 ]; then
+            iii=$(
+                LC_CTYPE=C; IFS=" "; set -- $iii; i=$(printf "%s" "$@")
+
+                i=$(ii="${i#?}"; iii="${i%"$ii"}"; iiii="$iii"
+                case "$iii" in
+                [[:print:]]) printf "%s" "$iii" && iiiii=1 ;;
+                *) iiiii=0 ;;
+                esac
+                i="$ii"
+                while [ -n "$i" ]; do
+                ii="${i#?}"; iii="${i%"$ii"}"
+                case "$iii" in
+                [[:print:]])
+                case "$iiii" in
+                *"$iii"*) : ;;
+                *)
+                if [ $iiiii -eq 1 ]; then
+                printf " %s" "$iii"
+                else
+                printf "%s" "$iii"
+                iiiii=1
+                fi
+                ;;
+                esac
+                ;;
+                *) : ;;
+                esac
+                iiii="$iiii$iii"; i="$ii"
+                done
+                )
+
+                printf "%s" "$i"
+            )
+        fi
+    else
+        iii='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %'
+    fi
+
+    case "$iii" in
+    *'\'*)
+        ii='\'
+
+        case "$i" in
+            *"$ii"*) : ;;
+            *) continue ;;
+        esac
+
+        iiii="${i%%"$ii"*}\\$ii"
+        i="${iiii}${i#*"$ii"}"
+
+        while :; do case "$i" in
+            "$iiii"*"$ii"*)
+                iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                iiii="${iiii}${iiiii}"
+                iiiii="${i#*"$iiii"}"
+                i="${iiii}\\$ii${iiiii#*"$ii"}"
+                iiii="${iiii}\\$ii"
+            ;;
+            *) break ;;
+        esac done
+    ;;
+    esac
+
+    for ii in $iii; do
+        case "$ii" in
+            *'\'*) continue ;;
+        esac
+
+        case "$i" in
+            *"$ii"*) : ;;
+            *) continue ;;
+        esac
+
+        iiii="${i%%"$ii"*}\\$ii"
+        i="${iiii}${i#*"$ii"}"
+
+        while :; do case "$i" in
+            "$iiii"*"$ii"*)
+                iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                iiii="${iiii}${iiiii}"
+                iiiii="${i#*"$iiii"}"
+                i="${iiii}\\$ii${iiiii#*"$ii"}"
+                iiii="${iiii}\\$ii"
+            ;;
+            *) break ;;
+        esac done
+    done
+
+    set +f
+
+    printf "%s" "$i"
+    [ -n "$iiii" ] && return 1 || return 0
 }
 ```
 
