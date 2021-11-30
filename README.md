@@ -9,7 +9,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
 * [INFO()](https://github.com/mscalindt/shell-glossary#info)
 * [INFO_PX()](https://github.com/mscalindt/shell-glossary#info_px)
-* [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip)
+* [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/8
 * [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltl_substr0) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/1.3
 * [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/1.3
 * [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltr_substr0) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/1.3
