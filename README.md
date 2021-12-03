@@ -1,4 +1,4 @@
-A collection of reusable pure POSIX `sh` functions with no external binary calls (on somewhat modern shells where `printf` and `read` are builtins). 
+A collection of reusable pure POSIX `sh` functions with no external binary calls (on somewhat modern shells where `printf` and `read` are builtins).
 
 # Normal functions:
 
