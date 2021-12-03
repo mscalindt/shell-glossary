@@ -1423,8 +1423,9 @@ safe_str() {
 #
 # Caveats:
 # 1. A character is considered to be any character (except whitespace) in the
-#    printable set of characters ('[:print:]'). This means that characters
-#    outside this set will not be printed.
+#    printable set of ASCII characters ('[:print:]'). This means that characters
+#    outside this set will not be printed. Multibyte characters consisting of
+#    characters in the printable set will only have those characters printed.
 #    Fix: none; shell limitation.
 #
 str_to_chars() {
