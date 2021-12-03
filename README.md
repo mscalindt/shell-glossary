@@ -20,7 +20,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/3.3
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/4.1
 * [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/9
-* [SAFE_STR()](https://github.com/mscalindt/shell-glossary#safe_str)
+* [SAFE_STR()](https://github.com/mscalindt/shell-glossary#safe_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/11
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/10
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
 * [WARN_PX()](https://github.com/mscalindt/shell-glossary#warn_px)
