@@ -1320,7 +1320,7 @@ safe_str() {
             *) continue ;;
         esac
 
-        if [ $# -ge 2 ] && [ $2 = 1 ] || \
+        if [ $# -ge 2 ] && [ "$2" = 1 ] || \
            [ $# -eq 3 ]; then
             iiii="${i%%"$ii"*}"
             i="${iiii}${i#*"$ii"}"
@@ -1329,7 +1329,7 @@ safe_str() {
             i="${iiii}${i#*"$ii"}"
         fi
 
-        if [ $# -ge 2 ] && [ $2 = 1 ] || \
+        if [ $# -ge 2 ] && [ "$2" = 1 ] || \
            [ $# -eq 3 ]; then
             while :; do case "$i" in
                 "$iiii"*"$ii"*)
@@ -1365,7 +1365,7 @@ safe_str() {
             *) continue ;;
         esac
 
-        if [ $# -ge 2 ] && [ $2 = 1 ] || \
+        if [ $# -ge 2 ] && [ "$2" = 1 ] || \
            [ $# -eq 3 ]; then
             iiii="${i%%"$ii"*}"
             i="${iiii}${i#*"$ii"}"
@@ -1374,7 +1374,7 @@ safe_str() {
             i="${iiii}${i#*"$ii"}"
         fi
 
-        if [ $# -ge 2 ] && [ $2 = 1 ] || \
+        if [ $# -ge 2 ] && [ "$2" = 1 ] || \
            [ $# -eq 3 ]; then
             while :; do case "$i" in
                 "$iiii"*"$ii"*)
