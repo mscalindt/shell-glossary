@@ -1418,8 +1418,7 @@ safe_str() {
 #
 # Returns:
 # (0) characters
-# (1) $1 is, on its own, a character
-# (2) no characters in $1
+# (1) no characters in $1
 #
 # Caveats:
 # 1. A character is considered to be any character (except whitespace) in the
@@ -1440,8 +1439,8 @@ str_to_chars() {
     IFS=$ii
     set +f
 
-    [ -z "$i" ] && return 2
-    [ "${#i}" -eq 1 ] && return 1
+    [ -z "$i" ] && return 1
+    [ "${#i}" -eq 1 ] && printf "%s" "$i" && return 0
 
     if [ $iii -eq 10 ]; then
         i=$(
