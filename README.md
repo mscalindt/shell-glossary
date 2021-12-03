@@ -1425,6 +1425,7 @@ safe_str() {
 #    printable set of ASCII characters ('[:print:]'). This means that characters
 #    outside this set will not be printed. Multibyte characters consisting of
 #    characters in the printable set will only have those characters printed.
+#    Exceptions: input with byte length of 1.
 #    Fix: none; shell limitation.
 #
 str_to_chars() {
