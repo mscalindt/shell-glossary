@@ -1402,7 +1402,7 @@ safe_str() {
     set +f
 
     printf "%s" "$i"
-    [ -n "$iiii" ] && return 1 || return 0
+    [ -z "$iiii" ] && return 1 || return 0
 }
 ```
 
