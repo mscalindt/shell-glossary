@@ -1313,8 +1313,7 @@ safe_str() {
 
     case "$iii" in
     *'\'*)
-        ii='\'
-
+        for ii in \\; do
         case "$i" in
             *"$ii"*) : ;;
             *) continue ;;
@@ -1352,6 +1351,7 @@ safe_str() {
                 *) break ;;
             esac done
         fi
+        done
     ;;
     esac
 
@@ -1401,8 +1401,8 @@ safe_str() {
 
     set +f
 
-    printf "%s" "$i"
-    [ -z "$iiii" ] && return 1 || return 0
+    [ -z "$iiii" ] && return 1
+    printf "%s" "$i" && return 0
 }
 ```
 
