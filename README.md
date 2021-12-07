@@ -74,7 +74,7 @@ err_px() {
 #
 # Parameters:
 # <"$1"> - directory
-# ['$2'] - mode('0X' - count files and directories ending with "X",
+# ["$2"] - mode('0X' - count files and directories ending with "X",
 #               '1' - count only files,
 #               '1X' - count only files ending with "X",
 #               '2' - count only directories,
