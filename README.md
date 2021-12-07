@@ -1256,8 +1256,8 @@ rstrip() {
 # \ | & ; < > ( ) $ ` " ' * ? [ ] # ~ = %
 #
 # Parameters:
-# <'$1'> - string
-# ['$2'] - mode('0X' - escape only specified "X" character(s))
+# <"$1"> - string
+# ["$2"] - mode('0X' - escape only specified "X" character(s))
 # [$3] - mode('1' - strip the characters)
 #
 # Returns:
