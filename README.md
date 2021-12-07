@@ -1068,7 +1068,7 @@ remchars() {
 # Remove a positional substring of a string
 #
 # Parameters:
-# <'$1'> - substring
+# <"$1"> - substring
 # <"$2"> - string
 # <$3> - mode('0' - remove the first occurrence,
 #             '1' - remove the last occurrence,
