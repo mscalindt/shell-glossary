@@ -1232,7 +1232,7 @@ replstr() {
 # Strip character(s) from right of string
 #
 # Parameters:
-# <'$1'> - character(s)
+# <"$1"> - character(s)
 # <"$2"> - string
 #
 # Returns:
