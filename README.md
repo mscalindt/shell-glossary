@@ -269,7 +269,7 @@ info_px() {
 # Strip character(s) from left of string
 #
 # Parameters:
-# <'$1'> - character(s)
+# <"$1"> - character(s)
 # <"$2"> - string
 #
 # Returns:
