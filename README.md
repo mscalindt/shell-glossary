@@ -164,7 +164,7 @@ get_fpath() {
 # Check the existence/position of a substring in string
 #
 # Parameters:
-# <'$1'> - substring
+# <"$1"> - substring
 # <"$2"> - string
 # [$3] - mode('1' - $1 is first character(s) of $2,
 #             '2' - $1 is last character(s) of $2,
