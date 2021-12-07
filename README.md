@@ -409,9 +409,9 @@ ltl_substr0() {
 #
 # Parameters:
 # <$1> - from "N" LTR character('0' - max)
-# <'$2'> - from "X" character(s)
+# <"$2"> - from "X" character(s)
 # <$3> - to "N" $2-TL character('0' - max)
-# <'$4'> - to "X" character(s)
+# <"$4"> - to "X" character(s)
 # <"$5"> - string
 # [$6] - mode('0' - strip all leading whitespace characters,
 #             '1' - strip all trailing whitespace characters,
