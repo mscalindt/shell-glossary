@@ -1417,7 +1417,7 @@ safe_str() {
 # Convert a string to whitespace-separated characters
 #
 # Parameters:
-# <'$1'> - string
+# <"$1"> - string
 # [$2] - mode('0' - remove duplicate characters)
 #
 # Returns:
