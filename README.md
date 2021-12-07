@@ -1175,9 +1175,9 @@ remstr() {
 # Replace a substring of a string with character(s)
 #
 # Parameters:
-# <'$1'> - substring
+# <"$1"> - substring
 # <"$2"> - string
-# <'$3'> - character(s)
+# <"$3"> - character(s)
 # <$4> - mode('0' - replace the first occurrence,
 #             '1' - replace the last occurrence,
 #             '2' - replace all occurrences)
