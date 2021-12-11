@@ -79,11 +79,11 @@ err_px() {
 #               '1X' - count only files ending with "X",
 #               '2' - count only directories,
 #               '2X' - count only directories ending with "X")
+# [$3] - mode('3' - exclude hidden files)
 #
 # Returns:
 # (0) count
-# (1) directory is empty
-# (2) not a directory | directory does not exist
+# (1) not a directory | directory does not exist
 #
 # Caveats:
 # 1. The number of files/directories the function (i.e. system) can process
@@ -96,42 +96,133 @@ err_px() {
 #
 fcount() {
     [ -d "$1" ] && i="$1" || return 2
+    iiii=0
 
-    if [ $# -eq 2 ]; then
+    if [ $# -eq 1 ]; then
+        set -- "$i"/*
+        [ -e "$1" ] && iiii=$#
+
+        set -- "$i"/.*
+        [ $# -ge 3 ] && iiii=$((iiii + $# - 2))
+    elif [ $# -eq 2 ] && [ "$2" = 3 ]; then
+        set -- "$i"/*
+        [ -e "$1" ] && iiii=$#
+    elif [ $# -eq 3 ]; then
         case "$2" in
             0*)
-                ii="${2#0}"
-                set -- "$i"/*"$ii" && iii="$1" && ii=$#
+                ii="${2#?}"
+
+                set -- "$i"/*"$ii"
+                [ -e "$1" ] && iiii=$#
             ;;
             1)
-                set -- "$i"/* && iii="$1" && ii=$#
+                set -- "$i"/*
+                [ -e "$1" ] && iiii=$#
+
                 set -- "$i"/*/
-                [ -e "$1" ] && i=$# && ii=$((ii - i))
+                [ -e "$1" ] && iiii=$((iiii - $#))
             ;;
             1*)
-                ii="${2#1}"
-                set -- "$i"/*"$ii" && iii="$1" && iiii=$#
+                ii="${2#?}"
+
+                set -- "$i"/*"$ii"
+                [ -e "$1" ] && iiii=$#
+
                 set -- "$i"/*"$ii"/
-                if [ -e "$1" ]; then
-                    i=$# && ii=$((iiii - i))
-                else
-                    ii="$iiii"
-                fi
+                [ -e "$1" ] && iiii=$((iiii - $#))
             ;;
             2)
-                set -- "$i"/*/ && iii="$1" && ii=$#
+                set -- "$i"/*/
+                [ -e "$1" ] && iiii=$#
             ;;
             2*)
-                ii="${2#2}"
-                set -- "$i"/*"$ii"/ && iii="$1" && ii=$#
+                ii="${2#?}"
+
+                set -- "$i"/*"$ii"/
+                [ -e "$1" ] && iiii=$#
             ;;
         esac
     else
-        set -- "$i"/* && iii="$1" && ii=$#
+        case "$2" in
+            0*)
+                ii="${2#?}"
+
+                set -- "$i"/*"$ii"
+                [ -e "$1" ] && iiii=$#
+
+                set -- "$i"/.*"$ii"
+                case "$ii" in
+                    ".") [ -e "$2" ] && iiii=$((iiii + $# - 1)) ;;
+                    "..") [ -e "$1" ] && iiii=$((iiii + $#)) ;;
+                    *)
+                        [ -e "$i/$ii" ] && iiii=$((iiii + 1))
+                        [ -e "$1" ] && iiii=$((iiii + $#))
+                    ;;
+                esac
+            ;;
+            1)
+                set -- "$i"/*
+                [ -e "$1" ] && iiii=$#
+
+                set -- "$i"/*/
+                [ -e "$1" ] && iiii=$((iiii - $#))
+
+                set -- "$i"/.*
+                [ -e "$3" ] && iiii=$((iiii + $# - 2))
+
+                set -- "$i"/.*/
+                [ -e "$3" ] && iiii=$((iiii - $# + 2))
+            ;;
+            1*)
+                ii="${2#?}"
+
+                [ -f "$i/$ii" ] && iiii=1
+
+                set -- "$i"/*"$ii"
+                [ -e "$1" ] && iiii=$((iiii + $#))
+
+                set -- "$i"/.*"$ii"
+                case "$ii" in
+                    ".") [ -e "$2" ] && iiii=$((iiii + $# - 1)) ;;
+                    *) [ -e "$1" ] && iiii=$((iiii + $#)) ;;
+                esac
+
+                set -- "$i"/.*"$ii"/
+                case "$ii" in
+                    ".") [ -e "$2" ] && iiii=$((iiii - $# + 1)) ;;
+                    *) [ -e "$1" ] && iiii=$((iiii - $#)) ;;
+                esac
+
+                set -- "$i"/*"$ii"/
+                [ -e "$1" ] && iiii=$((iiii - $#))
+            ;;
+            2)
+                set -- "$i"/*/
+                [ -e "$1" ] && iiii=$#
+
+                set -- "$i"/.*/
+                [ -e "$3" ] && iiii=$((iiii + $# - 2))
+            ;;
+            2*)
+                ii="${2#?}"
+
+                set -- "$i"/*"$ii"/
+                [ -e "$1" ] && iiii=$#
+
+                set -- "$i"/.*"$ii"/
+                case "$ii" in
+                    ".") [ -e "$2" ] && iiii=$((iiii + $# - 1)) ;;
+                    "..") [ -e "$1" ] && iiii=$((iiii + $#)) ;;
+                    *)
+                        [ -d "$i/$ii" ] && iiii=$((iiii + 1))
+                        [ -e "$1" ] && iiii=$((iiii + $#))
+                    ;;
+                esac
+            ;;
+        esac
     fi
 
-    [ -e "$iii" ] && printf "%d" "$ii" && return 0
-    return 1
+    printf "%d" "$iiii" && return 0
 }
 ```
 
