@@ -95,7 +95,7 @@ err_px() {
 #    Fix: none; not applicable.
 #
 fcount() {
-    [ -d "$1" ] && i="$1" || return 2
+    [ -d "$1" ] && i="$1" || return 1
     iiii=0
 
     if [ $# -eq 1 ]; then
