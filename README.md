@@ -1009,7 +1009,7 @@ parse() {
         ;;
     esac
 
-    return $?
+    return 0
 }
 ```
 
