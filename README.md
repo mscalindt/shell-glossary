@@ -976,9 +976,11 @@ ltr_substr1() {
 #
 # Returns:
 # (0) output | empty output (file) | empty output (file access error)
-# (1) file does not exist
+# (1) not a file | file does not exist
 #
 parse() {
+    [ -f "$2" ] || return 1
+
     case $1 in
         0)
             while IFS= read -r LINE || [ -n "$LINE" ]; do
