@@ -964,7 +964,7 @@ ltr_substr1() {
 
 ```sh
 # Description:
-# Parse the content of file
+# Parse the lines of a file
 #
 # Parameters:
 # <$1> - mode('0' - one-to-one copy,
