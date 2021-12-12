@@ -975,8 +975,8 @@ ltr_substr1() {
 # <"$2"> - file
 #
 # Returns:
-# (0) output | empty output (file)
-# (1) file does not exist | file permission error
+# (0) output | empty output (file) | empty output (file access error)
+# (1) file does not exist
 #
 parse() {
     case $1 in
