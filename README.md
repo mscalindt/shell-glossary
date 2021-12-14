@@ -79,7 +79,7 @@ err_px() {
 #               '1X' - count only files ending with "X",
 #               '2' - count only directories,
 #               '2X' - count only directories ending with "X")
-# [$3] - mode('3' - exclude hidden files)
+# [$3] - mode('3' - exclude hidden files/directories)
 #
 # Returns:
 # (0) count
