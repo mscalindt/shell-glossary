@@ -979,10 +979,12 @@ ltr_substr1() {
 #
 # Returns:
 # (0) output | empty output (file)
-# (1) not a file | file does not exist | file access error
+# (1) not a file | file does not exist
+# (2) file access error
 #
 parse() {
-    [ -r "$2" ] || return 1
+    [ -f "$2" ] || return 1
+    [ -r "$2" ] || return 2
 
     case $# in
     3)
