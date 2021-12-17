@@ -1086,10 +1086,13 @@ parse_fd1() {
 #
 # Returns:
 # (0) line's content | line empty
-# (1) line does not exist | file permission error
+# (1) line does not exist
+# (2) not a file | file does not exist | file access error
 #
 pline() {
     x=0
+
+    [ -r "$2" ] || return 2
 
     while read -r LINE || [ -n "$LINE" ]; do
         x=$((x + 1))
