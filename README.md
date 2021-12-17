@@ -975,11 +975,11 @@ ltr_substr1() {
 # <"$2"> - file
 #
 # Returns:
-# (0) output | empty output (file) | empty output (file access error)
-# (1) not a file | file does not exist
+# (0) output | empty output (file)
+# (1) not a file | file does not exist | file access error
 #
 parse() {
-    [ -f "$2" ] || return 1
+    [ -r "$2" ] || return 1
 
     case $1 in
         0)
