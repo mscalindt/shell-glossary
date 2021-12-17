@@ -15,7 +15,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltr_substr0) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/1.3
 * [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltr_substr1) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/1.3
 * [PARSE()](https://github.com/mscalindt/shell-glossary#parse) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/13
-* [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
+* [PLINE()](https://github.com/mscalindt/shell-glossary#pline) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/14
 * [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/5.1
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/3.3
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/4.1
