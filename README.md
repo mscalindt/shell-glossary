@@ -1120,7 +1120,7 @@ pline() {
 pline_fd1() {
     x=0
 
-    while read -r LINE || [ -n "$LINE" ]; do
+    while read -r LINE; do
         x=$((x + 1))
         [ $x -eq $1 ] && printf "%s" "$LINE" && return 0
     done
