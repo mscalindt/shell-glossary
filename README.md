@@ -1094,10 +1094,11 @@ pline() {
 
     [ -r "$2" ] || return 2
 
-    while read -r LINE || [ -n "$LINE" ]; do
+    while read -r LINE; do
         x=$((x + 1))
         [ $x -eq $1 ] && printf "%s" "$LINE" && return 0
     done < "$2"
+    [ $((x + 1)) -eq $1 ] && printf "%s" "$LINE" && return 0
 
     return 1
 }
