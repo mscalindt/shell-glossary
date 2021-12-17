@@ -1124,6 +1124,7 @@ pline_fd1() {
         x=$((x + 1))
         [ $x -eq $1 ] && printf "%s" "$LINE" && return 0
     done
+    [ $((x + 1)) -eq $1 ] && printf "%s" "$LINE" && return 0
 
     return 1
 }
