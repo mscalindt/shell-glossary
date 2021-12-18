@@ -98,16 +98,19 @@ fcount() {
     [ -d "$1" ] && i="$1" || return 1
     iiii=0
 
-    if [ $# -eq 1 ]; then
+    case $#$2 in
+    1*)
         set -- "$i"/*
         [ -e "$1" ] && iiii=$#
 
         set -- "$i"/.*
         [ $# -ge 3 ] && iiii=$((iiii + $# - 2))
-    elif [ $# -eq 2 ] && [ "$2" = 3 ]; then
+    ;;
+    23)
         set -- "$i"/*
         [ -e "$1" ] && iiii=$#
-    elif [ $# -eq 3 ]; then
+    ;;
+    3*)
         case "$2" in
             0*)
                 ii="${2#?}"
@@ -142,7 +145,8 @@ fcount() {
                 [ -e "$1" ] && iiii=$#
             ;;
         esac
-    else
+    ;;
+    *)
         case "$2" in
             0*)
                 ii="${2#?}"
@@ -220,7 +224,8 @@ fcount() {
                 esac
             ;;
         esac
-    fi
+    ;;
+    esac
 
     printf "%d" "$iiii" && return 0
 }
