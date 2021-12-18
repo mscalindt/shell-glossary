@@ -299,25 +299,28 @@ grep_str() {
 # (1) no match
 #
 grep_str_fd1() {
-    if [ $# -eq 2 ]; then
-        if [ $2 -eq 1 ]; then
-            while IFS= read -r LINE || [ -n "$LINE" ]; do
-                case "$LINE" in "$1"*) return 0 ;; esac
-            done
-        elif [ $2 -eq 2 ]; then
-            while IFS= read -r LINE || [ -n "$LINE" ]; do
-                case "$LINE" in *"$1") return 0 ;; esac
-            done
-        elif [ $2 -eq 3 ]; then
-            while IFS= read -r LINE || [ -n "$LINE" ]; do
-                case "$LINE" in "$1") return 0 ;; esac
-            done
-        fi
-    else
+    case $#$2 in
+    21)
+        while IFS= read -r LINE || [ -n "$LINE" ]; do
+            case "$LINE" in "$1"*) return 0 ;; esac
+        done
+    ;;
+    22)
+        while IFS= read -r LINE || [ -n "$LINE" ]; do
+            case "$LINE" in *"$1") return 0 ;; esac
+        done
+    ;;
+    23)
+        while IFS= read -r LINE || [ -n "$LINE" ]; do
+            case "$LINE" in "$1") return 0 ;; esac
+        done
+    ;;
+    *)
         while IFS= read -r LINE || [ -n "$LINE" ]; do
             case "$LINE" in *"$1"*) return 0 ;; esac
         done
-    fi
+    ;;
+    esac
 
     return 1
 }
