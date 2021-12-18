@@ -271,17 +271,12 @@ get_fpath() {
 # (1) no match
 #
 grep_str() {
-    if [ $# -eq 3 ]; then
-        if [ $3 -eq 1 ]; then
-            case "$2" in "$1"*) grep_str=0 && return 0 ;; esac
-        elif [ $3 -eq 2 ]; then
-            case "$2" in *"$1") grep_str=0 && return 0 ;; esac
-        elif [ $3 -eq 3 ]; then
-            case "$2" in "$1") grep_str=0 && return 0 ;; esac
-        fi
-    else
-        case "$2" in *"$1"*) grep_str=0 && return 0 ;; esac
-    fi
+    case $#$3 in
+    31) case "$2" in "$1"*) grep_str=0 && return 0 ;; esac ;;
+    32) case "$2" in *"$1") grep_str=0 && return 0 ;; esac ;;
+    33) case "$2" in "$1") grep_str=0 && return 0 ;; esac ;;
+    *) case "$2" in *"$1"*) grep_str=0 && return 0 ;; esac ;;
+    esac
 
     return 1
 }
