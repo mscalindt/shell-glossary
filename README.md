@@ -925,6 +925,9 @@ ltr_substr1() {
             ;;
         esac
 
+        [ "$i" = "$5" ] && return 2
+        iii="$i"
+
         case $3 in
             0)
                 i="${i%"$4"*}"
@@ -939,7 +942,7 @@ ltr_substr1() {
             ;;
         esac
 
-        [ "$i" = "$5" ] && return 2
+        [ "$i" = "$iii" ] && return 2
     fi
 
     if [ -n "$i" ]; then
