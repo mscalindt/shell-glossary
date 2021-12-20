@@ -517,7 +517,8 @@ ltl_substr0() {
 # [$8] - mode('6' - verify the expansion)
 #
 # Returns:
-# (0) substring
+# (0) substring | wrong substring i.e. unspecified expansion ($1/$3 is greater
+#     than the total $2/$4 in the string)
 # (1) empty expansion (empty, or unspecified, or wrong -- shell specific)
 # (2) unspecified expansion (unspecified, or empty, or wrong -- shell specific)
 #
