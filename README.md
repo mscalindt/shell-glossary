@@ -838,9 +838,8 @@ ltr_substr0() {
 #    Performance cost should be negligible on most shells.
 #
 ltr_substr1() {
-    if [ $# -eq 8 ] || \
-       [ $# -ge 7 ] && [ $7 -eq 6 ] || \
-       [ $# -ge 6 ] && [ $6 -eq 6 ]; then
+    case $#$7$6 in
+    8* | *76* | 66)
         case $1 in
             0)
                 case "$5" in
@@ -907,7 +906,8 @@ ltr_substr1() {
                 [ -z "$i" ] && i="${ii%"$4"}" || i="${ii%"$4""$i"}"
             ;;
         esac
-    else
+    ;;
+    *)
         case $1 in
             0)
                 i="${5##*"$2"}"
@@ -939,28 +939,24 @@ ltr_substr1() {
         esac
 
         [ "$i" = "$iii" ] && return 2
-    fi
+    ;;
+    esac
 
     if [ -n "$i" ]; then
-        if [ $# -ge 6 ] && [ $6 -eq 0 ]; then
+        case $6 in
+        0) i="${i#${i%%[![:space:]]*}}" ;;
+        1) i="${i%${i##*[![:space:]]}}" ;;
+        2)
             i="${i#${i%%[![:space:]]*}}"
-        elif [ $# -ge 6 ] && [ $6 -eq 1 ]; then
             i="${i%${i##*[![:space:]]}}"
-        elif [ $# -ge 6 ] && [ $6 -eq 2 ]; then
-            i="${i#${i%%[![:space:]]*}}"
-            i="${i%${i##*[![:space:]]}}"
-        fi
+        ;;
+        esac
 
-        if [ $# -ge 7 ] && [ $7 -eq 3 ] || \
-           [ $# -ge 6 ] && [ $6 -eq 3 ]; then
-            i="$2$i"
-        elif [ $# -ge 7 ] && [ $7 -eq 4 ] || \
-             [ $# -ge 6 ] && [ $6 -eq 4 ]; then
-            i="$i$4"
-        elif [ $# -ge 7 ] && [ $7 -eq 5 ] || \
-             [ $# -ge 6 ] && [ $6 -eq 5 ]; then
-            i="$2$i$4"
-        fi
+        case $7$6 in
+        *3*) i="$2$i" ;;
+        *4*) i="$i$4" ;;
+        *5*) i="$2$i$4" ;;
+        esac
 
         printf "%s" "$i" && return 0
     fi
