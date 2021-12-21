@@ -421,9 +421,8 @@ lstrip() {
 #    Performance cost should be negligible on most shells.
 #
 ltl_substr0() {
-    if [ $# -eq 6 ] || \
-       [ $# -ge 5 ] && [ $5 -eq 4 ] || \
-       [ $# -ge 4 ] && [ $4 -eq 4 ]; then
+    case $#$5$4 in
+    6* | *54* | 44)
         case $1 in
             0)
                 case "$3" in
@@ -456,7 +455,8 @@ ltl_substr0() {
                 [ -z "$i" ] && i="${3%"$2"}" || i="${3%"$2""$i"}"
             ;;
         esac
-    else
+    ;;
+    *)
         case $1 in
             0)
                 i="${3%"$2"*}"
@@ -472,22 +472,22 @@ ltl_substr0() {
         esac
 
         [ "$i" = "$3" ] && return 2
-    fi
+    ;;
+    esac
 
     if [ -n "$i" ]; then
-        if [ $# -ge 4 ] && [ $4 -eq 0 ]; then
+        case $4 in
+        0) i="${i#${i%%[![:space:]]*}}" ;;
+        1) i="${i%${i##*[![:space:]]}}" ;;
+        2)
             i="${i#${i%%[![:space:]]*}}"
-        elif [ $# -ge 4 ] && [ $4 -eq 1 ]; then
             i="${i%${i##*[![:space:]]}}"
-        elif [ $# -ge 4 ] && [ $4 -eq 2 ]; then
-            i="${i#${i%%[![:space:]]*}}"
-            i="${i%${i##*[![:space:]]}}"
-        fi
+        ;;
+        esac
 
-        if [ $# -ge 5 ] && [ $5 -eq 3 ] || \
-           [ $# -ge 4 ] && [ $4 -eq 3 ]; then
-            i="$i$2"
-        fi
+        case $5$4 in
+        *3*) i="$i$2" ;;
+        esac
 
         printf "%s" "$i" && return 0
     fi
