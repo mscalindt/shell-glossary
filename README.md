@@ -14,6 +14,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/16
 * [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltr_substr0) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/17
 * [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltr_substr1) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/18
+* [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary#num_to_char)
 * [PARSE()](https://github.com/mscalindt/shell-glossary#parse) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/13
 * [PLINE()](https://github.com/mscalindt/shell-glossary#pline) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/14
 * [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/5.1
@@ -962,6 +963,31 @@ ltr_substr1() {
     fi
 
     return 1
+}
+```
+
+## num_to_char
+
+```sh
+# Description:
+# Convert a natural number to that amount of a character.
+#
+# Parameters:
+# <$1> - number
+# <"$2"> - character
+#
+# Returns:
+# (0) character(s)
+#
+num_to_char() {
+    x=0
+
+    until [ $x -eq $1 ]; do
+        x=$((x + 1))
+        printf "%s" "$2"
+    done
+
+    return 0
 }
 ```
 
