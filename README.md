@@ -349,7 +349,7 @@ info() {
 #
 # Parameters:
 # <"$1"> - printf prefix
-# <"$2+"> - text
+# <"$2"+> - text
 #
 info_px() {
     i="$1" && shift
