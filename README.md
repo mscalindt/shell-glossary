@@ -1771,7 +1771,7 @@ warn() {
 #
 # Parameters:
 # <"$1"> - printf prefix
-# <"$2+"> - text
+# <"$2"+> - text
 #
 warn_px() {
     i="$1" && shift
