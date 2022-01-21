@@ -40,7 +40,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 #
 # Parameters:
 # <$1> - exit code
-# <"$2+"> - text
+# <"$2"+> - text
 #
 err() {
     i=$1 && shift
