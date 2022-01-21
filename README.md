@@ -334,7 +334,7 @@ grep_str_fd1() {
 # Print info
 #
 # Parameters:
-# <"$1+"> - text
+# <"$1"+> - text
 #
 info() {
     printf "%bINFO:%b %s\n" "\033[1;37m" "\033[0m" "$*"
