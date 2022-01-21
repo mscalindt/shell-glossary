@@ -1756,7 +1756,7 @@ str_to_chars() {
 # Print a warning
 #
 # Parameters:
-# <"$1+"> - text
+# <"$1"+> - text
 #
 warn() {
     printf "%bWARNING:%b %s\n" "\033[1;33m" "\033[0m" "$*"
