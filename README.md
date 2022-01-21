@@ -58,7 +58,7 @@ err() {
 # Parameters:
 # <$1> - exit code
 # <"$2"> - printf prefix
-# <"$3+"> - text
+# <"$3"+> - text
 #
 err_px() {
     i=$1 && ii="$2"; shift 2
