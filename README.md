@@ -1491,7 +1491,7 @@ rstrip() {
 # Parameters:
 # <"$1"> - string
 # ["$2"] - mode("0 X" - escape only specified whitespace-separated "X"
-                        character(s))
+#                       character(s))
 # [$3] - mode('1' - strip the characters)
 #
 # Returns:
