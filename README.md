@@ -1116,7 +1116,7 @@ parse() {
 #                   characters,
 #             '3' - skip empty lines,
 #             '4' - strip trailing/leading whitespace characters)
-# [$2] - mode('5N' - stop parsing further than specified "N" line)
+# [$2] - mode("5 N" - stop parsing further than specified "N" line)
 #
 # Returns:
 # (0) output | empty output (stdin)
@@ -1125,7 +1125,7 @@ parse_fd1() {
     case $# in
     2)
         x=0
-        set -- $1 ${2#?}
+        set -- $1 ${2#??}
         case $1 in
             0)
                 while IFS= read -r LINE; do
