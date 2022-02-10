@@ -1028,7 +1028,10 @@ parse() {
                     [ $x -eq $3 ] && break
                     printf "%s\n" "$LINE"
                 done < "$2"
-                [ -n "$LINE" ] && printf "%s\n" "$LINE" || echo
+                case ":$LINE" in
+                    :) echo ;;
+                    *) printf "%s\n" "$LINE" ;;
+                esac
             ;;
             1)
                 while IFS= read -r LINE; do
@@ -1036,7 +1039,10 @@ parse() {
                     [ $x -eq $3 ] && break
                     printf " %s \n" "$LINE"
                 done < "$2"
-                [ -n "$LINE" ] && printf " %s \n" "$LINE" || echo
+                case ":$LINE" in
+                    :) echo ;;
+                    *) printf " %s \n" "$LINE" ;;
+                esac
             ;;
             2)
                 while IFS= read -r LINE; do
@@ -1044,7 +1050,10 @@ parse() {
                     [ $x -eq $3 ] && break
                     printf "  %s  \n" "$LINE"
                 done < "$2"
-                [ -n "$LINE" ] && printf "  %s  \n" "$LINE" || echo
+                case ":$LINE" in
+                    :) echo ;;
+                    *) printf "  %s  \n" "$LINE" ;;
+                esac
             ;;
             3)
                 while IFS= read -r LINE || [ -n "$LINE" ]; do
@@ -1059,7 +1068,10 @@ parse() {
                     [ $x -eq $3 ] && break
                     printf "%s\n" "$LINE"
                 done < "$2"
-                [ -n "$LINE" ] && printf "%s\n" "$LINE" || echo
+                case ":$LINE" in
+                    :) echo ;;
+                    *) printf "%s\n" "$LINE" ;;
+                esac
             ;;
         esac
     ;;
@@ -1069,19 +1081,28 @@ parse() {
                 while IFS= read -r LINE; do
                     printf "%s\n" "$LINE"
                 done < "$2"
-                [ -n "$LINE" ] && printf "%s\n" "$LINE" || echo
+                case ":$LINE" in
+                    :) echo ;;
+                    *) printf "%s\n" "$LINE" ;;
+                esac
             ;;
             1)
                 while IFS= read -r LINE; do
                     printf " %s \n" "$LINE"
                 done < "$2"
-                [ -n "$LINE" ] && printf " %s \n" "$LINE" || echo
+                case ":$LINE" in
+                    :) echo ;;
+                    *) printf " %s \n" "$LINE" ;;
+                esac
             ;;
             2)
                 while IFS= read -r LINE; do
                     printf "  %s  \n" "$LINE"
                 done < "$2"
-                [ -n "$LINE" ] && printf "  %s  \n" "$LINE" || echo
+                case ":$LINE" in
+                    :) echo ;;
+                    *) printf "  %s  \n" "$LINE" ;;
+                esac
             ;;
             3)
                 while IFS= read -r LINE || [ -n "$LINE" ]; do
@@ -1092,7 +1113,10 @@ parse() {
                 while read -r LINE; do
                     printf "%s\n" "$LINE"
                 done < "$2"
-                [ -n "$LINE" ] && printf "%s\n" "$LINE" || echo
+                case ":$LINE" in
+                    :) echo ;;
+                    *) printf "%s\n" "$LINE" ;;
+                esac
             ;;
         esac
     ;;
