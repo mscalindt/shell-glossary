@@ -1490,7 +1490,8 @@ rstrip() {
 #
 # Parameters:
 # <"$1"> - string
-# ["$2"] - mode('0X' - escape only specified "X" character(s))
+# ["$2"] - mode("0 X" - escape only specified whitespace-separated "X"
+                        character(s))
 # [$3] - mode('1' - strip the characters)
 #
 # Returns:
@@ -1508,42 +1509,7 @@ safe_str() {
     set -f
 
     if [ $# -ge 2 ] && [ $ii -eq 0 ]; then
-        iii="${2#?}"
-        if [ ${#iii} -ne 1 ]; then
-            iii=$(
-                LC_CTYPE=C; IFS=" "; set -- $iii; i=$(printf "%s" "$@")
-
-                i=$(ii="${i#?}"; iii="${i%"$ii"}"; iiii="$iii"
-                case "$iii" in
-                [[:print:]]) printf "%s" "$iii" && iiiii=1 ;;
-                *) iiiii=0 ;;
-                esac
-                i="$ii"
-                while [ -n "$i" ]; do
-                ii="${i#?}"; iii="${i%"$ii"}"
-                case "$iii" in
-                [[:print:]])
-                case "$iiii" in
-                *"$iii"*) : ;;
-                *)
-                if [ $iiiii -eq 1 ]; then
-                printf " %s" "$iii"
-                else
-                printf "%s" "$iii"
-                iiiii=1
-                fi
-                ;;
-                esac
-                ;;
-                *) : ;;
-                esac
-                iiii="$iiii$iii"; i="$ii"
-                done
-                )
-
-                printf "%s" "$i"
-            )
-        fi
+        iii="${2#??}"
     else
         iii='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %'
     fi
