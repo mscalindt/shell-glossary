@@ -1006,7 +1006,7 @@ num_to_char() {
 #             '3' - skip empty lines,
 #             '4' - strip trailing/leading whitespace characters)
 # <"$2"> - file
-# [$3] - mode('5N' - stop parsing further than specified "N" line)
+# [$3] - mode("5 N" - stop parsing further than specified "N" line)
 #
 # Returns:
 # (0) output | empty output (file)
@@ -1020,7 +1020,7 @@ parse() {
     case $# in
     3)
         x=0
-        set -- $1 "$2" ${3#?}
+        set -- $1 "$2" ${3#??}
         case $1 in
             0)
                 while IFS= read -r LINE; do
