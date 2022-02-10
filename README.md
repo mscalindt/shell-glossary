@@ -1047,7 +1047,7 @@ parse() {
                 [ -n "$LINE" ] && printf "  %s  \n" "$LINE" || echo
             ;;
             3)
-                while IFS= read -r LINE || [ -n "$LINE" ] ; do
+                while IFS= read -r LINE || [ -n "$LINE" ]; do
                     x=$((x + 1))
                     [ -n "$LINE" ] && printf "%s\n" "$LINE"
                     [ $x -eq $3 ] && break
@@ -1084,7 +1084,7 @@ parse() {
                 [ -n "$LINE" ] && printf "  %s  \n" "$LINE" || echo
             ;;
             3)
-                while IFS= read -r LINE || [ -n "$LINE" ] ; do
+                while IFS= read -r LINE || [ -n "$LINE" ]; do
                     [ -n "$LINE" ] && printf "%s\n" "$LINE"
                 done < "$2"
             ;;
