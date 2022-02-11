@@ -3,7 +3,9 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 # Normal functions:
 
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
+* [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
 * [ERR_PX()](https://github.com/mscalindt/shell-glossary#err_px)
+* [ERR_NE_PX()](https://github.com/mscalindt/shell-glossary#err_ne_px)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/12
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
@@ -49,6 +51,20 @@ err() {
 }
 ```
 
+## err_ne
+
+```sh
+# Description:
+# Print error, no exit
+#
+# Parameters:
+# <"$1"+> - text
+#
+err_ne() {
+    printf "%bERROR:%b %s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
+}
+```
+
 ## err_px
 
 ```sh
@@ -64,6 +80,22 @@ err_px() {
     i=$1 && ii="$2"; shift 2
     printf "\n%bERROR:%b $ii%s\n\n" "\033[1;31m" "\033[0m" "$*" 1>&2
     exit $i
+}
+```
+
+## err_ne_px
+
+```sh
+# Description:
+# Print error with printf prefix before text, no exit
+#
+# Parameters:
+# <"$1"> - printf prefix
+# <"$2"+> - text
+#
+err_ne_px() {
+    i="$1" && shift
+    printf "%bERROR:%b $i%s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
 }
 ```
 
