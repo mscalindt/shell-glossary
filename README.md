@@ -1193,11 +1193,15 @@ parse_fd1() {
                 esac
             ;;
             3)
-                while IFS= read -r LINE || [ -n "$LINE" ]; do
+                while IFS= read -r LINE; do
                     x=$((x + 1))
+                    [ $x -eq $3 ] && break
                     [ -n "$LINE" ] && printf "%s\n" "$LINE"
-                    [ $x -eq $2 ] && break
                 done
+                case ":$LINE" in
+                    :) : ;;
+                    *) printf "%s\n" "$LINE" ;;
+                esac
             ;;
             4)
                 while read -r LINE; do
@@ -1242,9 +1246,13 @@ parse_fd1() {
                 esac
             ;;
             3)
-                while IFS= read -r LINE || [ -n "$LINE" ]; do
+                while IFS= read -r LINE; do
                     [ -n "$LINE" ] && printf "%s\n" "$LINE"
                 done
+                case ":$LINE" in
+                    :) : ;;
+                    *) printf "%s\n" "$LINE" ;;
+                esac
             ;;
             4)
                 while read -r LINE; do
