@@ -2,6 +2,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 
 # Normal functions:
 
+* [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary#confirm_cont)
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
 * [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
 * [ERR_PX()](https://github.com/mscalindt/shell-glossary#err_px)
@@ -33,6 +34,44 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [GREP_STR_FD1()](https://github.com/mscalindt/shell-glossary#grep_str_fd1)
 * [PARSE_FD1()](https://github.com/mscalindt/shell-glossary#parse_fd1)
 * [PLINE_FD1()](https://github.com/mscalindt/shell-glossary#pline_fd1)
+
+## confirm_cont
+
+```sh
+# Description:
+# Ask for confirmation to continue
+#
+# Parameters:
+# <$1> - mode('0' - default action: Y,
+#             '1' - default action: N)
+#
+# Returns:
+# (0) allowed
+# (1) forbidden
+#
+confirm_cont() {
+    case $1 in
+    0)
+        printf "%bContinue? [Y/n]%b " "\033[1;37m" "\033[0m"
+        read -r i
+
+        case "$i" in
+            N*|n*) return 1 ;;
+            *) return 0 ;;
+        esac
+    ;;
+    1)
+        printf "%bContinue? [y/N]%b " "\033[1;37m" "\033[0m"
+        read -r i
+
+        case "$i" in
+            Y*|y*) return 0 ;;
+            *) return 1 ;;
+        esac
+    ;;
+    esac
+}
+```
 
 ## err
 
