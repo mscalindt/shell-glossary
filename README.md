@@ -134,7 +134,7 @@ err_px() {
 #
 err_ne_px() {
     i="$1" && shift
-    printf "%bERROR:%b $i%s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
+    printf "ERROR: $i%s\n" "$*" 1>&2
 }
 ```
 
