@@ -15,7 +15,9 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
 * [INFO()](https://github.com/mscalindt/shell-glossary#info)
+* [INFO_CLR()](https://github.com/mscalindt/shell-glossary#info_clr)
 * [INFO_PX()](https://github.com/mscalindt/shell-glossary#info_px)
+* [INFO_PX_CLR()](https://github.com/mscalindt/shell-glossary#info_px_clr)
 * [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/8
 * [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltl_substr0) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/15
 * [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/16
@@ -481,6 +483,20 @@ info() {
 }
 ```
 
+## info_clr
+
+```sh
+# Description:
+# Print colorful info
+#
+# Parameters:
+# <"$1"+> - text
+#
+info_clr() {
+    printf "%bINFO:%b %s\n" "\033[1;37m" "\033[0m" "$*"
+}
+```
+
 ## info_px
 
 ```sh
@@ -494,6 +510,22 @@ info() {
 info_px() {
     i="$1" && shift
     printf "INFO: $i%s\n" "$*"
+}
+```
+
+## info_px_clr
+
+```sh
+# Description:
+# Print colorful info with printf prefix before text
+#
+# Parameters:
+# <"$1"> - printf prefix
+# <"$2"+> - text
+#
+info_px_clr() {
+    i="$1" && shift
+    printf "%bINFO:%b $i%s\n" "\033[1;37m" "\033[0m" "$*"
 }
 ```
 
