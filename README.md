@@ -33,7 +33,9 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [SAFE_STR()](https://github.com/mscalindt/shell-glossary#safe_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/11
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/10
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
+* [WARN_CLR()](https://github.com/mscalindt/shell-glossary#warn_clr)
 * [WARN_PX()](https://github.com/mscalindt/shell-glossary#warn_px)
+* [WARN_PX_CLR()](https://github.com/mscalindt/shell-glossary#warn_px_clr)
 
 # Stdin functions:
 
@@ -1965,6 +1967,20 @@ warn() {
 }
 ```
 
+## warn_clr
+
+```sh
+# Description:
+# Print a colorful warning
+#
+# Parameters:
+# <"$1"+> - text
+#
+warn_clr() {
+    printf "%bWARNING:%b %s\n" "\033[1;33m" "\033[0m" "$*"
+}
+```
+
 ### warn_px
 
 ```sh
@@ -1978,5 +1994,21 @@ warn() {
 warn_px() {
     i="$1" && shift
     printf "WARNING: $i%s\n" "$*"
+}
+```
+
+### warn_px_clr
+
+```sh
+# Description:
+# Print a colorful warning with printf prefix before text
+#
+# Parameters:
+# <"$1"> - printf prefix
+# <"$2"+> - text
+#
+warn_px_clr() {
+    i="$1" && shift
+    printf "%bWARNING:%b $i%s\n" "\033[1;33m" "\033[0m" "$*"
 }
 ```
