@@ -60,7 +60,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 confirm_cont() {
     case $1 in
     0)
-        printf "%bContinue? [Y/n]%b " "\033[1;37m" "\033[0m"
+        printf "Continue? [Y/n] "
         read -r i
 
         case "$i" in
@@ -69,7 +69,7 @@ confirm_cont() {
         esac
     ;;
     1)
-        printf "%bContinue? [y/N]%b " "\033[1;37m" "\033[0m"
+        printf "Continue? [y/N] "
         read -r i
 
         case "$i" in
