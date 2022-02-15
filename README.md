@@ -1961,7 +1961,7 @@ str_to_chars() {
 # <"$1"+> - text
 #
 warn() {
-    printf "%bWARNING:%b %s\n" "\033[1;33m" "\033[0m" "$*"
+    printf "WARNING: %s\n" "$*"
 }
 ```
 
