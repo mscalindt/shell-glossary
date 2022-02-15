@@ -1977,6 +1977,6 @@ warn() {
 #
 warn_px() {
     i="$1" && shift
-    printf "%bWARNING:%b $i%s\n" "\033[1;33m" "\033[0m" "$*"
+    printf "WARNING: $i%s\n" "$*"
 }
 ```
