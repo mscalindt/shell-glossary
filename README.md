@@ -100,7 +100,7 @@ err() {
 # <"$1"+> - text
 #
 err_ne() {
-    printf "%bERROR:%b %s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
+    printf "ERROR: %s\n" "$*" 1>&2
 }
 ```
 
