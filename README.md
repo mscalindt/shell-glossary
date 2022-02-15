@@ -493,7 +493,7 @@ info() {
 #
 info_px() {
     i="$1" && shift
-    printf "%bINFO:%b $i%s\n" "\033[1;37m" "\033[0m" "$*"
+    printf "INFO: $i%s\n" "$*"
 }
 ```
 
