@@ -117,7 +117,7 @@ err_ne() {
 #
 err_px() {
     i=$1 && ii="$2"; shift 2
-    printf "\n%bERROR:%b $ii%s\n\n" "\033[1;31m" "\033[0m" "$*" 1>&2
+    printf "\nERROR: $ii%s\n\n" "$*" 1>&2
     exit $i
 }
 ```
