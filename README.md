@@ -4,9 +4,13 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 
 * [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary#confirm_cont)
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
+* [ERR_CLR()](https://github.com/mscalindt/shell-glossary#err_clr)
 * [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
+* [ERR_NE_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_clr)
 * [ERR_PX()](https://github.com/mscalindt/shell-glossary#err_px)
+* [ERR_PX_CLR()](https://github.com/mscalindt/shell-glossary#err_px_clr)
 * [ERR_NE_PX()](https://github.com/mscalindt/shell-glossary#err_ne_px)
+* [ERR_NE_PX_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_px_clr)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/12
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
@@ -90,6 +94,23 @@ err() {
 }
 ```
 
+## err_clr
+
+```sh
+# Description:
+# Print colorful error and exit
+#
+# Parameters:
+# <$1> - exit code
+# <"$2"+> - text
+#
+err_clr() {
+    i=$1 && shift
+    printf "\n%bERROR:%b %s\n\n" "\033[1;31m" "\033[0m" "$*" 1>&2
+    exit $i
+}
+```
+
 ## err_ne
 
 ```sh
@@ -101,6 +122,20 @@ err() {
 #
 err_ne() {
     printf "ERROR: %s\n" "$*" 1>&2
+}
+```
+
+## err_ne_clr
+
+```sh
+# Description:
+# Print colorful error, no exit
+#
+# Parameters:
+# <"$1"+> - text
+#
+err_ne_clr() {
+    printf "%bERROR:%b %s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
 }
 ```
 
@@ -122,6 +157,24 @@ err_px() {
 }
 ```
 
+## err_px_clr
+
+```sh
+# Description:
+# Print colorful error with printf prefix before text and exit
+#
+# Parameters:
+# <$1> - exit code
+# <"$2"> - printf prefix
+# <"$3"+> - text
+#
+err_px_clr() {
+    i=$1 && ii="$2"; shift 2
+    printf "\n%bERROR:%b $ii%s\n\n" "\033[1;31m" "\033[0m" "$*" 1>&2
+    exit $i
+}
+```
+
 ## err_ne_px
 
 ```sh
@@ -135,6 +188,22 @@ err_px() {
 err_ne_px() {
     i="$1" && shift
     printf "ERROR: $i%s\n" "$*" 1>&2
+}
+```
+
+## err_ne_px_clr
+
+```sh
+# Description:
+# Print colorful error with printf prefix before text, no exit
+#
+# Parameters:
+# <"$1"> - printf prefix
+# <"$2"+> - text
+#
+err_ne_px_clr() {
+    i="$1" && shift
+    printf "%bERROR:%b $i%s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
 }
 ```
 
