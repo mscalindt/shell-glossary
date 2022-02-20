@@ -1229,6 +1229,10 @@ num_to_char() {
 # (1) not a file | file does not exist
 # (2) file access error
 #
+# Caveats:
+# 1. NULL character.
+# 2. Reading /proc is unreliable.
+#
 parse() {
     [ -f "$2" ] || return 1
     [ -r "$2" ] || return 2
