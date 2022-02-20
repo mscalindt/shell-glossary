@@ -1373,6 +1373,10 @@ parse() {
 # Returns:
 # (0) output | empty output (stdin)
 #
+# Caveats:
+# 1. NULL character.
+# 2. Reading /proc is unreliable.
+#
 parse_fd1() {
     case $# in
     2)
