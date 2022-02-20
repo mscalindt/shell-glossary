@@ -482,6 +482,9 @@ grep_str() {
 # (0) substring exists
 # (1) no match
 #
+# Caveats:
+# 1. NULL character.
+#
 grep_str_fd1() {
     case $#$2 in
     21)
