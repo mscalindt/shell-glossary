@@ -1511,6 +1511,10 @@ parse_fd1() {
 # (2) not a file | file does not exist
 # (3) file access error
 #
+# Caveats:
+# 1. NULL character.
+# 2. Reading /proc is unreliable.
+#
 pline() {
     x=0
 
