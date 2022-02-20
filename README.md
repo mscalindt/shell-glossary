@@ -1544,6 +1544,9 @@ pline() {
 # (0) line's content | line empty
 # (1) line does not exist
 #
+# Caveats:
+# 1. NULL character.
+#
 pline_fd1() {
     x=0
 
