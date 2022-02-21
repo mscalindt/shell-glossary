@@ -1375,7 +1375,6 @@ parse() {
 #
 # Caveats:
 # 1. NULL character.
-# 2. Reading /proc is unreliable.
 #
 parse_fd1() {
     case $# in
