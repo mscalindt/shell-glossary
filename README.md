@@ -1814,13 +1814,13 @@ safe_str() {
         esac
 
         case $#:$2 in
-            2:1*|3*) iiii="${i%%"$ii"*}" ;;
+            2:1|3*) iiii="${i%%"$ii"*}" ;;
             *) iiii="${i%%"$ii"*}\\$ii" ;;
         esac
         i="${iiii}${i#*"$ii"}"
 
         case $#:$2 in
-            2:1*|3*)
+            2:1|3*)
                 while :; do case "$i" in
                     "$iiii"*"$ii"*)
                         iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
@@ -1859,13 +1859,13 @@ safe_str() {
         esac
 
         case $#:$2 in
-            2:1*|3*) iiii="${i%%"$ii"*}" ;;
+            2:1|3*) iiii="${i%%"$ii"*}" ;;
             *) iiii="${i%%"$ii"*}\\$ii" ;;
         esac
         i="${iiii}${i#*"$ii"}"
 
         case $#:$2 in
-            2:1*|3*)
+            2:1|3*)
                 while :; do case "$i" in
                     "$iiii"*"$ii"*)
                         iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
