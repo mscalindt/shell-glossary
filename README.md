@@ -1797,11 +1797,12 @@ rstrip() {
 #
 safe_str() {
     i="$1"
+    unset iiii
 
     set -f
 
-    case $#:$2 in
-        2:0*|3*) iii="${2#??}" ;;
+    case $2 in
+        0*) iii="${2#??}" ;;
         *) iii='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
     esac
 
