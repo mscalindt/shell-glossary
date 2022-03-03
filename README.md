@@ -1797,16 +1797,13 @@ rstrip() {
 #
 safe_str() {
     i="$1"
-    ii="${2#?}" && ii="${2%"$ii"}"
-    unset iiii
 
     set -f
 
-    if [ $# -ge 2 ] && [ $ii -eq 0 ]; then
-        iii="${2#??}"
-    else
-        iii='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %'
-    fi
+    case $#:$2 in
+        2:0*|3*) iii="${2#??}" ;;
+        *) iii='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
+    esac
 
     case "$iii" in
     *'\'*)
@@ -1816,38 +1813,37 @@ safe_str() {
             *) continue ;;
         esac
 
-        if [ $# -ge 2 ] && [ "$2" = 1 ] || \
-           [ $# -eq 3 ]; then
-            iiii="${i%%"$ii"*}"
-            i="${iiii}${i#*"$ii"}"
-        else
-            iiii="${i%%"$ii"*}\\$ii"
-            i="${iiii}${i#*"$ii"}"
-        fi
+        case $#:$2 in
+            2:1*|3*) iiii="${i%%"$ii"*}" ;;
+            *) iiii="${i%%"$ii"*}\\$ii" ;;
+        esac
+        i="${iiii}${i#*"$ii"}"
 
-        if [ $# -ge 2 ] && [ "$2" = 1 ] || \
-           [ $# -eq 3 ]; then
-            while :; do case "$i" in
-                "$iiii"*"$ii"*)
-                    iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                    iiii="${iiii}${iiiii}"
-                    iiiii="${i#*"$iiii"}"
-                    i="${iiii}${iiiii#*"$ii"}"
-                ;;
-                *) break ;;
-            esac done
-        else
-            while :; do case "$i" in
-                "$iiii"*"$ii"*)
-                    iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                    iiii="${iiii}${iiiii}"
-                    iiiii="${i#*"$iiii"}"
-                    i="${iiii}\\$ii${iiiii#*"$ii"}"
-                    iiii="${iiii}\\$ii"
-                ;;
-                *) break ;;
-            esac done
-        fi
+        case $#:$2 in
+            2:1*|3*)
+                while :; do case "$i" in
+                    "$iiii"*"$ii"*)
+                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                        iiii="${iiii}${iiiii}"
+                        iiiii="${i#*"$iiii"}"
+                        i="${iiii}${iiiii#*"$ii"}"
+                    ;;
+                    *) break ;;
+                esac done
+            ;;
+            *)
+                while :; do case "$i" in
+                    "$iiii"*"$ii"*)
+                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                        iiii="${iiii}${iiiii}"
+                        iiiii="${i#*"$iiii"}"
+                        i="${iiii}\\$ii${iiiii#*"$ii"}"
+                        iiii="${iiii}\\$ii"
+                    ;;
+                    *) break ;;
+                esac done
+            ;;
+        esac
         done
     ;;
     esac
@@ -1862,38 +1858,37 @@ safe_str() {
             *) continue ;;
         esac
 
-        if [ $# -ge 2 ] && [ "$2" = 1 ] || \
-           [ $# -eq 3 ]; then
-            iiii="${i%%"$ii"*}"
-            i="${iiii}${i#*"$ii"}"
-        else
-            iiii="${i%%"$ii"*}\\$ii"
-            i="${iiii}${i#*"$ii"}"
-        fi
+        case $#:$2 in
+            2:1*|3*) iiii="${i%%"$ii"*}" ;;
+            *) iiii="${i%%"$ii"*}\\$ii" ;;
+        esac
+        i="${iiii}${i#*"$ii"}"
 
-        if [ $# -ge 2 ] && [ "$2" = 1 ] || \
-           [ $# -eq 3 ]; then
-            while :; do case "$i" in
-                "$iiii"*"$ii"*)
-                    iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                    iiii="${iiii}${iiiii}"
-                    iiiii="${i#*"$iiii"}"
-                    i="${iiii}${iiiii#*"$ii"}"
-                ;;
-                *) break ;;
-            esac done
-        else
-            while :; do case "$i" in
-                "$iiii"*"$ii"*)
-                    iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                    iiii="${iiii}${iiiii}"
-                    iiiii="${i#*"$iiii"}"
-                    i="${iiii}\\$ii${iiiii#*"$ii"}"
-                    iiii="${iiii}\\$ii"
-                ;;
-                *) break ;;
-            esac done
-        fi
+        case $#:$2 in
+            2:1*|3*)
+                while :; do case "$i" in
+                    "$iiii"*"$ii"*)
+                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                        iiii="${iiii}${iiiii}"
+                        iiiii="${i#*"$iiii"}"
+                        i="${iiii}${iiiii#*"$ii"}"
+                    ;;
+                    *) break ;;
+                esac done
+            ;;
+            *)
+                while :; do case "$i" in
+                    "$iiii"*"$ii"*)
+                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                        iiii="${iiii}${iiiii}"
+                        iiiii="${i#*"$iiii"}"
+                        i="${iiii}\\$ii${iiiii#*"$ii"}"
+                        iiii="${iiii}\\$ii"
+                    ;;
+                    *) break ;;
+                esac done
+            ;;
+        esac
     done
 
     set +f
