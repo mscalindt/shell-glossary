@@ -1806,53 +1806,11 @@ safe_str() {
     esac
 
     case "$iii" in
-    *'\'*)
-        for ii in \\; do
-        case "$i" in
-            *"$ii"*) : ;;
-            *) continue ;;
-        esac
-
-        case $#:$2 in
-            2:1|3*) iiii="${i%%"$ii"*}" ;;
-            *) iiii="${i%%"$ii"*}\\$ii" ;;
-        esac
-        i="${iiii}${i#*"$ii"}"
-
-        case $#:$2 in
-            2:1|3*)
-                while :; do case "$i" in
-                    "$iiii"*"$ii"*)
-                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                        iiii="${iiii}${iiiii}"
-                        iiiii="${i#*"$iiii"}"
-                        i="${iiii}${iiiii#*"$ii"}"
-                    ;;
-                    *) break ;;
-                esac done
-            ;;
-            *)
-                while :; do case "$i" in
-                    "$iiii"*"$ii"*)
-                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                        iiii="${iiii}${iiiii}"
-                        iiiii="${i#*"$iiii"}"
-                        i="${iiii}\\$ii${iiiii#*"$ii"}"
-                        iiii="${iiii}\\$ii"
-                    ;;
-                    *) break ;;
-                esac done
-            ;;
-        esac
-        done
-    ;;
+        '\'*) : ;;
+        *'\'*) iii="\\ ${iii%%\\*}${iii#*\\ }" ;;
     esac
 
     for ii in $iii; do
-        case "$ii" in
-            *'\'*) continue ;;
-        esac
-
         case "$i" in
             *"$ii"*) : ;;
             *) continue ;;
