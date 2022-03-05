@@ -1786,7 +1786,8 @@ rstrip() {
 # <"$1"> - string
 # ["$2"] - mode("0 X" - escape only specified whitespace-separated "X"
 #                       character(s))
-# [$3] - mode('1' - strip the characters)
+# [$3] - mode('1' - strip the characters,
+#             '2' - escape single quote character with itself)
 #
 # Returns:
 # (0) escaped/stripped string
@@ -1814,14 +1815,33 @@ safe_str() {
             *) continue ;;
         esac
 
-        case $#:$2 in
-            2:1|3*) iiii="${i%%"$ii"*}" ;;
-            *) iiii="${i%%"$ii"*}\\$ii" ;;
+        case $ii:$#:$3:$2 in
+            "'":3:2*|"'":2::2)
+                iiii="${i%%"$ii"*}'\\'$ii"
+            ;;
+            $ii:3:1*|$ii:2::1)
+                iiii="${i%%"$ii"*}"
+            ;;
+            *)
+                iiii="${i%%"$ii"*}\\$ii"
+            ;;
         esac
         i="${iiii}${i#*"$ii"}"
 
-        case $#:$2 in
-            2:1|3*)
+        case $ii:$#:$3:$2 in
+            "'":3:2*|"'":2::2)
+                while :; do case "$i" in
+                    "$iiii"*"$ii"*)
+                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
+                        iiii="${iiii}${iiiii}"
+                        iiiii="${i#*"$iiii"}"
+                        i="${iiii}'\\'$ii${iiiii#*"$ii"}"
+                        iiii="${iiii}'\\'$ii"
+                    ;;
+                    *) break ;;
+                esac done
+            ;;
+            $ii:3:1*|$ii:2::1)
                 while :; do case "$i" in
                     "$iiii"*"$ii"*)
                         iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
