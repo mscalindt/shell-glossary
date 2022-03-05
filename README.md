@@ -1792,9 +1792,6 @@ rstrip() {
 # (0) escaped/stripped string
 # (1) no meta characters in $1
 #
-# Caveats:
-# 1. Only printable ASCII characters shall be specified and escaped.
-#
 safe_str() {
     i="$1"
     unset iiii
