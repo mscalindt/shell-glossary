@@ -425,7 +425,7 @@ fcount() {
 # <"$1"> - path
 #
 # Returns:
-# (0) absolute path / path is already absolute
+# (0) absolute path | path
 #
 get_fpath() {
     case "$1" in
