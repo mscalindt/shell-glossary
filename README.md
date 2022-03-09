@@ -1817,7 +1817,7 @@ safe_str() {
 
         case $iiii:$#:$3:$2 in
             "'":3:2*|"'":2::2)
-                ii="${i%%"$iiii"*}'\\'$iiii"
+                ii="${i%%\'*}'\\''"
             ;;
             $iiii:3:1*|$iiii:2::1)
                 ii="${i%%"$iiii"*}"
@@ -1831,24 +1831,19 @@ safe_str() {
         case $iiii:$#:$3:$2 in
             "'":3:2*|"'":2::2)
                 while :; do case "$i" in
-                    "$ii"*"$iiii"*)
-                        iii="${i#*"$ii"}" && iii="${iii%%"$iiii"*}"
-                        ii="${ii}${iii}"
-                        iii="${i#*"$ii"}"
-                        i="${ii}'\\'$iiii${iii#*"$iiii"}"
-                        ii="${ii}'\\'$iiii"
+                    "$ii"*"'"*)
+                        iii="${i#*"$ii"}" && iii="${iii%%\'*}"
+                        i="${ii}${iii}'\\''${i#*"${ii}${iii}"\'}"
+                        ii="${ii}${iii}'\\''"
                     ;;
-                    *) break ;;
+                    *)
+                        break
+                    ;;
                 esac done
             ;;
             $iiii:3:1*|$iiii:2::1)
                 while :; do case "$i" in
-                    "$ii"*"$iiii"*)
-                        iii="${i#*"$ii"}" && iii="${iii%%"$iiii"*}"
-                        ii="${ii}${iii}"
-                        iii="${i#*"$ii"}"
-                        i="${ii}${iii#*"$iiii"}"
-                    ;;
+                    *"$iiii"*) i="${i%%"$iiii"*}${i#*"$iiii"}" ;;
                     *) break ;;
                 esac done
             ;;
@@ -1856,12 +1851,12 @@ safe_str() {
                 while :; do case "$i" in
                     "$ii"*"$iiii"*)
                         iii="${i#*"$ii"}" && iii="${iii%%"$iiii"*}"
-                        ii="${ii}${iii}"
-                        iii="${i#*"$ii"}"
-                        i="${ii}\\$iiii${iii#*"$iiii"}"
-                        ii="${ii}\\$iiii"
+                        i="${ii}${iii}\\$iiii${i#*"${ii}${iii}$iiii"}"
+                        ii="${ii}${iii}\\$iiii"
                     ;;
-                    *) break ;;
+                    *)
+                        break
+                    ;;
                 esac done
             ;;
         esac
