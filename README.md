@@ -1795,71 +1795,71 @@ rstrip() {
 #
 safe_str() {
     i="$1"
-    unset iiii
+    unset ii
 
     set -f
 
     case $2 in
-        0*) iii="${2#??}" ;;
-        *) iii='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
+        0*) iiiii="${2#??}" ;;
+        *) iiiii='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
     esac
 
-    case "$iii" in
+    case "$iiiii" in
         '\'*) : ;;
-        *'\'*) iii="\\ ${iii%%\\*}${iii#*\\ }" ;;
+        *'\'*) iiiii="\\ ${iiiii%%\\*}${iiiii#*\\ }" ;;
     esac
 
-    for ii in $iii; do
+    for iiii in $iiiii; do
         case "$i" in
-            *"$ii"*) : ;;
+            *"$iiii"*) : ;;
             *) continue ;;
         esac
 
-        case $ii:$#:$3:$2 in
+        case $iiii:$#:$3:$2 in
             "'":3:2*|"'":2::2)
-                iiii="${i%%"$ii"*}'\\'$ii"
+                ii="${i%%"$iiii"*}'\\'$iiii"
             ;;
-            $ii:3:1*|$ii:2::1)
-                iiii="${i%%"$ii"*}"
+            $iiii:3:1*|$iiii:2::1)
+                ii="${i%%"$iiii"*}"
             ;;
             *)
-                iiii="${i%%"$ii"*}\\$ii"
+                ii="${i%%"$iiii"*}\\$iiii"
             ;;
         esac
-        i="${iiii}${i#*"$ii"}"
+        i="${ii}${i#*"$iiii"}"
 
-        case $ii:$#:$3:$2 in
+        case $iiii:$#:$3:$2 in
             "'":3:2*|"'":2::2)
                 while :; do case "$i" in
-                    "$iiii"*"$ii"*)
-                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                        iiii="${iiii}${iiiii}"
-                        iiiii="${i#*"$iiii"}"
-                        i="${iiii}'\\'$ii${iiiii#*"$ii"}"
-                        iiii="${iiii}'\\'$ii"
+                    "$ii"*"$iiii"*)
+                        iii="${i#*"$ii"}" && iii="${iii%%"$iiii"*}"
+                        ii="${ii}${iii}"
+                        iii="${i#*"$ii"}"
+                        i="${ii}'\\'$iiii${iii#*"$iiii"}"
+                        ii="${ii}'\\'$iiii"
                     ;;
                     *) break ;;
                 esac done
             ;;
-            $ii:3:1*|$ii:2::1)
+            $iiii:3:1*|$iiii:2::1)
                 while :; do case "$i" in
-                    "$iiii"*"$ii"*)
-                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                        iiii="${iiii}${iiiii}"
-                        iiiii="${i#*"$iiii"}"
-                        i="${iiii}${iiiii#*"$ii"}"
+                    "$ii"*"$iiii"*)
+                        iii="${i#*"$ii"}" && iii="${iii%%"$iiii"*}"
+                        ii="${ii}${iii}"
+                        iii="${i#*"$ii"}"
+                        i="${ii}${iii#*"$iiii"}"
                     ;;
                     *) break ;;
                 esac done
             ;;
             *)
                 while :; do case "$i" in
-                    "$iiii"*"$ii"*)
-                        iiiii="${i#*"$iiii"}" && iiiii="${iiiii%%"$ii"*}"
-                        iiii="${iiii}${iiiii}"
-                        iiiii="${i#*"$iiii"}"
-                        i="${iiii}\\$ii${iiiii#*"$ii"}"
-                        iiii="${iiii}\\$ii"
+                    "$ii"*"$iiii"*)
+                        iii="${i#*"$ii"}" && iii="${iii%%"$iiii"*}"
+                        ii="${ii}${iii}"
+                        iii="${i#*"$ii"}"
+                        i="${ii}\\$iiii${iii#*"$iiii"}"
+                        ii="${ii}\\$iiii"
                     ;;
                     *) break ;;
                 esac done
@@ -1869,7 +1869,7 @@ safe_str() {
 
     set +f
 
-    [ -z "$iiii" ] && return 1
+    [ -z "$ii" ] && return 1
     printf "%s" "$i" && return 0
 }
 ```
