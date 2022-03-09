@@ -1864,7 +1864,8 @@ safe_str() {
 
     set +f
 
-    [ -z "$ii" ] && return 1
+    [ "$ii" ] || return 1
+
     printf "%s" "$i" && return 0
 }
 ```
