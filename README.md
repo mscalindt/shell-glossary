@@ -441,7 +441,7 @@ fcount() {
 # <"$1"> - path
 #
 # Returns:
-# (0) absolute path | path
+# (0) absolute $1 | $1
 #
 get_fpath() {
     case "$1" in
