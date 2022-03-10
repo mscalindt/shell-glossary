@@ -493,7 +493,7 @@ grep_str() {
 #             '3' - $1 is, on its own, stdin)
 #
 # Returns:
-# (0) substring exists
+# (0) match
 # (1) no match
 #
 # Caveats:
