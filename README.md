@@ -524,6 +524,9 @@ grep_str_fd1() {
 # Parameters:
 # <"$1"+> - text
 #
+# Returns:
+# (0) text
+#
 info() {
     printf "INFO: %s\n" "$*"
 }
@@ -537,6 +540,9 @@ info() {
 #
 # Parameters:
 # <"$1"+> - text
+#
+# Returns:
+# (0) text
 #
 info_clr() {
     printf "%bINFO:%b %s\n" "\033[1;37m" "\033[0m" "$*"
@@ -553,6 +559,9 @@ info_clr() {
 # <"$1"> - printf prefix
 # <"$2"+> - text
 #
+# Returns:
+# (0) text
+#
 info_px() {
     i="$1" && shift
     printf "INFO: $i%s\n" "$*"
@@ -568,6 +577,9 @@ info_px() {
 # Parameters:
 # <"$1"> - printf prefix
 # <"$2"+> - text
+#
+# Returns:
+# (0) text
 #
 info_px_clr() {
     i="$1" && shift
