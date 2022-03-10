@@ -66,8 +66,9 @@ confirm_cont() {
 
         case "$i" in
             N*|n*) return 1 ;;
-            *) return 0 ;;
         esac
+
+        return 0
     ;;
     1)
         printf "Continue? [y/N] "
@@ -75,8 +76,9 @@ confirm_cont() {
 
         case "$i" in
             Y*|y*) return 0 ;;
-            *) return 1 ;;
         esac
+
+        return 1
     ;;
     esac
 }
