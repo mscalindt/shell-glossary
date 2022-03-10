@@ -1487,8 +1487,6 @@ parse_fd1() {
         esac
     ;;
     esac
-
-    return 0
 }
 ```
 
