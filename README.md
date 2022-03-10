@@ -436,8 +436,6 @@ get_fpath() {
         "/"*) printf "%s" "$1" ;;
         *) printf "%s/%s" "$PWD" "$1" ;;
     esac
-
-    return 0
 }
 ```
 
