@@ -610,8 +610,8 @@ info_px_clr() {
 # <"$2"> - string
 #
 # Returns:
-# (0) stripped string
-# (1) no $1 at the start of $2
+# (0) stripped $2
+# (1) ! $1
 #
 lstrip() {
     case "$2" in
