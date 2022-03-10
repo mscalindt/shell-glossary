@@ -1901,8 +1901,10 @@ str_to_chars() {
     IFS=$ii
     set +f
 
-    [ -z "$i" ] && return 1
-    [ "${#i}" -eq 1 ] && printf "%s" "$i" && return 0
+    case :${#i} in
+        :0) return 1 ;;
+        :1) printf "%s" "$i" && return 0 ;;
+    esac
 
     if [ $iii -eq 10 ]; then
         i=$(
@@ -1969,7 +1971,7 @@ str_to_chars() {
 
     LC_CTYPE=$iiiiii
 
-    [ -z "$i" ] && return 1
+    [ "$i" ] || return 1
 
     printf "%s" "$i"
 }
