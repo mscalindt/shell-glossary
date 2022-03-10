@@ -1998,6 +1998,9 @@ str_to_chars() {
 # Parameters:
 # <"$1"+> - text
 #
+# Returns:
+# (0) text
+#
 warn() {
     printf "WARNING: %s\n" "$*"
 }
@@ -2011,6 +2014,9 @@ warn() {
 #
 # Parameters:
 # <"$1"+> - text
+#
+# Returns:
+# (0) text
 #
 warn_clr() {
     printf "%bWARNING:%b %s\n" "\033[1;33m" "\033[0m" "$*"
@@ -2027,6 +2033,9 @@ warn_clr() {
 # <"$1"> - printf prefix
 # <"$2"+> - text
 #
+# Returns:
+# (0) text
+#
 warn_px() {
     i="$1" && shift
     printf "WARNING: $i%s\n" "$*"
@@ -2042,6 +2051,9 @@ warn_px() {
 # Parameters:
 # <"$1"> - printf prefix
 # <"$2"+> - text
+#
+# Returns:
+# (0) text
 #
 warn_px_clr() {
     i="$1" && shift
