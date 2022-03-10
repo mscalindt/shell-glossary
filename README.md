@@ -1349,8 +1349,6 @@ parse() {
         esac
     ;;
     esac
-
-    return 0
 }
 ```
 
