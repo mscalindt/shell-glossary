@@ -1204,8 +1204,6 @@ num_to_char() {
         x=$((x + 1))
         printf "%s" "$2"
     done
-
-    return 0
 }
 ```
 
