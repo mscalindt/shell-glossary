@@ -1785,8 +1785,8 @@ replstr() {
 # <"$2"> - string
 #
 # Returns:
-# (0) stripped string
-# (1) no $1 at the end of $2
+# (0) stripped $2
+# (1) ! $1
 #
 rstrip() {
     case "$2" in
