@@ -106,8 +106,9 @@ confirm_cont_clr() {
 
         case "$i" in
             N*|n*) return 1 ;;
-            *) return 0 ;;
         esac
+
+        return 0
     ;;
     1)
         printf "%bContinue? [y/N]%b " "\033[1;37m" "\033[0m"
@@ -115,8 +116,9 @@ confirm_cont_clr() {
 
         case "$i" in
             Y*|y*) return 0 ;;
-            *) return 1 ;;
         esac
+
+        return 1
     ;;
     esac
 }
