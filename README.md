@@ -415,7 +415,7 @@ fcount() {
     ;;
     esac
 
-    printf "%d" "$iiii" && return 0
+    printf "%d" "$iiii"
 }
 ```
 
