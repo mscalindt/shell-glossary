@@ -167,6 +167,9 @@ err_clr() {
 # Parameters:
 # <"$1"+> - text
 #
+# Returns:
+# (0) text
+#
 err_ne() {
     printf "ERROR: %s\n" "$*" 1>&2
 }
@@ -180,6 +183,9 @@ err_ne() {
 #
 # Parameters:
 # <"$1"+> - text
+#
+# Returns:
+# (0) text
 #
 err_ne_clr() {
     printf "%bERROR:%b %s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
@@ -232,6 +238,9 @@ err_px_clr() {
 # <"$1"> - printf prefix
 # <"$2"+> - text
 #
+# Returns:
+# (0) text
+#
 err_ne_px() {
     i="$1" && shift
     printf "ERROR: $i%s\n" "$*" 1>&2
@@ -247,6 +256,9 @@ err_ne_px() {
 # Parameters:
 # <"$1"> - printf prefix
 # <"$2"+> - text
+#
+# Returns:
+# (0) text
 #
 err_ne_px_clr() {
     i="$1" && shift
