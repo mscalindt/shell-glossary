@@ -1687,7 +1687,9 @@ remstr() {
         esac done
     fi
 
-    [ -n "$i" ] && printf "%s" "$i" || return 1
+    [ "$i" ] || return 1
+
+    printf "%s" "$i"
 }
 ```
 
