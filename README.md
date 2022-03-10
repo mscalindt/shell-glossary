@@ -1970,7 +1970,8 @@ str_to_chars() {
     LC_CTYPE=$iiiiii
 
     [ -z "$i" ] && return 1
-    printf "%s" "$i" && return 0
+
+    printf "%s" "$i"
 }
 ```
 
