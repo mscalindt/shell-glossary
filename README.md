@@ -465,7 +465,7 @@ get_fpath() {
 #             '3' - $1 is, on its own, $2)
 #
 # Returns:
-# (0) substring exists
+# (0) match
 # (1) no match
 #
 grep_str() {
