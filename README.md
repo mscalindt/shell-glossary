@@ -98,7 +98,7 @@ confirm_cont() {
 #             '1' - default action: N)
 #
 # Returns:
-# (0) allowed
+# (0) permitted
 # (1) forbidden
 #
 confirm_cont_clr() {
