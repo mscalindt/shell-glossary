@@ -1807,7 +1807,7 @@ rstrip() {
 #             '2' - escape single quote character with itself)
 #
 # Returns:
-# (0) escaped/stripped string
+# (0) escaped/stripped $1
 # (1) no meta characters in $1
 #
 safe_str() {
