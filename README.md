@@ -1586,8 +1586,7 @@ pline_fd1() {
 # <"$2"> - string
 #
 # Returns:
-# $2 without $1 characters,
-# $2
+# (0) stripped $2 | $2
 #
 remchars() {
     set -f
