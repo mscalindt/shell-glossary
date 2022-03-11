@@ -1618,9 +1618,9 @@ remchars() {
 # [$4] - mode('3' - whitespace is delimiter)
 #
 # Returns:
-# (0) stripped string
-# (1) $1 is, on its own, $2
-# (2) $1 not present in $2
+# (0) stripped $2
+# (1) $1 = $2
+# (2) ! $1
 #
 remstr() {
     case "$2" in
