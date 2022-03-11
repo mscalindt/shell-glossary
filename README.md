@@ -759,19 +759,18 @@ ltl_substr0() {
 # [$8] - mode('6' - verify the expansion)
 #
 # Returns:
-# (0) substring | wrong substring i.e. unspecified expansion ($1/$3 is greater
-#     than the total $2/$4 in the string)
-# (1) empty expansion (empty, or unspecified, or wrong -- shell specific)
-# (2) unspecified expansion (unspecified, or empty, or wrong -- shell specific)
+# (0) substring | incorrect substring ($1/$3 > $2/$4)
+# (1) empty <unspecified/incorrect> expansion
+# (2) unspecified <empty/incorrect> expansion
 #
 # Returns (mode '6'):
 # (0) substring
 # (1) unspecified expansion ($2 is the first character by the given ruleset)
-# (2) unspecified expansion ($2 is not present at all)
-# (3) wrong expansion ($1 is greater than the total $2 in the string)
-# (4) empty expansion (empty expansion by the given ruleset)
-# (5) unspecified expansion ($4 is not present at all)
-# (6) wrong expansion ($3 is greater than the total $4 in the string)
+# (2) unspecified expansion (! $2)
+# (3) incorrect expansion ($1 > $2)
+# (4) empty expansion ($2..$4)
+# (5) unspecified expansion (! $4)
+# (6) incorrect expansion ($3 > $4)
 #
 # Caveats:
 # 1. If mode 6 is NOT passed, you should NOT assume the expansion is
