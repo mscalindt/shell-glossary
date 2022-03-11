@@ -1727,9 +1727,9 @@ remstr() {
 #             '2' - replace all occurrences)
 #
 # Returns:
-# (0) replaced string
-# (1) $1 is, on its own, $2
-# (2) $1 not present in $2
+# (0) modified $2
+# (1) $1 = $2
+# (2) ! $1
 #
 replstr() {
     case "$2" in
