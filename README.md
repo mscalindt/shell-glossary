@@ -1024,19 +1024,6 @@ ltr_substr0() {
 # (5) unspecified expansion (! $4)
 # (6) incorrect expansion ($3 > $4)
 #
-# Caveats:
-# 1. If mode 6 is NOT passed, you should NOT assume the expansion is
-#    respectively correct, even if the return code is 0. This is because every
-#    shell has its own unique string expander and unspecified results will vary
-#    between them; for example, if $2/$4 is not present anymore or at all, one
-#    shell might return the same expansion, while another might return empty
-#    expansion. Also, the string expander on its own does NOT guarantee correct
-#    expansion at all.
-#    Fix: Use mode '6'. When mode 6 is passed, the function will do various
-#    checks on each expansion to accurately determine what the expansion will
-#    result into; this guarantees respectively correct expansion on any shell.
-#    Performance cost should be negligible on most shells.
-#
 ltr_substr1() {
     case $#$7$6 in
     8* | *76* | 66)
