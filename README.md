@@ -58,7 +58,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 #             '1' - default action: N)
 #
 # Returns:
-# (0) allowed
+# (0) permitted
 # (1) forbidden
 #
 confirm_cont() {
