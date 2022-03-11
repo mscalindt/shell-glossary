@@ -3,22 +3,15 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 # Normal functions:
 
 * [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary#confirm_cont)
-* [CONFIRM_CONT_CLR()](https://github.com/mscalindt/shell-glossary#confirm_cont_clr)
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
-* [ERR_CLR()](https://github.com/mscalindt/shell-glossary#err_clr)
 * [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
-* [ERR_NE_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_clr)
 * [ERR_PX()](https://github.com/mscalindt/shell-glossary#err_px)
-* [ERR_PX_CLR()](https://github.com/mscalindt/shell-glossary#err_px_clr)
 * [ERR_NE_PX()](https://github.com/mscalindt/shell-glossary#err_ne_px)
-* [ERR_NE_PX_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_px_clr)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/12
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
 * [INFO()](https://github.com/mscalindt/shell-glossary#info)
-* [INFO_CLR()](https://github.com/mscalindt/shell-glossary#info_clr)
 * [INFO_PX()](https://github.com/mscalindt/shell-glossary#info_px)
-* [INFO_PX_CLR()](https://github.com/mscalindt/shell-glossary#info_px_clr)
 * [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/8
 * [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltl_substr0) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/15
 * [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/16
@@ -34,8 +27,18 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [SAFE_STR()](https://github.com/mscalindt/shell-glossary#safe_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/11
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/10
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
-* [WARN_CLR()](https://github.com/mscalindt/shell-glossary#warn_clr)
 * [WARN_PX()](https://github.com/mscalindt/shell-glossary#warn_px)
+
+# Normal functions (color):
+
+* [CONFIRM_CONT_CLR()](https://github.com/mscalindt/shell-glossary#confirm_cont_clr)
+* [ERR_CLR()](https://github.com/mscalindt/shell-glossary#err_clr)
+* [ERR_NE_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_clr)
+* [ERR_PX_CLR()](https://github.com/mscalindt/shell-glossary#err_px_clr)
+* [ERR_NE_PX_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_px_clr)
+* [INFO_CLR()](https://github.com/mscalindt/shell-glossary#info_clr)
+* [INFO_PX_CLR()](https://github.com/mscalindt/shell-glossary#info_px_clr)
+* [WARN_CLR()](https://github.com/mscalindt/shell-glossary#warn_clr)
 * [WARN_PX_CLR()](https://github.com/mscalindt/shell-glossary#warn_px_clr)
 
 # Stdin functions:
