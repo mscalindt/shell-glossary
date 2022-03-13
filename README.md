@@ -466,11 +466,11 @@ get_fpath() {
 # (1) no match
 #
 grep_str() {
-    case $#$3 in
-    31) case "$2" in "$1"*) grep_str=0 && return 0 ;; esac ;;
-    32) case "$2" in *"$1") grep_str=0 && return 0 ;; esac ;;
-    33) case "$2" in "$1") grep_str=0 && return 0 ;; esac ;;
-    *) case "$2" in *"$1"*) grep_str=0 && return 0 ;; esac ;;
+    case $#:$3 in
+        2:) case "$2" in *"$1"*) grep_str=0 && return 0 ;; esac ;;
+        3:1) case "$2" in "$1"*) grep_str=0 && return 0 ;; esac ;;
+        3:2) case "$2" in *"$1") grep_str=0 && return 0 ;; esac ;;
+        3:3) case "$2" in "$1") grep_str=0 && return 0 ;; esac ;;
     esac
 
     return 1
