@@ -1215,10 +1215,8 @@ num_to_char() {
 #
 # Parameters:
 # <$1> - mode('0' - one-to-one copy,
-#             '1' - wrap parsed lines in one leading/trailing whitespace
-#                   character,
-#             '2' - wrap parsed lines in two leading/trailing whitespace
-#                   characters,
+#             '1' - add one leading/trailing whitespace character,
+#             '2' - add two leading/trailing whitespace characters,
 #             '3' - skip empty lines,
 #             '4' - strip trailing/leading whitespace characters)
 # <"$2"> - file
