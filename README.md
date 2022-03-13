@@ -1182,17 +1182,28 @@ ltr_substr1() {
 # Parameters:
 # <$1> - number
 # <"$2"> - character
+# [$3] - mode('0' - whitespace-separated characters)
 #
 # Returns:
 # (0) character(s)
 #
 num_to_char() {
-    x=0
-
-    until [ $x -eq $1 ]; do
-        x=$((x + 1))
-        printf "%s" "$2"
-    done
+    case $# in
+        3)
+            x=1; printf "%s" "$2"
+            until [ $x -eq $1 ]; do
+                x=$((x + 1))
+                printf " %s" "$2"
+            done
+        ;;
+        *)
+            x=0
+            until [ $x -eq $1 ]; do
+                x=$((x + 1))
+                printf "%s" "$2"
+            done
+        ;;
+    esac
 }
 ```
 
