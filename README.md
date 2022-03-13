@@ -497,27 +497,27 @@ grep_str() {
 # 1. NULL character.
 #
 grep_str_fd1() {
-    case $#$2 in
-    21)
-        while IFS= read -r LINE || [ -n "$LINE" ]; do
-            case "$LINE" in "$1"*) return 0 ;; esac
-        done
-    ;;
-    22)
-        while IFS= read -r LINE || [ -n "$LINE" ]; do
-            case "$LINE" in *"$1") return 0 ;; esac
-        done
-    ;;
-    23)
-        while IFS= read -r LINE || [ -n "$LINE" ]; do
-            case "$LINE" in "$1") return 0 ;; esac
-        done
-    ;;
-    *)
-        while IFS= read -r LINE || [ -n "$LINE" ]; do
-            case "$LINE" in *"$1"*) return 0 ;; esac
-        done
-    ;;
+    case $#:$2 in
+        1:)
+            while IFS= read -r LINE || [ "$LINE" ]; do
+                case "$LINE" in *"$1"*) return 0 ;; esac
+            done
+        ;;
+        2:1)
+            while IFS= read -r LINE || [ "$LINE" ]; do
+                case "$LINE" in "$1"*) return 0 ;; esac
+            done
+        ;;
+        2:2)
+            while IFS= read -r LINE || [ "$LINE" ]; do
+                case "$LINE" in *"$1") return 0 ;; esac
+            done
+        ;;
+        2:3)
+            while IFS= read -r LINE || [ "$LINE" ]; do
+                case "$LINE" in "$1") return 0 ;; esac
+            done
+        ;;
     esac
 
     return 1
