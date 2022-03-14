@@ -1383,8 +1383,8 @@ parse_fd1() {
                     printf "%s\n" "$LINE"
                 done
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
             1)
@@ -1394,8 +1394,8 @@ parse_fd1() {
                     printf " %s \n" "$LINE"
                 done
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf " %s \n" "$LINE" ;;
+                    :) : ;;
+                    *) printf " %s " "$LINE" ;;
                 esac
             ;;
             2)
@@ -1405,8 +1405,8 @@ parse_fd1() {
                     printf "  %s  \n" "$LINE"
                 done
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "  %s  \n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "  %s  " "$LINE" ;;
                 esac
             ;;
             3)
@@ -1417,7 +1417,7 @@ parse_fd1() {
                 done
                 case ":$LINE" in
                     :) : ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
             4)
@@ -1427,8 +1427,8 @@ parse_fd1() {
                     printf "%s\n" "$LINE"
                 done
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
         esac
@@ -1440,8 +1440,8 @@ parse_fd1() {
                     printf "%s\n" "$LINE"
                 done
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
             1)
@@ -1449,8 +1449,8 @@ parse_fd1() {
                     printf " %s \n" "$LINE"
                 done
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf " %s \n" "$LINE" ;;
+                    :) : ;;
+                    *) printf " %s " "$LINE" ;;
                 esac
             ;;
             2)
@@ -1458,8 +1458,8 @@ parse_fd1() {
                     printf "  %s  \n" "$LINE"
                 done
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "  %s  \n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "  %s  " "$LINE" ;;
                 esac
             ;;
             3)
@@ -1468,7 +1468,7 @@ parse_fd1() {
                 done
                 case ":$LINE" in
                     :) : ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
             4)
@@ -1476,8 +1476,8 @@ parse_fd1() {
                     printf "%s\n" "$LINE"
                 done
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
         esac
