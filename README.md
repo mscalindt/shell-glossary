@@ -1247,8 +1247,8 @@ parse() {
                     printf "%s\n" "$LINE"
                 done < "$2"
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
             1)
@@ -1258,8 +1258,8 @@ parse() {
                     printf " %s \n" "$LINE"
                 done < "$2"
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf " %s \n" "$LINE" ;;
+                    :) : ;;
+                    *) printf " %s " "$LINE" ;;
                 esac
             ;;
             2)
@@ -1269,8 +1269,8 @@ parse() {
                     printf "  %s  \n" "$LINE"
                 done < "$2"
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "  %s  \n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "  %s  " "$LINE" ;;
                 esac
             ;;
             3)
@@ -1281,7 +1281,7 @@ parse() {
                 done < "$2"
                 case ":$LINE" in
                     :) : ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
             4)
@@ -1291,8 +1291,8 @@ parse() {
                     printf "%s\n" "$LINE"
                 done < "$2"
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
         esac
@@ -1304,8 +1304,8 @@ parse() {
                     printf "%s\n" "$LINE"
                 done < "$2"
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
             1)
@@ -1313,8 +1313,8 @@ parse() {
                     printf " %s \n" "$LINE"
                 done < "$2"
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf " %s \n" "$LINE" ;;
+                    :) : ;;
+                    *) printf " %s " "$LINE" ;;
                 esac
             ;;
             2)
@@ -1322,8 +1322,8 @@ parse() {
                     printf "  %s  \n" "$LINE"
                 done < "$2"
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "  %s  \n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "  %s  " "$LINE" ;;
                 esac
             ;;
             3)
@@ -1332,7 +1332,7 @@ parse() {
                 done < "$2"
                 case ":$LINE" in
                     :) : ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
             4)
@@ -1340,8 +1340,8 @@ parse() {
                     printf "%s\n" "$LINE"
                 done < "$2"
                 case ":$LINE" in
-                    :) echo ;;
-                    *) printf "%s\n" "$LINE" ;;
+                    :) : ;;
+                    *) printf "%s" "$LINE" ;;
                 esac
             ;;
         esac
