@@ -1336,9 +1336,9 @@ parse() {
 # 1. NULL character.
 #
 parse_fd1() {
-    case $#:"$1" in
+    case $#:"$2$1" in
         1:5*) x=0; i="${1#??}" ;;
-        2:*1|2:*2|2:*3|2:*4) x=0; i="${2#??}" ;;
+        2:5*1|2:5*2|2:5*3|2:5*4) x=0; i="${2#??}" ;;
     esac
 
     case $#:"$2$1" in
@@ -1346,101 +1346,73 @@ parse_fd1() {
             while IFS= read -r LINE; do
                 printf "%s\n" "$LINE"
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf "%s" "$LINE" ;;
-            esac
         ;;
         1:1)
             while IFS= read -r LINE; do
                 printf " %s \n" "$LINE"
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf " %s " "$LINE" ;;
-            esac
         ;;
         1:2)
             while IFS= read -r LINE; do
                 printf "  %s  \n" "$LINE"
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf "  %s  " "$LINE" ;;
-            esac
         ;;
         1:3)
             while IFS= read -r LINE; do
-                [ -n "$LINE" ] && printf "%s\n" "$LINE"
+                case ":$LINE" in :) : ;; *) printf "%s\n" "$LINE" ;; esac
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf "%s" "$LINE" ;;
-            esac
         ;;
         1:4)
             while read -r LINE; do
                 printf "%s\n" "$LINE"
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf "%s" "$LINE" ;;
-            esac
         ;;
         1:5*)
             while IFS= read -r LINE; do
                 x=$((x + 1))
-                [ $x -eq $i ] && break
+                case $x in $i) break ;; esac
                 printf "%s\n" "$LINE"
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf "%s" "$LINE" ;;
-            esac
         ;;
-        2:*1)
+        2:5*1)
             while IFS= read -r LINE; do
                 x=$((x + 1))
-                [ $x -eq $i ] && break
+                case $x in $i) break ;; esac
                 printf " %s \n" "$LINE"
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf " %s " "$LINE" ;;
-            esac
         ;;
-        2:*2)
+        2:5*2)
             while IFS= read -r LINE; do
                 x=$((x + 1))
-                [ $x -eq $i ] && break
+                case $x in $i) break ;; esac
                 printf "  %s  \n" "$LINE"
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf "  %s  " "$LINE" ;;
-            esac
         ;;
-        2:*3)
+        2:5*3)
             while IFS= read -r LINE; do
                 x=$((x + 1))
-                [ $x -eq $i ] && break
-                [ -n "$LINE" ] && printf "%s\n" "$LINE"
+                case $x in $i) break ;; esac
+                case ":$LINE" in :) : ;; *) printf "%s\n" "$LINE" ;; esac
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf "%s" "$LINE" ;;
-            esac
         ;;
-        2:*4)
+        2:5*4)
             while read -r LINE; do
                 x=$((x + 1))
-                [ $x -eq $i ] && break
+                case $x in $i) break ;; esac
                 printf "%s\n" "$LINE"
             done
-            case ":$LINE" in
-                :) : ;;
-                *) printf "%s" "$LINE" ;;
-            esac
+        ;;
+    esac
+
+    case $#:"$2$1" in
+        0:|1:3|1:4|1:5*|2:5*3|2:5*4)
+            printf "%s" "$LINE"
+        ;;
+        1:1|2:5*1)
+            case ":$LINE" in :) : ;; *) printf " %s " "$LINE" ;; esac
+        ;;
+        1:2|2:5*2)
+            case ":$LINE" in :) : ;; *) printf "  %s  " "$LINE" ;; esac
         ;;
     esac
 }
