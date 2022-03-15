@@ -1446,9 +1446,10 @@ pline() {
 
     while read -r LINE; do
         x=$((x + 1))
-        [ $x -eq $1 ] && printf "%s" "$LINE" && return 0
+        case $x in $1) printf "%s" "$LINE"; return 0 ;; esac
     done < "$2"
-    [ $((x + 1)) -eq $1 ] && printf "%s" "$LINE" && return 0
+
+    case $((x + 1)) in $1) printf "%s" "$LINE"; return 0 ;; esac
 
     return 1
 }
