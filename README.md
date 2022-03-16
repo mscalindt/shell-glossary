@@ -1535,82 +1535,91 @@ remstr() {
         *) return 2 ;;
     esac
 
-    if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
-        case "$2" in
-            " $1 ") return 1 ;;
-        esac
-    fi
+    case $# in
+        4) case "$2" in " $1 ") return 1 ;; esac ;;
+    esac
 
-    if [ $3 -eq 0 ] || [ $3 -eq 2 ]; then
-        i="${2%%"$1"*}"
-        if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
-            case "$2" in
-                *" $1 "*) i="${i% }" ;;
-                *"$1"*" $1") : ;;
-                *" $1") i="${i% }" ;;
-            esac
-        fi
+    case $3 in
+        0|2)
+            i="${2%%"$1"*}"
 
-        ii="${2#*"$1"}"
-        if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
-            case "$2" in "$1 "*) ii="${ii# }" ;; esac
-        fi
-
-        if [ -n "$i" ] && [ -n "$ii" ]; then
-            i="$i$ii"
-        elif [ -n "$ii" ]; then
-            i="$ii"
-        fi
-    elif [ $3 -eq 1 ]; then
-        i="${2%"$1"*}" && [ $# -eq 4 ] && [ $4 -eq 3 ] && i="${i% }"
-
-        ii="${2##*"$1"}"
-        if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
-            case "$2" in "$1 "*"$1"*) : ;; "$1 "*) ii="${ii# }" ;; esac
-        fi
-
-        if [ -n "$i" ] && [ -n "$ii" ]; then
-            i="$i$ii"
-        elif [ -n "$ii" ]; then
-            i="$ii"
-        fi
-    fi
-
-    if [ $3 -eq 2 ]; then
-        while :; do case "$i" in
-            "$1") return 1 ;;
-            *"$1"*)
-                if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
-                    case "$i" in
-                        " $1 ") return 1 ;;
-                    esac
-                fi
-
-                ii="${i%%"$1"*}"
-                if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
-                    case "$i" in
-                        *" $1 "*) ii="${ii% }" ;;
+            case $# in
+                4)
+                    case "$2" in
+                        *" $1 "*) i="${i% }" ;;
                         *"$1"*" $1") : ;;
-                        *" $1") ii="${ii% }" ;;
+                        *" $1") i="${i% }" ;;
                     esac
-                fi
+                ;;
+            esac
 
-                iii="${i#*"$1"}"
-                if [ $# -eq 4 ] && [ $4 -eq 3 ]; then
-                    case "$i" in "$1 "*) iii="${iii# }" ;; esac
-                fi
+            ii="${2#*"$1"}"
 
-                if [ -n "$ii" ] && [ -n "$iii" ]; then
+            case $# in
+                4) case "$2" in "$1 "*) ii="${ii# }" ;; esac ;;
+            esac
+
+            i="$i$ii"
+        ;;
+        1)
+            i="${2%"$1"*}"
+
+            case $# in
+                4) i="${i% }" ;;
+            esac
+
+            ii="${2##*"$1"}"
+
+            case $# in
+                4)
+                    case "$2" in
+                        "$1 "*"$1"*) : ;;
+                        "$1 "*) ii="${ii# }" ;;
+                    esac
+                ;;
+            esac
+
+            i="$i$ii"
+        ;;
+    esac
+
+    case $3 in
+        2)
+            while :; do case "$i" in
+                "$1")
+                    return 1
+                ;;
+                *"$1"*)
+                    case $# in
+                        4) case "$i" in " $1 ") return 1 ;; esac ;;
+                    esac
+
+                    ii="${i%%"$1"*}"
+
+                    case $# in
+                        4)
+                            case "$i" in
+                                *" $1 "*) ii="${ii% }" ;;
+                                *"$1"*" $1") : ;;
+                                *" $1") ii="${ii% }" ;;
+                            esac
+                        ;;
+                    esac
+
+                    iii="${i#*"$1"}"
+
+                    case $# in
+                        4) case "$i" in "$1 "*) iii="${iii# }" ;; esac ;;
+                    esac
+
                     i="$ii$iii"
-                elif [ -n "$ii" ]; then
-                    i="$ii"
-                elif [ -n "$iii" ]; then
-                    i="$iii"
-                fi
-            ;;
-            *) break ;;
-        esac done
-    fi
+                ;;
+                *)
+                    break
+                ;;
+            esac done
+        ;;
+    esac
 
     [ "$i" ] || return 1
 
