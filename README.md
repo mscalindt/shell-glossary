@@ -1499,17 +1499,13 @@ pline_fd1() {
 # (0) stripped $2 | $2
 #
 remchars() {
-    set -f
-
-    i=$IFS
+    set -f; i=$IFS
 
     IFS=$1
     set -- $2
     printf "%s" "$@"
 
-    IFS=$i
-
-    set +f
+    IFS=$i; set +f
 }
 ```
 
