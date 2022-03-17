@@ -1653,32 +1653,33 @@ replstr() {
         *) return 2 ;;
     esac
 
-    if [ "$1" = "$3" ]; then
-        printf "%s" "$2" && return 0
-    fi
+    case "$1" in
+        "$3") printf "%s" "$2" && return 0 ;;
+    esac
 
-    if [ $4 -eq 0 ]; then
-        i="${2%%"$1"*}$3${2#*"$1"}"
-    elif [ $4 -eq 1 ]; then
-        i="${2%"$1"*}$3${2##*"$1"}"
-    fi
+    case $4 in
+        0)
+            i="${2%%"$1"*}$3${2#*"$1"}"
+        ;;
+        1)
+            i="${2%"$1"*}$3${2##*"$1"}"
+        ;;
+        2)
+            ii="${2%%"$1"*}$3"
+            i="${ii}${2#*"$1"}"
 
-    if [ $4 -eq 2 ]; then
-        i="$2"
-        ii="${i%%"$1"*}$3"
-        i="${ii}${i#*"$1"}"
-
-        while :; do case "$i" in
-            "$ii"*"$1"*)
-                iii="${i#*"$ii"}" && iii="${iii%%"$1"*}"
-                ii="${ii}${iii}"
-                iii="${i#*"$ii"}"
-                i="${ii}$3${iii#*"$1"}"
-                ii="${ii}$3"
-            ;;
-            *) break ;;
-        esac done
-    fi
+            while :; do case "$i" in
+                "$ii"*"$1"*)
+                    iii="${i#*"$ii"}" && iii="${iii%%"$1"*}"
+                    i="${ii}${iii}$3${i#*"${ii}${iii}$1"}"
+                    ii="${ii}${iii}$3"
+                ;;
+                *)
+                    break
+                ;;
+            esac done
+        ;;
+    esac
 
     printf "%s" "$i"
 }
