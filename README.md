@@ -1814,101 +1814,72 @@ safe_str() {
 # [$2] - mode('0' - remove duplicate characters)
 #
 # Returns:
-# (0) characters
-# (1) no characters in $1
+# (0) characters | ! $1
 #
 # Caveats:
-# 1. A character is considered to be any character (except whitespace) in the
-#    printable set of ASCII characters ('[:print:]'). This means that characters
-#    outside this set will not be printed.
-#    Exceptions: input with byte length of 1.
-#    Fix: unknown; unknown.
+# 1. Only characters in the printable set of C ASCII characters ('[\x20-\x7E]')
+#    will be printed.
 #
 str_to_chars() {
-    iiiiii=$LC_CTYPE
-    LC_CTYPE=C
-    iii=1$2
-    set -f
-    ii=$IFS
-    IFS=" "
-    set -- $1
-    i=$(printf "%s" "$@")
-    IFS=$ii
-    set +f
+    i="$1"
 
-    case :${#i} in
-        :0) return 1 ;;
-        :1) printf "%s" "$i" && return 0 ;;
+    iiii=$LC_CTYPE
+    LC_CTYPE=C
+
+    while :; do
+        case ":$i" in :) break ;; esac
+
+        ii="${i%"${i#?}"}"
+        i="${i#?}"
+
+        case "$ii" in
+            " ")
+                :
+            ;;
+            [[:print:]])
+                case $# in
+                    2) iii="$ii" ;;
+                esac
+
+                printf "%s" "$ii"; break
+            ;;
+        esac
+    done
+
+    case $# in
+        2)
+            while :; do
+                case ":$i" in :) break ;; esac
+
+                ii="${i%"${i#?}"}"
+                i="${i#?}"
+
+                case "$iii" in
+                    *"$ii"*) continue ;;
+                esac
+
+                case "$ii" in
+                    " ") : ;;
+                    [[:print:]]) iii="$iii$ii"; printf " %s" "$ii" ;;
+                esac
+            done
+        ;;
+        *)
+            while :; do
+                case ":$i" in :) break ;; esac
+
+                ii="${i%"${i#?}"}"
+                i="${i#?}"
+
+                case "$ii" in
+                    " ") : ;;
+                    [[:print:]]) printf " %s" "$ii" ;;
+                esac
+            done
+        ;;
     esac
 
-    if [ $iii -eq 10 ]; then
-        i=$(
-            ii="${i#?}"
-            iii="${i%"$ii"}"
-            iiii="$iii"
-            case "$iii" in
-                [[:print:]]) printf "%s" "$iii" && iiiii=1 ;;
-                *) iiiii=0 ;;
-            esac
-            i="$ii"
-
-            while [ -n "$i" ]; do
-                ii="${i#?}"
-                iii="${i%"$ii"}"
-                case "$iii" in
-                    [[:print:]])
-                        case "$iiii" in
-                            *"$iii"*) : ;;
-                            *)
-                                if [ $iiiii -eq 1 ]; then
-                                    printf " %s" "$iii"
-                                else
-                                    printf "%s" "$iii"
-                                    iiiii=1
-                                fi
-                            ;;
-                        esac
-                    ;;
-                    *) : ;;
-                esac
-                iiii="$iiii$iii"
-                i="$ii"
-            done
-        )
-    else
-        i=$(
-            ii="${i#?}"
-            iii="${i%"$ii"}"
-            case "$iii" in
-                [[:print:]]) printf "%s" "$iii" && iiii=1 ;;
-                *) iiii=0 ;;
-            esac
-            i="$ii"
-
-            while [ -n "$i" ]; do
-                ii="${i#?}"
-                iii="${i%"$ii"}"
-                case "$iii" in
-                    [[:print:]])
-                        if [ $iiii -eq 1 ]; then
-                            printf " %s" "$iii"
-                        else
-                            printf "%s" "$iii"
-                            iiii=1
-                        fi
-                    ;;
-                    *) : ;;
-                esac
-                i="$ii"
-            done
-        )
-    fi
-
-    LC_CTYPE=$iiiiii
-
-    [ "$i" ] || return 1
-
-    printf "%s" "$i"
+    LC_CTYPE=$iiii
 }
 ```
 
