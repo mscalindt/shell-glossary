@@ -609,9 +609,11 @@ info_px_clr() {
 # Returns:
 # (0) stripped $2
 # (1) ! $1
+# (2) $1 = $2
 #
 lstrip() {
     case "$2" in
+        "$1") return 2 ;;
         "$1"*) printf "%s" "${2#"$1"}" && return 0 ;;
     esac
 
