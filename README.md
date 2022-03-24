@@ -1224,7 +1224,7 @@ num_to_char() {
 # ["$3"] - mode("5 N" - stop parsing further than specified "N" line)
 #
 # Returns:
-# (0) output | empty output (file)
+# (0) output | empty output (file) | empty output (by the given ruleset)
 # (1) not a file | file does not exist
 # (2) file access error
 #
