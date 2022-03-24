@@ -1332,7 +1332,7 @@ parse() {
 # ["$2"] - mode("5 N" - stop parsing further than specified "N" line)
 #
 # Returns:
-# (0) output | empty output (stdin)
+# (0) output | empty output (stdin) | empty output (by the given ruleset)
 #
 # Caveats:
 # 1. NULL character.
