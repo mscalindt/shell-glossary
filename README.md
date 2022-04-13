@@ -1441,11 +1441,10 @@ parse_fd1() {
 # 2. Reading /proc is unreliable.
 #
 pline() {
-    x=0
-
     [ -f "$2" ] || return 2
     [ -r "$2" ] || return 3
 
+    x=0
     while read -r LINE; do
         x=$((x + 1))
         case $x in $1) printf "%s" "$LINE"; return 0 ;; esac
