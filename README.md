@@ -1329,7 +1329,7 @@ parse() {
 #             '2' - add two leading/trailing whitespace characters,
 #             '3' - skip empty lines,
 #             '4' - strip trailing/leading whitespace characters)
-# ["$2"] - mode("5 N" - stop parsing further than specified "N" line)
+# ["$2"] - mode("5 N" - stop parsing further than "N" line)
 #
 # Returns:
 # (0) output | empty output (stdin) | empty output (by the given ruleset)
