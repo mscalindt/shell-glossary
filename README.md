@@ -1720,8 +1720,7 @@ rstrip() {
 #
 # Parameters:
 # <"$1"> - string
-# ["$2"] - mode("0 X" - escape only specified whitespace-separated "X"
-#                       character(s))
+# ["$2"] - mode("0 X" - escape only "X" whitespace-separated character(s))
 # [$3] - mode('1' - strip the characters,
 #             '2' - escape single quote character with itself)
 #
