@@ -572,8 +572,8 @@ info_clr() {
 # (0) text
 #
 info_px() {
-    i="$1" && shift
-    printf "INFO: $i%s\n" "$*"
+    _printf_fmt="$1" && shift
+    printf "INFO: ${_printf_fmt}%s\n" "$*"
 }
 ```
 
