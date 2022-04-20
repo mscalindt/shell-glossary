@@ -591,8 +591,8 @@ info_px() {
 # (0) text
 #
 info_px_clr() {
-    i="$1" && shift
-    printf "%bINFO:%b $i%s\n" "\033[1;37m" "\033[0m" "$*"
+    _printf_fmt="$1" && shift
+    printf "%bINFO:%b ${_printf_fmt}%s\n" "\033[1;37m" "\033[0m" "$*"
 }
 ```
 
