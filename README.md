@@ -65,9 +65,9 @@ confirm_cont() {
     case $1 in
     0)
         printf "Continue? [Y/n] "
-        read -r i
+        read -r _action
 
-        case "$i" in
+        case "$_action" in
             N*|n*) return 1 ;;
         esac
 
@@ -75,9 +75,9 @@ confirm_cont() {
     ;;
     1)
         printf "Continue? [y/N] "
-        read -r i
+        read -r _action
 
-        case "$i" in
+        case "$_action" in
             Y*|y*) return 0 ;;
         esac
 
