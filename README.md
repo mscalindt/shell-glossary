@@ -245,8 +245,8 @@ err_px_clr() {
 # (0) text
 #
 err_ne_px() {
-    i="$1" && shift
-    printf "ERROR: $i%s\n" "$*" 1>&2
+    _printf_fmt="$1" && shift
+    printf "ERROR: ${_printf_fmt}%s\n" "$*" 1>&2
 }
 ```
 
