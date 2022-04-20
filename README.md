@@ -499,23 +499,23 @@ grep_str() {
 grep_str_fd1() {
     case $#:$2 in
         1:)
-            while IFS= read -r LINE || [ "$LINE" ]; do
-                case "$LINE" in *"$1"*) return 0 ;; esac
+            while IFS= read -r _line || [ "$_line" ]; do
+                case "$_line" in *"$1"*) return 0 ;; esac
             done
         ;;
         2:1)
-            while IFS= read -r LINE || [ "$LINE" ]; do
-                case "$LINE" in "$1"*) return 0 ;; esac
+            while IFS= read -r _line || [ "$_line" ]; do
+                case "$_line" in "$1"*) return 0 ;; esac
             done
         ;;
         2:2)
-            while IFS= read -r LINE || [ "$LINE" ]; do
-                case "$LINE" in *"$1") return 0 ;; esac
+            while IFS= read -r _line || [ "$_line" ]; do
+                case "$_line" in *"$1") return 0 ;; esac
             done
         ;;
         2:3)
-            while IFS= read -r LINE || [ "$LINE" ]; do
-                case "$LINE" in "$1") return 0 ;; esac
+            while IFS= read -r _line || [ "$_line" ]; do
+                case "$_line" in "$1") return 0 ;; esac
             done
         ;;
     esac
