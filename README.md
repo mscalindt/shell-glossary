@@ -300,131 +300,131 @@ err_ne_px_clr() {
 fcount() {
     [ -d "$1" ] || return 1
 
-    i="$1"
-    iii=0
+    _dir="$1"
+    _count=0
 
     case "$2" in
-        0*|1*|2*) ii="${2#?}" ;;
+        0*|1*|2*) _sfix="${2#?}" ;;
     esac
 
     case $#:"$2" in
         1:)
-            set -- "$i"/*
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*
+            [ -e "$1" ] && _count=$#
 
-            set -- "$i"/.*
-            [ $# -ge 3 ] && iii=$((iii + $# - 2))
+            set -- "$_dir"/.*
+            [ $# -ge 3 ] && _count=$((_count + $# - 2))
         ;;
         2:0*)
-            set -- "$i"/*"$ii"
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*"$_sfix"
+            [ -e "$1" ] && _count=$#
 
-            set -- "$i"/.*"$ii"
-            case "$ii" in
+            set -- "$_dir"/.*"$_sfix"
+            case "$_sfix" in
                 ".")
-                    [ -e "$2" ] && iii=$((iii + $# - 1))
+                    [ -e "$2" ] && _count=$((_count + $# - 1))
                 ;;
                 "..")
-                    [ -e "$1" ] && iii=$((iii + $#))
+                    [ -e "$1" ] && _count=$((_count + $#))
                 ;;
                 *)
-                    [ -e "$i/$ii" ] && iii=$((iii + 1))
-                    [ -e "$1" ] && iii=$((iii + $#))
+                    [ -e "$_dir/$_sfix" ] && _count=$((_count + 1))
+                    [ -e "$1" ] && _count=$((_count + $#))
                 ;;
             esac
         ;;
         2:1)
-            set -- "$i"/*
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*
+            [ -e "$1" ] && _count=$#
 
-            set -- "$i"/*/
-            [ -e "$1" ] && iii=$((iii - $#))
+            set -- "$_dir"/*/
+            [ -e "$1" ] && _count=$((_count - $#))
 
-            set -- "$i"/.*
-            [ -e "$3" ] && iii=$((iii + $# - 2))
+            set -- "$_dir"/.*
+            [ -e "$3" ] && _count=$((_count + $# - 2))
 
-            set -- "$i"/.*/
-            [ -e "$3" ] && iii=$((iii - $# + 2))
+            set -- "$_dir"/.*/
+            [ -e "$3" ] && _count=$((_count - $# + 2))
         ;;
         2:1*)
-            [ -f "$i/$ii" ] && iii=1
+            [ -f "$_dir/$_sfix" ] && _count=1
 
-            set -- "$i"/*"$ii"
-            [ -e "$1" ] && iii=$((iii + $#))
+            set -- "$_dir"/*"$_sfix"
+            [ -e "$1" ] && _count=$((_count + $#))
 
-            set -- "$i"/.*"$ii"
-            case "$ii" in
-                ".") [ -e "$2" ] && iii=$((iii + $# - 1)) ;;
-                *) [ -e "$1" ] && iii=$((iii + $#)) ;;
+            set -- "$_dir"/.*"$_sfix"
+            case "$_sfix" in
+                ".") [ -e "$2" ] && _count=$((_count + $# - 1)) ;;
+                *) [ -e "$1" ] && _count=$((_count + $#)) ;;
             esac
 
-            set -- "$i"/.*"$ii"/
-            case "$ii" in
-                ".") [ -e "$2" ] && iii=$((iii - $# + 1)) ;;
-                *) [ -e "$1" ] && iii=$((iii - $#)) ;;
+            set -- "$_dir"/.*"$_sfix"/
+            case "$_sfix" in
+                ".") [ -e "$2" ] && _count=$((_count - $# + 1)) ;;
+                *) [ -e "$1" ] && _count=$((_count - $#)) ;;
             esac
 
-            set -- "$i"/*"$ii"/
-            [ -e "$1" ] && iii=$((iii - $#))
+            set -- "$_dir"/*"$_sfix"/
+            [ -e "$1" ] && _count=$((_count - $#))
         ;;
         2:2)
-            set -- "$i"/*/
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*/
+            [ -e "$1" ] && _count=$#
 
-            set -- "$i"/.*/
-            [ -e "$3" ] && iii=$((iii + $# - 2))
+            set -- "$_dir"/.*/
+            [ -e "$3" ] && _count=$((_count + $# - 2))
         ;;
         2:2*)
-            set -- "$i"/*"$ii"/
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*"$_sfix"/
+            [ -e "$1" ] && _count=$#
 
-            set -- "$i"/.*"$ii"/
-            case "$ii" in
+            set -- "$_dir"/.*"$_sfix"/
+            case "$_sfix" in
                 ".")
-                    [ -e "$2" ] && iii=$((iii + $# - 1))
+                    [ -e "$2" ] && _count=$((_count + $# - 1))
                 ;;
                 "..")
-                    [ -e "$1" ] && iii=$((iii + $#))
+                    [ -e "$1" ] && _count=$((_count + $#))
                 ;;
                 *)
-                    [ -d "$i/$ii" ] && iii=$((iii + 1))
-                    [ -e "$1" ] && iii=$((iii + $#))
+                    [ -d "$_dir/$_sfix" ] && _count=$((_count + 1))
+                    [ -e "$1" ] && _count=$((_count + $#))
                 ;;
             esac
         ;;
         2:3)
-            set -- "$i"/*
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*
+            [ -e "$1" ] && _count=$#
         ;;
         3:0*)
-            set -- "$i"/*"$ii"
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*"$_sfix"
+            [ -e "$1" ] && _count=$#
         ;;
         3:1)
-            set -- "$i"/*
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*
+            [ -e "$1" ] && _count=$#
 
-            set -- "$i"/*/
-            [ -e "$1" ] && iii=$((iii - $#))
+            set -- "$_dir"/*/
+            [ -e "$1" ] && _count=$((_count - $#))
         ;;
         3:1*)
-            set -- "$i"/*"$ii"
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*"$_sfix"
+            [ -e "$1" ] && _count=$#
 
-            set -- "$i"/*"$ii"/
-            [ -e "$1" ] && iii=$((iii - $#))
+            set -- "$_dir"/*"$_sfix"/
+            [ -e "$1" ] && _count=$((_count - $#))
         ;;
         3:2)
-            set -- "$i"/*/
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*/
+            [ -e "$1" ] && _count=$#
         ;;
         3:2*)
-            set -- "$i"/*"$ii"/
-            [ -e "$1" ] && iii=$#
+            set -- "$_dir"/*"$_sfix"/
+            [ -e "$1" ] && _count=$#
         ;;
     esac
 
-    printf "%d" "$iii"
+    printf "%d" "$_count"
 }
 ```
 
