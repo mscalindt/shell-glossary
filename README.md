@@ -105,9 +105,9 @@ confirm_cont_clr() {
     case $1 in
     0)
         printf "%bContinue? [Y/n]%b " "\033[1;37m" "\033[0m"
-        read -r i
+        read -r _action
 
-        case "$i" in
+        case "$_action" in
             N*|n*) return 1 ;;
         esac
 
@@ -115,9 +115,9 @@ confirm_cont_clr() {
     ;;
     1)
         printf "%bContinue? [y/N]%b " "\033[1;37m" "\033[0m"
-        read -r i
+        read -r _action
 
-        case "$i" in
+        case "$_action" in
             Y*|y*) return 0 ;;
         esac
 
