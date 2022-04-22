@@ -1200,16 +1200,16 @@ ltr_substr1() {
 num_to_char() {
     case $# in
         3)
-            x=1; printf "%s" "$2"
-            until [ $x -eq $1 ]; do
-                x=$((x + 1))
+            _i=1; printf "%s" "$2"
+            until [ $_i -eq $1 ]; do
+                _i=$((_i + 1))
                 printf " %s" "$2"
             done
         ;;
         *)
-            x=0
-            until [ $x -eq $1 ]; do
-                x=$((x + 1))
+            _i=0
+            until [ $_i -eq $1 ]; do
+                _i=$((_i + 1))
                 printf "%s" "$2"
             done
         ;;
