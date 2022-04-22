@@ -934,38 +934,40 @@ ltl_substr1() {
 # (3) incorrect expansion ($1 > $2)
 #
 ltr_substr0() {
+    _str="$3"
+
     case $#:$5$4 in
         6:*|5:4*|4:4)
             case $1 in
                 0)
-                    case "$3" in
+                    case "$_str" in
                         *"$2") return 1 ;;
                         *"$2"*) : ;;
                         *) return 2 ;;
                     esac
 
-                    i="${3##*"$2"}"
+                    _str="${_str##*"$2"}"
                 ;;
                 *)
-                    case $1"$3" in
+                    case $1"$_str" in
                         $1*"$2"*"$2"*) : ;;
                         1*"$2") return 1 ;;
                         $1*"$2"*) : ;;
                         *) return 2 ;;
                     esac
 
-                    x=0 && i="$3"
-                    until [ $x -eq $1 ]; do
-                        i="${i#*"$2"}"
+                    _i=0
+                    until [ $_i -eq $1 ]; do
+                        _str="${_str#*"$2"}"
 
-                        case "$i" in
+                        case "$_str" in
                             *"$2"*"$2"*) : ;;
-                            *"$2") [ $((x + 2)) -eq $1 ] && return 1 ;;
+                            *"$2") [ $((_i + 2)) -eq $1 ] && return 1 ;;
                             *"$2"*) : ;;
-                            *) [ $((x + 1)) -eq $1 ] || return 3 ;;
+                            *) [ $((_i + 1)) -eq $1 ] || return 3 ;;
                         esac
 
-                        x=$((x + 1))
+                        _i=$((_i + 1))
                     done
                 ;;
             esac
@@ -973,41 +975,41 @@ ltr_substr0() {
         *)
             case $1 in
                 0)
-                    i="${3##*"$2"}"
+                    _str="${_str##*"$2"}"
                 ;;
                 *)
-                    x=0 && i="$3"
-                    until [ $x -eq $1 ]; do
-                        i="${i#*"$2"}"
-                        x=$((x + 1))
+                    _i=0
+                    until [ $_i -eq $1 ]; do
+                        _str="${_str#*"$2"}"
+                        _i=$((_i + 1))
                     done
                 ;;
             esac
 
-            [ "$i" = "$3" ] && return 2
+            [ "$_str" = "$3" ] && return 2
         ;;
     esac
 
-    [ "$i" ] || return 1
+    [ "$_str" ] || return 1
 
     case $4 in
         0)
-            i="${i#${i%%[![:space:]]*}}"
+            _str="${_str#${_str%%[![:space:]]*}}"
         ;;
         1)
-            i="${i%${i##*[![:space:]]}}"
+            _str="${_str%${_str##*[![:space:]]}}"
         ;;
         2)
-            i="${i#${i%%[![:space:]]*}}"
-            i="${i%${i##*[![:space:]]}}"
+            _str="${_str#${_str%%[![:space:]]*}}"
+            _str="${_str%${_str##*[![:space:]]}}"
         ;;
     esac
 
     case $5$4 in
-        *3*) i="$2$i" ;;
+        *3*) _str="$2$_str" ;;
     esac
 
-    printf "%s" "$i"
+    printf "%s" "$_str"
 }
 ```
 
