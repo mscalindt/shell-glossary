@@ -1481,14 +1481,14 @@ pline() {
 # 1. NULL character.
 #
 pline_fd1() {
-    x=0
+    _i=0
 
-    while read -r LINE; do
-        x=$((x + 1))
-        case $x in $1) printf "%s" "$LINE"; return 0 ;; esac
+    while read -r _line; do
+        _i=$((_i + 1))
+        case $_i in $1) printf "%s" "$_line"; return 0 ;; esac
     done
 
-    case $((x + 1)) in $1) printf "%s" "$LINE"; return 0 ;; esac
+    case $((_i + 1)) in $1) printf "%s" "$_line"; return 0 ;; esac
 
     return 1
 }
