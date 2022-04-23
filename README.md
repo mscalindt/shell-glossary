@@ -1658,32 +1658,34 @@ remstr() {
 # (2) ! $1
 #
 replstr() {
-    case "$2" in
+    _str="$2"
+
+    case "$_str" in
         "$1") return 1 ;;
         *"$1"*) : ;;
         *) return 2 ;;
     esac
 
     case "$1" in
-        "$3") printf "%s" "$2" && return 0 ;;
+        "$3") printf "%s" "$_str" && return 0 ;;
     esac
 
     case $4 in
         0)
-            i="${2%%"$1"*}$3${2#*"$1"}"
+            _str="${_str%%"$1"*}$3${_str#*"$1"}"
         ;;
         1)
-            i="${2%"$1"*}$3${2##*"$1"}"
+            _str="${_str%"$1"*}$3${_str##*"$1"}"
         ;;
         2)
-            ii="${2%%"$1"*}$3"
-            i="${ii}${2#*"$1"}"
+            _str_ref="${_str%%"$1"*}$3"
+            _str="$_str_ref${_str#*"$1"}"
 
-            while :; do case "$i" in
-                "$ii"*"$1"*)
-                    iii="${i#*"$ii"}" && iii="${iii%%"$1"*}"
-                    i="${ii}${iii}$3${i#*"${ii}${iii}$1"}"
-                    ii="${ii}${iii}$3"
+            while :; do case "$_str" in
+                "$_str_ref"*"$1"*)
+                    _pfix="${_str#*"$_str_ref"}" && _pfix="${_pfix%%"$1"*}"
+                    _str="$_str_ref$_pfix$3${_str#*"$_str_ref$_pfix$1"}"
+                    _str_ref="$_str_ref$_pfix$3"
                 ;;
                 *)
                     break
@@ -1692,7 +1694,7 @@ replstr() {
         ;;
     esac
 
-    printf "%s" "$i"
+    printf "%s" "$_str"
 }
 ```
 
