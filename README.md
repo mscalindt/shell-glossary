@@ -1741,65 +1741,65 @@ rstrip() {
 # (1) no meta characters in $1
 #
 esc_str() {
-    i="$1"
-    unset ii
+    _str="$1"
+    unset _str_ref
 
     set -f
 
     case $2 in
-        0*) iiiii="${2#??}" ;;
-        *) iiiii='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
+        0*) _chars="${2#??}" ;;
+        *) _chars='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
     esac
 
-    case "$iiiii" in
+    case "$_chars" in
         '\'*) : ;;
-        *'\'*) iiiii="\\ ${iiiii%%\\*}${iiiii#*\\ }" ;;
+        *'\'*) _chars="\\ ${_chars%%\\*}${_chars#*\\ }" ;;
     esac
 
-    for iiii in $iiiii; do
-        case "$i" in
-            *"$iiii"*) : ;;
+    for _char in $_chars; do
+        case "$_str" in
+            *"$_char"*) : ;;
             *) continue ;;
         esac
 
-        case $iiii:$#:$3:$2 in
+        case $_char:$#:$3:$2 in
             "'":3:2*|"'":2::2)
-                ii="${i%%\'*}'\\''"
+                _str_ref="${_str%%\'*}'\\''"
             ;;
-            $iiii:3:1*|$iiii:2::1)
-                ii="${i%%"$iiii"*}"
+            $_char:3:1*|$_char:2::1)
+                _str_ref="${_str%%"$_char"*}"
             ;;
             *)
-                ii="${i%%"$iiii"*}\\$iiii"
+                _str_ref="${_str%%"$_char"*}\\$_char"
             ;;
         esac
-        i="${ii}${i#*"$iiii"}"
+        _str="$_str_ref${_str#*"$_char"}"
 
-        case $iiii:$#:$3:$2 in
+        case $_char:$#:$3:$2 in
             "'":3:2*|"'":2::2)
-                while :; do case "$i" in
-                    "$ii"*"'"*)
-                        iii="${i#*"$ii"}" && iii="${iii%%\'*}"
-                        i="${ii}${iii}'\\''${i#*"${ii}${iii}"\'}"
-                        ii="${ii}${iii}'\\''"
+                while :; do case "$_str" in
+                    "$_str_ref"*"'"*)
+                        _str="${_str#*"$_str_ref"}"
+                        _str_ref="$_str_ref${_str%%\'*}'\\''"
+                        _str="$_str_ref${_str#*\'}"
                     ;;
                     *)
                         break
                     ;;
                 esac done
             ;;
-            $iiii:3:1*|$iiii:2::1)
-                while :; do case "$i" in
-                    *"$iiii"*) i="${i%%"$iiii"*}${i#*"$iiii"}" ;;
+            $_char:3:1*|$_char:2::1)
+                while :; do case "$_str" in
+                    *"$_char"*) _str="${_str%%"$_char"*}${_str#*"$_char"}" ;;
                     *) break ;;
                 esac done
             ;;
             *)
-                while :; do case "$i" in
-                    "$ii"*"$iiii"*)
-                        iii="${i#*"$ii"}" && iii="${iii%%"$iiii"*}"
-                        i="${ii}${iii}\\$iiii${i#*"${ii}${iii}$iiii"}"
-                        ii="${ii}${iii}\\$iiii"
+                while :; do case "$_str" in
+                    "$_str_ref"*"$_char"*)
+                        _str="${_str#*"$_str_ref"}"
+                        _str_ref="$_str_ref${_str%%"$_char"*}\\$_char"
+                        _str="$_str_ref${_str#*"$_char"}"
                     ;;
                     *)
                         break
@@ -1811,9 +1811,9 @@ esc_str() {
 
     set +f
 
-    [ "$ii" ] || return 1
+    [ "$_str_ref" ] || return 1
 
-    printf "%s" "$i"
+    printf "%s" "$_str"
 }
 ```
 
