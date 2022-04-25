@@ -39,7 +39,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [INFO_CLR()](https://github.com/mscalindt/shell-glossary#info_clr)
 * [INFO_FMT_CLR()](https://github.com/mscalindt/shell-glossary#info_fmt_clr)
 * [WARN_CLR()](https://github.com/mscalindt/shell-glossary#warn_clr)
-* [WARN_PX_CLR()](https://github.com/mscalindt/shell-glossary#warn_px_clr)
+* [WARN_FMT_CLR()](https://github.com/mscalindt/shell-glossary#warn_fmt_clr)
 
 # Stdin functions:
 
@@ -1960,7 +1960,7 @@ warn_fmt() {
 }
 ```
 
-### warn_px_clr
+### warn_fmt_clr
 
 ```sh
 # Description:
@@ -1973,7 +1973,7 @@ warn_fmt() {
 # Returns:
 # (0) text
 #
-warn_px_clr() {
+warn_fmt_clr() {
     _printf_fmt="$1"; shift
     printf "%bWARNING:%b ${_printf_fmt}%s\n" "\033[1;33m" "\033[0m" "$*"
 }
