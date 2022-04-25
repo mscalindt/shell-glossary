@@ -1964,10 +1964,10 @@ warn_px() {
 
 ```sh
 # Description:
-# Print a colorful warning with printf prefix before text
+# Print a colorful warning with printf format before text
 #
 # Parameters:
-# <"$1"> - printf prefix
+# <"$1"> - printf format
 # <"$2"+> - text
 #
 # Returns:
