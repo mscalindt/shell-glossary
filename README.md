@@ -264,7 +264,7 @@ err_ne_px() {
 # (0) text
 #
 err_ne_px_clr() {
-    _printf_fmt="$1" && shift
+    _printf_fmt="$1"; shift
     printf "%bERROR:%b ${_printf_fmt}%s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
 }
 ```
