@@ -5,7 +5,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary#confirm_cont)
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
 * [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
-* [ERR_PX()](https://github.com/mscalindt/shell-glossary#err_px)
+* [ERR_FMT()](https://github.com/mscalindt/shell-glossary#err_fmt)
 * [ERR_NE_PX()](https://github.com/mscalindt/shell-glossary#err_ne_px)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/12
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
@@ -195,7 +195,7 @@ err_ne_clr() {
 }
 ```
 
-## err_px
+## err_fmt
 
 ```sh
 # Description:
@@ -206,7 +206,7 @@ err_ne_clr() {
 # <"$2"> - printf format
 # <"$3"+> - text
 #
-err_px() {
+err_fmt() {
     _rc=$1; _printf_fmt="$2"; shift 2
     printf "\nERROR: ${_printf_fmt}%s\n\n" "$*" 1>&2
     exit $_rc
