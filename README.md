@@ -1458,14 +1458,10 @@ pline() {
 # 1. NULL character.
 #
 pline_fd1() {
-    _i=0
-
-    while read -r _line; do
+    _i=0; while read -r _line || [ "$_line" ]; do
         _i=$((_i + 1))
         case $_i in $1) printf "%s" "$_line"; return 0 ;; esac
     done
-
-    case $((_i + 1)) in $1) printf "%s" "$_line"; return 0 ;; esac
 
     return 1
 }
