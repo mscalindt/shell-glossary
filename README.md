@@ -1955,7 +1955,7 @@ warn_clr() {
 # (0) text
 #
 warn_px() {
-    _printf_fmt="$1" && shift
+    _printf_fmt="$1"; shift
     printf "WARNING: ${_printf_fmt}%s\n" "$*"
 }
 ```
