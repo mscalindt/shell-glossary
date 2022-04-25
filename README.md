@@ -1180,17 +1180,17 @@ ltr_substr1() {
 num_to_char() {
     case $# in
         3)
-            _i=1; printf "%s" "$2"
-            until [ $_i -eq $1 ]; do
-                _i=$((_i + 1))
+            printf "%s" "$2"
+
+            _i=1; until [ $_i -eq $1 ]; do
                 printf " %s" "$2"
+                _i=$((_i + 1))
             done
         ;;
         *)
-            _i=0
-            until [ $_i -eq $1 ]; do
-                _i=$((_i + 1))
+            _i=0; until [ $_i -eq $1 ]; do
                 printf "%s" "$2"
+                _i=$((_i + 1))
             done
         ;;
     esac
