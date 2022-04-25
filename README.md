@@ -1945,10 +1945,10 @@ warn_clr() {
 
 ```sh
 # Description:
-# Print a warning with printf prefix before text
+# Print a warning with printf format before text
 #
 # Parameters:
-# <"$1"> - printf prefix
+# <"$1"> - printf format
 # <"$2"+> - text
 #
 # Returns:
