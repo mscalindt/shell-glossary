@@ -1835,27 +1835,27 @@ esc_str() {
 #    will be printed.
 #
 str_to_chars() {
-    i="$1"
+    _str="$1"
 
-    iiii=$LC_CTYPE
+    _old_lc_ctype=$LC_CTYPE
     LC_CTYPE=C
 
     while :; do
-        case ":$i" in :) break ;; esac
+        case ":$_str" in :) break ;; esac
 
-        ii="${i%"${i#?}"}"
-        i="${i#?}"
+        _char="${_str%"${_str#?}"}"
+        _str="${_str#?}"
 
-        case "$ii" in
+        case "$_char" in
             " ")
                 :
             ;;
             [[:print:]])
                 case $# in
-                    2) iii="$ii" ;;
+                    2) _chars_set="$_char" ;;
                 esac
 
-                printf "%s" "$ii"; break
+                printf "%s" "$_char"; break
             ;;
         esac
     done
@@ -1863,37 +1863,47 @@ str_to_chars() {
     case $# in
         2)
             while :; do
-                case ":$i" in :) break ;; esac
+                case ":$_str" in :) break ;; esac
 
-                ii="${i%"${i#?}"}"
-                i="${i#?}"
+                _char="${_str%"${_str#?}"}"
+                _str="${_str#?}"
 
-                case "$iii" in
-                    *"$ii"*) continue ;;
+                case "$_chars_set" in
+                    *"$_char"*) continue ;;
                 esac
 
-                case "$ii" in
-                    " ") : ;;
-                    [[:print:]]) iii="$iii$ii"; printf " %s" "$ii" ;;
+                case "$_char" in
+                    " ")
+                        :
+                    ;;
+                    [[:print:]])
+                        _chars_set="$_chars_set$_char"
+
+                        printf " %s" "$_char"
+                    ;;
                 esac
             done
         ;;
         *)
             while :; do
-                case ":$i" in :) break ;; esac
+                case ":$_str" in :) break ;; esac
 
-                ii="${i%"${i#?}"}"
-                i="${i#?}"
+                _char="${_str%"${_str#?}"}"
+                _str="${_str#?}"
 
-                case "$ii" in
-                    " ") : ;;
-                    [[:print:]]) printf " %s" "$ii" ;;
+                case "$_char" in
+                    " ")
+                        :
+                    ;;
+                    [[:print:]])
+                        printf " %s" "$_char"
+                    ;;
                 esac
             done
         ;;
     esac
 
-    LC_CTYPE=$iiii
+    LC_CTYPE=$_old_lc_ctype
 }
 ```
 
