@@ -944,8 +944,7 @@ ltr_substr0() {
                         *) return 2 ;;
                     esac
 
-                    _i=0
-                    until [ $_i -eq $1 ]; do
+                    _i=0; until [ $_i -eq $1 ]; do
                         _str="${_str#*"$2"}"
 
                         case "$_str" in
@@ -966,8 +965,7 @@ ltr_substr0() {
                     _str="${_str##*"$2"}"
                 ;;
                 *)
-                    _i=0
-                    until [ $_i -eq $1 ]; do
+                    _i=0; until [ $_i -eq $1 ]; do
                         _str="${_str#*"$2"}"
                         _i=$((_i + 1))
                     done
