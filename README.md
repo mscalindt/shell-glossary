@@ -562,10 +562,10 @@ info_clr() {
 
 ```sh
 # Description:
-# Print info with printf prefix before text
+# Print info with printf format before text
 #
 # Parameters:
-# <"$1"> - printf prefix
+# <"$1"> - printf format
 # <"$2"+> - text
 #
 # Returns:
