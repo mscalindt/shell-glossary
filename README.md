@@ -614,7 +614,7 @@ info_fmt_clr() {
 lstrip() {
     case "$2" in
         "$1") return 2 ;;
-        "$1"*) printf "%s" "${2#"$1"}" && return 0 ;;
+        "$1"*) printf "%s" "${2#"$1"}"; return 0 ;;
     esac
 
     return 1
