@@ -27,7 +27,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [ESC_STR()](https://github.com/mscalindt/shell-glossary#esc_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/11
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/10
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
-* [WARN_PX()](https://github.com/mscalindt/shell-glossary#warn_px)
+* [WARN_FMT()](https://github.com/mscalindt/shell-glossary#warn_fmt)
 
 # Normal functions (color):
 
@@ -1941,7 +1941,7 @@ warn_clr() {
 }
 ```
 
-### warn_px
+### warn_fmt
 
 ```sh
 # Description:
@@ -1954,7 +1954,7 @@ warn_clr() {
 # Returns:
 # (0) text
 #
-warn_px() {
+warn_fmt() {
     _printf_fmt="$1"; shift
     printf "WARNING: ${_printf_fmt}%s\n" "$*"
 }
