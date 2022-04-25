@@ -37,7 +37,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [ERR_FMT_CLR()](https://github.com/mscalindt/shell-glossary#err_fmt_clr)
 * [ERR_NE_FMT_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_fmt_clr)
 * [INFO_CLR()](https://github.com/mscalindt/shell-glossary#info_clr)
-* [INFO_PX_CLR()](https://github.com/mscalindt/shell-glossary#info_px_clr)
+* [INFO_FMT_CLR()](https://github.com/mscalindt/shell-glossary#info_fmt_clr)
 * [WARN_CLR()](https://github.com/mscalindt/shell-glossary#warn_clr)
 * [WARN_PX_CLR()](https://github.com/mscalindt/shell-glossary#warn_px_clr)
 
@@ -577,7 +577,7 @@ info_fmt() {
 }
 ```
 
-## info_px_clr
+## info_fmt_clr
 
 ```sh
 # Description:
@@ -590,7 +590,7 @@ info_fmt() {
 # Returns:
 # (0) text
 #
-info_px_clr() {
+info_fmt_clr() {
     _printf_fmt="$1"; shift
     printf "%bINFO:%b ${_printf_fmt}%s\n" "\033[1;37m" "\033[0m" "$*"
 }
