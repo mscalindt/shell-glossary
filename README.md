@@ -217,11 +217,11 @@ err_px() {
 
 ```sh
 # Description:
-# Print colorful error with printf prefix before text and exit
+# Print colorful error with printf format before text and exit
 #
 # Parameters:
 # <$1> - exit code
-# <"$2"> - printf prefix
+# <"$2"> - printf format
 # <"$3"+> - text
 #
 err_px_clr() {
