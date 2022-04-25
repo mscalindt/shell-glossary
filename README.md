@@ -1644,7 +1644,7 @@ replstr() {
     esac
 
     case "$1" in
-        "$3") printf "%s" "$_str" && return 0 ;;
+        "$3") printf "%s" "$_str"; return 0 ;;
     esac
 
     case $4 in
