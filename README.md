@@ -1432,13 +1432,10 @@ pline() {
     [ -f "$2" ] || return 2
     [ -r "$2" ] || return 3
 
-    _i=0
-    while read -r _line; do
+    _i=0; while read -r _line || [ "$_line" ]; do
         _i=$((_i + 1))
         case $_i in $1) printf "%s" "$_line"; return 0 ;; esac
     done < "$2"
-
-    case $((_i + 1)) in $1) printf "%s" "$_line"; return 0 ;; esac
 
     return 1
 }
