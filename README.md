@@ -34,7 +34,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [CONFIRM_CONT_CLR()](https://github.com/mscalindt/shell-glossary#confirm_cont_clr)
 * [ERR_CLR()](https://github.com/mscalindt/shell-glossary#err_clr)
 * [ERR_NE_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_clr)
-* [ERR_PX_CLR()](https://github.com/mscalindt/shell-glossary#err_px_clr)
+* [ERR_FMT_CLR()](https://github.com/mscalindt/shell-glossary#err_fmt_clr)
 * [ERR_NE_PX_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_px_clr)
 * [INFO_CLR()](https://github.com/mscalindt/shell-glossary#info_clr)
 * [INFO_PX_CLR()](https://github.com/mscalindt/shell-glossary#info_px_clr)
@@ -213,7 +213,7 @@ err_fmt() {
 }
 ```
 
-## err_px_clr
+## err_fmt_clr
 
 ```sh
 # Description:
@@ -224,7 +224,7 @@ err_fmt() {
 # <"$2"> - printf format
 # <"$3"+> - text
 #
-err_px_clr() {
+err_fmt_clr() {
     _rc=$1; _printf_fmt="$2"; shift 2
     printf "\n%bERROR:%b ${_printf_fmt}%s\n\n" "\033[1;31m" "\033[0m" "$*" 1>&2
     exit $_rc
