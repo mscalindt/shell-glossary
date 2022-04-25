@@ -1660,9 +1660,9 @@ replstr() {
 
             while :; do case "$_str" in
                 "$_str_ref"*"$1"*)
-                    _pfix="${_str#*"$_str_ref"}" && _pfix="${_pfix%%"$1"*}"
-                    _str="$_str_ref$_pfix$3${_str#*"$_str_ref$_pfix$1"}"
-                    _str_ref="$_str_ref$_pfix$3"
+                    _str="${_str#*"$_str_ref"}"
+                    _str_ref="$_str_ref${_str%%"$1"*}$3"
+                    _str="$_str_ref${_str#*"$1"}"
                 ;;
                 *)
                     break
