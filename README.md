@@ -1056,8 +1056,7 @@ ltr_substr1() {
                         *) return 2 ;;
                     esac
 
-                    _i=0
-                    until [ $_i -eq $1 ]; do
+                    _i=0; until [ $_i -eq $1 ]; do
                         _str="${_str#*"$2"}"
 
                         case "$_str" in
@@ -1090,8 +1089,7 @@ ltr_substr1() {
                         *) return 5 ;;
                     esac
 
-                    _i=0 && _sfix="$_str"
-                    until [ $_i -eq $3 ]; do
+                    _sfix="$_str"; _i=0; until [ $_i -eq $3 ]; do
                         _sfix="${_sfix#*"$4"}"
 
                         case "$_sfix" in
@@ -1102,10 +1100,7 @@ ltr_substr1() {
                         _i=$((_i + 1))
                     done
 
-                    case ":$_sfix" in
-                        :) _str="${_str%"$4"}" ;;
-                        *) _str="${_str%"$4$_sfix"}" ;;
-                    esac
+                    _str="${_str%"$4$_sfix"}"
                 ;;
             esac
         ;;
@@ -1115,8 +1110,7 @@ ltr_substr1() {
                     _str="${_str##*"$2"}"
                 ;;
                 *)
-                    _i=0
-                    until [ $_i -eq $1 ]; do
+                    _i=0; until [ $_i -eq $1 ]; do
                         _str="${_str#*"$2"}"
                         _i=$((_i + 1))
                     done
@@ -1131,11 +1125,11 @@ ltr_substr1() {
                     _str="${_str%"$4"*}"
                 ;;
                 *)
-                    _i=0 && _sfix="$_str"
-                    until [ $_i -eq $3 ]; do
+                    _sfix="$_str"; _i=0; until [ $_i -eq $3 ]; do
                         _sfix="${_sfix#*"$4"}"
                         _i=$((_i + 1))
                     done
+
                     _str="${_str%"$4$_sfix"}"
                 ;;
             esac
