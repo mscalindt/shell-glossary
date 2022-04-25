@@ -1974,7 +1974,7 @@ warn_px() {
 # (0) text
 #
 warn_px_clr() {
-    _printf_fmt="$1" && shift
+    _printf_fmt="$1"; shift
     printf "%bWARNING:%b ${_printf_fmt}%s\n" "\033[1;33m" "\033[0m" "$*"
 }
 ```
