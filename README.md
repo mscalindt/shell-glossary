@@ -235,10 +235,10 @@ err_px_clr() {
 
 ```sh
 # Description:
-# Print error with printf prefix before text, no exit
+# Print error with printf format before text, no exit
 #
 # Parameters:
-# <"$1"> - printf prefix
+# <"$1"> - printf format
 # <"$2"+> - text
 #
 # Returns:
