@@ -6,7 +6,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
 * [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
 * [ERR_FMT()](https://github.com/mscalindt/shell-glossary#err_fmt)
-* [ERR_NE_PX()](https://github.com/mscalindt/shell-glossary#err_ne_px)
+* [ERR_NE_FMT()](https://github.com/mscalindt/shell-glossary#err_ne_fmt)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/12
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
@@ -231,7 +231,7 @@ err_fmt_clr() {
 }
 ```
 
-## err_ne_px
+## err_ne_fmt
 
 ```sh
 # Description:
@@ -244,7 +244,7 @@ err_fmt_clr() {
 # Returns:
 # (0) text
 #
-err_ne_px() {
+err_ne_fmt() {
     _printf_fmt="$1"; shift
     printf "ERROR: ${_printf_fmt}%s\n" "$*" 1>&2
 }
