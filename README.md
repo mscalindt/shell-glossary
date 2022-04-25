@@ -581,10 +581,10 @@ info_px() {
 
 ```sh
 # Description:
-# Print colorful info with printf prefix before text
+# Print colorful info with printf format before text
 #
 # Parameters:
-# <"$1"> - printf prefix
+# <"$1"> - printf format
 # <"$2"+> - text
 #
 # Returns:
