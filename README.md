@@ -1805,8 +1805,7 @@ esc_str() {
 str_to_chars() {
     _str="$1"
 
-    _old_lc_ctype=$LC_CTYPE
-    LC_CTYPE=C
+    _old_lc=$LC_ALL; export LC_ALL=C
 
     while :; do
         case ":$_str" in :) break ;; esac
@@ -1871,7 +1870,7 @@ str_to_chars() {
         ;;
     esac
 
-    LC_CTYPE=$_old_lc_ctype
+    export LC_ALL=$_old_lc
 }
 ```
 
