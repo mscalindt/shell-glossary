@@ -1201,7 +1201,7 @@ num_to_char() {
 
 ```sh
 # Description:
-# Parse the lines of a file
+# Parse the content of a file
 #
 # Parameters:
 # <"$1"> - file
