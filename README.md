@@ -1720,6 +1720,7 @@ esc_str() {
 
     case "$_chars" in
         '\'*) : ;;
+        *'\') _chars="\\ ${_chars%%\\*}${_chars#*\\}" ;;
         *'\'*) _chars="\\ ${_chars%%\\*}${_chars#*\\ }" ;;
     esac
 
