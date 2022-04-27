@@ -1734,7 +1734,7 @@ esc_str() {
             "'":3:2*|"'":2::2)
                 _str_ref="${_str%%\'*}'\\''"
             ;;
-            $_char:3:1*|$_char:2::1)
+            "$_char":3:1*|"$_char":2::1)
                 _str_ref="${_str%%"$_char"*}"
             ;;
             *)
@@ -1756,7 +1756,7 @@ esc_str() {
                     ;;
                 esac done
             ;;
-            $_char:3:1*|$_char:2::1)
+            "$_char":3:1*|"$_char":2::1)
                 while :; do case "$_str" in
                     *"$_char"*) _str="${_str%%"$_char"*}${_str#*"$_char"}" ;;
                     *) break ;;
