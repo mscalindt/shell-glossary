@@ -7,6 +7,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
 * [ERR_FMT()](https://github.com/mscalindt/shell-glossary#err_fmt)
 * [ERR_NE_FMT()](https://github.com/mscalindt/shell-glossary#err_ne_fmt)
+* [ESC_STR()](https://github.com/mscalindt/shell-glossary#esc_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/11
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/12
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
 * [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
@@ -24,7 +25,6 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/3.4
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/4.2
 * [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/9
-* [ESC_STR()](https://github.com/mscalindt/shell-glossary#esc_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/11
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/10
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
 * [WARN_FMT()](https://github.com/mscalindt/shell-glossary#warn_fmt)
@@ -266,6 +266,101 @@ err_ne_fmt() {
 err_ne_fmt_clr() {
     _printf_fmt="$1"; shift
     printf "%bERROR:%b ${_printf_fmt}%s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
+}
+```
+
+## esc_str
+
+```sh
+# Description:
+# Escape all POSIX-defined shell meta characters in a string; characters are:
+# \ | & ; < > ( ) $ ` " ' * ? [ ] # ~ = %
+#
+# Parameters:
+# <"$1"> - string
+# ["$2"] - mode("0 X" - escape only "X" whitespace-separated character(s))
+# [$3] - mode('1' - strip the characters,
+#             '2' - escape single quote character with itself)
+#
+# Returns:
+# (0) escaped/stripped $1
+# (1) no meta characters in $1
+#
+esc_str() {
+    _str="$1"
+    unset _str_ref
+
+    set -f
+
+    case $2 in
+        0*) _chars="${2#??}" ;;
+        *) _chars='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
+    esac
+
+    case "$_chars" in
+        '\'*) : ;;
+        *'\') _chars="\\ ${_chars%%\\*}${_chars#*\\}" ;;
+        *'\'*) _chars="\\ ${_chars%%\\*}${_chars#*\\ }" ;;
+    esac
+
+    for _char in $_chars; do
+        case "$_str" in
+            *"$_char"*) : ;;
+            *) continue ;;
+        esac
+
+        case $_char:$#:$3:$2 in
+            "'":3:2*|"'":2::2)
+                _str_ref="${_str%%\'*}'\\''"
+            ;;
+            "$_char":3:1*|"$_char":2::1)
+                _str_ref="${_str%%"$_char"*}"
+            ;;
+            *)
+                _str_ref="${_str%%"$_char"*}\\$_char"
+            ;;
+        esac
+        _str="$_str_ref${_str#*"$_char"}"
+
+        case $_char:$#:$3:$2 in
+            "'":3:2*|"'":2::2)
+                while :; do case "$_str" in
+                    "$_str_ref"*"'"*)
+                        _str="${_str#*"$_str_ref"}"
+                        _str_ref="$_str_ref${_str%%\'*}'\\''"
+                        _str="$_str_ref${_str#*\'}"
+                    ;;
+                    *)
+                        break
+                    ;;
+                esac done
+            ;;
+            "$_char":3:1*|"$_char":2::1)
+                while :; do case "$_str" in
+                    *"$_char"*) _str="${_str%%"$_char"*}${_str#*"$_char"}" ;;
+                    *) break ;;
+                esac done
+            ;;
+            *)
+                while :; do case "$_str" in
+                    "$_str_ref"*"$_char"*)
+                        _str="${_str#*"$_str_ref"}"
+                        _str_ref="$_str_ref${_str%%"$_char"*}\\$_char"
+                        _str="$_str_ref${_str#*"$_char"}"
+                    ;;
+                    *)
+                        break
+                    ;;
+                esac done
+            ;;
+        esac
+    done
+
+    set +f
+
+    [ "$_str_ref" ] || return 1
+
+    printf "%s" "$_str"
 }
 ```
 
@@ -1687,101 +1782,6 @@ rstrip() {
     esac
 
     return 1
-}
-```
-
-## esc_str
-
-```sh
-# Description:
-# Escape all POSIX-defined shell meta characters in a string; characters are:
-# \ | & ; < > ( ) $ ` " ' * ? [ ] # ~ = %
-#
-# Parameters:
-# <"$1"> - string
-# ["$2"] - mode("0 X" - escape only "X" whitespace-separated character(s))
-# [$3] - mode('1' - strip the characters,
-#             '2' - escape single quote character with itself)
-#
-# Returns:
-# (0) escaped/stripped $1
-# (1) no meta characters in $1
-#
-esc_str() {
-    _str="$1"
-    unset _str_ref
-
-    set -f
-
-    case $2 in
-        0*) _chars="${2#??}" ;;
-        *) _chars='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
-    esac
-
-    case "$_chars" in
-        '\'*) : ;;
-        *'\') _chars="\\ ${_chars%%\\*}${_chars#*\\}" ;;
-        *'\'*) _chars="\\ ${_chars%%\\*}${_chars#*\\ }" ;;
-    esac
-
-    for _char in $_chars; do
-        case "$_str" in
-            *"$_char"*) : ;;
-            *) continue ;;
-        esac
-
-        case $_char:$#:$3:$2 in
-            "'":3:2*|"'":2::2)
-                _str_ref="${_str%%\'*}'\\''"
-            ;;
-            "$_char":3:1*|"$_char":2::1)
-                _str_ref="${_str%%"$_char"*}"
-            ;;
-            *)
-                _str_ref="${_str%%"$_char"*}\\$_char"
-            ;;
-        esac
-        _str="$_str_ref${_str#*"$_char"}"
-
-        case $_char:$#:$3:$2 in
-            "'":3:2*|"'":2::2)
-                while :; do case "$_str" in
-                    "$_str_ref"*"'"*)
-                        _str="${_str#*"$_str_ref"}"
-                        _str_ref="$_str_ref${_str%%\'*}'\\''"
-                        _str="$_str_ref${_str#*\'}"
-                    ;;
-                    *)
-                        break
-                    ;;
-                esac done
-            ;;
-            "$_char":3:1*|"$_char":2::1)
-                while :; do case "$_str" in
-                    *"$_char"*) _str="${_str%%"$_char"*}${_str#*"$_char"}" ;;
-                    *) break ;;
-                esac done
-            ;;
-            *)
-                while :; do case "$_str" in
-                    "$_str_ref"*"$_char"*)
-                        _str="${_str#*"$_str_ref"}"
-                        _str_ref="$_str_ref${_str%%"$_char"*}\\$_char"
-                        _str="$_str_ref${_str#*"$_char"}"
-                    ;;
-                    *)
-                        break
-                    ;;
-                esac done
-            ;;
-        esac
-    done
-
-    set +f
-
-    [ "$_str_ref" ] || return 1
-
-    printf "%s" "$_str"
 }
 ```
 
