@@ -1225,11 +1225,6 @@ parse() {
     [ -r "$1" ] || return 2
 
     case $#:"$3$2" in
-        2:5*) _i=0; _maxN="${2#??}" ;;
-        3:5*1|3:5*2|3:5*3|3:5*4) _i=0; _maxN="${3#??}" ;;
-    esac
-
-    case $#:"$3$2" in
         1:)
             while IFS= read -r _line; do
                 printf "%s\n" "$_line"
@@ -1256,35 +1251,35 @@ parse() {
             done < "$1"
         ;;
         2:5*)
-            while IFS= read -r _line; do
+            _maxN="${2#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in $_maxN) break ;; esac
                 printf "%s\n" "$_line"
             done < "$1"
         ;;
         3:5*1)
-            while IFS= read -r _line; do
+            _maxN="${3#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in $_maxN) break ;; esac
                 printf " %s \n" "$_line"
             done < "$1"
         ;;
         3:5*2)
-            while IFS= read -r _line; do
+            _maxN="${3#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in $_maxN) break ;; esac
                 printf "  %s  \n" "$_line"
             done < "$1"
         ;;
         3:5*3)
-            while IFS= read -r _line; do
+            _maxN="${3#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in $_maxN) break ;; esac
                 case ":$_line" in :) : ;; *) printf "%s\n" "$_line" ;; esac
             done < "$1"
         ;;
         3:5*4)
-            while read -r _line; do
+            _maxN="${3#??}"; _i=0; while read -r _line; do
                 _i=$((_i + 1))
                 case $_i in $_maxN) break ;; esac
                 printf "%s\n" "$_line"
@@ -1297,10 +1292,10 @@ parse() {
             printf "%s" "$_line"
         ;;
         2:1|3:5*1)
-            case ":$_line" in :) : ;; *) printf " %s " "$_line" ;; esac
+            [ "$_line" ] && printf " %s " "$_line"
         ;;
         2:2|3:5*2)
-            case ":$_line" in :) : ;; *) printf "  %s  " "$_line" ;; esac
+            [ "$_line" ] && printf "  %s  " "$_line"
         ;;
     esac
 }
