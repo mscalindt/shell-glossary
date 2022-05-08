@@ -292,7 +292,7 @@ esc_str() {
 
     set -f
 
-    case $2 in
+    case "$2" in
         0*) _chars="${2#??}" ;;
         *) _chars='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
     esac
@@ -309,7 +309,7 @@ esc_str() {
             *) continue ;;
         esac
 
-        case $_char:$#:$3:$2 in
+        case "$_char":$#:$3:"$2" in
             "'":3:2*|"'":2::2)
                 _str_ref="${_str%%\'*}'\\''"
             ;;
@@ -322,7 +322,7 @@ esc_str() {
         esac
         _str="$_str_ref${_str#*"$_char"}"
 
-        case $_char:$#:$3:$2 in
+        case "$_char":$#:$3:"$2" in
             "'":3:2*|"'":2::2)
                 while :; do case "$_str" in
                     "$_str_ref"*"'"*)
