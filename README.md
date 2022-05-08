@@ -64,7 +64,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 confirm_cont() {
     case $1 in
     0)
-        printf "Continue? [Y/n] "
+        printf 'Continue? [Y/n] '
         read -r _action
 
         case "$_action" in
@@ -74,7 +74,7 @@ confirm_cont() {
         return 0
     ;;
     1)
-        printf "Continue? [y/N] "
+        printf 'Continue? [y/N] '
         read -r _action
 
         case "$_action" in
