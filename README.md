@@ -538,7 +538,7 @@ fcount() {
 get_fpath() {
     case "$1" in
         /*) printf "%s" "$1" ;;
-        *) printf "%s/%s" "$PWD" "$1" ;;
+        *) printf "%s" "$PWD/$1" ;;
     esac
 }
 ```
