@@ -1814,7 +1814,7 @@ str_to_chars() {
         _str="${_str#?}"
 
         case "$_char" in
-            " ")
+            ' ')
                 :
             ;;
             [[:print:]])
@@ -1840,7 +1840,7 @@ str_to_chars() {
                 esac
 
                 case "$_char" in
-                    " ")
+                    ' ')
                         :
                     ;;
                     [[:print:]])
