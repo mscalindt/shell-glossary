@@ -57,6 +57,9 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 # <$1> - mode('0' - default action: Y,
 #             '1' - default action: N)
 #
+# Provides:
+# <"$_action"> - the raw input
+#
 # Returns:
 # (0) permitted
 # (1) forbidden
