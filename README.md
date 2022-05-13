@@ -1752,6 +1752,9 @@ remstr() {
 #             '1' - replace the last occurrence,
 #             '2' - replace all occurrences)
 #
+# Provides:
+# (0) <"$_str"> - the modified string
+#
 # Returns:
 # (0) modified $2
 # (1) $1 = $2
