@@ -860,6 +860,10 @@ ltl_substr0() {
 #             '5' - keep $2/$4)
 # [$8] - mode('6' - verify the expansion)
 #
+# Provides:
+# (0) <"$_str"> - the modified string
+# [$_i] - positive integer, indicating iterations done
+#
 # Returns:
 # (0) substring | incorrect substring ($1/$3 > $2/$4)
 # (1) empty <unspecified/incorrect> expansion
