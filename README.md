@@ -1567,6 +1567,9 @@ pline() {
 # Parameters:
 # <$1> - line number
 #
+# Provides:
+# (0) <"$_line"> - the line
+#
 # Returns:
 # (0) line's content | line empty
 # (1) line does not exist
