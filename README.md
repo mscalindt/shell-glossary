@@ -1625,6 +1625,9 @@ remchars() {
 #             '2' - remove all occurrences)
 # [$4] - mode('3' - whitespace is delimiter)
 #
+# Provides:
+# (0) <"$_str"> - the modified string
+#
 # Returns:
 # (0) stripped $2
 # (1) $1 = $2
