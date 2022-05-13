@@ -389,6 +389,9 @@ esc_str() {
 #               "2X" - count only directories ending with "X")
 # [$3] - mode('3' - exclude hidden files/directories)
 #
+# Provides:
+# (0) <$_count> - the count
+#
 # Returns:
 # (0) count
 # (1) not a directory | directory does not exist
