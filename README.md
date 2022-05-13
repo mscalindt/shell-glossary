@@ -100,6 +100,9 @@ confirm_cont() {
 # <$1> - mode('0' - default action: Y,
 #             '1' - default action: N)
 #
+# Provides:
+# <"$_action"> - the raw input
+#
 # Returns:
 # (0) permitted
 # (1) forbidden
