@@ -288,6 +288,10 @@ err_ne_fmt_clr() {
 # [$3] - mode('1' - strip the characters,
 #             '2' - escape single quote character with itself)
 #
+# Provides:
+# (0) <"$_str"> - the modified string
+# <"$_chars"> - the characters, sorted by order parsed
+#
 # Returns:
 # (0) escaped/stripped $1
 # (1) no meta characters in $1
