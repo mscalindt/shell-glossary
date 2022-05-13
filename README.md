@@ -1026,6 +1026,10 @@ ltl_substr1() {
 # [$5] - mode('3' - keep $2)
 # [$6] - mode('4' - verify the expansion)
 #
+# Provides:
+# (0) <"$_str"> - the modified string
+# [$_i] - positive integer, indicating iterations done
+#
 # Returns:
 # (0) substring | incorrect substring ($1 > $2)
 # (1) empty <unspecified/incorrect> expansion
