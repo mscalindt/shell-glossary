@@ -556,7 +556,7 @@ get_fpath() {
 }
 ```
 
-## grep_str
+## str
 
 ```sh
 # Description:
@@ -573,7 +573,7 @@ get_fpath() {
 # (0) match
 # (1) no match
 #
-grep_str() {
+str() {
     case $#:$3 in
         2:) case "$2" in *"$1"*) return 0 ;; esac ;;
         3:1) case "$2" in "$1"*) return 0 ;; esac ;;
