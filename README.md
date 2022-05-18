@@ -577,7 +577,7 @@ info() {
 
 ```sh
 # Description:
-# Print colorful info
+# Colorfully print info
 #
 # Parameters:
 # <"$1"+> - text
