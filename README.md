@@ -613,7 +613,7 @@ info_fmt() {
 
 ```sh
 # Description:
-# Print colorful info with printf format before text
+# Colorfully print info with printf format before text
 #
 # Parameters:
 # <"$1"> - printf format
