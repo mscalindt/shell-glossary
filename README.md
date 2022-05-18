@@ -1972,7 +1972,7 @@ warn_fmt() {
 
 ```sh
 # Description:
-# Print a colorful warning with printf format before text
+# Colorfully print a warning with printf format before text
 #
 # Parameters:
 # <"$1"> - printf format
