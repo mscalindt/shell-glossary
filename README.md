@@ -154,7 +154,7 @@ err() {
 
 ```sh
 # Description:
-# Print colorful error and exit
+# Colorfully print error and exit
 #
 # Parameters:
 # <$1> - exit code
