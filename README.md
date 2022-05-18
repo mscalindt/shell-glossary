@@ -1936,7 +1936,7 @@ warn() {
 
 ```sh
 # Description:
-# Print a colorful warning
+# Colorfully print a warning
 #
 # Parameters:
 # <"$1"+> - text
