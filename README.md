@@ -585,7 +585,7 @@ str() {
 }
 ```
 
-## grep_str_fd1
+## str_fd1
 
 ```sh
 # Description:
@@ -604,7 +604,7 @@ str() {
 # Caveats:
 # 1. NULL character.
 #
-grep_str_fd1() {
+str_fd1() {
     case $#:$2 in
         1:)
             while IFS= read -r _line || [ "$_line" ]; do
