@@ -188,7 +188,7 @@ err_ne() {
 
 ```sh
 # Description:
-# Print colorful error, no exit
+# Colorfully print error, no exit
 #
 # Parameters:
 # <"$1"+> - text
