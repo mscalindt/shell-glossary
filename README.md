@@ -223,7 +223,7 @@ err_fmt() {
 
 ```sh
 # Description:
-# Print colorful error with printf format before text and exit
+# Colorfully print error with printf format before text and exit
 #
 # Parameters:
 # <$1> - exit code
