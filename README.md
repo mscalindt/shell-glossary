@@ -10,7 +10,6 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [ESC_STR()](https://github.com/mscalindt/shell-glossary#esc_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/11
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/12
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
-* [GREP_STR()](https://github.com/mscalindt/shell-glossary#grep_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
 * [INFO()](https://github.com/mscalindt/shell-glossary#info)
 * [INFO_FMT()](https://github.com/mscalindt/shell-glossary#info_fmt)
 * [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/8
@@ -25,6 +24,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/3.4
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/4.2
 * [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/9
+* [STR()](https://github.com/mscalindt/shell-glossary#str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/10
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
 * [WARN_FMT()](https://github.com/mscalindt/shell-glossary#warn_fmt)
@@ -43,9 +43,9 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 
 # Stdin functions:
 
-* [GREP_STR_FD1()](https://github.com/mscalindt/shell-glossary#grep_str_fd1)
 * [PARSE_FD1()](https://github.com/mscalindt/shell-glossary#parse_fd1)
 * [PLINE_FD1()](https://github.com/mscalindt/shell-glossary#pline_fd1)
+* [STR_FD1()](https://github.com/mscalindt/shell-glossary#str_fd1)
 
 ## confirm_cont
 
