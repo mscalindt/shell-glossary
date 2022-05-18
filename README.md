@@ -556,82 +556,6 @@ get_fpath() {
 }
 ```
 
-## str
-
-```sh
-# Description:
-# Check the existence/position of a substring in string
-#
-# Parameters:
-# <"$1"> - substring
-# <"$2"> - string
-# [$3] - mode('1' - $1 is first character(s) of $2,
-#             '2' - $1 is last character(s) of $2,
-#             '3' - $1 is, on its own, $2)
-#
-# Returns:
-# (0) match
-# (1) no match
-#
-str() {
-    case $#:$3 in
-        2:) case "$2" in *"$1"*) return 0 ;; esac ;;
-        3:1) case "$2" in "$1"*) return 0 ;; esac ;;
-        3:2) case "$2" in *"$1") return 0 ;; esac ;;
-        3:3) case "$2" in "$1") return 0 ;; esac ;;
-    esac
-
-    return 1
-}
-```
-
-## str_fd1
-
-```sh
-# Description:
-# Check the existence/position of a substring in stdin
-#
-# Parameters:
-# <"$1"> - substring
-# [$2] - mode('1' - $1 is first character(s) of stdin,
-#             '2' - $1 is last character(s) of stdin,
-#             '3' - $1 is, on its own, stdin)
-#
-# Returns:
-# (0) match
-# (1) no match
-#
-# Caveats:
-# 1. NULL character.
-#
-str_fd1() {
-    case $#:$2 in
-        1:)
-            while IFS= read -r _line || [ "$_line" ]; do
-                case "$_line" in *"$1"*) return 0 ;; esac
-            done
-        ;;
-        2:1)
-            while IFS= read -r _line || [ "$_line" ]; do
-                case "$_line" in "$1"*) return 0 ;; esac
-            done
-        ;;
-        2:2)
-            while IFS= read -r _line || [ "$_line" ]; do
-                case "$_line" in *"$1") return 0 ;; esac
-            done
-        ;;
-        2:3)
-            while IFS= read -r _line || [ "$_line" ]; do
-                case "$_line" in "$1") return 0 ;; esac
-            done
-        ;;
-    esac
-
-    return 1
-}
-```
-
 ## info
 
 ```sh
@@ -1820,6 +1744,82 @@ rstrip() {
     case "$2" in
         "$1") return 2 ;;
         *"$1") printf "%s" "${2%"$1"}"; return 0 ;;
+    esac
+
+    return 1
+}
+```
+
+## str
+
+```sh
+# Description:
+# Check the existence/position of a substring in string
+#
+# Parameters:
+# <"$1"> - substring
+# <"$2"> - string
+# [$3] - mode('1' - $1 is first character(s) of $2,
+#             '2' - $1 is last character(s) of $2,
+#             '3' - $1 is, on its own, $2)
+#
+# Returns:
+# (0) match
+# (1) no match
+#
+str() {
+    case $#:$3 in
+        2:) case "$2" in *"$1"*) return 0 ;; esac ;;
+        3:1) case "$2" in "$1"*) return 0 ;; esac ;;
+        3:2) case "$2" in *"$1") return 0 ;; esac ;;
+        3:3) case "$2" in "$1") return 0 ;; esac ;;
+    esac
+
+    return 1
+}
+```
+
+## str_fd1
+
+```sh
+# Description:
+# Check the existence/position of a substring in stdin
+#
+# Parameters:
+# <"$1"> - substring
+# [$2] - mode('1' - $1 is first character(s) of stdin,
+#             '2' - $1 is last character(s) of stdin,
+#             '3' - $1 is, on its own, stdin)
+#
+# Returns:
+# (0) match
+# (1) no match
+#
+# Caveats:
+# 1. NULL character.
+#
+str_fd1() {
+    case $#:$2 in
+        1:)
+            while IFS= read -r _line || [ "$_line" ]; do
+                case "$_line" in *"$1"*) return 0 ;; esac
+            done
+        ;;
+        2:1)
+            while IFS= read -r _line || [ "$_line" ]; do
+                case "$_line" in "$1"*) return 0 ;; esac
+            done
+        ;;
+        2:2)
+            while IFS= read -r _line || [ "$_line" ]; do
+                case "$_line" in *"$1") return 0 ;; esac
+            done
+        ;;
+        2:3)
+            while IFS= read -r _line || [ "$_line" ]; do
+                case "$_line" in "$1") return 0 ;; esac
+            done
+        ;;
     esac
 
     return 1
