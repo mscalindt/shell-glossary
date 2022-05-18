@@ -260,7 +260,7 @@ err_ne_fmt() {
 
 ```sh
 # Description:
-# Print colorful error with printf format before text, no exit
+# Colorfully print error with printf format before text, no exit
 #
 # Parameters:
 # <"$1"> - printf format
