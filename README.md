@@ -1230,13 +1230,13 @@ num_to_char() {
         3)
             printf "%s" "$2"
 
-            _i=1; until [ $_i -eq $1 ]; do
+            _i=1; until [ "$_i" -eq "$1" ]; do
                 printf " %s" "$2"
                 _i=$((_i + 1))
             done
         ;;
         *)
-            _i=0; until [ $_i -eq $1 ]; do
+            _i=0; until [ "$_i" -eq "$1" ]; do
                 printf "%s" "$2"
                 _i=$((_i + 1))
             done
