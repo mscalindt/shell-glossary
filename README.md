@@ -213,9 +213,9 @@ err_ne_clr() {
 # <"$3"+> - text
 #
 err_fmt() {
-    _rc=$1; _printf_fmt="$2"; shift 2
+    _rc="$1"; _printf_fmt="$2"; shift 2
     printf "\nERROR: ${_printf_fmt}%s\n\n" "$*" 1>&2
-    exit $_rc
+    exit "$_rc"
 }
 ```
 
