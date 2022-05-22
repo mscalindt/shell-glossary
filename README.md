@@ -24,6 +24,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/3.4
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/4.2
 * [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/9
+* [SQ_ARG()](https://github.com/mscalindt/shell-glossary#sq_arg)
 * [STR()](https://github.com/mscalindt/shell-glossary#str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/10
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
@@ -1747,6 +1748,77 @@ rstrip() {
     esac
 
     return 1
+}
+```
+
+## sq_arg
+
+```sh
+# Description:
+# Get N single-quoted argument in a shell-folded string
+#
+# Parameters:
+# <$1> - N
+# <"$2"> - string
+#
+# Provides:
+# (0) <"$_arg"> - the argument
+# (0) <"$_pfix"> - pattern, left of the argument
+# (0) <"$_sfix"> - pattern, right of the argument
+# [$_i] - positive integer, indicating iterations done
+#
+# Returns:
+# (0) argument
+# (1) argument does not exist
+# (2) invalid string
+# (3) invalid N
+#
+sq_arg() {
+    sq_even() {
+        set -f; _old_ifs="$IFS"
+
+        IFS=\'
+        set -- $1
+
+        IFS="$_old_ifs"; set +f
+
+        [ "$(($# % 2))" -eq 0 ] && return 0 || return 1
+    }
+
+    [ "$1" -ge 1 ] || return 3
+    sq_even "$2" || return 2
+
+    _sfix="$2"; _i=0; while :; do
+        _i=$((_i + 1))
+
+        _sfix="${_sfix#*\'*\'}"
+
+        while :; do case ":$_sfix" in
+            :"\\"*) _sfix="${_sfix#???*\'}" ;;
+            :" "*) break ;;
+            :) [ "$1" -eq "$_i" ] && break || return 1 ;;
+            *) return 2 ;;
+        esac done
+
+        if [ "$1" -eq "$_i" ]; then
+            _pfix="$2"
+            _pfix="${_pfix%"$_sfix"}"
+            _pfix="${_pfix%\'*\'*}"
+
+            while :; do case ":${_pfix#"${_pfix%??}"}" in
+                :"\\'") _pfix="${_pfix%\'*???}" ;;
+                :*" " | :) break ;;
+                *) return 2 ;;
+            esac done
+
+            _arg="$2"
+            _arg="${_arg#"$_pfix"}"
+            _arg="${_arg%"$_sfix"}"
+
+            printf "%s" "$_arg"
+            return 0
+        fi
+    done
 }
 ```
 
