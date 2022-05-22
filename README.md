@@ -109,26 +109,26 @@ confirm_cont() {
 #
 confirm_cont_clr() {
     case $1 in
-    0)
-        printf "%bContinue? [Y/n]%b " "\033[1;37m" "\033[0m"
-        read -r _action
+        0)
+            printf "%bContinue? [Y/n]%b " "\033[1;37m" "\033[0m"
+            read -r _action
 
-        case "$_action" in
-            N*|n*) return 1 ;;
-        esac
+            case "$_action" in
+                N*|n*) return 1 ;;
+            esac
 
-        return 0
-    ;;
-    1)
-        printf "%bContinue? [y/N]%b " "\033[1;37m" "\033[0m"
-        read -r _action
+            return 0
+        ;;
+        1)
+            printf "%bContinue? [y/N]%b " "\033[1;37m" "\033[0m"
+            read -r _action
 
-        case "$_action" in
-            Y*|y*) return 0 ;;
-        esac
+            case "$_action" in
+                Y*|y*) return 0 ;;
+            esac
 
-        return 1
-    ;;
+            return 1
+        ;;
     esac
 }
 ```
