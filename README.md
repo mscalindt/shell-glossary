@@ -988,14 +988,14 @@ ltr_substr0() {
                         *) return 2 ;;
                     esac
 
-                    _i=0; until [ $_i -eq $1 ]; do
+                    _i=0; until [ "$_i" -eq "$1" ]; do
                         _str="${_str#*"$2"}"
 
                         case "$_str" in
                             *"$2"*"$2"*) : ;;
-                            *"$2") [ $((_i + 2)) -eq $1 ] && return 1 ;;
+                            *"$2") [ "$((_i + 2))" -eq "$1" ] && return 1 ;;
                             *"$2"*) : ;;
-                            *) [ $((_i + 1)) -eq $1 ] || return 3 ;;
+                            *) [ "$((_i + 1))" -eq "$1" ] || return 3 ;;
                         esac
 
                         _i=$((_i + 1))
@@ -1009,7 +1009,7 @@ ltr_substr0() {
                     _str="${_str##*"$2"}"
                 ;;
                 *)
-                    _i=0; until [ $_i -eq $1 ]; do
+                    _i=0; until [ "$_i" -eq "$1" ]; do
                         _str="${_str#*"$2"}"
                         _i=$((_i + 1))
                     done
@@ -1024,14 +1024,14 @@ ltr_substr0() {
 
     case $4 in
         0)
-            _str="${_str#${_str%%[![:space:]]*}}"
+            _str="${_str#"${_str%%[![:space:]]*}"}"
         ;;
         1)
-            _str="${_str%${_str##*[![:space:]]}}"
+            _str="${_str%"${_str##*[![:space:]]}"}"
         ;;
         2)
-            _str="${_str#${_str%%[![:space:]]*}}"
-            _str="${_str%${_str##*[![:space:]]}}"
+            _str="${_str#"${_str%%[![:space:]]*}"}"
+            _str="${_str%"${_str##*[![:space:]]}"}"
         ;;
     esac
 
