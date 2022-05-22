@@ -1846,7 +1846,7 @@ str_fd1() {
 str_to_chars() {
     _str="$1"
 
-    _old_lc=$LC_ALL; export LC_ALL=C
+    _old_lc="$LC_ALL"; export LC_ALL=C
 
     while :; do
         case ":$_str" in :) break ;; esac
