@@ -825,12 +825,12 @@ ltl_substr1() {
                         *) return 2 ;;
                     esac
 
-                    _sfix="$_str"; _i=0; until [ $_i -eq $1 ]; do
+                    _sfix="$_str"; _i=0; until [ "$_i" -eq "$1" ]; do
                         _sfix="${_sfix#*"$2"}"
 
                         case "$_sfix" in
                             *"$2"*) : ;;
-                            *) [ $((_i + 1)) -eq $1 ] || return 3 ;;
+                            *) [ "$((_i + 1))" -eq "$1" ] || return 3 ;;
                         esac
 
                         _i=$((_i + 1))
@@ -858,12 +858,12 @@ ltl_substr1() {
                         *) return 5 ;;
                     esac
 
-                    _pfix="$_str"; _i=0; until [ $_i -eq $3 ]; do
+                    _pfix="$_str"; _i=0; until [ "$_i" -eq "$3" ]; do
                         _pfix="${_pfix%"$4"*}"
 
                         case "$_pfix" in
                             *"$4"*) : ;;
-                            *) [ $((_i + 1)) -eq $3 ] || return 6 ;;
+                            *) [ "$((_i + 1))" -eq "$3" ] || return 6 ;;
                         esac
 
                         _i=$((_i + 1))
@@ -879,7 +879,7 @@ ltl_substr1() {
                     _str="${_str%"$2"*}"
                 ;;
                 *)
-                    _sfix="$_str"; _i=0; until [ $_i -eq $1 ]; do
+                    _sfix="$_str"; _i=0; until [ "$_i" -eq "$1" ]; do
                         _sfix="${_sfix#*"$2"}"
                         _i=$((_i + 1))
                     done
@@ -896,7 +896,7 @@ ltl_substr1() {
                     _str="${_str#*"$4"}"
                 ;;
                 *)
-                    _pfix="$_str"; _i=0; until [ $_i -eq $3 ]; do
+                    _pfix="$_str"; _i=0; until [ "$_i" -eq "$3" ]; do
                         _pfix="${_pfix%"$4"*}"
                         _i=$((_i + 1))
                     done
@@ -913,14 +913,14 @@ ltl_substr1() {
 
     case $6 in
         0)
-            _str="${_str#${_str%%[![:space:]]*}}"
+            _str="${_str#"${_str%%[![:space:]]*}"}"
         ;;
         1)
-            _str="${_str%${_str##*[![:space:]]}}"
+            _str="${_str%"${_str##*[![:space:]]}"}"
         ;;
         2)
-            _str="${_str#${_str%%[![:space:]]*}}"
-            _str="${_str%${_str##*[![:space:]]}}"
+            _str="${_str#"${_str%%[![:space:]]*}"}"
+            _str="${_str%"${_str##*[![:space:]]}"}"
         ;;
     esac
 
