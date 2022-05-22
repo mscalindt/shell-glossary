@@ -144,9 +144,9 @@ confirm_cont_clr() {
 # <"$2"+> - text
 #
 err() {
-    _rc=$1; shift
+    _rc="$1"; shift
     printf "\nERROR: %s\n\n" "$*" 1>&2
-    exit $_rc
+    exit "$_rc"
 }
 ```
 
