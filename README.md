@@ -1911,7 +1911,7 @@ str_to_chars() {
         ;;
     esac
 
-    export LC_ALL=$_old_lc
+    export LC_ALL="$_old_lc"
 }
 ```
 
