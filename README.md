@@ -421,7 +421,7 @@ fcount() {
             [ -e "$1" ] && _count=$#
 
             set -- "$_dir"/.*
-            [ $# -ge 3 ] && _count=$((_count + $# - 2))
+            [ "$#" -ge 3 ] && _count=$((_count + $# - 2))
         ;;
         2:0*)
             set -- "$_dir"/*"$_sfix"
