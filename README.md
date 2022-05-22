@@ -231,9 +231,9 @@ err_fmt() {
 # <"$3"+> - text
 #
 err_fmt_clr() {
-    _rc=$1; _printf_fmt="$2"; shift 2
+    _rc="$1"; _printf_fmt="$2"; shift 2
     printf "\n%bERROR:%b ${_printf_fmt}%s\n\n" "\033[1;31m" "\033[0m" "$*" 1>&2
-    exit $_rc
+    exit "$_rc"
 }
 ```
 
