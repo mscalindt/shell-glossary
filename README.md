@@ -1505,7 +1505,7 @@ pline() {
 pline_fd1() {
     _i=0; while read -r _line || [ "$_line" ]; do
         _i=$((_i + 1))
-        case $_i in $1) printf "%s" "$_line"; return 0 ;; esac
+        case $_i in "$1") printf "%s" "$_line"; return 0 ;; esac
     done
 
     return 1
