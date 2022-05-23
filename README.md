@@ -822,7 +822,7 @@ ltl_substr1() {
                 *)
                     case $1"$_str" in
                         1"$2"*) return 1 ;;
-                        $1*"$2"*) : ;;
+                        "$1"*"$2"*) : ;;
                         *) return 2 ;;
                     esac
 
@@ -855,7 +855,7 @@ ltl_substr1() {
                 *)
                     case $3"$_str" in
                         1*"$4") return 4 ;;
-                        $3*"$4"*) : ;;
+                        "$3"*"$4"*) : ;;
                         *) return 5 ;;
                     esac
 
