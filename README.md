@@ -1302,35 +1302,35 @@ parse() {
         2:5*)
             _maxN="${2#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
-                case $_i in $_maxN) break ;; esac
+                case $_i in "$_maxN") break ;; esac
                 printf "%s\n" "$_line"
             done < "$1"
         ;;
         3:5*1)
             _maxN="${3#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
-                case $_i in $_maxN) break ;; esac
+                case $_i in "$_maxN") break ;; esac
                 printf " %s \n" "$_line"
             done < "$1"
         ;;
         3:5*2)
             _maxN="${3#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
-                case $_i in $_maxN) break ;; esac
+                case $_i in "$_maxN") break ;; esac
                 printf "  %s  \n" "$_line"
             done < "$1"
         ;;
         3:5*3)
             _maxN="${3#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
-                case $_i in $_maxN) break ;; esac
+                case $_i in "$_maxN") break ;; esac
                 case ":$_line" in :) : ;; *) printf "%s\n" "$_line" ;; esac
             done < "$1"
         ;;
         3:5*4)
             _maxN="${3#??}"; _i=0; while read -r _line; do
                 _i=$((_i + 1))
-                case $_i in $_maxN) break ;; esac
+                case $_i in "$_maxN") break ;; esac
                 printf "%s\n" "$_line"
             done < "$1"
         ;;
