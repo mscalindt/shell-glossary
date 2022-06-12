@@ -2,6 +2,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 
 # Normal functions:
 
+* [CHARS_EVEN()](https://github.com/mscalindt/shell-glossary#chars_even)
 * [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary#confirm_cont)
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
 * [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
@@ -47,6 +48,57 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [PARSE_FD1()](https://github.com/mscalindt/shell-glossary#parse_fd1)
 * [PLINE_FD1()](https://github.com/mscalindt/shell-glossary#pline_fd1)
 * [STR_FD1()](https://github.com/mscalindt/shell-glossary#str_fd1)
+
+## chars_even
+
+```
+# Description:
+# Test if the character(s) count (combined), in a given string, is even
+#
+# Parameters:
+# <"$1"> - character(s)
+# <"$2"> - string
+#
+# Provides:
+# <"$_count"> - the count
+#
+# Returns:
+# (0) even
+# (1) uneven
+#
+chars_even() {
+    set -f; _old_ifs="$IFS"
+
+    IFS="$1"
+
+    _chars="$1"; while :; do case "${#_chars}" in
+        1)
+            _char="$_chars"
+
+            case "$2" in
+                *"$_char") set -- $2; _count="$#"; break ;;
+                *) set -- $2; _count=$(($# - 1)); break ;;
+            esac
+        ;;
+        *)
+            while :; do
+                _char="${_chars%"${_chars#?}"}"
+                _chars="${_chars#?}"
+
+                case "$2" in
+                    *"$_char") set -- $2; _count="$#"; break 2 ;;
+                esac
+
+                case "${#_chars}" in 1) break ;; esac
+            done
+        ;;
+    esac done
+
+    IFS="$_old_ifs"; set +f
+
+    [ "$((_count % 2))" -eq 0 ] || return 1
+}
+```
 
 ## confirm_cont
 
