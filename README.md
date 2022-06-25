@@ -1333,8 +1333,15 @@ ltr_substr1() {
 #
 # Returns:
 # (0) character(s)
+# (255) bad input
 #
 num_to_char() {
+    case "$1:${1#*[!0123456789]}" in
+        : | 0*) return 255 ;;
+        "$1:$1") : ;;
+        *) return 255 ;;
+    esac
+
     case $# in
         3)
             printf "%s" "$2"
