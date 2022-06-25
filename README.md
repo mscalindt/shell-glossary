@@ -1886,7 +1886,7 @@ rstrip() {
 # (0) argument
 # (1) argument does not exist
 # (2) invalid string
-# (3) invalid N
+# (255) bad input
 #
 sq_arg() {
     sq_even() {
@@ -1900,7 +1900,12 @@ sq_arg() {
         [ "$(($# % 2))" -eq 0 ] && return 0 || return 1
     }
 
-    [ "$1" -ge 1 ] || return 3
+    case "$1:${1#*[!0123456789]}" in
+        : | 0*) return 255 ;;
+        "$1:$1") : ;;
+        *) return 255 ;;
+    esac
+
     sq_even "$2" || return 2
 
     _sfix="$2"; _i=0; while :; do
