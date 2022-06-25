@@ -1324,10 +1324,10 @@ ltr_substr1() {
 
 ```sh
 # Description:
-# Convert a natural number to that amount of a character.
+# Convert N to that amount of a character
 #
 # Parameters:
-# <$1> - number
+# <$1> - N
 # <"$2"> - character
 # [$3] - mode('0' - whitespace-separated characters)
 #
