@@ -855,6 +855,7 @@ ltl_substr0() {
 # (0) substring | incorrect substring ($1/$3 > $2/$4)
 # (1) empty <unspecified/incorrect> expansion
 # (2) unspecified <empty/incorrect> expansion
+# (255) bad input
 #
 # Returns (mode '6'):
 # (0) substring
@@ -864,8 +865,25 @@ ltl_substr0() {
 # (4) empty expansion ($2..$4)
 # (5) unspecified expansion (! $4)
 # (6) incorrect expansion ($3 > $4)
+# (255) bad input
 #
 ltl_substr1() {
+    case "$1:${1#*[!0123456789]}" in
+        :) return 255 ;;
+        0:0) : ;;
+        0*) return 255 ;;
+        "$1:$1") : ;;
+        *) return 255 ;;
+    esac
+
+    case "$3:${3#*[!0123456789]}" in
+        :) return 255 ;;
+        0:0) : ;;
+        0*) return 255 ;;
+        "$3:$3") : ;;
+        *) return 255 ;;
+    esac
+
     _str="$5"
 
     case $#:$7$6 in
