@@ -730,14 +730,24 @@ lstrip() {
 # (0) substring | incorrect substring ($1 > $2)
 # (1) empty <unspecified/incorrect> expansion
 # (2) unspecified <empty/incorrect> expansion
+# (255) bad input
 #
 # Returns (mode '4'):
 # (0) substring
 # (1) empty expansion ($2 is the first character by the given ruleset)
 # (2) unspecified expansion (! $2)
 # (3) incorrect expansion ($1 > $2)
+# (255) bad input
 #
 ltl_substr0() {
+    case "$1:${1#*[!0123456789]}" in
+        :) return 255 ;;
+        0:0) : ;;
+        0*) return 255 ;;
+        "$1:$1") : ;;
+        *) return 255 ;;
+    esac
+
     _str="$3"
 
     case $#:$5$4 in
