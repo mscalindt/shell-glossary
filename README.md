@@ -598,13 +598,16 @@ fcount() {
 # Parameters:
 # <"$1"> - path
 #
+# Provides:
+# <"$_str"> - the absolute path | path
+#
 # Returns:
 # (0) absolute $1 | $1
 #
 get_fpath() {
     case "$1" in
-        /*) printf "%s" "$1" ;;
-        *) printf "%s" "$PWD/$1" ;;
+        /*) _str="$1"; printf "%s" "$1" ;;
+        *) _str="$PWD/$1"; printf "%s" "$PWD/$1" ;;
     esac
 }
 ```
