@@ -198,7 +198,7 @@ confirm_cont_clr() {
 #
 err() {
     _rc="$1"; shift
-    printf "\nERROR: %s\n\n" "$*" 1>&2
+    printf "ERROR: %s\n" "$*" 1>&2
     exit "$_rc"
 }
 ```
