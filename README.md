@@ -461,7 +461,10 @@ esc_str() {
 fcount() {
     [ -d "$1" ] || return 1
 
-    _dir="$1"
+    case "$1" in
+        *"/") _dir="${1%?}" ;;
+        *) _dir="$1" ;;
+    esa
     _count=0
 
     case "$2" in
