@@ -845,13 +845,13 @@ ltl_substr0() {
 # <$3> - to "N" $2-TL character('0' - max)
 # <"$4"> - to "X" character(s)
 # <"$5"> - string
-# [$6] - mode('0' - strip all leading whitespace characters,
-#             '1' - strip all trailing whitespace characters,
-#             '2' - strip all leading/trailing whitespace characters)
-# [$7] - mode('3' - keep $2,
-#             '4' - keep $4,
-#             '5' - keep $2/$4)
-# [$8] - mode('6' - verify the expansion)
+# [$6] - mode0-2('0' - strip all leading whitespace characters,
+#                '1' - strip all trailing whitespace characters,
+#                '2' - strip all leading/trailing whitespace characters)
+# [$7] - mode3-5('3' - keep $2,
+#                '4' - keep $4,
+#                '5' - keep $2/$4)
+# [$8] - mode6('6' - verify the expansion)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
