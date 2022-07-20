@@ -150,8 +150,8 @@ confirm_cont() {
 # Colorfully ask for confirmation to continue
 #
 # Parameters:
-# <$1> - mode('0' - default action: Y,
-#             '1' - default action: N)
+# <$1> - mode0-1('0' - default action: Y,
+#                '1' - default action: N)
 #
 # Provides:
 # <"$_action"> - the raw input
