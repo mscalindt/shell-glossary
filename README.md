@@ -1478,11 +1478,11 @@ parse() {
 # Parse the content of stdin
 #
 # Parameters:
-# [$1] - mode('1' - add one leading/trailing whitespace character,
-#             '2' - add two leading/trailing whitespace characters,
-#             '3' - skip empty lines,
-#             '4' - strip trailing/leading whitespace characters)
-# ["$2"] - mode("5 N" - stop parsing further than "N" line)
+# [$1] - mode1-4('1' - add one leading/trailing whitespace character,
+#                '2' - add two leading/trailing whitespace characters,
+#                '3' - skip empty lines,
+#                '4' - strip trailing/leading whitespace characters)
+# ["$2"] - mode5("5 N" - stop parsing further than "N" line)
 #
 # Returns:
 # (0) output | empty output (stdin) | empty output (by the given ruleset)
