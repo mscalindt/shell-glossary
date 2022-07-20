@@ -1375,11 +1375,11 @@ num_to_char() {
 #
 # Parameters:
 # <"$1"> - file
-# [$2] - mode('1' - add one leading/trailing whitespace character,
-#             '2' - add two leading/trailing whitespace characters,
-#             '3' - skip empty lines,
-#             '4' - strip trailing/leading whitespace characters)
-# ["$3"] - mode("5 N" - stop parsing further than "N" line)
+# [$2] - mode1-4('1' - add one leading/trailing whitespace character,
+#                '2' - add two leading/trailing whitespace characters,
+#                '3' - skip empty lines,
+#                '4' - strip trailing/leading whitespace characters)
+# ["$3"] - mode5("5 N" - stop parsing further than "N" line)
 #
 # Returns:
 # (0) output | empty output (file) | empty output (by the given ruleset)
