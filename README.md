@@ -1794,9 +1794,9 @@ remstr() {
 # <"$1"> - substring
 # <"$2"> - string
 # <"$3"> - character(s)
-# <$4> - mode('0' - replace the first occurrence,
-#             '1' - replace the last occurrence,
-#             '2' - replace all occurrences)
+# <$4> - mode0-2('0' - replace the first occurrence,
+#                '1' - replace the last occurrence,
+#                '2' - replace all occurrences)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
