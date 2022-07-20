@@ -1957,9 +1957,9 @@ sq_arg() {
 # Parameters:
 # <"$1"> - substring
 # <"$2"> - string
-# [$3] - mode('1' - $1 is first character(s) of $2,
-#             '2' - $1 is last character(s) of $2,
-#             '3' - $1 is, on its own, $2)
+# [$3] - mode1-3('1' - $1 is first character(s) of $2,
+#                '2' - $1 is last character(s) of $2,
+#                '3' - $1 is, on its own, $2)
 #
 # Returns:
 # (0) match
