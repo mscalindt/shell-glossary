@@ -1031,11 +1031,11 @@ ltl_substr1() {
 # <$1> - from "N" LTR character('0' - max)
 # <"$2"> - from "X" character(s)
 # <"$3"> - string
-# [$4] - mode('0' - strip all leading whitespace characters,
-#             '1' - strip all trailing whitespace characters,
-#             '2' - strip all leading/trailing whitespace characters)
-# [$5] - mode('3' - keep $2)
-# [$6] - mode('4' - verify the expansion)
+# [$4] - mode0-2('0' - strip all leading whitespace characters,
+#                '1' - strip all trailing whitespace characters,
+#                '2' - strip all leading/trailing whitespace characters)
+# [$5] - mode3('3' - keep $2)
+# [$6] - mode4('4' - verify the expansion)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
