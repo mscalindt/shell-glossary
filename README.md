@@ -1985,9 +1985,9 @@ str() {
 #
 # Parameters:
 # <"$1"> - substring
-# [$2] - mode('1' - $1 is first character(s) of stdin,
-#             '2' - $1 is last character(s) of stdin,
-#             '3' - $1 is, on its own, stdin)
+# [$2] - mode1-3('1' - $1 is first character(s) of stdin,
+#                '2' - $1 is last character(s) of stdin,
+#                '3' - $1 is, on its own, stdin)
 #
 # Returns:
 # (0) match
