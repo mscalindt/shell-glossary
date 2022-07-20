@@ -435,12 +435,12 @@ esc_str() {
 #
 # Parameters:
 # <"$1"> - directory
-# ["$2"] - mode("0X" - count files and directories ending with "X",
-#               '1' - count only files,
-#               "1X" - count only files ending with "X",
-#               '2' - count only directories,
-#               "2X" - count only directories ending with "X")
-# [$3] - mode('3' - exclude hidden files/directories)
+# ["$2"] - mode0-2("0X" - count files and directories ending with "X",
+#                  '1' - count only files,
+#                  "1X" - count only files ending with "X",
+#                  '2' - count only directories,
+#                  "2X" - count only directories ending with "X")
+# [$3] - mode3('3' - exclude hidden files/directories)
 #
 # Provides:
 # (0) <$_count> - the count
