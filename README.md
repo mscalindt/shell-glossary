@@ -1666,10 +1666,10 @@ remchars() {
 # Parameters:
 # <"$1"> - substring
 # <"$2"> - string
-# <$3> - mode('0' - remove the first occurrence,
-#             '1' - remove the last occurrence,
-#             '2' - remove all occurrences)
-# [$4] - mode('3' - whitespace is delimiter)
+# <$3> - mode0-2('0' - remove the first occurrence,
+#                '1' - remove the last occurrence,
+#                '2' - remove all occurrences)
+# [$4] - mode3('3' - whitespace is delimiter)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
