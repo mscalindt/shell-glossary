@@ -1335,7 +1335,7 @@ ltr_substr1() {
 # Parameters:
 # <$1> - N
 # <"$2"> - character
-# [$3] - mode('0' - whitespace-separated characters)
+# [$3] - mode0('0' - whitespace-separated characters)
 #
 # Returns:
 # (0) character(s)
