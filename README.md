@@ -2032,7 +2032,7 @@ str_fd1() {
 #
 # Parameters:
 # <"$1"> - string
-# [$2] - mode('0' - remove duplicate characters)
+# [$2] - mode0('0' - remove duplicate characters)
 #
 # Returns:
 # (0) characters | ! $1
