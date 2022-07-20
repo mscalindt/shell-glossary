@@ -337,9 +337,9 @@ err_ne_fmt_clr() {
 #
 # Parameters:
 # <"$1"> - string
-# ["$2"] - mode("0 X" - escape only "X" whitespace-separated character(s))
-# [$3] - mode('1' - strip the characters,
-#             '2' - escape single quote character with itself)
+# ["$2"] - mode0("0 X" - escape only "X" whitespace-separated character(s))
+# [$3] - mode1-2('1' - strip the characters,
+#                '2' - escape single quote character with itself)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
