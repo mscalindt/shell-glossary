@@ -1672,10 +1672,10 @@ remchars() {
 # Parameters:
 # <"$1"> - substring
 # <"$2"> - string
-# <$3> - mode0-2('0' - remove the first occurrence,
-#                '1' - remove the last occurrence,
-#                '2' - remove all occurrences)
-# [$4] - mode3('3' - whitespace is delimiter)
+# <$3> - mode1-3('1' - remove the first occurrence,
+#                '2' - remove the last occurrence,
+#                '3' - remove all occurrences)
+# [$4] - mode4('4' - whitespace is delimiter)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
@@ -1699,7 +1699,7 @@ remstr() {
     esac
 
     case $3 in
-        0|2)
+        1|3)
             _pfix="${_str%%"$1"*}"
             case $# in
                 4)
@@ -1722,7 +1722,7 @@ remstr() {
 
             _str="$_pfix$_sfix"
         ;;
-        1)
+        2)
             _pfix="${_str%"$1"*}"
             case $# in
                 4)
@@ -1745,7 +1745,7 @@ remstr() {
     esac
 
     case $3 in
-        2)
+        3)
             while :; do case "$_str" in
                 "$1")
                     return 1
