@@ -1167,7 +1167,8 @@ ltr_substr0() {
 #
 # Provides:
 # (0) <"$_str"> - the modified string
-# [$_i] - positive integer, indicating iterations done
+# [$_i] - the iterations completed;
+#         whole number
 #
 # Returns:
 # (0) substring | incorrect substring ($1/$3 > $2/$4)
