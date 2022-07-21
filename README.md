@@ -150,8 +150,8 @@ confirm_cont() {
 # Colorfully ask for confirmation to continue
 #
 # Parameters:
-# <$1> - mode0-1('0' - default action: Y,
-#                '1' - default action: N)
+# <$1> - mode1-2('1' - default action: Y,
+#                '2' - default action: N)
 #
 # Provides:
 # <"$_action"> - the raw input
@@ -162,7 +162,7 @@ confirm_cont() {
 #
 confirm_cont_clr() {
     case $1 in
-        0)
+        1)
             printf "%bContinue? [Y/n]%b " "\033[1;37m" "\033[0m"
             read -r _action
 
@@ -172,7 +172,7 @@ confirm_cont_clr() {
 
             return 0
         ;;
-        1)
+        2)
             printf "%bContinue? [y/N]%b " "\033[1;37m" "\033[0m"
             read -r _action
 
