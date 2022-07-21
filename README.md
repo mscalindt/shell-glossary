@@ -1890,9 +1890,12 @@ rstrip() {
 #
 # Provides:
 # (0) <"$_arg"> - the argument
-# (0) <"$_pfix"> - pattern, left of the argument
-# (0) <"$_sfix"> - pattern, right of the argument
-# [$_i] - positive integer, indicating iterations done
+# (0) <"$_pfix"> - a pattern;
+#                  left side of the argument
+# (0) <"$_sfix"> - a pattern;
+#                  right side of the argument
+# [$_i] - the iterations completed;
+#         whole number
 #
 # Returns:
 # (0) argument
