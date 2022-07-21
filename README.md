@@ -343,7 +343,9 @@ err_ne_fmt_clr() {
 #
 # Provides:
 # (0) <"$_str"> - the modified string
-# <"$_chars"> - the characters, sorted by order parsed
+# <"$_chars"> - the characters;
+#               whitespace delimited;
+#               sorted by order parsed
 #
 # Returns:
 # (0) escaped/stripped $1
