@@ -1800,9 +1800,9 @@ remstr() {
 # <"$1"> - substring
 # <"$2"> - string
 # <"$3"> - character(s)
-# <$4> - mode0-2('0' - replace the first occurrence,
-#                '1' - replace the last occurrence,
-#                '2' - replace all occurrences)
+# <$4> - mode1-3('1' - replace the first occurrence,
+#                '2' - replace the last occurrence,
+#                '3' - replace all occurrences)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
@@ -1826,13 +1826,13 @@ replstr() {
     esac
 
     case $4 in
-        0)
+        1)
             _str="${_str%%"$1"*}$3${_str#*"$1"}"
         ;;
-        1)
+        2)
             _str="${_str%"$1"*}$3${_str##*"$1"}"
         ;;
-        2)
+        3)
             _str_ref="${_str%%"$1"*}$3"
             _str="$_str_ref${_str#*"$1"}"
 
