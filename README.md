@@ -107,8 +107,8 @@ chars_even() {
 # Ask for confirmation to continue
 #
 # Parameters:
-# <$1> - mode0-1('0' - default action: Y,
-#                '1' - default action: N)
+# <$1> - mode1-2('1' - default action: Y,
+#                '2' - default action: N)
 #
 # Provides:
 # <"$_action"> - the raw input
@@ -119,7 +119,7 @@ chars_even() {
 #
 confirm_cont() {
     case $1 in
-        0)
+        1)
             printf 'Continue? [Y/n] '
             read -r _action
 
@@ -129,7 +129,7 @@ confirm_cont() {
 
             return 0
         ;;
-        1)
+        2)
             printf 'Continue? [y/N] '
             read -r _action
 
