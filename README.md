@@ -247,7 +247,7 @@ err_ne() {
 # <"$1"+> - text
 #
 # Returns:
-# (0) text
+# (0) error-formatted $1
 #
 err_ne_clr() {
     printf "%bERROR:%b %s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
