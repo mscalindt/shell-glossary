@@ -1900,7 +1900,7 @@ rstrip() {
 # Returns:
 # (0) argument
 # (1) argument does not exist
-# (2) invalid string
+# (2) invalid $2
 # (255) bad input
 #
 sq_arg() {
