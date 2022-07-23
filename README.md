@@ -230,7 +230,7 @@ err_clr() {
 # <"$1"+> - text
 #
 # Returns:
-# (0) text
+# (0) error-formatted $1
 #
 err_ne() {
     printf "ERROR: %s\n" "$*" 1>&2
