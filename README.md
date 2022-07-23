@@ -2044,7 +2044,7 @@ str_fd1() {
 # [$2] - mode0('0' - remove duplicate characters)
 #
 # Returns:
-# (0) characters | ! $1
+# (0) character(s)
 #
 # Caveats:
 # 1. Only characters in the printable set of C ASCII characters ('[\x20-\x7E]')
