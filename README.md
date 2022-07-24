@@ -2167,7 +2167,7 @@ warn_clr() {
 # <"$2"+> - text
 #
 # Returns:
-# (0) text
+# (0) warning-formatted $2
 #
 warn_fmt() {
     _printf_fmt="$1"; shift
