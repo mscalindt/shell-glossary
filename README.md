@@ -644,7 +644,7 @@ info() {
 # <"$1"+> - text
 #
 # Returns:
-# (0) text
+# (0) info-formatted $1
 #
 info_clr() {
     printf "%bINFO:%b %s\n" "\033[1;37m" "\033[0m" "$*"
