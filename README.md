@@ -627,7 +627,7 @@ get_fpath() {
 # <"$1"+> - text
 #
 # Returns:
-# (0) text
+# (0) info-formatted $1
 #
 info() {
     printf "INFO: %s\n" "$*"
