@@ -2132,7 +2132,7 @@ str_to_chars() {
 # <"$1"+> - text
 #
 # Returns:
-# (0) text
+# (0) warning-formatted $1
 #
 warn() {
     printf "WARNING: %s\n" "$*"
