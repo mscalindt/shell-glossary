@@ -320,7 +320,7 @@ err_ne_fmt() {
 # <"$2"+> - text
 #
 # Returns:
-# (0) text
+# (0) error-formatted $2
 #
 err_ne_fmt_clr() {
     _printf_fmt="$1"; shift
