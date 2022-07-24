@@ -662,7 +662,7 @@ info_clr() {
 # <"$2"+> - text
 #
 # Returns:
-# (0) text
+# (0) info-formatted $2
 #
 info_fmt() {
     _printf_fmt="$1"; shift
