@@ -76,7 +76,7 @@ chars_even() {
             _char="$_chars"
 
             case "$2" in
-                *"$_char") set -- $2; _count="$#"; break ;;
+                *"$_char") set -- $2; _count=$#; break ;;
                 *) set -- $2; _count=$(($# - 1)); break ;;
             esac
         ;;
@@ -86,7 +86,7 @@ chars_even() {
                 _chars="${_chars#?}"
 
                 case "$2" in
-                    *"$_char") set -- $2; _count="$#"; break 2 ;;
+                    *"$_char") set -- $2; _count=$#; break 2 ;;
                 esac
 
                 case "${#_chars}" in 1) break ;; esac
