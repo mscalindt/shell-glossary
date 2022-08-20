@@ -464,7 +464,7 @@ fcount() {
     [ -d "$1" ] || return 1
 
     case "$1" in
-        *"/") _dir="${1%?}" ;;
+        *'/') _dir="${1%?}" ;;
         *) _dir="$1" ;;
     esac
     _count=0
@@ -487,10 +487,10 @@ fcount() {
 
             set -- "$_dir"/.*"$_sfix"
             case "$_sfix" in
-                ".")
+                '.')
                     [ -e "$2" ] && _count=$((_count + $# - 1))
                 ;;
-                "..")
+                '..')
                     [ -e "$1" ] && _count=$((_count + $#))
                 ;;
                 *)
@@ -520,13 +520,13 @@ fcount() {
 
             set -- "$_dir"/.*"$_sfix"
             case "$_sfix" in
-                ".") [ -e "$2" ] && _count=$((_count + $# - 1)) ;;
+                '.') [ -e "$2" ] && _count=$((_count + $# - 1)) ;;
                 *) [ -e "$1" ] && _count=$((_count + $#)) ;;
             esac
 
             set -- "$_dir"/.*"$_sfix"/
             case "$_sfix" in
-                ".") [ -e "$2" ] && _count=$((_count - $# + 1)) ;;
+                '.') [ -e "$2" ] && _count=$((_count - $# + 1)) ;;
                 *) [ -e "$1" ] && _count=$((_count - $#)) ;;
             esac
 
@@ -546,10 +546,10 @@ fcount() {
 
             set -- "$_dir"/.*"$_sfix"/
             case "$_sfix" in
-                ".")
+                '.')
                     [ -e "$2" ] && _count=$((_count + $# - 1))
                 ;;
-                "..")
+                '..')
                     [ -e "$1" ] && _count=$((_count + $#))
                 ;;
                 *)
