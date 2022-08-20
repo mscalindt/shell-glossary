@@ -878,7 +878,7 @@ ltl_substr0() {
 # (255) bad input
 #
 ltl_substr1() {
-    case "$1:${1#*[!0123456789]}" in
+    case $1:${1#*[!0123456789]} in
         :) return 255 ;;
         0:0) : ;;
         0*) return 255 ;;
@@ -886,7 +886,7 @@ ltl_substr1() {
         *) return 255 ;;
     esac
 
-    case "$3:${3#*[!0123456789]}" in
+    case $3:${3#*[!0123456789]} in
         :) return 255 ;;
         0:0) : ;;
         0*) return 255 ;;
