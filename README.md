@@ -749,7 +749,7 @@ lstrip() {
 # (255) bad input
 #
 ltl_substr0() {
-    case "$1:${1#*[!0123456789]}" in
+    case $1:${1#*[!0123456789]} in
         :) return 255 ;;
         0:0) : ;;
         0*) return 255 ;;
