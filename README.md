@@ -1060,7 +1060,7 @@ ltl_substr1() {
 # (255) bad input
 #
 ltr_substr0() {
-    case "$1:${1#*[!0123456789]}" in
+    case $1:${1#*[!0123456789]} in
         :) return 255 ;;
         0:0) : ;;
         0*) return 255 ;;
