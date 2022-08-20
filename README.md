@@ -1929,8 +1929,8 @@ sq_arg() {
         _sfix="${_sfix#*\'*\'}"
 
         while :; do case ":$_sfix" in
-            :"\\"*) _sfix="${_sfix#???*\'}" ;;
-            :" "*) break ;;
+            :'\'*) _sfix="${_sfix#???*\'}" ;;
+            :' '*) break ;;
             :) [ "$1" -eq "$_i" ] && break || return 1 ;;
             *) return 2 ;;
         esac done
@@ -1942,7 +1942,7 @@ sq_arg() {
 
             while :; do case ":${_pfix#"${_pfix%??}"}" in
                 :"\\'") _pfix="${_pfix%\'*???}" ;;
-                :*" " | :) break ;;
+                :*' ' | :) break ;;
                 *) return 2 ;;
             esac done
 
