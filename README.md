@@ -71,7 +71,7 @@ chars_even() {
 
     IFS="$1"
 
-    _chars="$1"; while :; do case "${#_chars}" in
+    _chars="$1"; while :; do case ${#_chars} in
         1)
             _char="$_chars"
 
@@ -89,7 +89,7 @@ chars_even() {
                     *"$_char") set -- $2; _count=$#; break 2 ;;
                 esac
 
-                case "${#_chars}" in 1) break ;; esac
+                case ${#_chars} in 1) break ;; esac
             done
         ;;
     esac done
