@@ -2061,7 +2061,7 @@ str_to_chars() {
         _char="${_str%"${_str#?}"}"
         _str="${_str#?}"
 
-        case "$_char" in
+        case $_char in
             ' ')
                 :
             ;;
@@ -2087,7 +2087,7 @@ str_to_chars() {
                     *"$_char"*) continue ;;
                 esac
 
-                case "$_char" in
+                case $_char in
                     ' ')
                         :
                     ;;
@@ -2106,7 +2106,7 @@ str_to_chars() {
                 _char="${_str%"${_str#?}"}"
                 _str="${_str#?}"
 
-                case "$_char" in
+                case $_char in
                     " ")
                         :
                     ;;
