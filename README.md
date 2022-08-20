@@ -363,9 +363,9 @@ esc_str() {
     esac
 
     case "$_chars" in
-        "\\"*) : ;;
-        *"\\") _chars="\\ ${_chars%%\\*}${_chars#*\\}" ;;
-        *"\\"*) _chars="\\ ${_chars%%\\*}${_chars#*\\ }" ;;
+        '\'*) : ;;
+        *'\') _chars='\'" ${_chars%%\\*}${_chars#*\\}" ;;
+        *'\'*) _chars='\'" ${_chars%%\\*}${_chars#*\\ }" ;;
     esac
 
     for _char in $_chars; do
