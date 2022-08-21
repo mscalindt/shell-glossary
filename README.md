@@ -749,18 +749,18 @@ lstrip() {
 # (255) bad input
 #
 ltl_substr0() {
-    case $1:${1#*[!0123456789]} in
+    case :$1${1#*[!0123456789]} in
         :) return 255 ;;
-        0:0) : ;;
-        0*) return 255 ;;
-        "$1:$1") : ;;
+        :00) : ;;
+        :0*) return 255 ;;
+        :"$1$1") : ;;
         *) return 255 ;;
     esac
 
     _str="$3"
 
-    case $#:$5$4 in
-        6:*|5:4*|4:4)
+    case $#:$5:$4 in
+        6*|5:4*|4::4)
             case $1 in
                 0)
                     case "$_str" in
@@ -773,9 +773,9 @@ ltl_substr0() {
                     _str="${_str%"$2"*}"
                 ;;
                 *)
-                    case $1"$_str" in
-                        1"$2"*) return 1 ;;
-                        "$1"*"$2"*) : ;;
+                    case $1:"$_str" in
+                        1:"$2"*) return 1 ;;
+                        "$1":*"$2"*) : ;;
                         *) return 2 ;;
                     esac
 
@@ -828,8 +828,8 @@ ltl_substr0() {
         ;;
     esac
 
-    case $5$4 in
-        *3*) _str="$_str$2" ;;
+    case $5:$4 in
+        3*|*3) _str="$_str$2" ;;
     esac
 
     printf "%s" "$_str"
