@@ -878,26 +878,26 @@ ltl_substr0() {
 # (255) bad input
 #
 ltl_substr1() {
-    case $1:${1#*[!0123456789]} in
+    case :$1${1#*[!0123456789]} in
         :) return 255 ;;
-        0:0) : ;;
-        0*) return 255 ;;
-        "$1:$1") : ;;
+        :00) : ;;
+        :0*) return 255 ;;
+        :"$1$1") : ;;
         *) return 255 ;;
     esac
 
-    case $3:${3#*[!0123456789]} in
+    case :$3${3#*[!0123456789]} in
         :) return 255 ;;
-        0:0) : ;;
-        0*) return 255 ;;
-        "$3:$3") : ;;
+        :00) : ;;
+        :0*) return 255 ;;
+        :"$3$3") : ;;
         *) return 255 ;;
     esac
 
     _str="$5"
 
-    case $#:$7$6 in
-        8:*|7:6*|6:6)
+    case $#:$7:$6 in
+        8*|7:6*|6::6)
             case $1 in
                 0)
                     case "$_str" in
@@ -910,9 +910,9 @@ ltl_substr1() {
                     _str="${_str%"$2"*}"
                 ;;
                 *)
-                    case $1"$_str" in
-                        1"$2"*) return 1 ;;
-                        "$1"*"$2"*) : ;;
+                    case $1:"$_str" in
+                        1:"$2"*) return 1 ;;
+                        "$1":*"$2"*) : ;;
                         *) return 2 ;;
                     esac
 
@@ -943,9 +943,9 @@ ltl_substr1() {
                     _str="${_str#*"$4"}"
                 ;;
                 *)
-                    case $3"$_str" in
-                        1*"$4") return 4 ;;
-                        "$3"*"$4"*) : ;;
+                    case $3:"$_str" in
+                        1:*"$4") return 4 ;;
+                        "$3":*"$4"*) : ;;
                         *) return 5 ;;
                     esac
 
@@ -1015,10 +1015,10 @@ ltl_substr1() {
         ;;
     esac
 
-    case $7$6 in
-        *3*) _str="$_str$2" ;;
-        *4*) _str="$4$_str" ;;
-        *5*) _str="$4$_str$2" ;;
+    case $7:$6 in
+        3*|*3) _str="$_str$2" ;;
+        4*|*4) _str="$4$_str" ;;
+        5*|*5) _str="$4$_str$2" ;;
     esac
 
     printf "%s" "$_str"
