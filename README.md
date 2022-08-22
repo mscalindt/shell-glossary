@@ -1497,61 +1497,61 @@ parse() {
 # 1. NULL character.
 #
 parse_fd1() {
-    case $#:"$2$1" in
-        0:)
+    case $#:$2:$1 in
+        0*)
             while IFS= read -r _line; do
                 printf "%s\n" "$_line"
             done
         ;;
-        1:1)
+        1::1)
             while IFS= read -r _line; do
                 printf " %s \n" "$_line"
             done
         ;;
-        1:2)
+        1::2)
             while IFS= read -r _line; do
                 printf "  %s  \n" "$_line"
             done
         ;;
-        1:3)
+        1::3)
             while IFS= read -r _line; do
                 case ":$_line" in :) : ;; *) printf "%s\n" "$_line" ;; esac
             done
         ;;
-        1:4)
+        1::4)
             while read -r _line; do
                 printf "%s\n" "$_line"
             done
         ;;
-        1:5*)
+        1::5*)
             _maxN="${1#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
                 printf "%s\n" "$_line"
             done
         ;;
-        2:5*1)
+        2:5*:1)
             _maxN="${2#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
                 printf " %s \n" "$_line"
             done
         ;;
-        2:5*2)
+        2:5*:2)
             _maxN="${2#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
                 printf "  %s  \n" "$_line"
             done
         ;;
-        2:5*3)
+        2:5*:3)
             _maxN="${2#??}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
                 case ":$_line" in :) : ;; *) printf "%s\n" "$_line" ;; esac
             done
         ;;
-        2:5*4)
+        2:5*:4)
             _maxN="${2#??}"; _i=0; while read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
@@ -1560,14 +1560,14 @@ parse_fd1() {
         ;;
     esac
 
-    case $#:"$2$1" in
-        0:|1:3|1:4|1:5*|2:5*3|2:5*4)
+    case $#:$2:$1 in
+        0*|1::3|1::4|1::5*|2:5*:3|2:5*:4)
             printf "%s" "$_line"
         ;;
-        1:1|2:5*1)
+        1::1|2:5*:1)
             [ "$_line" ] && printf " %s " "$_line"
         ;;
-        1:2|2:5*2)
+        1::2|2:5*:2)
             [ "$_line" ] && printf "  %s  " "$_line"
         ;;
     esac
