@@ -1915,9 +1915,9 @@ sq_arg() {
         [ "$(($# % 2))" -eq 0 ] && return 0 || return 1
     }
 
-    case $1:${1#*[!0123456789]} in
-        : | 0*) return 255 ;;
-        "$1:$1") : ;;
+    case :$1${1#*[!0123456789]} in
+        : | :0*) return 255 ;;
+        :"$1$1") : ;;
         *) return 255 ;;
     esac
 
@@ -1928,7 +1928,7 @@ sq_arg() {
 
         _sfix="${_sfix#*\'*\'}"
 
-        while :; do case ":$_sfix" in
+        while :; do case :"$_sfix" in
             :'\'*) _sfix="${_sfix#???*\'}" ;;
             :' '*) break ;;
             :) [ "$1" -eq "$_i" ] && break || return 1 ;;
@@ -1940,7 +1940,7 @@ sq_arg() {
             _pfix="${_pfix%"$_sfix"}"
             _pfix="${_pfix%\'*\'*}"
 
-            while :; do case ":${_pfix#"${_pfix%??}"}" in
+            while :; do case :"${_pfix#"${_pfix%??}"}" in
                 :"\\'") _pfix="${_pfix%\'*???}" ;;
                 :*' ' | :) break ;;
                 *) return 2 ;;
