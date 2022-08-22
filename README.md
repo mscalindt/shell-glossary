@@ -2056,7 +2056,7 @@ str_to_chars() {
     _old_lc="$LC_ALL"; export LC_ALL=C
 
     while :; do
-        case ":$_str" in :) break ;; esac
+        case :"$_str" in :) break ;; esac
 
         _char="${_str%"${_str#?}"}"
         _str="${_str#?}"
@@ -2078,7 +2078,7 @@ str_to_chars() {
     case $# in
         2)
             while :; do
-                case ":$_str" in :) break ;; esac
+                case :"$_str" in :) break ;; esac
 
                 _char="${_str%"${_str#?}"}"
                 _str="${_str#?}"
@@ -2101,7 +2101,7 @@ str_to_chars() {
         ;;
         *)
             while :; do
-                case ":$_str" in :) break ;; esac
+                case :"$_str" in :) break ;; esac
 
                 _char="${_str%"${_str#?}"}"
                 _str="${_str#?}"
