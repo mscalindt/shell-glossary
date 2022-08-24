@@ -474,7 +474,7 @@ fcount() {
     esac
 
     case $#:"$2" in
-        1:)
+        1*)
             set -- "$_dir"/*
             [ -e "$1" ] && _count=$#
 
