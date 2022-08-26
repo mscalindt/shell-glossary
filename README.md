@@ -51,7 +51,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 
 ## chars_even
 
-```
+```sh
 # Description:
 # Test if the character(s) count (combined), in a given string, is even
 #
