@@ -1348,6 +1348,9 @@ ltr_substr1() {
 # <"$2"> - character
 # [$3] - mode0('0' - whitespace-separated characters)
 #
+# Provides:
+# (0) <"$_chars"> - the character(s)
+#
 # Returns:
 # (0) character(s)
 # (255) bad input
@@ -1359,17 +1362,20 @@ num_to_char() {
         *) return 255 ;;
     esac
 
+    _chars="$2"
+    printf "%s" "$2"
+
     case $# in
         3)
-            printf "%s" "$2"
-
             _i=1; until [ "$_i" -eq "$1" ]; do
+                _chars="$_chars $2"
                 printf " %s" "$2"
                 _i=$((_i + 1))
             done
         ;;
         *)
-            _i=0; until [ "$_i" -eq "$1" ]; do
+            _i=1; until [ "$_i" -eq "$1" ]; do
+                _chars="$_chars$2"
                 printf "%s" "$2"
                 _i=$((_i + 1))
             done
