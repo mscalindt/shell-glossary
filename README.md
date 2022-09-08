@@ -611,9 +611,11 @@ fcount() {
 #
 get_fpath() {
     case "$1" in
-        '/'*) _str="$1"; printf "%s" "$1" ;;
-        *) _str="$PWD/$1"; printf "%s" "$PWD/$1" ;;
+        '/'*) _str="$1" ;;
+        *) _str="$PWD/$1" ;;
     esac
+
+    printf "%s" "$_str"
 }
 ```
 
