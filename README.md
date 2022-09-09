@@ -1874,6 +1874,9 @@ replstr() {
 # <"$1"> - character(s)
 # <"$2"> - string
 #
+# Provides:
+# (0) <"$_str"> - the stripped string
+#
 # Returns:
 # (0) stripped $2
 # (1) ! $1
@@ -1882,7 +1885,7 @@ replstr() {
 rstrip() {
     case "$2" in
         "$1") return 2 ;;
-        *"$1") printf "%s" "${2%"$1"}"; return 0 ;;
+        *"$1") _str="${2%"$1"}"; printf "%s" "$_str"; return 0 ;;
     esac
 
     return 1
