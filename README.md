@@ -60,7 +60,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 # <"$2"> - string
 #
 # Provides:
-# <"$_count"> - the count
+# <$_count> - the count
 #
 # Returns:
 # (0) even
