@@ -2057,6 +2057,9 @@ str_fd1() {
 # <"$1"> - string
 # [$2] - mode0('0' - remove duplicate characters)
 #
+# Provides:
+# <"$_chars"> - the character(s)
+#
 # Returns:
 # (0) character(s)
 #
@@ -2065,7 +2068,7 @@ str_fd1() {
 #    will be printed.
 #
 str_to_chars() {
-    _str="$1"
+    _str="$1"; _chars=
 
     _old_lc="$LC_ALL"; export LC_ALL=C
 
@@ -2084,6 +2087,7 @@ str_to_chars() {
                     2) _chars_set="$_char" ;;
                 esac
 
+                _chars="$_char"
                 printf "%s" "$_char"; break
             ;;
         esac
@@ -2108,6 +2112,7 @@ str_to_chars() {
                     [[:print:]])
                         _chars_set="$_chars_set$_char"
 
+                        _chars="$_chars $_char"
                         printf " %s" "$_char"
                     ;;
                 esac
@@ -2125,6 +2130,7 @@ str_to_chars() {
                         :
                     ;;
                     [[:print:]])
+                        _chars="$_chars $_char"
                         printf " %s" "$_char"
                     ;;
                 esac
