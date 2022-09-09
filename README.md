@@ -604,18 +604,18 @@ fcount() {
 # <"$1"> - path
 #
 # Provides:
-# <"$_str"> - the absolute path | path
+# <"$_path"> - the absolute path | path
 #
 # Returns:
 # (0) absolute $1 | $1
 #
 get_fpath() {
     case "$1" in
-        '/'*) _str="$1" ;;
-        *) _str="$PWD/$1" ;;
+        '/'*) _path="$1" ;;
+        *) _path="$PWD/$1" ;;
     esac
 
-    printf "%s" "$_str"
+    printf "%s" "$_path"
 }
 ```
 
