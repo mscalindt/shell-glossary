@@ -2026,25 +2026,25 @@ str() {
 # 1. NULL character.
 #
 str_fd1() {
-    case $#:$2 in
-        1*)
-            while IFS= read -r _line || [ "$_line" ]; do
-                case "$_line" in *"$1"*) return 0 ;; esac
-            done
-        ;;
-        2:1)
+    case $2 in
+        1)
             while IFS= read -r _line || [ "$_line" ]; do
                 case "$_line" in "$1"*) return 0 ;; esac
             done
         ;;
-        2:2)
+        2)
             while IFS= read -r _line || [ "$_line" ]; do
                 case "$_line" in *"$1") return 0 ;; esac
             done
         ;;
-        2:3)
+        3)
             while IFS= read -r _line || [ "$_line" ]; do
                 case "$_line" in "$1") return 0 ;; esac
+            done
+        ;;
+        *)
+            while IFS= read -r _line || [ "$_line" ]; do
+                case "$_line" in *"$1"*) return 0 ;; esac
             done
         ;;
     esac
