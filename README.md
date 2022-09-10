@@ -1995,11 +1995,11 @@ sq_arg() {
 # (1) no match
 #
 str() {
-    case $#:$3:"$2" in
-        2::*"$1"*) return 0 ;;
-        3:1:"$1"*) return 0 ;;
-        3:2:*"$1") return 0 ;;
-        3:3:"$1") return 0 ;;
+    case $3:"$2" in
+        1:"$1"*) return 0 ;;
+        2:*"$1") return 0 ;;
+        3:"$1") return 0 ;;
+        :*"$1"*) return 0 ;;
     esac
 
     return 1
