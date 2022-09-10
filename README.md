@@ -2089,8 +2089,8 @@ str_to_chars() {
                 :
             ;;
             [[:print:]])
-                case $# in
-                    2) _chars_set="$_char" ;;
+                case $2 in
+                    0) _chars_set="$_char" ;;
                 esac
 
                 _chars="$_char"
@@ -2099,8 +2099,8 @@ str_to_chars() {
         esac
     done
 
-    case $# in
-        2)
+    case $2 in
+        0)
             while :; do
                 case :"$_str" in :) break ;; esac
 
