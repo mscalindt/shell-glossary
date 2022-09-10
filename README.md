@@ -1210,8 +1210,8 @@ ltr_substr1() {
 
     _str="$5"
 
-    case $#:$7:$6 in
-        8*|7:6*|6::6)
+    case $8$7$6 in
+        *6*)
             case $1 in
                 0)
                     case "$_str" in
@@ -1327,10 +1327,10 @@ ltr_substr1() {
         ;;
     esac
 
-    case $7:$6 in
-        3*|*3) _str="$2$_str" ;;
-        4*|*4) _str="$_str$4" ;;
-        5*|*5) _str="$2$_str$4" ;;
+    case $7$6 in
+        *3*) _str="$2$_str" ;;
+        *4*) _str="$_str$4" ;;
+        *5*) _str="$2$_str$4" ;;
     esac
 
     printf "%s" "$_str"
