@@ -473,15 +473,8 @@ fcount() {
         0*|1*|2*) _sfix="${2#?}" ;;
     esac
 
-    case $#:"$2" in
-        1*)
-            set -- "$_dir"/*
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/.*
-            [ "$#" -ge 3 ] && _count=$((_count + $# - 2))
-        ;;
-        2:0*)
+    case "$2":$3 in
+        0*:)
             set -- "$_dir"/*"$_sfix"
             [ -e "$1" ] && _count=$#
 
@@ -499,7 +492,7 @@ fcount() {
                 ;;
             esac
         ;;
-        2:1)
+        1:)
             set -- "$_dir"/*
             [ -e "$1" ] && _count=$#
 
@@ -512,7 +505,7 @@ fcount() {
             set -- "$_dir"/.*/
             [ -e "$3" ] && _count=$((_count - $# + 2))
         ;;
-        2:1*)
+        1*:)
             [ -f "$_dir/$_sfix" ] && _count=1
 
             set -- "$_dir"/*"$_sfix"
@@ -533,14 +526,14 @@ fcount() {
             set -- "$_dir"/*"$_sfix"/
             [ -e "$1" ] && _count=$((_count - $#))
         ;;
-        2:2)
+        2:)
             set -- "$_dir"/*/
             [ -e "$1" ] && _count=$#
 
             set -- "$_dir"/.*/
             [ -e "$3" ] && _count=$((_count + $# - 2))
         ;;
-        2:2*)
+        2*:)
             set -- "$_dir"/*"$_sfix"/
             [ -e "$1" ] && _count=$#
 
@@ -558,35 +551,42 @@ fcount() {
                 ;;
             esac
         ;;
+        3:)
+            set -- "$_dir"/*
+            [ -e "$1" ] && _count=$#
+        ;;
+        0*:3)
+            set -- "$_dir"/*"$_sfix"
+            [ -e "$1" ] && _count=$#
+        ;;
+        1:3)
+            set -- "$_dir"/*
+            [ -e "$1" ] && _count=$#
+
+            set -- "$_dir"/*/
+            [ -e "$1" ] && _count=$((_count - $#))
+        ;;
+        1*:3)
+            set -- "$_dir"/*"$_sfix"
+            [ -e "$1" ] && _count=$#
+
+            set -- "$_dir"/*"$_sfix"/
+            [ -e "$1" ] && _count=$((_count - $#))
+        ;;
         2:3)
-            set -- "$_dir"/*
-            [ -e "$1" ] && _count=$#
-        ;;
-        3:0*)
-            set -- "$_dir"/*"$_sfix"
-            [ -e "$1" ] && _count=$#
-        ;;
-        3:1)
-            set -- "$_dir"/*
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/*/
-            [ -e "$1" ] && _count=$((_count - $#))
-        ;;
-        3:1*)
-            set -- "$_dir"/*"$_sfix"
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/*"$_sfix"/
-            [ -e "$1" ] && _count=$((_count - $#))
-        ;;
-        3:2)
             set -- "$_dir"/*/
             [ -e "$1" ] && _count=$#
         ;;
-        3:2*)
+        2*:3)
             set -- "$_dir"/*"$_sfix"/
             [ -e "$1" ] && _count=$#
+        ;;
+        *)
+            set -- "$_dir"/*
+            [ -e "$1" ] && _count=$#
+
+            set -- "$_dir"/.*
+            [ "$#" -ge 3 ] && _count=$((_count + $# - 2))
         ;;
     esac
 
