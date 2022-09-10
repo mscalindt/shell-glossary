@@ -1711,14 +1711,14 @@ remstr() {
         *) return 2 ;;
     esac
 
-    case $# in
+    case $4 in
         4) case "$_str" in " $1 ") return 1 ;; esac ;;
     esac
 
     case $3 in
         1|3)
             _pfix="${_str%%"$1"*}"
-            case $# in
+            case $4 in
                 4)
                     case "$_str" in
                         *" $1 "*) _pfix="${_pfix% }" ;;
@@ -1729,7 +1729,7 @@ remstr() {
             esac
 
             _sfix="${_str#*"$1"}"
-            case $# in
+            case $4 in
                 4)
                     case "$_str" in
                         "$1 "*) _sfix="${_sfix# }" ;;
@@ -1741,14 +1741,14 @@ remstr() {
         ;;
         2)
             _pfix="${_str%"$1"*}"
-            case $# in
+            case $4 in
                 4)
                     _pfix="${_pfix% }"
                 ;;
             esac
 
             _sfix="${_str##*"$1"}"
-            case $# in
+            case $4 in
                 4)
                     case "$_str" in
                         "$1 "*"$1"*) : ;;
@@ -1768,12 +1768,12 @@ remstr() {
                     return 1
                 ;;
                 *"$1"*)
-                    case $# in
+                    case $4 in
                         4) case "$_str" in " $1 ") return 1 ;; esac ;;
                     esac
 
                     _pfix="${_str%%"$1"*}"
-                    case $# in
+                    case $4 in
                         4)
                             case "$_str" in
                                 *" $1 "*) _pfix="${_pfix% }" ;;
@@ -1784,7 +1784,7 @@ remstr() {
                     esac
 
                     _sfix="${_str#*"$1"}"
-                    case $# in
+                    case $4 in
                         4)
                             case "$_str" in
                                 "$1 "*) _sfix="${_sfix# }" ;;
