@@ -1365,8 +1365,8 @@ num_to_char() {
     _chars="$2"
     printf "%s" "$2"
 
-    case $# in
-        3)
+    case $3 in
+        0)
             _i=1; until [ "$_i" -eq "$1" ]; do
                 _chars="$_chars $2"
                 printf " %s" "$2"
