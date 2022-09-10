@@ -374,11 +374,11 @@ esc_str() {
             *) continue ;;
         esac
 
-        case $_char:$#:$3:"$2" in
-            "'":3:2*|"'":2::2)
+        case $_char:$3:"$2" in
+            "'":2*|"'"::2)
                 _str_ref="${_str%%\'*}'\\''"
             ;;
-            "$_char":3:1*|"$_char":2::1)
+            "$_char":1*|"$_char"::1)
                 _str_ref="${_str%%"$_char"*}"
             ;;
             *)
@@ -387,8 +387,8 @@ esc_str() {
         esac
         _str="$_str_ref${_str#*"$_char"}"
 
-        case $_char:$#:$3:"$2" in
-            "'":3:2*|"'":2::2)
+        case $_char:$3:"$2" in
+            "'":2*|"'"::2)
                 while :; do case "$_str" in
                     "$_str_ref"*"'"*)
                         _str="${_str#*"$_str_ref"}"
@@ -400,7 +400,7 @@ esc_str() {
                     ;;
                 esac done
             ;;
-            "$_char":3:1*|"$_char":2::1)
+            "$_char":1*|"$_char"::1)
                 while :; do case "$_str" in
                     *"$_char"*) _str="${_str%%"$_char"*}${_str#*"$_char"}" ;;
                     *) break ;;
