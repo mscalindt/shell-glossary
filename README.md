@@ -463,12 +463,11 @@ esc_str() {
 fcount() {
     [ -d "$1" ] || return 1
 
+    _count=0
     case "$1" in
         *'/') _dir="${1%?}" ;;
         *) _dir="$1" ;;
     esac
-    _count=0
-
     case "$2" in
         0*|1*|2*) _sfix="${2#?}" ;;
     esac
