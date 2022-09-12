@@ -483,11 +483,7 @@ fcount() {
                 '.')
                     [ -e "$2" ] && _count=$((_count + $# - 1))
                 ;;
-                '..')
-                    [ -e "$1" ] && _count=$((_count + $#))
-                ;;
                 *)
-                    [ -e "$_dir/$_sfix" ] && _count=$((_count + 1))
                     [ -e "$1" ] && _count=$((_count + $#))
                 ;;
             esac
@@ -506,8 +502,6 @@ fcount() {
             [ -e "$3" ] && _count=$((_count - $# + 2))
         ;;
         1*:)
-            [ -f "$_dir/$_sfix" ] && _count=1
-
             set -- "$_dir"/*"$_sfix"
             [ -e "$1" ] && _count=$((_count + $#))
 
@@ -542,11 +536,7 @@ fcount() {
                 '.')
                     [ -e "$2" ] && _count=$((_count + $# - 1))
                 ;;
-                '..')
-                    [ -e "$1" ] && _count=$((_count + $#))
-                ;;
                 *)
-                    [ -d "$_dir/$_sfix" ] && _count=$((_count + 1))
                     [ -e "$1" ] && _count=$((_count + $#))
                 ;;
             esac
