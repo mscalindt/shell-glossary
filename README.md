@@ -461,6 +461,107 @@ esc_str() {
 #    Fix: none; not applicable.
 #
 fcount() {
+    fcount_all() {
+        _fcount=0
+
+        if [ "$_sfix" ]; then
+            set -- "$_dir"/*"$_sfix"
+            [ -e "$1" ] && _fcount=$#
+
+            set -- "$_dir"/.*"$_sfix"
+            case "$_sfix" in
+                '.')
+                    [ -e "$2" ] && _fcount=$((_fcount + $# - 1))
+                ;;
+                *)
+                    [ -e "$1" ] && _fcount=$((_fcount + $#))
+                ;;
+            esac
+        else
+            set -- "$_dir"/*
+            [ -e "$1" ] && _fcount=$#
+
+            set -- "$_dir"/.*
+            [ -e "$3" ] && _fcount=$((_fcount + $# - 2))
+        fi
+    }
+    fcount_dotdirs() {
+        _fcount=0
+
+        if [ "$_sfix" ]; then
+            set -- "$_dir"/.*"$_sfix"/
+            case "$_sfix" in
+                '.')
+                    [ -e "$2" ] && _fcount=$(($# - 1))
+                ;;
+                *)
+                    [ -e "$1" ] && _fcount=$#
+                ;;
+            esac
+        else
+            set -- "$_dir"/.*/
+            [ -e "$3" ] && _fcount=$(($# - 2))
+        fi
+    }
+    fcount_dotfiles() {
+        _fcount=0
+
+        if [ "$_sfix" ]; then
+            set -- "$_dir"/.*"$_sfix"
+            case "$_sfix" in
+                '.')
+                    [ -e "$2" ] && _fcount=$((_fcount + $# - 1))
+                ;;
+                *)
+                    [ -e "$1" ] && _fcount=$((_fcount + $#))
+                ;;
+            esac
+
+            set -- "$_dir"/.*"$_sfix"/
+            case "$_sfix" in
+                '.')
+                    [ -e "$2" ] && _fcount=$((_fcount - $# + 1))
+                ;;
+                *)
+                    [ -e "$1" ] && _fcount=$((_fcount - $#))
+                ;;
+            esac
+        else
+            set -- "$_dir"/.*
+            [ -e "$3" ] && _fcount=$(($# - 2))
+
+            set -- "$_dir"/.*/
+            [ -e "$3" ] && _fcount=$((_fcount - $# + 2))
+        fi
+    }
+    fcount_dirs() {
+        _fcount=0
+
+        if [ "$_sfix" ]; then
+            set -- "$_dir"/*"$_sfix"/
+        else
+            set -- "$_dir"/*/
+        fi
+        [ -e "$1" ] && _fcount=$#
+    }
+    fcount_files() {
+        _fcount=0
+
+        if [ "$_sfix" ]; then
+            set -- "$_dir"/*"$_sfix"
+            [ -e "$1" ] && _fcount=$#
+
+            set -- "$_dir"/*"$_sfix"/
+            [ -e "$1" ] && _fcount=$((_fcount - $#))
+        else
+            set -- "$_dir"/*
+            [ -e "$1" ] && _fcount=$#
+
+            set -- "$_dir"/*/
+            [ -e "$1" ] && _fcount=$((_fcount - $#))
+        fi
+    }
+
     [ -d "$1" ] || return 1
 
     _count=0
@@ -470,112 +571,30 @@ fcount() {
     esac
     case "$2" in
         0*|1*|2*) _sfix="${2#?}" ;;
+        *) _sfix= ;;
     esac
 
     case "$2":$3 in
-        0*:)
-            set -- "$_dir"/*"$_sfix"
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/.*"$_sfix"
-            case "$_sfix" in
-                '.')
-                    [ -e "$2" ] && _count=$((_count + $# - 1))
-                ;;
-                *)
-                    [ -e "$1" ] && _count=$((_count + $#))
-                ;;
-            esac
-        ;;
-        1:)
-            set -- "$_dir"/*
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/*/
-            [ -e "$1" ] && _count=$((_count - $#))
-
-            set -- "$_dir"/.*
-            [ -e "$3" ] && _count=$((_count + $# - 2))
-
-            set -- "$_dir"/.*/
-            [ -e "$3" ] && _count=$((_count - $# + 2))
-        ;;
         1*:)
-            set -- "$_dir"/*"$_sfix"
-            [ -e "$1" ] && _count=$((_count + $#))
-
-            set -- "$_dir"/.*"$_sfix"
-            case "$_sfix" in
-                '.') [ -e "$2" ] && _count=$((_count + $# - 1)) ;;
-                *) [ -e "$1" ] && _count=$((_count + $#)) ;;
-            esac
-
-            set -- "$_dir"/.*"$_sfix"/
-            case "$_sfix" in
-                '.') [ -e "$2" ] && _count=$((_count - $# + 1)) ;;
-                *) [ -e "$1" ] && _count=$((_count - $#)) ;;
-            esac
-
-            set -- "$_dir"/*"$_sfix"/
-            [ -e "$1" ] && _count=$((_count - $#))
-        ;;
-        2:)
-            set -- "$_dir"/*/
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/.*/
-            [ -e "$3" ] && _count=$((_count + $# - 2))
+            fcount_files; _count=$_fcount
+            fcount_dotfiles; _count=$((_count + $_fcount))
         ;;
         2*:)
-            set -- "$_dir"/*"$_sfix"/
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/.*"$_sfix"/
-            case "$_sfix" in
-                '.')
-                    [ -e "$2" ] && _count=$((_count + $# - 1))
-                ;;
-                *)
-                    [ -e "$1" ] && _count=$((_count + $#))
-                ;;
-            esac
+            fcount_dirs; _count=$_fcount
+            fcount_dotdirs; _count=$((_count + $_fcount))
         ;;
-        3:)
-            set -- "$_dir"/*
-            [ -e "$1" ] && _count=$#
-        ;;
-        0*:3)
-            set -- "$_dir"/*"$_sfix"
-            [ -e "$1" ] && _count=$#
-        ;;
-        1:3)
-            set -- "$_dir"/*
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/*/
-            [ -e "$1" ] && _count=$((_count - $#))
+        3:|0*:3)
+            fcount_files; _count=$_fcount
+            fcount_dirs; _count=$((_count + $_fcount))
         ;;
         1*:3)
-            set -- "$_dir"/*"$_sfix"
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/*"$_sfix"/
-            [ -e "$1" ] && _count=$((_count - $#))
-        ;;
-        2:3)
-            set -- "$_dir"/*/
-            [ -e "$1" ] && _count=$#
+            fcount_files; _count=$_fcount
         ;;
         2*:3)
-            set -- "$_dir"/*"$_sfix"/
-            [ -e "$1" ] && _count=$#
+            fcount_dirs; _count=$_fcount
         ;;
         *)
-            set -- "$_dir"/*
-            [ -e "$1" ] && _count=$#
-
-            set -- "$_dir"/.*
-            [ "$#" -ge 3 ] && _count=$((_count + $# - 2))
+            fcount_all; _count=$_fcount
         ;;
     esac
 
