@@ -471,7 +471,7 @@ fcount() {
             set -- "$_dir"/.*"$_sfix"
             case "$_sfix" in
                 '.')
-                    [ -e "$2" ] && _fcount=$((_fcount + $# - 1))
+                    [ "$#" -ge 2 ] && _fcount=$((_fcount + $# - 1))
                 ;;
                 *)
                     [ -e "$1" ] && _fcount=$((_fcount + $#))
@@ -482,7 +482,7 @@ fcount() {
             [ -e "$1" ] && _fcount=$#
 
             set -- "$_dir"/.*
-            [ -e "$3" ] && _fcount=$((_fcount + $# - 2))
+            [ "$#" -ge 3 ] && _fcount=$((_fcount + $# - 2))
         fi
     }
     fcount_dotdirs() {
@@ -492,7 +492,7 @@ fcount() {
             set -- "$_dir"/.*"$_sfix"/
             case "$_sfix" in
                 '.')
-                    [ -e "$2" ] && _fcount=$(($# - 1))
+                    [ "$#" -ge 2 ] && _fcount=$(($# - 1))
                 ;;
                 *)
                     [ -e "$1" ] && _fcount=$#
@@ -500,7 +500,7 @@ fcount() {
             esac
         else
             set -- "$_dir"/.*/
-            [ -e "$3" ] && _fcount=$(($# - 2))
+            [ "$#" -ge 3 ] && _fcount=$(($# - 2))
         fi
     }
     fcount_dotfiles() {
@@ -510,7 +510,7 @@ fcount() {
             set -- "$_dir"/.*"$_sfix"
             case "$_sfix" in
                 '.')
-                    [ -e "$2" ] && _fcount=$((_fcount + $# - 1))
+                    [ "$#" -ge 2 ] && _fcount=$((_fcount + $# - 1))
                 ;;
                 *)
                     [ -e "$1" ] && _fcount=$((_fcount + $#))
@@ -520,7 +520,7 @@ fcount() {
             set -- "$_dir"/.*"$_sfix"/
             case "$_sfix" in
                 '.')
-                    [ -e "$2" ] && _fcount=$((_fcount - $# + 1))
+                    [ "$#" -ge 2 ] && _fcount=$((_fcount - $# + 1))
                 ;;
                 *)
                     [ -e "$1" ] && _fcount=$((_fcount - $#))
@@ -528,10 +528,10 @@ fcount() {
             esac
         else
             set -- "$_dir"/.*
-            [ -e "$3" ] && _fcount=$(($# - 2))
+            [ "$#" -ge 3 ] && _fcount=$(($# - 2))
 
             set -- "$_dir"/.*/
-            [ -e "$3" ] && _fcount=$((_fcount - $# + 2))
+            [ "$#" -ge 3 ] && _fcount=$((_fcount - $# + 2))
         fi
     }
     fcount_dirs() {
