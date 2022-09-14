@@ -1199,6 +1199,7 @@ ltr_substr0() {
 #                '4' - keep $4,
 #                '5' - keep $2/$4)
 # [$8] - mode6('6' - verify the expansion)
+# [$9] - mode7('7' - no output)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
@@ -1363,7 +1364,10 @@ ltr_substr1() {
         *5*) _str="$2$_str$4" ;;
     esac
 
-    printf "%s" "$_str"
+    case $9$8$7$6 in
+        *7*) : ;;
+        *) printf "%s" "$_str" ;;
+    esac
 }
 ```
 
