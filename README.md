@@ -1643,6 +1643,7 @@ parse_fd1() {
 # Parameters:
 # <$1> - line number
 # <"$2"> - file
+# [$3] - mode0('0' - no output)
 #
 # Provides:
 # (0) <"$_line"> - the line
@@ -1663,7 +1664,7 @@ pline() {
 
     _i=0; while read -r _line || [ "$_line" ]; do
         _i=$((_i + 1))
-        case $_i in "$1") printf "%s" "$_line"; return 0 ;; esac
+        case $_i in "$1") [ ! "$3" ] && printf "%s" "$_line"; return 0 ;; esac
     done < "$2"
 
     return 1
