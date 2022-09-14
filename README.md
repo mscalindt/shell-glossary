@@ -340,6 +340,7 @@ err_ne_fmt_clr() {
 # ["$2"] - mode0("0 X" - escape only "X" whitespace-separated character(s))
 # [$3] - mode1-2('1' - strip the characters,
 #                '2' - escape single quote character with itself)
+# [$4] - mode3('3' - no output)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
@@ -375,10 +376,10 @@ esc_str() {
         esac
 
         case $_char:$3:"$2" in
-            "'":2*|"'"::2)
+            "'":2*|"'":"$3":2)
                 _str_ref="${_str%%\'*}'\\''"
             ;;
-            "$_char":1*|"$_char"::1)
+            "$_char":1*|"$_char":"$3":1)
                 _str_ref="${_str%%"$_char"*}"
             ;;
             *)
@@ -388,7 +389,7 @@ esc_str() {
         _str="$_str_ref${_str#*"$_char"}"
 
         case $_char:$3:"$2" in
-            "'":2*|"'"::2)
+            "'":2*|"'":"$3":2)
                 while :; do case "$_str" in
                     "$_str_ref"*"'"*)
                         _str="${_str#*"$_str_ref"}"
@@ -400,7 +401,7 @@ esc_str() {
                     ;;
                 esac done
             ;;
-            "$_char":1*|"$_char"::1)
+            "$_char":1*|"$_char":"$3":1)
                 while :; do case "$_str" in
                     *"$_char"*) _str="${_str%%"$_char"*}${_str#*"$_char"}" ;;
                     *) break ;;
@@ -425,7 +426,10 @@ esc_str() {
 
     [ "$_str_ref" ] || return 1
 
-    printf "%s" "$_str"
+    case :$4:$3:"$2" in
+        *:3*) : ;;
+        *) printf "%s" "$_str" ;;
+    esac
 }
 ```
 
