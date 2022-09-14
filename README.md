@@ -752,6 +752,7 @@ lstrip() {
 #                '2' - strip all leading/trailing whitespace characters)
 # [$5] - mode3('3' - keep $2)
 # [$6] - mode4('4' - verify the expansion)
+# [$7] - mode5('5' - no output)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
@@ -855,7 +856,10 @@ ltl_substr0() {
         *3*) _str="$_str$2" ;;
     esac
 
-    printf "%s" "$_str"
+    case $7$6$5$4 in
+        *5*) : ;;
+        *) printf "%s" "$_str" ;;
+    esac
 }
 ```
 
