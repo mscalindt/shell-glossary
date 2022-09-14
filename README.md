@@ -578,24 +578,24 @@ fcount() {
         *) _sfix= ;;
     esac
 
-    case "$2":$3 in
-        1*:)
-            fcount_files; _count=$_fcount
-            fcount_dotfiles; _count=$((_count + $_fcount))
-        ;;
-        2*:)
+    case $3:"$2" in
+        3:2*)
             fcount_dirs; _count=$_fcount
-            fcount_dotdirs; _count=$((_count + $_fcount))
         ;;
-        3:|0*:3)
+        3:1*)
+            fcount_files; _count=$_fcount
+        ;;
+        3:0*|"$3":3)
             fcount_files; _count=$_fcount
             fcount_dirs; _count=$((_count + $_fcount))
         ;;
-        1*:3)
-            fcount_files; _count=$_fcount
-        ;;
-        2*:3)
+        "$3":2*)
             fcount_dirs; _count=$_fcount
+            fcount_dotdirs; _count=$((_count + $_fcount))
+        ;;
+        "$3":1*)
+            fcount_files; _count=$_fcount
+            fcount_dotfiles; _count=$((_count + $_fcount))
         ;;
         *)
             fcount_all; _count=$_fcount
