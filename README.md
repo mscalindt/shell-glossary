@@ -618,6 +618,7 @@ fcount() {
 #
 # Parameters:
 # <"$1"> - path
+# [$2] - mode0('0' - no output)
 #
 # Provides:
 # <"$_path"> - the absolute path | path
@@ -631,7 +632,7 @@ get_fpath() {
         *) _path="$PWD/$1" ;;
     esac
 
-    printf "%s" "$_path"
+    [ ! "$2" ] && printf "%s" "$_path"
 }
 ```
 
