@@ -1869,6 +1869,7 @@ remstr() {
 # <$4> - mode1-3('1' - replace the first occurrence,
 #                '2' - replace the last occurrence,
 #                '3' - replace all occurrences)
+# [$5] - mode4('4' - no output)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
@@ -1888,7 +1889,7 @@ replstr() {
     esac
 
     case "$1" in
-        "$3") printf "%s" "$_str"; return 0 ;;
+        "$3") [ ! "$5" ] && printf "%s" "$_str"; return 0 ;;
     esac
 
     case $4 in
@@ -1915,7 +1916,7 @@ replstr() {
         ;;
     esac
 
-    printf "%s" "$_str"
+    [ ! "$5" ] && printf "%s" "$_str"
 }
 ```
 
