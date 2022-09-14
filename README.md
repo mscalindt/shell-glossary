@@ -1958,6 +1958,7 @@ rstrip() {
 # Parameters:
 # <$1> - N
 # <"$2"> - string
+# [$3] - mode0('0' - no output)
 #
 # Provides:
 # (0) <"$_arg"> - the argument
@@ -2021,7 +2022,7 @@ sq_arg() {
             _arg="${_arg#"$_pfix"}"
             _arg="${_arg%"$_sfix"}"
 
-            printf "%s" "$_arg"
+            [ ! "$3" ] && printf "%s" "$_arg"
             return 0
         fi
     done
