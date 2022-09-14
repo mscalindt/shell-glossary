@@ -1738,6 +1738,7 @@ remchars() {
 #                '2' - remove the last occurrence,
 #                '3' - remove all occurrences)
 # [$4] - mode4('4' - whitespace is delimiter)
+# [$5] - mode5('5' - no output)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
@@ -1848,7 +1849,10 @@ remstr() {
 
     [ "$_str" ] || return 1
 
-    printf "%s" "$_str"
+    case $5$4 in
+        *5*) : ;;
+        *) printf "%s" "$_str" ;;
+    esac
 }
 ```
 
