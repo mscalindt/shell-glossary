@@ -447,6 +447,7 @@ esc_str() {
 #                  '2' - count only directories,
 #                  "2X" - count only directories ending with "X")
 # [$3] - mode3('3' - exclude hidden files/directories)
+# [$4] - mode4('4' - no output)
 #
 # Provides:
 # (0) <$_count> - the count
@@ -602,7 +603,10 @@ fcount() {
         ;;
     esac
 
-    printf "%d" "$_count"
+    case $4:$3:"$2" in
+        4*|"$4":4*|"$4":"$3":4) : ;;
+        *) printf "%d" "$_count" ;;
+    esac
 }
 ```
 
