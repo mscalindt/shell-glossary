@@ -1381,6 +1381,7 @@ ltr_substr1() {
 # <$1> - N
 # <"$2"> - character
 # [$3] - mode0('0' - whitespace-separated characters)
+# [$4] - mode1('1' - no output)
 #
 # Provides:
 # (0) <"$_chars"> - the character(s)
@@ -1394,6 +1395,10 @@ num_to_char() {
         : | 0*) return 255 ;;
         "$1:$1") : ;;
         *) return 255 ;;
+    esac
+
+    case $4$3 in
+        *1*) printf() { return; } ;;
     esac
 
     _chars="$2"
@@ -1414,6 +1419,10 @@ num_to_char() {
                 _i=$((_i + 1))
             done
         ;;
+    esac
+
+    case $4$3 in
+        *1*) unset printf ;;
     esac
 }
 ```
