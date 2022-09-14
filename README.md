@@ -2114,6 +2114,7 @@ str_fd1() {
 # Parameters:
 # <"$1"> - string
 # [$2] - mode0('0' - remove duplicate characters)
+# [$3] - mode1('1' - no output)
 #
 # Provides:
 # <"$_chars"> - the character(s)
@@ -2129,6 +2130,10 @@ str_to_chars() {
     _str="$1"; _chars=
 
     _old_lc="$LC_ALL"; export LC_ALL=C
+
+    case $3$2 in
+        *1*) printf() { return; } ;;
+    esac
 
     while :; do
         case :"$_str" in :) break ;; esac
@@ -2194,6 +2199,10 @@ str_to_chars() {
                 esac
             done
         ;;
+    esac
+
+    case $3$2 in
+        *1*) unset printf ;;
     esac
 
     export LC_ALL="$_old_lc"
