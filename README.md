@@ -1929,6 +1929,7 @@ replstr() {
 # Parameters:
 # <"$1"> - character(s)
 # <"$2"> - string
+# [$3] - mode0('0' - no output)
 #
 # Provides:
 # (0) <"$_str"> - the stripped string
@@ -1941,7 +1942,7 @@ replstr() {
 rstrip() {
     case "$2" in
         "$1") return 2 ;;
-        *"$1") _str="${2%"$1"}"; printf "%s" "$_str"; return 0 ;;
+        *"$1") _str="${2%"$1"}"; [ ! "$3" ] && printf "%s" "$_str"; return 0 ;;
     esac
 
     return 1
