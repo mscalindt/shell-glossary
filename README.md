@@ -8,26 +8,26 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
 * [ERR_FMT()](https://github.com/mscalindt/shell-glossary#err_fmt)
 * [ERR_NE_FMT()](https://github.com/mscalindt/shell-glossary#err_ne_fmt)
-* [ESC_STR()](https://github.com/mscalindt/shell-glossary#esc_str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/11
-* [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/12
-* [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/6
+* [ESC_STR()](https://github.com/mscalindt/shell-glossary#esc_str)
+* [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount)
+* [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
 * [INFO()](https://github.com/mscalindt/shell-glossary#info)
 * [INFO_FMT()](https://github.com/mscalindt/shell-glossary#info_fmt)
-* [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/8
-* [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltl_substr0) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/15
-* [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/16
-* [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltr_substr0) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/17
-* [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltr_substr1) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/18
+* [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip)
+* [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltl_substr0)
+* [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1)
+* [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltr_substr0)
+* [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltr_substr1)
 * [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary#num_to_char)
-* [PARSE()](https://github.com/mscalindt/shell-glossary#parse) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/13
-* [PLINE()](https://github.com/mscalindt/shell-glossary#pline) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/14
-* [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/5.1
-* [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/3.4
-* [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/4.2
-* [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/9
+* [PARSE()](https://github.com/mscalindt/shell-glossary#parse)
+* [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
+* [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
+* [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr)
+* [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr)
+* [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip)
 * [SQ_ARG()](https://github.com/mscalindt/shell-glossary#sq_arg)
-* [STR()](https://github.com/mscalindt/shell-glossary#str) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/7.1
-* [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars) | Unit tests: https://raw.githubusercontent.com/mscalindt/top-secret/root/2/10
+* [STR()](https://github.com/mscalindt/shell-glossary#str)
+* [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars)
 * [WARN()](https://github.com/mscalindt/shell-glossary#warn)
 * [WARN_FMT()](https://github.com/mscalindt/shell-glossary#warn_fmt)
 
