@@ -4,15 +4,9 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 
 * [CHARS_EVEN()](https://github.com/mscalindt/shell-glossary#chars_even)
 * [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary#confirm_cont)
-* [ERR()](https://github.com/mscalindt/shell-glossary#err)
-* [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
-* [ERR_FMT()](https://github.com/mscalindt/shell-glossary#err_fmt)
-* [ERR_NE_FMT()](https://github.com/mscalindt/shell-glossary#err_ne_fmt)
 * [ESC_STR()](https://github.com/mscalindt/shell-glossary#esc_str)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount)
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
-* [INFO()](https://github.com/mscalindt/shell-glossary#info)
-* [INFO_FMT()](https://github.com/mscalindt/shell-glossary#info_fmt)
 * [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip)
 * [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltl_substr0)
 * [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1)
@@ -28,12 +22,22 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [SQ_ARG()](https://github.com/mscalindt/shell-glossary#sq_arg)
 * [STR()](https://github.com/mscalindt/shell-glossary#str)
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars)
-* [WARN()](https://github.com/mscalindt/shell-glossary#warn)
-* [WARN_FMT()](https://github.com/mscalindt/shell-glossary#warn_fmt)
 
 # Normal functions (color):
 
 * [CONFIRM_CONT_CLR()](https://github.com/mscalindt/shell-glossary#confirm_cont_clr)
+
+# Output control:
+* [ERR()](https://github.com/mscalindt/shell-glossary#err)
+* [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
+* [ERR_FMT()](https://github.com/mscalindt/shell-glossary#err_fmt)
+* [ERR_NE_FMT()](https://github.com/mscalindt/shell-glossary#err_ne_fmt)
+* [INFO()](https://github.com/mscalindt/shell-glossary#info)
+* [INFO_FMT()](https://github.com/mscalindt/shell-glossary#info_fmt)
+* [WARN()](https://github.com/mscalindt/shell-glossary#warn)
+* [WARN_FMT()](https://github.com/mscalindt/shell-glossary#warn_fmt)
+
+# Output control (color):
 * [ERR_CLR()](https://github.com/mscalindt/shell-glossary#err_clr)
 * [ERR_NE_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_clr)
 * [ERR_FMT_CLR()](https://github.com/mscalindt/shell-glossary#err_fmt_clr)
