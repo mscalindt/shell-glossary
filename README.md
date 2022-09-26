@@ -670,7 +670,7 @@ info() {
 # (0) info-formatted $1
 #
 info_clr() {
-    printf "%bINFO:%b %s\n" "\033[1;37m" "\033[0m" "$*"
+    printf "%bINFO:%b %s\n" '\033[1;37m' '\033[0m' "$*"
 }
 ```
 
