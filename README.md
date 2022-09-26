@@ -328,7 +328,7 @@ err_ne_fmt() {
 #
 err_ne_fmt_clr() {
     _printf_fmt="$1"; shift
-    printf "%bERROR:%b ${_printf_fmt}%s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
+    printf "%bERROR:%b ${_printf_fmt}%s\n" '\033[1;31m' '\033[0m' "$*" 1>&2
 }
 ```
 
