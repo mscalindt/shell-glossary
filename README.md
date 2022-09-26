@@ -1648,6 +1648,7 @@ parse_fd1() {
 # <$1> - line number
 # <"$2"> - file
 # [$3] - mode0('0' - no output)
+# [$4] - mode1('1' - strip all leading/trailing whitespace characters)
 #
 # Provides:
 # (0) <"$_line"> - the line
@@ -1666,10 +1667,38 @@ pline() {
     [ -f "$2" ] || return 2
     [ -r "$2" ] || return 3
 
-    _i=0; while read -r _line || [ "$_line" ]; do
-        _i=$((_i + 1))
-        case $_i in "$1") [ ! "$3" ] && printf "%s" "$_line"; return 0 ;; esac
-    done < "$2"
+    case $4$3 in
+        *1*)
+            _i=0; while read -r _line || [ "$_line" ]; do
+                _i=$((_i + 1))
+                case $_i in
+                    "$1")
+                        case $3 in
+                            0) : ;;
+                            *) printf "%s" "$_line" ;;
+                        esac
+
+                        return 0
+                    ;;
+                esac
+            done < "$2"
+        ;;
+        *)
+            _i=0; while IFS= read -r _line || [ "$_line" ]; do
+                _i=$((_i + 1))
+                case $_i in
+                    "$1")
+                        case $3 in
+                            0) : ;;
+                            *) printf "%s" "$_line" ;;
+                        esac
+
+                        return 0
+                    ;;
+                esac
+            done < "$2"
+        ;;
+    esac
 
     return 1
 }
