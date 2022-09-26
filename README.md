@@ -1713,6 +1713,7 @@ pline() {
 # Parameters:
 # <$1> - line number
 # [$2] - mode0('0' - no output)
+# [$3] - mode1('1' - strip all leading/trailing whitespace characters)
 #
 # Provides:
 # (0) <"$_line"> - the line
@@ -1725,10 +1726,38 @@ pline() {
 # 1. NULL character.
 #
 pline_fd1() {
-    _i=0; while read -r _line || [ "$_line" ]; do
-        _i=$((_i + 1))
-        case $_i in "$1") [ ! "$2" ] && printf "%s" "$_line"; return 0 ;; esac
-    done
+    case $3$2 in
+        *1*)
+            _i=0; while read -r _line || [ "$_line" ]; do
+                _i=$((_i + 1))
+                case $_i in
+                    "$1")
+                        case $2 in
+                            0) : ;;
+                            *) printf "%s" "$_line" ;;
+                        esac
+
+                        return 0
+                    ;;
+                esac
+            done
+        ;;
+        *)
+            _i=0; while IFS= read -r _line || [ "$_line" ]; do
+                _i=$((_i + 1))
+                case $_i in
+                    "$1")
+                        case $2 in
+                            0) : ;;
+                            *) printf "%s" "$_line" ;;
+                        esac
+
+                        return 0
+                    ;;
+                esac
+            done
+        ;;
+    esac
 
     return 1
 }
