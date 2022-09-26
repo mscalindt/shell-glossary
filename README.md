@@ -167,7 +167,7 @@ confirm_cont() {
 confirm_cont_clr() {
     case $1 in
         1)
-            printf "%bContinue? [Y/n]%b " "\033[1;37m" "\033[0m"
+            printf "%bContinue? [Y/n]%b " '\033[1;37m' '\033[0m'
             read -r _action
 
             case "$_action" in
@@ -177,7 +177,7 @@ confirm_cont_clr() {
             return 0
         ;;
         2)
-            printf "%bContinue? [y/N]%b " "\033[1;37m" "\033[0m"
+            printf "%bContinue? [y/N]%b " '\033[1;37m' '\033[0m'
             read -r _action
 
             case "$_action" in
