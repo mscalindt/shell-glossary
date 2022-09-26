@@ -2281,6 +2281,6 @@ warn_fmt() {
 #
 warn_fmt_clr() {
     _printf_fmt="$1"; shift
-    printf "%bWARNING:%b ${_printf_fmt}%s\n" "\033[1;33m" "\033[0m" "$*"
+    printf "%bWARNING:%b ${_printf_fmt}%s\n" '\033[1;33m' '\033[0m' "$*"
 }
 ```
