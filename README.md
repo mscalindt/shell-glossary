@@ -219,7 +219,7 @@ err() {
 #
 err_clr() {
     _rc="$1"; shift
-    printf "%bERROR:%b %s\n" "\033[1;31m" "\033[0m" "$*" 1>&2
+    printf "%bERROR:%b %s\n" '\033[1;31m' '\033[0m' "$*" 1>&2
     exit "$_rc"
 }
 ```
