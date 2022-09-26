@@ -2243,7 +2243,7 @@ warn() {
 # (0) warning-formatted $1
 #
 warn_clr() {
-    printf "%bWARNING:%b %s\n" "\033[1;33m" "\033[0m" "$*"
+    printf "%bWARNING:%b %s\n" '\033[1;33m' '\033[0m' "$*"
 }
 ```
 
