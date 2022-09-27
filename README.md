@@ -100,7 +100,7 @@ chars_even() {
 
     IFS="$_old_ifs"; set +f
 
-    [ "$((_count % 2))" -eq 0 ] || return 1
+    [ "$((_count % 2))" -eq 0 ]
 }
 ```
 
