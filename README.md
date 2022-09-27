@@ -296,6 +296,9 @@ err_fmt() {
 # <"$2"> - printf format
 # <"$3"+> - text
 #
+# Returns:
+# (!) $1
+#
 err_fmt_clr() {
     _rc="$1"; _printf_fmt="$2"; shift 2
     printf "%bERROR:%b ${_printf_fmt}%s\n" '\033[1;31m' '\033[0m' "$*" 1>&2
