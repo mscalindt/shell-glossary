@@ -200,6 +200,9 @@ confirm_cont_clr() {
 # <$1> - exit code
 # <"$2"+> - text
 #
+# Returns:
+# (!) $1
+#
 err() {
     _rc="$1"; shift
     printf "ERROR: %s\n" "$*" 1>&2
