@@ -275,6 +275,9 @@ err_ne_clr() {
 # <"$2"> - printf format
 # <"$3"+> - text
 #
+# Returns:
+# (!) $1
+#
 err_fmt() {
     _rc="$1"; _printf_fmt="$2"; shift 2
     printf "ERROR: ${_printf_fmt}%s\n" "$*" 1>&2
