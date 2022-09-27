@@ -636,7 +636,10 @@ get_fpath() {
         *) _path="$PWD/$1" ;;
     esac
 
-    [ ! "$2" ] && printf "%s" "$_path"
+    case $2 in
+        0) : ;;
+        *) printf "%s" "$_path" ;;
+    esac
 }
 ```
 
