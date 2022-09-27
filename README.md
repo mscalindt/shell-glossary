@@ -1981,7 +1981,10 @@ replstr() {
         ;;
     esac
 
-    [ ! "$5" ] && printf "%s" "$_str"
+    case $5 in
+        4) : ;;
+        *) printf "%s" "$_str" ;;
+    esac
 }
 ```
 
