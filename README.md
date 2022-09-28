@@ -319,10 +319,11 @@ err_fmt_clr() {
 #
 # Returns:
 # (0) error-formatted $2
+# (1) printf format error
 #
 err_ne_fmt() {
     _printf_fmt="$1"; shift
-    printf "ERROR: ${_printf_fmt}%s\n" "$*" 1>&2
+    printf "ERROR: ${_printf_fmt}%s\n" "$*" 1>&2 2> /dev/null || return 1
 }
 ```
 
