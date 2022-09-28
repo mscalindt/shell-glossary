@@ -725,10 +725,12 @@ info_fmt() {
 #
 # Returns:
 # (0) info-formatted $2
+# (1) printf format error
 #
 info_fmt_clr() {
     _printf_fmt="$1"; shift
-    printf "%bINFO:%b ${_printf_fmt}%s\n" '\033[1;37m' '\033[0m' "$*"
+    printf "%bINFO:%b ${_printf_fmt}%s\n" \
+           '\033[1;37m' '\033[0m' "$*" 2> /dev/null || return 1
 }
 ```
 
