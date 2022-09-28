@@ -2342,10 +2342,11 @@ warn_clr() {
 #
 # Returns:
 # (0) warning-formatted $2
+# (1) printf format error
 #
 warn_fmt() {
     _printf_fmt="$1"; shift
-    printf "WARNING: ${_printf_fmt}%s\n" "$*"
+    printf "WARNING: ${_printf_fmt}%s\n" "$*" 2> /dev/null || return 1
 }
 ```
 
