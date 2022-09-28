@@ -705,10 +705,11 @@ info_clr() {
 #
 # Returns:
 # (0) info-formatted $2
+# (1) printf format error
 #
 info_fmt() {
     _printf_fmt="$1"; shift
-    printf "INFO: ${_printf_fmt}%s\n" "$*"
+    printf "INFO: ${_printf_fmt}%s\n" "$*" 2> /dev/null || return 1
 }
 ```
 
