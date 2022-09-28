@@ -2362,9 +2362,11 @@ warn_fmt() {
 #
 # Returns:
 # (0) warning-formatted $2
+# (1) printf format error
 #
 warn_fmt_clr() {
     _printf_fmt="$1"; shift
-    printf "%bWARNING:%b ${_printf_fmt}%s\n" '\033[1;33m' '\033[0m' "$*"
+    printf "%bWARNING:%b ${_printf_fmt}%s\n" \
+           '\033[1;33m' '\033[0m' "$*" 2> /dev/null || return 1
 }
 ```
