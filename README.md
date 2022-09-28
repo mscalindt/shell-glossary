@@ -339,10 +339,12 @@ err_ne_fmt() {
 #
 # Returns:
 # (0) error-formatted $2
+# (1) printf format error
 #
 err_ne_fmt_clr() {
     _printf_fmt="$1"; shift
-    printf "%bERROR:%b ${_printf_fmt}%s\n" '\033[1;31m' '\033[0m' "$*" 1>&2
+    printf "%bERROR:%b ${_printf_fmt}%s\n" \
+           '\033[1;31m' '\033[0m' "$*" 1>&2 2> /dev/null || return 1
 }
 ```
 
