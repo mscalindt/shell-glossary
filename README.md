@@ -2067,11 +2067,14 @@ sq_arg() {
         set -f; _old_ifs="$IFS"
 
         IFS=\'
-        set -- $1
+        case "$1" in
+            *\') set -- $1; _count=$# ;;
+            *) set -- $1; _count=$(($# - 1)) ;;
+        esac
 
         IFS="$_old_ifs"; set +f
 
-        [ "$(($# % 2))" -eq 0 ]
+        [ "$((_count % 2))" -eq 0 ]
     }
 
     case :$1${1#*[!0123456789]} in
