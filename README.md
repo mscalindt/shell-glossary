@@ -2071,7 +2071,7 @@ sq_arg() {
 
         IFS="$_old_ifs"; set +f
 
-        [ "$(($# % 2))" -eq 0 ] && return 0 || return 1
+        [ "$(($# % 2))" -eq 0 ]
     }
 
     case :$1${1#*[!0123456789]} in
