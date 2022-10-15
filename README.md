@@ -1968,8 +1968,15 @@ replchars() {
     _chars="$2"
     _str="$3"
     set -- $3
-    case "$@" in "$_str") return 2 ;; esac
-    while [ "$#" -ne 0 ]; do printf "%s%s" "$1" "$_chars"; shift; done
+
+    case $# in 1) [ "$1" = "$_str" ] && return 2 ;; esac
+    while [ "$#" -ge 2 ]; do
+        printf "%s%s" "$1" "$_chars"; shift
+    done
+    case "$IFS" in
+        *"${_str#"${_str%?}"}"*) printf "%s%s" "$1" "$_chars" ;;
+        *) printf "%s" "$1" ;;
+    esac
 
     IFS="$_old_ifs"; set +f
 }
