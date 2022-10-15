@@ -1828,7 +1828,7 @@ remchars() {
 # (0) <"$_str"> - the modified string
 #
 # Returns:
-# (0) stripped $2
+# (0) modified $2
 # (1) $1 = $2
 # (2) ! $1
 #
