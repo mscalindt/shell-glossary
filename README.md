@@ -17,6 +17,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
 * [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr)
+* [REPLCHARS()](https://github.com/mscalindt/shell-glossary#replchars)
 * [REPLSTR()](https://github.com/mscalindt/shell-glossary#replstr)
 * [RSTRIP()](https://github.com/mscalindt/shell-glossary#rstrip)
 * [SQ_ARG()](https://github.com/mscalindt/shell-glossary#sq_arg)
