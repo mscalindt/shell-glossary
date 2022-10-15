@@ -1796,7 +1796,7 @@ pline_fd1() {
 # <"$2"> - string
 #
 # Returns:
-# (0) stripped $2 | $2
+# (0) modified $2 | $2
 #
 remchars() {
     set -f; _old_ifs="$IFS"
