@@ -1940,6 +1940,40 @@ remstr() {
 }
 ```
 
+## replchars
+
+```sh
+# Description:
+# Replace specific character(s) with character(s) in string
+#
+# Parameters:
+# <"$1"> - specific character(s)
+# <"$2"> - character(s)
+# <"$3"> - string
+#
+# Returns:
+# (0) modified $3
+# (1) $1 = $2
+# (2) ! $1
+#
+replchars() {
+    case "$1" in
+        "$2") return 1 ;;
+    esac
+
+    set -f; _old_ifs="$IFS"
+
+    IFS="$1"
+    _chars="$2"
+    _str="$3"
+    set -- $3
+    case "$@" in "$_str") return 2 ;; esac
+    while [ "$#" -ne 0 ]; do printf "%s%s" "$1" "$_chars"; shift; done
+
+    IFS="$_old_ifs"; set +f
+}
+```
+
 ## replstr
 
 ```sh
