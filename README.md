@@ -70,6 +70,7 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 # Returns:
 # (0) even
 # (1) uneven
+# (2) ! $1
 #
 chars_even() {
     char_even() {
@@ -103,6 +104,8 @@ chars_even() {
             esac
         ;;
     esac
+
+    case $_count in 0) return 2 ;; esac
 
     [ "$((_count % 2))" -eq 0 ]
 }
