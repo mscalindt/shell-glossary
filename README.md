@@ -1757,11 +1757,18 @@ pline() {
 # Returns:
 # (0) line's content | line empty
 # (1) line does not exist
+# (255) bad input
 #
 # Caveats:
 # 1. NULL character.
 #
 pline_fd1() {
+    case $1:${1#*[!0123456789]} in
+        : | 0*) return 255 ;;
+        "$1:$1") : ;;
+        *) return 255 ;;
+    esac
+
     case $3$2 in
         *1*)
             _i=0; while read -r _line || [ "$_line" ]; do
