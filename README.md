@@ -1816,6 +1816,9 @@ pline_fd1() {
 # <"$1"> - character(s)
 # <"$2"> - string
 #
+# Provides:
+# <"$_str"> - the modified string | string
+#
 # Returns:
 # (0) modified $2 | $2
 #
@@ -1825,12 +1828,12 @@ remchars() {
 
         IFS="$1"
         set -- $2
-        printf "%s" "$@"
+        while [ "$#" -ge 1 ]; do _str="$_str$1"; shift; done
 
         IFS="$_old_ifs"; set +f
     }
 
-    remchar "$1" "$2"
+    _str=; remchar "$1" "$2"; printf "%s" "$_str"
 }
 ```
 
