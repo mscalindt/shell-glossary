@@ -72,34 +72,37 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 # (1) uneven
 #
 chars_even() {
-    set -f; _old_ifs="$IFS"
+    char_even() {
+        set -f; _old_ifs="$IFS"
 
-    IFS="$1"
+        IFS="$1"
+        case "$2" in
+            *"$1") set -- $2; _count=$# ;;
+            *) set -- $2; _count=$(($# - 1)) ;;
+        esac
 
-    _chars="$1"; while :; do case ${#_chars} in
+        IFS="$_old_ifs"; set +f
+
+        [ "$((_count % 2))" -eq 0 ]
+    }
+
+    case ${#1} in
         1)
-            _char="$_chars"
-
-            case "$2" in
-                *"$_char") set -- $2; _count=$#; break ;;
-                *) set -- $2; _count=$(($# - 1)); break ;;
-            esac
+            char_even "$1" "$2"
         ;;
         *)
-            while :; do
-                _char="${_chars%"${_chars#?}"}"
-                _chars="${_chars#?}"
+            char_even "$1" "$2"
 
-                case "$2" in
-                    *"$_char") set -- $2; _count=$#; break 2 ;;
-                esac
-
-                case ${#_chars} in 1) break ;; esac
-            done
+            case "$1" in
+                *"${2#"${2%?}"}"*)
+                    case "$2" in
+                        *"$1") : ;;
+                        *) _count=$((_count + 1)) ;;
+                    esac
+                ;;
+            esac
         ;;
-    esac done
-
-    IFS="$_old_ifs"; set +f
+    esac
 
     [ "$((_count % 2))" -eq 0 ]
 }
