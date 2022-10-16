@@ -1989,6 +1989,7 @@ remstr() {
 # <"$1"> - specific character(s)
 # <"$2"> - character(s)
 # <"$3"> - string
+# [$4] - mode0('0' - no output)
 #
 # Provides:
 # (0) <"$_str"> - the modified string
@@ -2018,7 +2019,10 @@ replchars() {
         "$3") return 1 ;;
     esac
 
-    printf "%s" "$_str"
+    case $4 in
+        0) : ;;
+        *) printf "%s" "$_str" ;;
+    esac
 }
 ```
 
