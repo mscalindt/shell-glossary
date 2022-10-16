@@ -1815,6 +1815,7 @@ pline_fd1() {
 # Parameters:
 # <"$1"> - character(s)
 # <"$2"> - string
+# [$3] - mode0('0' - no output)
 #
 # Provides:
 # <"$_str"> - the modified string
@@ -1840,7 +1841,10 @@ remchars() {
         "$2") return 1 ;;
     esac
 
-    printf "%s" "$_str"
+    case $3 in
+        0) : ;;
+        *) printf "%s" "$_str" ;;
+    esac
 }
 ```
 
