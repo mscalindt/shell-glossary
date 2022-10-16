@@ -1687,12 +1687,19 @@ parse_fd1() {
 # (1) line does not exist
 # (2) not a file | file does not exist
 # (3) file access error
+# (255) bad input
 #
 # Caveats:
 # 1. NULL character.
 # 2. Reading /proc is unreliable.
 #
 pline() {
+    case $1:${1#*[!0123456789]} in
+        : | 0*) return 255 ;;
+        "$1:$1") : ;;
+        *) return 255 ;;
+    esac
+
     [ -f "$2" ] || return 2
     [ -r "$2" ] || return 3
 
