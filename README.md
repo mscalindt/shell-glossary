@@ -1817,10 +1817,11 @@ pline_fd1() {
 # <"$2"> - string
 #
 # Provides:
-# <"$_str"> - the modified string | string
+# <"$_str"> - the modified string
 #
 # Returns:
-# (0) modified $2 | $2
+# (0) modified $2
+# (1) ! $1
 #
 remchars() {
     remchar() {
@@ -1833,7 +1834,13 @@ remchars() {
         IFS="$_old_ifs"; set +f
     }
 
-    _str=; remchar "$1" "$2"; printf "%s" "$_str"
+    _str=; remchar "$1" "$2"
+
+    case "$_str" in
+        "$2") return 1 ;;
+    esac
+
+    printf "%s" "$_str"
 }
 ```
 
