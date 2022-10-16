@@ -1820,13 +1820,17 @@ pline_fd1() {
 # (0) modified $2 | $2
 #
 remchars() {
-    set -f; _old_ifs="$IFS"
+    remchar() {
+        set -f; _old_ifs="$IFS"
 
-    IFS="$1"
-    set -- $2
-    printf "%s" "$@"
+        IFS="$1"
+        set -- $2
+        printf "%s" "$@"
 
-    IFS="$_old_ifs"; set +f
+        IFS="$_old_ifs"; set +f
+    }
+
+    remchar "$1" "$2"
 }
 ```
 
