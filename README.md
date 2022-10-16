@@ -1818,7 +1818,7 @@ pline_fd1() {
 # [$3] - mode0('0' - no output)
 #
 # Provides:
-# <"$_str"> - the modified string
+# (0) <"$_str"> - the modified string
 #
 # Returns:
 # (0) modified $2
