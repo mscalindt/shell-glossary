@@ -1990,28 +1990,35 @@ remstr() {
 # <"$2"> - character(s)
 # <"$3"> - string
 #
+# Provides:
+# (0) <"$_str"> - the modified string
+#
 # Returns:
 # (0) modified $3
 # (1) ! $1
 #
 replchars() {
-    set -f; _old_ifs="$IFS"
+    replchar() {
+        set -f; _old_ifs="$IFS"
 
-    IFS="$1"
-    _chars="$2"
-    _str="$3"
-    set -- $3
+        IFS="$1"; _chars="$2"; __str="$3"
+        set -- $3
+        while [ "$#" -ge 2 ]; do _str="$_str$1$_chars"; shift; done
+        case "$IFS" in
+            *"${__str#"${__str%?}"}"*) _str="$_str$1$_chars" ;;
+            *) _str="$_str$1" ;;
+        esac
 
-    case $# in 1) [ "$1" = "$_str" ] && return 1 ;; esac
-    while [ "$#" -ge 2 ]; do
-        printf "%s%s" "$1" "$_chars"; shift
-    done
-    case "$IFS" in
-        *"${_str#"${_str%?}"}"*) printf "%s%s" "$1" "$_chars" ;;
-        *) printf "%s" "$1" ;;
+        IFS="$_old_ifs"; set +f
+    }
+
+    _str=; replchar "$1" "$2" "$3"
+
+    case "$_str" in
+        "$3") return 1 ;;
     esac
 
-    IFS="$_old_ifs"; set +f
+    printf "%s" "$_str"
 }
 ```
 
