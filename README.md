@@ -2129,13 +2129,13 @@ rstrip() {
 # (255) bad input
 #
 sq_arg() {
-    sq_even() {
+    char_even() {
         set -f; _old_ifs="$IFS"
 
-        IFS=\'
-        case "$1" in
-            *\') set -- $1; _count=$# ;;
-            *) set -- $1; _count=$(($# - 1)) ;;
+        IFS="$1"
+        case "$2" in
+            *"$1") set -- $2; _count=$# ;;
+            *) set -- $2; _count=$(($# - 1)) ;;
         esac
 
         IFS="$_old_ifs"; set +f
@@ -2149,7 +2149,7 @@ sq_arg() {
         *) return 255 ;;
     esac
 
-    sq_even "$2" || return 2
+    char_even '\' "$2" || return 2
 
     _sfix="$2"; _i=0; while :; do
         _i=$((_i + 1))
