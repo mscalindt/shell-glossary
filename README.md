@@ -1992,14 +1992,9 @@ remstr() {
 #
 # Returns:
 # (0) modified $3
-# (1) $1 = $2
-# (2) ! $1
+# (1) ! $1
 #
 replchars() {
-    case "$1" in
-        "$2") return 1 ;;
-    esac
-
     set -f; _old_ifs="$IFS"
 
     IFS="$1"
@@ -2007,7 +2002,7 @@ replchars() {
     _str="$3"
     set -- $3
 
-    case $# in 1) [ "$1" = "$_str" ] && return 2 ;; esac
+    case $# in 1) [ "$1" = "$_str" ] && return 1 ;; esac
     while [ "$#" -ge 2 ]; do
         printf "%s%s" "$1" "$_chars"; shift
     done
