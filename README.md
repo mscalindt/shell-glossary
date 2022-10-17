@@ -74,15 +74,14 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 #
 chars_even() {
     char_even() {
-        set -f; _old_ifs="$IFS"
+        _old_ifs="$IFS"; IFS="$1"
 
-        IFS="$1"
-        case "$2" in
-            *"$1") set -- $2; _count=$# ;;
+        set -f; case "$2" in
+            *"$IFS") set -- $2; _count=$# ;;
             *) set -- $2; _count=$(($# - 1)) ;;
-        esac
+        esac; set +f
 
-        IFS="$_old_ifs"; set +f
+        IFS="$_old_ifs"
 
         [ "$((_count % 2))" -eq 0 ]
     }
