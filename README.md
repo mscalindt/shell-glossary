@@ -1808,16 +1808,17 @@ pline_fd1() {
 #
 remchars() {
     remchar() {
-        set -f; _old_ifs="$IFS"
+        _old_ifs="$IFS"; IFS="$1"
 
-        IFS="$1"
-        set -- $2
-        while [ "$#" -ge 1 ]; do _str="$_str$1"; shift; done
+        set -f; set -- $2; set +f
+        _str=; while [ "$#" -ge 1 ]; do
+            _str="$_str$1"; shift
+        done
 
-        IFS="$_old_ifs"; set +f
+        IFS="$_old_ifs"
     }
 
-    _str=; remchar "$1" "$2"
+    remchar "$1" "$2"
 
     case "$_str" in
         "$2") return 1 ;;
