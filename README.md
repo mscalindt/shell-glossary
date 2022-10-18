@@ -2270,10 +2270,11 @@ str_fd1() {
 # [$3] - mode1('1' - no output)
 #
 # Provides:
-# <"$_chars"> - the character(s)
+# (0) <"$_chars"> - the character(s)
 #
 # Returns:
 # (0) character(s)
+# (1) invalid $1
 #
 # Caveats:
 # 1. Only characters in the printable set of C ASCII characters ('[\x20-\x7E]')
@@ -2317,6 +2318,8 @@ str_to_chars() {
             done
         ;;
     esac; _chars="${_chars%?}"; export LC_ALL="$_old_lc"
+
+    [ "$_chars" ] || return 1
 
     case $3$2 in
         *1*) : ;;
