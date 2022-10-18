@@ -2280,46 +2280,15 @@ str_fd1() {
 #    will be printed.
 #
 str_to_chars() {
-    _str="$1"; _chars=
+    _old_lc="$LC_ALL"; _str="$1"; _chars=
 
-    _old_lc="$LC_ALL"; export LC_ALL=C
-
-    case $3$2 in
-        *1*) printf() { return; } ;;
-    esac
-
-    while :; do
-        case :"$_str" in :) break ;; esac
-
-        _char="${_str%"${_str#?}"}"
-        _str="${_str#?}"
-
-        case $_char in
-            ' ')
-                :
-            ;;
-            [[:print:]])
-                case $2 in
-                    0) _chars_set="$_char" ;;
-                esac
-
-                _chars="$_char"
-                printf "%s" "$_char"; break
-            ;;
-        esac
-    done
-
-    case $2 in
+    export LC_ALL=C; case $2 in
         0)
-            while :; do
-                case :"$_str" in :) break ;; esac
-
+            _chars_set=; while [ "$_str" ]; do
                 _char="${_str%"${_str#?}"}"
                 _str="${_str#?}"
 
-                case "$_chars_set" in
-                    *"$_char"*) continue ;;
-                esac
+                case "$_chars_set" in *"$_char"*) continue ;; esac
 
                 case $_char in
                     ' ')
@@ -2327,38 +2296,32 @@ str_to_chars() {
                     ;;
                     [[:print:]])
                         _chars_set="$_chars_set$_char"
-
-                        _chars="$_chars $_char"
-                        printf " %s" "$_char"
+                        _chars="$_chars$_char "
                     ;;
                 esac
             done
         ;;
         *)
-            while :; do
-                case :"$_str" in :) break ;; esac
-
+            while [ "$_str" ]; do
                 _char="${_str%"${_str#?}"}"
                 _str="${_str#?}"
 
                 case $_char in
-                    " ")
+                    ' ')
                         :
                     ;;
                     [[:print:]])
-                        _chars="$_chars $_char"
-                        printf " %s" "$_char"
+                        _chars="$_chars$_char "
                     ;;
                 esac
             done
         ;;
-    esac
+    esac; _chars="${_chars%?}"; export LC_ALL="$_old_lc"
 
     case $3$2 in
-        *1*) unset printf ;;
+        *1*) : ;;
+        *) printf "%s" "$_chars" ;;
     esac
-
-    export LC_ALL="$_old_lc"
 }
 ```
 
