@@ -2149,7 +2149,7 @@ sq_arg() {
         *) return 255 ;;
     esac
 
-    char_even '\' "$2" || return 2
+    char_even \' "$2" || return 2
 
     _sfix="$2"; _i=0; while :; do
         _i=$((_i + 1))
