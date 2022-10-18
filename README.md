@@ -1888,8 +1888,6 @@ remstr() {
                     esac
                 ;;
             esac
-
-            _str="$_pfix$_sfix"
         ;;
         2)
             _pfix="${_str%"$1"*}"
@@ -1908,10 +1906,8 @@ remstr() {
                     esac
                 ;;
             esac
-
-            _str="$_pfix$_sfix"
         ;;
-    esac
+    esac; _str="$_pfix$_sfix"
 
     case $3 in
         3)
