@@ -2130,15 +2130,14 @@ rstrip() {
 #
 sq_arg() {
     char_even() {
-        set -f; _old_ifs="$IFS"
+        _old_ifs="$IFS"; IFS="$1"
 
-        IFS="$1"
-        case "$2" in
-            *"$1") set -- $2; _count=$# ;;
+        set -f; case "$2" in
+            *"$IFS") set -- $2; _count=$# ;;
             *) set -- $2; _count=$(($# - 1)) ;;
-        esac
+        esac; set +f
 
-        IFS="$_old_ifs"; set +f
+        IFS="$_old_ifs"
 
         [ "$((_count % 2))" -eq 0 ]
     }
@@ -2154,9 +2153,7 @@ sq_arg() {
     _sfix="$2"; _i=0; while :; do
         _i=$((_i + 1))
 
-        _sfix="${_sfix#*\'*\'}"
-
-        while :; do case :"$_sfix" in
+        _sfix="${_sfix#*\'*\'}"; while :; do case :"$_sfix" in
             :'\'*) _sfix="${_sfix#???*\'}" ;;
             :' '*) break ;;
             :) [ "$1" -eq "$_i" ] && break || return 1 ;;
