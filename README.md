@@ -1979,20 +1979,21 @@ remstr() {
 #
 replchars() {
     replchar() {
-        set -f; _old_ifs="$IFS"
+        _old_ifs="$IFS"; IFS="$1"; _chars="$2"
 
-        IFS="$1"; _chars="$2"; __str="$3"
-        set -- $3
-        while [ "$#" -ge 2 ]; do _str="$_str$1$_chars"; shift; done
+        set -f; set -- $3 "$3"; set +f
+        _str=; while [ "$#" -ge 3 ]; do
+            _str="$_str$1$_chars"; shift
+        done
         case "$IFS" in
-            *"${__str#"${__str%?}"}"*) _str="$_str$1$_chars" ;;
+            *"${2#"${2%?}"}"*) _str="$_str$1$_chars" ;;
             *) _str="$_str$1" ;;
         esac
 
-        IFS="$_old_ifs"; set +f
+        IFS="$_old_ifs"
     }
 
-    _str=; replchar "$1" "$2" "$3"
+    replchar "$1" "$2" "$3"
 
     case "$_str" in
         "$3") return 1 ;;
