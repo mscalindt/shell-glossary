@@ -379,10 +379,7 @@ err_ne_fmt_clr() {
 # (1) no meta characters in $1
 #
 esc_str() {
-    _str="$1"
-    unset _str_ref
-
-    set -f
+    _str="$1"; _str_ref=
 
     case "$2" in
         0*) _chars="${2#??}" ;;
@@ -390,12 +387,12 @@ esc_str() {
     esac
 
     case "$_chars" in
-        '\'*) : ;;
-        *'\') _chars='\'" ${_chars%%\\*}${_chars#*\\}" ;;
-        *'\'*) _chars='\'" ${_chars%%\\*}${_chars#*\\ }" ;;
+        \\*) : ;;
+        *\\) _chars="\\ ${_chars%%\\*}${_chars#*\\}" ;;
+        *\\*) _chars="\\ ${_chars%%\\*}${_chars#*\\ }" ;;
     esac
 
-    for _char in $_chars; do
+    set -f; for _char in $_chars; do
         case "$_str" in
             *"$_char"*) : ;;
             *) continue ;;
@@ -446,9 +443,7 @@ esc_str() {
                 esac done
             ;;
         esac
-    done
-
-    set +f
+    done; set +f
 
     [ "$_str_ref" ] || return 1
 
