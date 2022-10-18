@@ -1424,32 +1424,26 @@ num_to_char() {
         *) return 255 ;;
     esac
 
-    case $4$3 in
-        *1*) printf() { return; } ;;
-    esac
-
     _chars="$2"
-    printf "%s" "$2"
 
     case $3 in
         0)
             _i=1; until [ "$_i" -eq "$1" ]; do
                 _chars="$_chars $2"
-                printf " %s" "$2"
                 _i=$((_i + 1))
             done
         ;;
         *)
             _i=1; until [ "$_i" -eq "$1" ]; do
                 _chars="$_chars$2"
-                printf "%s" "$2"
                 _i=$((_i + 1))
             done
         ;;
     esac
 
     case $4$3 in
-        *1*) unset printf ;;
+        *1*) : ;;
+        *) printf "%s" "$_chars" ;;
     esac
 }
 ```
