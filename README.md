@@ -1185,14 +1185,14 @@ ltr_substr0() {
 
     case $4 in
         0)
-            _str="${_str#"${_str%%[![:space:]]*}"}"
+            _str="${_str#"${_str%%[! ]*}"}"
         ;;
         1)
-            _str="${_str%"${_str##*[![:space:]]}"}"
+            _str="${_str%"${_str##*[! ]}"}"
         ;;
         2)
-            _str="${_str#"${_str%%[![:space:]]*}"}"
-            _str="${_str%"${_str##*[![:space:]]}"}"
+            _str="${_str#"${_str%%[! ]*}"}"
+            _str="${_str%"${_str##*[! ]}"}"
         ;;
     esac
 
