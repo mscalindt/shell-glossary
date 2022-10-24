@@ -1997,28 +1997,22 @@ replchars() {
 # (2) ! $1
 #
 replstr() {
-    _str="$2"
-
-    case "$_str" in
+    case "$2" in
         "$1") return 1 ;;
         *"$1"*) : ;;
         *) return 2 ;;
     esac
 
-    case "$1" in
-        "$3") [ ! "$5" ] && printf "%s" "$_str"; return 0 ;;
-    esac
-
     case $4 in
         1)
-            _str="${_str%%"$1"*}$3${_str#*"$1"}"
+            _str="${2%%"$1"*}$3${2#*"$1"}"
         ;;
         2)
-            _str="${_str%"$1"*}$3${_str##*"$1"}"
+            _str="${2%"$1"*}$3${2##*"$1"}"
         ;;
         3)
-            _str_ref="${_str%%"$1"*}$3"
-            _str="$_str_ref${_str#*"$1"}"
+            _str_ref="${2%%"$1"*}$3"
+            _str="$_str_ref${2#*"$1"}"
 
             while :; do case "$_str" in
                 "$_str_ref"*"$1"*)
