@@ -1855,55 +1855,31 @@ remchars() {
 # (2) ! $1
 #
 remstr() {
-    _str="$2"
-
-    case "$_str" in
+    case "$2" in
         "$1") return 1 ;;
         *"$1"*) : ;;
         *) return 2 ;;
     esac
 
-    case $4 in
-        4) case "$_str" in " $1 ") return 1 ;; esac ;;
-    esac
-
     case $3 in
         1|3)
-            _pfix="${_str%%"$1"*}"
-            case $4 in
-                4)
-                    case "$_str" in
-                        *" $1 "*) _pfix="${_pfix% }" ;;
-                        *"$1"*" $1") : ;;
-                        *" $1") _pfix="${_pfix% }" ;;
-                    esac
-                ;;
-            esac
-
-            _sfix="${_str#*"$1"}"
-            case $4 in
-                4)
-                    case "$_str" in
-                        "$1 "*) _sfix="${_sfix# }" ;;
-                    esac
-                ;;
-            esac
+            _pfix="${2%%"$1"*}"
+            _sfix="${2#*"$1"}"
         ;;
         2)
-            _pfix="${_str%"$1"*}"
-            case $4 in
-                4)
-                    _pfix="${_pfix% }"
-                ;;
-            esac
+            _pfix="${2%"$1"*}"
+            _sfix="${2##*"$1"}"
+        ;;
+    esac; case $4 in
+        4)
+            case "$2" in
+                *" $1 "* | *" $1"* | *"$1 "*)
+                    _pfix="${_pfix%"${_pfix##*[! ]}"}"
+                    _sfix="${_sfix#"${_sfix%%[! ]*}"}"
 
-            _sfix="${_str##*"$1"}"
-            case $4 in
-                4)
-                    case "$_str" in
-                        "$1 "*"$1"*) : ;;
-                        "$1 "*) _sfix="${_sfix# }" ;;
-                    esac
+                    if [ "$_pfix" ] && [ "$_sfix" ]; then
+                        _pfix="$_pfix "
+                    fi
                 ;;
             esac
         ;;
@@ -1912,30 +1888,21 @@ remstr() {
     case $3 in
         3)
             while :; do case "$_str" in
-                "$1")
-                    return 1
-                ;;
                 *"$1"*)
-                    case $4 in
-                        4) case "$_str" in " $1 ") return 1 ;; esac ;;
-                    esac
-
                     _pfix="${_str%%"$1"*}"
-                    case $4 in
-                        4)
-                            case "$_str" in
-                                *" $1 "*) _pfix="${_pfix% }" ;;
-                                *"$1"*" $1") : ;;
-                                *" $1") _pfix="${_pfix% }" ;;
-                            esac
-                        ;;
-                    esac
-
                     _sfix="${_str#*"$1"}"
+
                     case $4 in
                         4)
                             case "$_str" in
-                                "$1 "*) _sfix="${_sfix# }" ;;
+                                *" $1 "* | *" $1"* | *"$1 "*)
+                                    _pfix="${_pfix%"${_pfix##*[! ]}"}"
+                                    _sfix="${_sfix#"${_sfix%%[! ]*}"}"
+
+                                    if [ "$_pfix" ] && [ "$_sfix" ]; then
+                                        _pfix="$_pfix "
+                                    fi
+                                ;;
                             esac
                         ;;
                     esac
