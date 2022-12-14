@@ -2081,7 +2081,7 @@ rstrip() {
 # (0) <"$_sfix"> - a pattern;
 #                  right side of the argument
 # [$_i] - the iterations completed;
-#         whole number
+#         natural number
 #
 # Returns:
 # (0) argument
