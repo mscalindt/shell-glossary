@@ -27,10 +27,6 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 * [STR()](https://github.com/mscalindt/shell-glossary#str)
 * [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary#str_to_chars)
 
-# Normal functions (color):
-
-* [CONFIRM_CONT_CLR()](https://github.com/mscalindt/shell-glossary#confirm_cont_clr)
-
 # Stdin functions:
 
 * [PARSE_FD1()](https://github.com/mscalindt/shell-glossary#parse_fd1)
@@ -103,6 +99,9 @@ chars_even() {
 # <$1> - mode1-2('1' - default action: Y,
 #                '2' - default action: N)
 #
+# Uses:
+# [NO_COLOR] $ - this environment variable disables colored output
+#
 # Provides:
 # <"$_action"> - the raw input
 #
@@ -113,7 +112,11 @@ chars_even() {
 confirm_cont() {
     case $1 in
         1)
-            printf 'Continue? [Y/n] '
+            if [ "$NO_COLOR" ]; then
+                printf 'Continue? [Y/n] '
+            else
+                printf "%bContinue? [Y/n]%b " '\033[1;37m' '\033[0m'
+            fi
             read -r _action
 
             case "$_action" in
@@ -123,50 +126,11 @@ confirm_cont() {
             return 0
         ;;
         2)
-            printf 'Continue? [y/N] '
-            read -r _action
-
-            case "$_action" in
-                Y*|y*) return 0 ;;
-            esac
-
-            return 1
-        ;;
-    esac
-}
-```
-
-## confirm_cont_clr
-
-```sh
-# Description:
-# Colorfully ask for confirmation to continue
-#
-# Parameters:
-# <$1> - mode1-2('1' - default action: Y,
-#                '2' - default action: N)
-#
-# Provides:
-# <"$_action"> - the raw input
-#
-# Returns:
-# (0) permitted
-# (1) forbidden
-#
-confirm_cont_clr() {
-    case $1 in
-        1)
-            printf "%bContinue? [Y/n]%b " '\033[1;37m' '\033[0m'
-            read -r _action
-
-            case "$_action" in
-                N*|n*) return 1 ;;
-            esac
-
-            return 0
-        ;;
-        2)
-            printf "%bContinue? [y/N]%b " '\033[1;37m' '\033[0m'
+            if [ "$NO_COLOR" ]; then
+                printf 'Continue? [Y/n] '
+            else
+                printf "%bContinue? [Y/n]%b " '\033[1;37m' '\033[0m'
+            fi
             read -r _action
 
             case "$_action" in
