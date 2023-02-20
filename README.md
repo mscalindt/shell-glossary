@@ -4,9 +4,12 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 
 * [CHARS_EVEN()](https://github.com/mscalindt/shell-glossary#chars_even)
 * [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary#confirm_cont)
+* [ERR()](https://github.com/mscalindt/shell-glossary#err)
+* [ERRF()](https://github.com/mscalindt/shell-glossary#errF)
 * [ESC_STR()](https://github.com/mscalindt/shell-glossary#esc_str)
 * [FCOUNT()](https://github.com/mscalindt/shell-glossary#fcount)
 * [GET_FPATH()](https://github.com/mscalindt/shell-glossary#get_fpath)
+* [INFO()](https://github.com/mscalindt/shell-glossary#info)
 * [LSTRIP()](https://github.com/mscalindt/shell-glossary#lstrip)
 * [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary#ltl_substr0)
 * [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltl_substr1)
@@ -27,26 +30,6 @@ A collection of reusable pure POSIX `sh` functions with no external binary calls
 # Normal functions (color):
 
 * [CONFIRM_CONT_CLR()](https://github.com/mscalindt/shell-glossary#confirm_cont_clr)
-
-# Output control:
-* [ERR()](https://github.com/mscalindt/shell-glossary#err)
-* [ERR_NE()](https://github.com/mscalindt/shell-glossary#err_ne)
-* [ERR_FMT()](https://github.com/mscalindt/shell-glossary#err_fmt)
-* [ERR_NE_FMT()](https://github.com/mscalindt/shell-glossary#err_ne_fmt)
-* [INFO()](https://github.com/mscalindt/shell-glossary#info)
-* [INFO_FMT()](https://github.com/mscalindt/shell-glossary#info_fmt)
-* [WARN()](https://github.com/mscalindt/shell-glossary#warn)
-* [WARN_FMT()](https://github.com/mscalindt/shell-glossary#warn_fmt)
-
-# Output control (color):
-* [ERR_CLR()](https://github.com/mscalindt/shell-glossary#err_clr)
-* [ERR_NE_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_clr)
-* [ERR_FMT_CLR()](https://github.com/mscalindt/shell-glossary#err_fmt_clr)
-* [ERR_NE_FMT_CLR()](https://github.com/mscalindt/shell-glossary#err_ne_fmt_clr)
-* [INFO_CLR()](https://github.com/mscalindt/shell-glossary#info_clr)
-* [INFO_FMT_CLR()](https://github.com/mscalindt/shell-glossary#info_fmt_clr)
-* [WARN_CLR()](https://github.com/mscalindt/shell-glossary#warn_clr)
-* [WARN_FMT_CLR()](https://github.com/mscalindt/shell-glossary#warn_fmt_clr)
 
 # Stdin functions:
 
@@ -199,158 +182,187 @@ confirm_cont_clr() {
 ## err
 
 ```sh
-# Description:
-# Print error and exit
-#
-# Parameters:
-# <$1> - exit code
-# <"$2"+> - text
-#
-# Returns:
-# (!) $1
-#
+#! .desc:
+# Print formatted text to stderr
+#! .params:
+# <$1> - color(
+#     '-'  - none
+#     '-bk' - black
+#     '-r' - red
+#     '-g' - green
+#     '-y' - yellow
+#     '-be' - blue
+#     '-m' - magenta
+#     '-c' - cyan
+#     '-w' - white
+#     .
+# )
+# <$2> - type(
+#     '-' - raw
+#     '--' - raw, no newline
+#     '-1' - %H%M%S date fmt
+#     '-2' - %H%M%S date fmt, no newline
+#     .
+# )
+# <"$3"+> - text
+#! .uses:
+# [NO_COLOR] $ - this environment variable disables colored output
+#! .rc:
+# (0) success
+# (255) bad input
 err() {
-    _rc="$1"; shift
-    printf "ERROR: %s\n" "$*" 1>&2
-    exit "$_rc"
+    [ "$#" -ge 3 ] || return 255
+
+    case $1 in
+        '-') _color= ;;
+        '-bk') _color='\033[1;30m' ;;
+        '-r') _color='\033[1;31m' ;;
+        '-g') _color='\033[1;32m' ;;
+        '-y') _color='\033[1;33m' ;;
+        '-be') _color='\033[1;34m' ;;
+        '-m') _color='\033[1;35m' ;;
+        '-c') _color='\033[1;36m' ;;
+        '-w') _color='\033[1;37m' ;;
+        *) return 255 ;;
+    esac
+
+    if [ "$NO_COLOR" ]; then
+        case $2 in
+            '-')
+                shift 2
+                printf "%s\n" "$*" >&2
+            ;;
+            '--')
+                shift 2
+                printf "%s" "$*" >&2
+            ;;
+            '-1')
+                shift 2
+                printf "[%s] =>>: %s\n" "$(date "+%H:%M:%S")" "$*" >&2
+            ;;
+            '-2')
+                shift 2
+                printf "[%s] =>>: %s" "$(date "+%H:%M:%S")" "$*" >&2
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    else
+        case $2 in
+            '-')
+                shift 2
+                printf "%b%s%b\n" "$_color" "$*" '\033[0m' >&2
+            ;;
+            '--')
+                shift 2
+                printf "%b%s%b" "$_color" "$*" '\033[0m' >&2
+            ;;
+            '-1')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b\n" "$_color" "$(date "+%H:%M:%S")" \
+                                              '\033[1;37m' "$*" '\033[0m' >&2
+            ;;
+            '-2')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b" "$_color" "$(date "+%H:%M:%S")" \
+                                            '\033[1;37m' "$*" '\033[0m' >&2
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    fi
 }
 ```
 
-## err_clr
+## errF
 
 ```sh
-# Description:
-# Colorfully print error and exit
-#
-# Parameters:
+#! .desc:
+# Print red-colored formatted text to stderr and exit
+#! .params:
 # <$1> - exit code
-# <"$2"+> - text
-#
-# Returns:
-# (!) $1
-#
-err_clr() {
-    _rc="$1"; shift
-    printf "%bERROR:%b %s\n" '\033[1;31m' '\033[0m' "$*" 1>&2
-    exit "$_rc"
-}
-```
-
-## err_ne
-
-```sh
-# Description:
-# Print error, no exit
-#
-# Parameters:
-# <"$1"+> - text
-#
-# Returns:
-# (0) error-formatted $1
-#
-err_ne() {
-    printf "ERROR: %s\n" "$*" 1>&2
-}
-```
-
-## err_ne_clr
-
-```sh
-# Description:
-# Colorfully print error, no exit
-#
-# Parameters:
-# <"$1"+> - text
-#
-# Returns:
-# (0) error-formatted $1
-#
-err_ne_clr() {
-    printf "%bERROR:%b %s\n" '\033[1;31m' '\033[0m' "$*" 1>&2
-}
-```
-
-## err_fmt
-
-```sh
-# Description:
-# Print error with printf format before text and exit
-#
-# Parameters:
-# <$1> - exit code
-# <"$2"> - printf format
+# <$2> - type(
+#     '-' - raw
+#     '--' - raw, no newline
+#     '-1' - %H%M%S date fmt
+#     '-2' - %H%M%S date fmt, no newline
+#     .
+# )
 # <"$3"+> - text
-#
-# Returns:
-# (!) $1
-#
-err_fmt() {
-    _rc="$1"; _printf_fmt="$2"; shift 2
-    printf "ERROR: ${_printf_fmt}%s\n" "$*" 1>&2 2> /dev/null
-    exit "$_rc"
-}
-```
+#! .uses:
+# [NO_COLOR] $ - this environment variable disables colored output
+#! .rc:
+# (*) success
+# (255) bad input
+errF() {
+    [ "$#" -ge 3 ] || return 255
 
-## err_fmt_clr
+    # Check if $1 is a whole number
+    case :"$1${1#*[!0123456789]}" in
+        :) return 255 ;;
+        :00) : ;;
+        :0*) return 255 ;;
+        :"$1$1") : ;;
+        *) return 255 ;;
+    esac
 
-```sh
-# Description:
-# Colorfully print error with printf format before text and exit
-#
-# Parameters:
-# <$1> - exit code
-# <"$2"> - printf format
-# <"$3"+> - text
-#
-# Returns:
-# (!) $1
-#
-err_fmt_clr() {
-    _rc="$1"; _printf_fmt="$2"; shift 2
-    printf "%bERROR:%b ${_printf_fmt}%s\n" \
-           '\033[1;31m' '\033[0m' "$*" 1>&2 2> /dev/null
-    exit "$_rc"
-}
-```
+    [ "$1" -le 255 ] || return 255
 
-## err_ne_fmt
+    _exit_code="$1"
 
-```sh
-# Description:
-# Print error with printf format before text, no exit
-#
-# Parameters:
-# <"$1"> - printf format
-# <"$2"+> - text
-#
-# Returns:
-# (0) error-formatted $2
-# (1) printf format error
-#
-err_ne_fmt() {
-    _printf_fmt="$1"; shift
-    printf "ERROR: ${_printf_fmt}%s\n" "$*" 1>&2 2> /dev/null || return 1
-}
-```
+    if [ "$NO_COLOR" ]; then
+        case $2 in
+            '-')
+                shift 2
+                printf "%s\n" "$*" >&2
+            ;;
+            '--')
+                shift 2
+                printf "%s" "$*" >&2
+            ;;
+            '-1')
+                shift 2
+                printf "[%s] =>>: %s\n" "$(date "+%H:%M:%S")" "$*" >&2
+            ;;
+            '-2')
+                shift 2
+                printf "[%s] =>>: %s" "$(date "+%H:%M:%S")" "$*" >&2
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    else
+        case $2 in
+            '-')
+                shift 2
+                printf "%b%s%b\n" '\033[1;31m' "$*" '\033[0m' >&2
+            ;;
+            '--')
+                shift 2
+                printf "%b%s%b" '\033[1;31m' "$*" '\033[0m' >&2
+            ;;
+            '-1')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b\n" '\033[1;31m' \
+                                              "$(date "+%H:%M:%S")" \
+                                              '\033[1;37m' "$*" '\033[0m' >&2
+            ;;
+            '-2')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b" '\033[1;31m' \
+                                            "$(date "+%H:%M:%S")" \
+                                            '\033[1;37m' "$*" '\033[0m' >&2
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    fi
 
-## err_ne_fmt_clr
-
-```sh
-# Description:
-# Colorfully print error with printf format before text, no exit
-#
-# Parameters:
-# <"$1"> - printf format
-# <"$2"+> - text
-#
-# Returns:
-# (0) error-formatted $2
-# (1) printf format error
-#
-err_ne_fmt_clr() {
-    _printf_fmt="$1"; shift
-    printf "%bERROR:%b ${_printf_fmt}%s\n" \
-           '\033[1;31m' '\033[0m' "$*" 1>&2 2> /dev/null || return 1
+    exit "$_exit_code"
 }
 ```
 
@@ -663,75 +675,97 @@ get_fpath() {
 ## info
 
 ```sh
-# Description:
-# Print info
-#
-# Parameters:
-# <"$1"+> - text
-#
-# Returns:
-# (0) info-formatted $1
-#
+#! .desc:
+# Print formatted text to stdout
+#! .params:
+# <$1> - color(
+#     '-'  - none
+#     '-bk' - black
+#     '-r' - red
+#     '-g' - green
+#     '-y' - yellow
+#     '-be' - blue
+#     '-m' - magenta
+#     '-c' - cyan
+#     '-w' - white
+#     .
+# )
+# <$2> - type(
+#     '-' - raw
+#     '--' - raw, no newline
+#     '-1' - %H%M%S date fmt
+#     '-2' - %H%M%S date fmt, no newline
+#     .
+# )
+# <"$3"+> - text
+#! .uses:
+# [NO_COLOR] $ - this environment variable disables colored output
+#! .rc:
+# (0) success
+# (255) bad input
 info() {
-    printf "INFO: %s\n" "$*"
-}
-```
+    [ "$#" -ge 3 ] || return 255
 
-## info_clr
+    case $1 in
+        '-') _color= ;;
+        '-bk') _color='\033[1;30m' ;;
+        '-r') _color='\033[1;31m' ;;
+        '-g') _color='\033[1;32m' ;;
+        '-y') _color='\033[1;33m' ;;
+        '-be') _color='\033[1;34m' ;;
+        '-m') _color='\033[1;35m' ;;
+        '-c') _color='\033[1;36m' ;;
+        '-w') _color='\033[1;37m' ;;
+        *) return 255 ;;
+    esac
 
-```sh
-# Description:
-# Colorfully print info
-#
-# Parameters:
-# <"$1"+> - text
-#
-# Returns:
-# (0) info-formatted $1
-#
-info_clr() {
-    printf "%bINFO:%b %s\n" '\033[1;37m' '\033[0m' "$*"
-}
-```
-
-## info_fmt
-
-```sh
-# Description:
-# Print info with printf format before text
-#
-# Parameters:
-# <"$1"> - printf format
-# <"$2"+> - text
-#
-# Returns:
-# (0) info-formatted $2
-# (1) printf format error
-#
-info_fmt() {
-    _printf_fmt="$1"; shift
-    printf "INFO: ${_printf_fmt}%s\n" "$*" 2> /dev/null || return 1
-}
-```
-
-## info_fmt_clr
-
-```sh
-# Description:
-# Colorfully print info with printf format before text
-#
-# Parameters:
-# <"$1"> - printf format
-# <"$2"+> - text
-#
-# Returns:
-# (0) info-formatted $2
-# (1) printf format error
-#
-info_fmt_clr() {
-    _printf_fmt="$1"; shift
-    printf "%bINFO:%b ${_printf_fmt}%s\n" \
-           '\033[1;37m' '\033[0m' "$*" 2> /dev/null || return 1
+    if [ "$NO_COLOR" ]; then
+        case $2 in
+            '-')
+                shift 2
+                printf "%s\n" "$*"
+            ;;
+            '--')
+                shift 2
+                printf "%s" "$*"
+            ;;
+            '-1')
+                shift 2
+                printf "[%s] =>>: %s\n" "$(date "+%H:%M:%S")" "$*"
+            ;;
+            '-2')
+                shift 2
+                printf "[%s] =>>: %s" "$(date "+%H:%M:%S")" "$*"
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    else
+        case $2 in
+            '-')
+                shift 2
+                printf "%b%s%b\n" "$_color" "$*" '\033[0m'
+            ;;
+            '--')
+                shift 2
+                printf "%b%s%b" "$_color" "$*" '\033[0m'
+            ;;
+            '-1')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b\n" "$_color" "$(date "+%H:%M:%S")" \
+                                              '\033[1;37m' "$*" '\033[0m'
+            ;;
+            '-2')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b" "$_color" "$(date "+%H:%M:%S")" \
+                                            '\033[1;37m' "$*" '\033[0m'
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    fi
 }
 ```
 
@@ -2286,80 +2320,5 @@ str_to_chars() {
         *1*) : ;;
         *) printf "%s" "$_chars" ;;
     esac
-}
-```
-
-## warn
-
-```sh
-# Description:
-# Print a warning
-#
-# Parameters:
-# <"$1"+> - text
-#
-# Returns:
-# (0) warning-formatted $1
-#
-warn() {
-    printf "WARNING: %s\n" "$*"
-}
-```
-
-## warn_clr
-
-```sh
-# Description:
-# Colorfully print a warning
-#
-# Parameters:
-# <"$1"+> - text
-#
-# Returns:
-# (0) warning-formatted $1
-#
-warn_clr() {
-    printf "%bWARNING:%b %s\n" '\033[1;33m' '\033[0m' "$*"
-}
-```
-
-### warn_fmt
-
-```sh
-# Description:
-# Print a warning with printf format before text
-#
-# Parameters:
-# <"$1"> - printf format
-# <"$2"+> - text
-#
-# Returns:
-# (0) warning-formatted $2
-# (1) printf format error
-#
-warn_fmt() {
-    _printf_fmt="$1"; shift
-    printf "WARNING: ${_printf_fmt}%s\n" "$*" 2> /dev/null || return 1
-}
-```
-
-### warn_fmt_clr
-
-```sh
-# Description:
-# Colorfully print a warning with printf format before text
-#
-# Parameters:
-# <"$1"> - printf format
-# <"$2"+> - text
-#
-# Returns:
-# (0) warning-formatted $2
-# (1) printf format error
-#
-warn_fmt_clr() {
-    _printf_fmt="$1"; shift
-    printf "%bWARNING:%b ${_printf_fmt}%s\n" \
-           '\033[1;33m' '\033[0m' "$*" 2> /dev/null || return 1
 }
 ```
