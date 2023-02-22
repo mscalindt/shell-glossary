@@ -37,21 +37,18 @@ utility calls.
 ## chars_even
 
 ```sh
-# Description:
+#! .desc:
 # Test if the character(s) count (combined), in a given string, is even
-#
-# Parameters:
+#! .params:
 # <"$1"> - character(s)
 # <"$2"> - string
-#
-# Provides:
-# <$_count> - the count
-#
-# Returns:
+#! .gives:
+# (0|1) <$_count> - the count
+#! .rc:
 # (0) even
 # (1) uneven
 # (2) ! $1
-#
+#.
 chars_even() {
     char_even() {
         _old_ifs="$IFS"; IFS="$1"
@@ -93,23 +90,22 @@ chars_even() {
 ## confirm_cont
 
 ```sh
-# Description:
+#! .desc:
 # Ask for confirmation to continue
-#
-# Parameters:
-# <$1> - mode1-2('1' - default action: Y,
-#                '2' - default action: N)
-#
-# Uses:
+#! .params:
+# <$1> - action(
+#     '1' - default action: Y
+#     '2' - default action: N
+#     .
+# )
+#! .uses:
 # [NO_COLOR] $ - this environment variable disables colored output
-#
-# Provides:
+#! .gives:
 # <"$_action"> - the raw input
-#
-# Returns:
+#! .rc:
 # (0) permitted
 # (1) forbidden
-#
+#.
 confirm_cont() {
     case $1 in
         1)
@@ -175,6 +171,7 @@ confirm_cont() {
 #! .rc:
 # (0) success
 # (255) bad input
+#.
 err() {
     [ "$#" -ge 3 ] || return 255
 
@@ -261,6 +258,7 @@ err() {
 #! .rc:
 # (*) success
 # (255) bad input
+#.
 errF() {
     [ "$#" -ge 3 ] || return 255
 
@@ -334,27 +332,33 @@ errF() {
 ## esc_str
 
 ```sh
-# Description:
+#! .desc:
 # Escape all POSIX-defined shell meta characters in a string; characters are:
 # \ | & ; < > ( ) $ ` " ' * ? [ ] # ~ = %
-#
-# Parameters:
+#! .params:
 # <"$1"> - string
-# ["$2"] - mode0("0 X" - escape only "X" whitespace-separated character(s))
-# [$3] - mode1-2('1' - strip the characters,
-#                '2' - escape single quote character with itself)
-# [$4] - mode3('3' - no output)
-#
-# Provides:
+# ["$2"] - escape_chars(
+#     "0 X" - escape only "X" whitespace-separated character(s)
+#     .
+# )
+# [$3] - options(
+#     '1' - strip the characters
+#     '2' - escape single quote character with itself
+#     .
+# )
+# [$4] - type(
+#     '3' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_str"> - the modified string
 # <"$_chars"> - the characters;
 #               whitespace delimited;
 #               sorted by order parsed
-#
-# Returns:
+#! .rc:
 # (0) escaped/stripped $1
 # (1) no meta characters in $1
-#
+#.
 esc_str() {
     _str="$1"; _str_ref=
 
@@ -434,35 +438,40 @@ esc_str() {
 ## fcount
 
 ```sh
-# Description:
+#! .desc:
 # Count files and directories in a directory
-#
-# Parameters:
+#! .params:
 # <"$1"> - directory
-# ["$2"] - mode0-2("0X" - count files and directories ending with "X",
-#                  '1' - count only files,
-#                  "1X" - count only files ending with "X",
-#                  '2' - count only directories,
-#                  "2X" - count only directories ending with "X")
-# [$3] - mode3('3' - exclude hidden files/directories)
-# [$4] - mode4('4' - no output)
-#
-# Provides:
+# ["$2"] - count_type(
+#     "0X" - count files and directories ending with "X"
+#     '1' - count only files
+#     "1X" - count only files ending with "X"
+#     '2' - count only directories
+#     "2X" - count only directories ending with "X"
+#     .
+# )
+# [$3] - options(
+#     '3' - exclude hidden files/directories
+#     .
+# )
+# [$4] - type(
+#     '4' - no output
+#     .
+# )
+#! .gives:
 # (0) <$_count> - the count
-#
-# Returns:
+#! .rc:
 # (0) count
 # (1) not a directory | directory does not exist
-#
-# Caveats:
-# 1. The number of files/directories the function (i.e. system) can process
-#    varies. The files/directories are stored as arguments, which means that the
-#    amount of things that can be processed depends on the system and version,
-#    on the number of files and their respective argument size, and on the
-#    number and size of environment variable names. For more information,
-#    related limits shall be checked: ARG_MAX.
-#    Fix: none; not applicable.
-#
+#! .caveats:
+# > The number of files/directories the function (i.e. system) can process
+#   varies. The files/directories are stored as arguments, which means that the
+#   amount of things that can be processed depends on the system and version,
+#   on the number of files and their respective argument size, and on the
+#   number and size of environment variable names.
+#   >> For more information, related limits shall be checked: ARG_MAX
+#   >> Fix: none; not applicable
+#.
 fcount() {
     fcount_all() {
         _fcount=0
@@ -611,19 +620,19 @@ fcount() {
 ## get_fpath
 
 ```sh
-# Description:
+#! .desc:
 # Convert relative path to absolute path
-#
-# Parameters:
+#! .params:
 # <"$1"> - path
-# [$2] - mode0('0' - no output)
-#
-# Provides:
+# [$2] - type(
+#     '0' - no output
+#     .
+# )
+#! .gives:
 # <"$_path"> - the absolute path | path
-#
-# Returns:
+#! .rc:
 # (0) absolute $1 | $1
-#
+#.
 get_fpath() {
     case "$1" in
         '/'*) _path="$1" ;;
@@ -668,6 +677,7 @@ get_fpath() {
 #! .rc:
 # (0) success
 # (255) bad input
+#.
 info() {
     [ "$#" -ge 3 ] || return 255
 
@@ -737,22 +747,22 @@ info() {
 ## lstrip
 
 ```sh
-# Description:
+#! .desc:
 # Strip character(s) from left of string
-#
-# Parameters:
+#! .params:
 # <"$1"> - character(s)
 # <"$2"> - string
-# [$3] - mode0('0' - no output)
-#
-# Provides:
+# [$3] - type(
+#     '0' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_str"> - the stripped string
-#
-# Returns:
+#! .rc:
 # (0) stripped $2
 # (1) ! $1
 # (2) $1 = $2
-#
+#.
 lstrip() {
     case "$2" in
         "$1") return 2 ;;
@@ -766,38 +776,49 @@ lstrip() {
 ## ltl_substr0
 
 ```sh
-# Description:
-# Get positional substring, (from LTL) (N)character(s), in a string
-#
-# Parameters:
-# <$1> - from "N" LTR character('0' - max)
-# <"$2"> - from "X" character(s)
+#! .desc:
+# Get positional substring, (left of) (N)character(s), in a string
+#! .params:
+# <$1> - "N"_LTR(
+#     '0' - max
+#     .
+# )
+# <"$2"> - character(s)
 # <"$3"> - string
-# [$4] - mode0-2('0' - strip all leading whitespace characters,
-#                '1' - strip all trailing whitespace characters,
-#                '2' - strip all leading/trailing whitespace characters)
-# [$5] - mode3('3' - keep $2)
-# [$6] - mode4('4' - verify the expansion)
-# [$7] - mode5('5' - no output)
-#
-# Provides:
-# (0) <"$_str"> - the modified string
+# [$4] - options(
+#     '0' - strip all leading whitespace characters
+#     '1' - strip all trailing whitespace characters
+#     '2' - strip all leading/trailing whitespace characters
+#     .
+# )
+# [$5] - string_options(
+#     '3' - keep $2
+#     .
+# )
+# [$6] - accuracy(
+#     '4' - verify the expansion
+#     .
+# )
+# [$7] - type(
+#     '5' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_str"> - the substring
 # [$_i] - the iterations completed;
 #         whole number
-#
-# Returns:
+#! .rc:
 # (0) substring | incorrect substring ($1 > $2)
 # (1) empty <unspecified/incorrect> expansion
 # (2) unspecified <empty/incorrect> expansion
 # (255) bad input
-#
-# Returns (mode '4'):
+#! .rc (accuracy '4'):
 # (0) substring
 # (1) empty expansion ($2 is the first character by the given ruleset)
 # (2) unspecified expansion (! $2)
 # (3) incorrect expansion ($1 > $2)
 # (255) bad input
-#
+#.
 ltl_substr0() {
     case :$1${1#*[!0123456789]} in
         :) return 255 ;;
@@ -892,36 +913,50 @@ ltl_substr0() {
 ## ltl_substr1
 
 ```sh
-# Description:
-# Get positional substring, (from&to LTL) (N)character(s), in a string
-#
-# Parameters:
-# <$1> - from "N" LTR character('0' - max)
-# <"$2"> - from "X" character(s)
-# <$3> - to "N" $2-TL character('0' - max)
-# <"$4"> - to "X" character(s)
+#! .desc:
+# Get positional substring, (left of, up to) (N)character(s), in a string
+#! .params:
+# <$1> - "N"_LTR(
+#     '0' - max
+#     .
+# )
+# <"$2"> - left of "X" character(s)
+# <$3> - "N"_$2-TL(
+#     '0' - max
+#     .
+# )
+# <"$4"> - up to "X" character(s)
 # <"$5"> - string
-# [$6] - mode0-2('0' - strip all leading whitespace characters,
-#                '1' - strip all trailing whitespace characters,
-#                '2' - strip all leading/trailing whitespace characters)
-# [$7] - mode3-5('3' - keep $2,
-#                '4' - keep $4,
-#                '5' - keep $2/$4)
-# [$8] - mode6('6' - verify the expansion)
-# [$9] - mode7('7' - no output)
-#
-# Provides:
-# (0) <"$_str"> - the modified string
+# [$6] - options(
+#     '0' - strip all leading whitespace characters
+#     '1' - strip all trailing whitespace characters
+#     '2' - strip all leading/trailing whitespace characters
+#     .
+# )
+# [$7] - string_options(
+#     '3' - keep $2
+#     '4' - keep $4
+#     '5' - keep $2/$4
+#     .
+# )
+# [$8] - accuracy(
+#     '6' - verify the expansion
+#     .
+# )
+# [$9] - type(
+#     '7' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_str"> - the substring
 # [$_i] - the iterations completed;
 #         whole number
-#
-# Returns:
+#! .rc:
 # (0) substring | incorrect substring ($1/$3 > $2/$4)
 # (1) empty <unspecified/incorrect> expansion
 # (2) unspecified <empty/incorrect> expansion
 # (255) bad input
-#
-# Returns (mode '6'):
+#! .rc (accuracy '6'):
 # (0) substring
 # (1) unspecified expansion ($2 is the first character by the given ruleset)
 # (2) unspecified expansion (! $2)
@@ -930,7 +965,7 @@ ltl_substr0() {
 # (5) unspecified expansion (! $4)
 # (6) incorrect expansion ($3 > $4)
 # (255) bad input
-#
+#.
 ltl_substr1() {
     case :$1${1#*[!0123456789]} in
         :) return 255 ;;
@@ -1085,38 +1120,49 @@ ltl_substr1() {
 ## ltr_substr0
 
 ```sh
-# Description:
-# Get positional substring, (from LTR) (N)character(s), in a string
-#
-# Parameters:
-# <$1> - from "N" LTR character('0' - max)
-# <"$2"> - from "X" character(s)
+#! .desc:
+# Get positional substring, (right of) (N)character(s), in a string
+#! .params:
+# <$1> - "N"_LTR(
+#     '0' - max
+#     .
+# )
+# <"$2"> - character(s)
 # <"$3"> - string
-# [$4] - mode0-2('0' - strip all leading whitespace characters,
-#                '1' - strip all trailing whitespace characters,
-#                '2' - strip all leading/trailing whitespace characters)
-# [$5] - mode3('3' - keep $2)
-# [$6] - mode4('4' - verify the expansion)
-# [$7] - mode5('5' - no output)
-#
-# Provides:
-# (0) <"$_str"> - the modified string
+# [$4] - options(
+#     '0' - strip all leading whitespace characters
+#     '1' - strip all trailing whitespace characters
+#     '2' - strip all leading/trailing whitespace characters
+#     .
+# )
+# [$5] - string_options(
+#     '3' - keep $2
+#     .
+# )
+# [$6] - accuracy(
+#     '4' - verify the expansion
+#     .
+# )
+# [$7] - type(
+#     '5' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_str"> - the substring
 # [$_i] - the iterations completed;
 #         whole number
-#
-# Returns:
+#! .rc:
 # (0) substring | incorrect substring ($1 > $2)
 # (1) empty <unspecified/incorrect> expansion
 # (2) unspecified <empty/incorrect> expansion
 # (255) bad input
-#
-# Returns (mode '4'):
+#! .rc (accuracy '4'):
 # (0) substring
 # (1) empty expansion ($2 is the last character by the given ruleset)
 # (2) unspecified expansion (! $2)
 # (3) incorrect expansion ($1 > $2)
 # (255) bad input
-#
+#.
 ltr_substr0() {
     case :$1${1#*[!0123456789]} in
         :) return 255 ;;
@@ -1209,36 +1255,50 @@ ltr_substr0() {
 ## ltr_substr1
 
 ```sh
-# Description:
-# Get positional substring, (from&to LTR) (N)character(s), in a string
-#
-# Parameters:
-# <$1> - from "N" LTR character('0' - max)
-# <"$2"> - from "X" character(s)
-# <$3> - to "N" $2-TR character('0' - max)
-# <"$4"> - to "X" character(s)
+#! .desc:
+# Get positional substring, (right of, up to) (N)character(s), in a string
+#! .params:
+# <$1> - "N"_LTR(
+#     '0' - max
+#     .
+# )
+# <"$2"> - right of "X" character(s)
+# <$3> - "N"_$2-TR(
+#     '0' - max
+#     .
+# )
+# <"$4"> - up to "X" character(s)
 # <"$5"> - string
-# [$6] - mode0-2('0' - strip all leading whitespace characters,
-#                '1' - strip all trailing whitespace characters,
-#                '2' - strip all leading/trailing whitespace characters)
-# [$7] - mode3-5('3' - keep $2,
-#                '4' - keep $4,
-#                '5' - keep $2/$4)
-# [$8] - mode6('6' - verify the expansion)
-# [$9] - mode7('7' - no output)
-#
-# Provides:
-# (0) <"$_str"> - the modified string
+# [$6] - options(
+#     '0' - strip all leading whitespace characters
+#     '1' - strip all trailing whitespace characters
+#     '2' - strip all leading/trailing whitespace characters
+#     .
+# )
+# [$7] - string_options(
+#     '3' - keep $2
+#     '4' - keep $4
+#     '5' - keep $2/$4
+#     .
+# )
+# [$8] - accuracy(
+#     '6' - verify the expansion
+#     .
+# )
+# [$9] - type(
+#     '7' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_str"> - the substring
 # [$_i] - the iterations completed;
 #         whole number
-#
-# Returns:
+#! .rc:
 # (0) substring | incorrect substring ($1/$3 > $2/$4)
 # (1) empty <unspecified/incorrect> expansion
 # (2) unspecified <empty/incorrect> expansion
 # (255) bad input
-#
-# Returns (mode '6'):
+#! .rc (accuracy '6'):
 # (0) substring
 # (1) unspecified expansion ($2 is the last character by the given ruleset)
 # (2) unspecified expansion (! $2)
@@ -1247,7 +1307,7 @@ ltr_substr0() {
 # (5) unspecified expansion (! $4)
 # (6) incorrect expansion ($3 > $4)
 # (255) bad input
-#
+#.
 ltr_substr1() {
     case :$1${1#*[!0123456789]} in
         :) return 255 ;;
@@ -1400,22 +1460,25 @@ ltr_substr1() {
 ## num_to_char
 
 ```sh
-# Description:
+#! .desc:
 # Convert N to that amount of a character
-#
-# Parameters:
+#! .params:
 # <$1> - N
 # <"$2"> - character
-# [$3] - mode0('0' - whitespace-separated characters)
-# [$4] - mode1('1' - no output)
-#
-# Provides:
+# [$3] - options(
+#     '0' - whitespace-separated characters
+#     .
+# )
+# [$4] - type(
+#     '1' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_chars"> - the character(s)
-#
-# Returns:
+#! .rc:
 # (0) character(s)
 # (255) bad input
-#
+#.
 num_to_char() {
     case $1:${1#*[!0123456789]} in
         : | 0*) return 255 ;;
@@ -1450,26 +1513,31 @@ num_to_char() {
 ## parse
 
 ```sh
-# Description:
+#! .desc:
 # Parse the content of a file
-#
-# Parameters:
+#! .params:
 # <"$1"> - file
-# [$2] - mode1-4('1' - add one leading/trailing whitespace character,
-#                '2' - add two leading/trailing whitespace characters,
-#                '3' - skip empty lines,
-#                '4' - strip all leading/trailing whitespace characters)
-# ["$3"] - mode5("5 N" - stop parsing further than "N" line)
-#
-# Returns:
+# [$2] - options(
+#     '1' - add one leading/trailing whitespace character
+#     '2' - add two leading/trailing whitespace characters
+#     '3' - skip empty lines
+#     '4' - strip all leading/trailing whitespace characters
+#     .
+# )
+# ["$3"] - parse_options(
+#     "5 N" - stop parsing further than "N" line
+#     .
+# )
+#! .rc:
 # (0) output | empty output (file) | empty output (by the given ruleset)
 # (1) not a file | file does not exist
 # (2) file access error
-#
-# Caveats:
-# 1. NULL character.
-# 2. Reading /proc is unreliable.
-#
+#! .caveats:
+# > NULL character.
+#   >> Fix: none
+# > Reading /proc is unreliable.
+#   >> Fix: `cat`
+#.
 parse() {
     [ -f "$1" ] || return 1
     [ -r "$1" ] || return 2
@@ -1554,22 +1622,26 @@ parse() {
 ## parse_fd1
 
 ```sh
-# Description:
+#! .desc:
 # Parse the content of stdin
-#
-# Parameters:
-# [$1] - mode1-4('1' - add one leading/trailing whitespace character,
-#                '2' - add two leading/trailing whitespace characters,
-#                '3' - skip empty lines,
-#                '4' - strip all leading/trailing whitespace characters)
-# ["$2"] - mode5("5 N" - stop parsing further than "N" line)
-#
-# Returns:
+#! .params:
+# [$1] - options(
+#     '1' - add one leading/trailing whitespace character
+#     '2' - add two leading/trailing whitespace characters
+#     '3' - skip empty lines
+#     '4' - strip all leading/trailing whitespace characters
+#     .
+# )
+# ["$2"] - parse_options(
+#     "5 N" - stop parsing further than "N" line
+#     .
+# )
+#! .rc:
 # (0) output | empty output (stdin) | empty output (by the given ruleset)
-#
-# Caveats:
-# 1. NULL character.
-#
+#! .caveats:
+# > NULL character.
+#   >> Fix: none
+#.
 parse_fd1() {
     case $2:$1 in
         :1)
@@ -1651,29 +1723,33 @@ parse_fd1() {
 ## pline
 
 ```sh
-# Description:
+#! .desc:
 # Print specific line in file
-#
-# Parameters:
+#! .params:
 # <$1> - line number
 # <"$2"> - file
-# [$3] - mode0('0' - no output)
-# [$4] - mode1('1' - strip all leading/trailing whitespace characters)
-#
-# Provides:
+# [$3] - type(
+#     '0' - no output
+#     .
+# )
+# [$4] - options(
+#     '1' - strip all leading/trailing whitespace characters
+#     .
+# )
+#! .gives:
 # (0) <"$_line"> - the line
-#
-# Returns:
+#! .rc:
 # (0) line's content | line empty
 # (1) line does not exist
 # (2) not a file | file does not exist
 # (3) file access error
 # (255) bad input
-#
-# Caveats:
-# 1. NULL character.
-# 2. Reading /proc is unreliable.
-#
+#! .caveats:
+# > NULL character.
+#   >> Fix: none
+# > Reading /proc is unreliable.
+#   >> Fix: `cat`
+#.
 pline() {
     case $1:${1#*[!0123456789]} in
         : | 0*) return 255 ;;
@@ -1724,25 +1800,28 @@ pline() {
 ## pline_fd1
 
 ```sh
-# Description:
+#! .desc:
 # Print specific line in stdin
-#
-# Parameters:
+#! .params:
 # <$1> - line number
-# [$2] - mode0('0' - no output)
-# [$3] - mode1('1' - strip all leading/trailing whitespace characters)
-#
-# Provides:
+# [$2] - type(
+#     '0' - no output
+#     .
+# )
+# [$3] - options(
+#     '1' - strip all leading/trailing whitespace characters
+#     .
+# )
+#! .gives:
 # (0) <"$_line"> - the line
-#
-# Returns:
+#! .rc:
 # (0) line's content | line empty
 # (1) line does not exist
 # (255) bad input
-#
-# Caveats:
-# 1. NULL character.
-#
+#! .caveats:
+# > NULL character.
+#   >> Fix: none
+#.
 pline_fd1() {
     case $1:${1#*[!0123456789]} in
         : | 0*) return 255 ;;
@@ -1790,21 +1869,21 @@ pline_fd1() {
 ## remchars
 
 ```sh
-# Description:
+#! .desc:
 # Remove specific character(s) in string
-#
-# Parameters:
+#! .params:
 # <"$1"> - character(s)
 # <"$2"> - string
-# [$3] - mode0('0' - no output)
-#
-# Provides:
+# [$3] - type(
+#     '0' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_str"> - the modified string
-#
-# Returns:
+#! .rc:
 # (0) modified $2
 # (1) ! $1
-#
+#.
 remchars() {
     remchar() {
         _old_ifs="$IFS"; IFS="$1"
@@ -1833,26 +1912,32 @@ remchars() {
 ## remstr
 
 ```sh
-# Description:
+#! .desc:
 # Remove a positional substring of a string
-#
-# Parameters:
+#! .params:
 # <"$1"> - substring
 # <"$2"> - string
-# <$3> - mode1-3('1' - remove the first occurrence,
-#                '2' - remove the last occurrence,
-#                '3' - remove all occurrences)
-# [$4] - mode4('4' - whitespace is delimiter)
-# [$5] - mode5('5' - no output)
-#
-# Provides:
+# <$3> - removal_options(
+#     '1' - remove the first occurrence
+#     '2' - remove the last occurrence
+#     '3' - remove all occurrences
+#     .
+# )
+# [$4] - options(
+#     '4' - whitespace is delimiter
+#     .
+# )
+# [$5] - type(
+#     '5' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_str"> - the modified string
-#
-# Returns:
+#! .rc:
 # (0) modified $2
 # (1) $1 = $2
 # (2) ! $1
-#
+#.
 remstr() {
     case "$2" in
         "$1") return 1 ;;
@@ -1927,22 +2012,22 @@ remstr() {
 ## replchars
 
 ```sh
-# Description:
+#! .desc:
 # Replace specific character(s) with character(s) in string
-#
-# Parameters:
+#! .params:
 # <"$1"> - specific character(s)
 # <"$2"> - character(s)
 # <"$3"> - string
-# [$4] - mode0('0' - no output)
-#
-# Provides:
+# [$4] - type(
+#     '0' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_str"> - the modified string
-#
-# Returns:
+#! .rc:
 # (0) modified $3
 # (1) ! $1
-#
+#.
 replchars() {
     replchar() {
         _old_ifs="$IFS"; IFS="$1"; _chars="$2"
@@ -1975,26 +2060,29 @@ replchars() {
 ## replstr
 
 ```sh
-# Description:
+#! .desc:
 # Replace a substring of a string with character(s)
-#
-# Parameters:
+#! .params:
 # <"$1"> - substring
 # <"$2"> - string
 # <"$3"> - character(s)
-# <$4> - mode1-3('1' - replace the first occurrence,
-#                '2' - replace the last occurrence,
-#                '3' - replace all occurrences)
-# [$5] - mode4('4' - no output)
-#
-# Provides:
+# <$4> - replacement_options(
+#     '1' - replace the first occurrence
+#     '2' - replace the last occurrence
+#     '3' - replace all occurrences
+#     .
+# )
+# [$5] - type(
+#     '4' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_str"> - the modified string
-#
-# Returns:
+#! .rc:
 # (0) modified $2
 # (1) $1 = $2
 # (2) ! $1
-#
+#.
 replstr() {
     case "$2" in
         "$1") return 1 ;;
@@ -2036,22 +2124,22 @@ replstr() {
 ## rstrip
 
 ```sh
-# Description:
+#! .desc:
 # Strip character(s) from right of string
-#
-# Parameters:
+#! .params:
 # <"$1"> - character(s)
 # <"$2"> - string
-# [$3] - mode0('0' - no output)
-#
-# Provides:
+# [$3] - type(
+#     '0' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_str"> - the stripped string
-#
-# Returns:
+#! .rc:
 # (0) stripped $2
 # (1) ! $1
 # (2) $1 = $2
-#
+#.
 rstrip() {
     case "$2" in
         "$1") return 2 ;;
@@ -2065,15 +2153,16 @@ rstrip() {
 ## sq_arg
 
 ```sh
-# Description:
+#! .desc:
 # Get N single-quoted argument in a shell-folded string
-#
-# Parameters:
+#! .params:
 # <$1> - N
 # <"$2"> - string
-# [$3] - mode0('0' - no output)
-#
-# Provides:
+# [$3] - type(
+#     '0' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_arg"> - the argument
 # (0) <"$_pfix"> - a pattern;
 #                  left side of the argument
@@ -2081,13 +2170,12 @@ rstrip() {
 #                  right side of the argument
 # [$_i] - the iterations completed;
 #         natural number
-#
-# Returns:
+#! .rc:
 # (0) argument
 # (1) argument does not exist
 # (2) invalid $2
 # (255) bad input
-#
+#.
 sq_arg() {
     char_even() {
         _old_ifs="$IFS"; IFS="$1"
@@ -2145,20 +2233,21 @@ sq_arg() {
 ## str
 
 ```sh
-# Description:
+#! .desc:
 # Check the existence/position of a substring in string
-#
-# Parameters:
+#! .params:
 # <"$1"> - substring
 # <"$2"> - string
-# [$3] - mode1-3('1' - $1 is first character(s) of $2,
-#                '2' - $1 is last character(s) of $2,
-#                '3' - $1 is, on its own, $2)
-#
-# Returns:
+# [$3] - position(
+#     '1' - $1 is first character(s) of $2
+#     '2' - $1 is last character(s) of $2
+#     '3' - $1 is, on its own, $2
+#     .
+# )
+#! .rc:
 # (0) match
 # (1) no match
-#
+#.
 str() {
     case $3:"$2" in
         1:"$1"*) return 0 ;;
@@ -2174,22 +2263,23 @@ str() {
 ## str_fd1
 
 ```sh
-# Description:
+#! .desc:
 # Check the existence/position of a substring in stdin
-#
-# Parameters:
+#! .params:
 # <"$1"> - substring
-# [$2] - mode1-3('1' - $1 is first character(s) of stdin,
-#                '2' - $1 is last character(s) of stdin,
-#                '3' - $1 is, on its own, stdin)
-#
-# Returns:
+# [$2] - position(
+#     '1' - $1 is first character(s) of stdin
+#     '2' - $1 is last character(s) of stdin
+#     '3' - $1 is, on its own, stdin
+#     .
+# )
+#! .rc:
 # (0) match
 # (1) no match
-#
-# Caveats:
-# 1. NULL character.
-#
+#! .caveats:
+# > NULL character.
+#   >> Fix: none
+#.
 str_fd1() {
     case $2 in
         1)
@@ -2221,25 +2311,29 @@ str_fd1() {
 ## str_to_chars
 
 ```sh
-# Description:
+#! .desc:
 # Convert a string to whitespace-separated characters
-#
-# Parameters:
+#! .params:
 # <"$1"> - string
-# [$2] - mode0('0' - remove duplicate characters)
-# [$3] - mode1('1' - no output)
-#
-# Provides:
+# [$2] - options(
+#     '0' - remove duplicate characters
+#     .
+# )
+# [$3] - type(
+#     '1' - no output
+#     .
+# )
+#! .gives:
 # (0) <"$_chars"> - the character(s)
-#
-# Returns:
+#! .rc:
 # (0) character(s)
 # (1) invalid $1
-#
-# Caveats:
-# 1. Only characters in the printable set of C ASCII characters ('[\x20-\x7E]')
-#    will be printed.
-#
+#! .caveats:
+# > Only printable ASCII characters will be included and any characters outside
+#   of this set will be excluded.
+#   >> The printable set: [\x20-\x7E]; [[:print:]]; ASCII 0x20-0x7E
+#   >> Fix: not applicable
+#.
 str_to_chars() {
     _old_lc="$LC_ALL"; _str="$1"; _chars=
 
