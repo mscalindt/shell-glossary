@@ -625,7 +625,7 @@ fcount() {
 #! .params:
 # <"$1"> - path
 # [$2] - type(
-#     '0' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -639,8 +639,8 @@ get_fpath() {
         *) _path="$PWD/$1" ;;
     esac
 
-    case $2 in
-        0) : ;;
+    case "$2" in
+        '-nout') : ;;
         *) printf "%s" "$_path" ;;
     esac
 }
