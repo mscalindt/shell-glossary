@@ -338,16 +338,16 @@ errF() {
 #! .params:
 # <"$1"> - string
 # ["$2"] - escape_chars(
-#     "0 X" - escape only "X" whitespace-separated character(s)
+#     "-chars X" - escape only "X" whitespace-separated character(s)
 #     .
 # )
 # [$3] - options(
-#     '1' - strip the characters
-#     '2' - escape single quote character with itself
+#     '-sqesc' - escape single quote character with itself
+#     '-strip' - strip the characters
 #     .
 # )
 # [$4] - type(
-#     '3' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -363,7 +363,7 @@ esc_str() {
     _str="$1"; _str_ref=
 
     case "$2" in
-        0*) _chars="${2#??}" ;;
+        '-chars'*) _chars="${2#'-chars '}" ;;
         *) _chars='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
     esac
 
@@ -379,11 +379,11 @@ esc_str() {
             *) continue ;;
         esac
 
-        case $_char:$3:"$2" in
-            "'":2*|"'":"$3":2)
+        case "$_char$2$3$4" in
+            \'*'-sqesc'*)
                 _str_ref="${_str%%\'*}'\\''"
             ;;
-            "$_char":1*|"$_char":"$3":1)
+            *'-strip'*)
                 _str_ref="${_str%%"$_char"*}"
             ;;
             *)
@@ -392,10 +392,10 @@ esc_str() {
         esac
         _str="$_str_ref${_str#*"$_char"}"
 
-        case $_char:$3:"$2" in
-            "'":2*|"'":"$3":2)
+        case "$_char$2$3$4" in
+            \'*'-sqesc'*)
                 while :; do case "$_str" in
-                    "$_str_ref"*"'"*)
+                    "$_str_ref"*\'*)
                         _str="${_str#*"$_str_ref"}"
                         _str_ref="$_str_ref${_str%%\'*}'\\''"
                         _str="$_str_ref${_str#*\'}"
@@ -405,7 +405,7 @@ esc_str() {
                     ;;
                 esac done
             ;;
-            "$_char":1*|"$_char":"$3":1)
+            *'-strip'*)
                 while :; do case "$_str" in
                     *"$_char"*) _str="${_str%%"$_char"*}${_str#*"$_char"}" ;;
                     *) break ;;
@@ -428,8 +428,8 @@ esc_str() {
 
     [ "$_str_ref" ] || return 1
 
-    case :$4:$3:"$2" in
-        *:3*) : ;;
+    case "$2$3$4" in
+        *'-nout'*) : ;;
         *) printf "%s" "$_str" ;;
     esac
 }
