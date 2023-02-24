@@ -94,8 +94,8 @@ chars_even() {
 # Ask for confirmation to continue
 #! .params:
 # <$1> - action(
-#     '1' - default action: Y
-#     '2' - default action: N
+#     '-n' - default action: N
+#     '-y' - default action: Y
 #     .
 # )
 #! .uses:
@@ -107,22 +107,8 @@ chars_even() {
 # (1) forbidden
 #.
 confirm_cont() {
-    case $1 in
-        1)
-            if [ "$NO_COLOR" ]; then
-                printf 'Continue? [Y/n] '
-            else
-                printf "%bContinue? [Y/n]%b " '\033[1;37m' '\033[0m'
-            fi
-            read -r _action
-
-            case "$_action" in
-                N*|n*) return 1 ;;
-            esac
-
-            return 0
-        ;;
-        2)
+    case "$1" in
+        '-n')
             if [ "$NO_COLOR" ]; then
                 printf 'Continue? [Y/n] '
             else
@@ -135,6 +121,20 @@ confirm_cont() {
             esac
 
             return 1
+        ;;
+        '-y')
+            if [ "$NO_COLOR" ]; then
+                printf 'Continue? [Y/n] '
+            else
+                printf "%bContinue? [Y/n]%b " '\033[1;37m' '\033[0m'
+            fi
+            read -r _action
+
+            case "$_action" in
+                N*|n*) return 1 ;;
+            esac
+
+            return 0
         ;;
     esac
 }
