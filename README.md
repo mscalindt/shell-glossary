@@ -753,7 +753,7 @@ info() {
 # <"$1"> - character(s)
 # <"$2"> - string
 # [$3] - type(
-#     '0' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -765,8 +765,19 @@ info() {
 #.
 lstrip() {
     case "$2" in
-        "$1") return 2 ;;
-        "$1"*) _str="${2#"$1"}"; [ ! "$3" ] && printf "%s" "$_str"; return 0 ;;
+        "$1")
+            return 2
+        ;;
+        "$1"*)
+            _str="${2#"$1"}"
+
+            case "$3" in
+                '-nout') : ;;
+                *) printf "%s" "$_str" ;;
+            esac
+
+            return 0
+        ;;
     esac
 
     return 1
