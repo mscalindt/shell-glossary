@@ -766,7 +766,7 @@ info() {
 lstrip() {
     case "$2" in
         "$1") return 2 ;;
-        "$1"*) _str="${2#"$1"}"; [ ! "$2" ] && printf "%s" "$_str"; return 0 ;;
+        "$1"*) _str="${2#"$1"}"; [ ! "$3" ] && printf "%s" "$_str"; return 0 ;;
     esac
 
     return 1
