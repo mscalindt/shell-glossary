@@ -2078,13 +2078,13 @@ replchars() {
 # <"$2"> - string
 # <"$3"> - character(s)
 # <$4> - replacement_options(
-#     '1' - replace the first occurrence
-#     '2' - replace the last occurrence
-#     '3' - replace all occurrences
+#     '-replfst' - replace the first occurrence
+#     '-repllst' - replace the last occurrence
+#     '-replall' - replace all occurrences
 #     .
 # )
 # [$5] - type(
-#     '4' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -2101,14 +2101,14 @@ replstr() {
         *) return 2 ;;
     esac
 
-    case $4 in
-        1)
+    case "$4" in
+        '-replfst')
             _str="${2%%"$1"*}$3${2#*"$1"}"
         ;;
-        2)
+        '-repllst')
             _str="${2%"$1"*}$3${2##*"$1"}"
         ;;
-        3)
+        '-replall')
             _str_ref="${2%%"$1"*}$3"
             _str="$_str_ref${2#*"$1"}"
 
@@ -2125,8 +2125,8 @@ replstr() {
         ;;
     esac
 
-    case $5 in
-        4) : ;;
+    case "$5" in
+        '-nout') : ;;
         *) printf "%s" "$_str" ;;
     esac
 }
