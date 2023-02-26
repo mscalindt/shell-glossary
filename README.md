@@ -2181,7 +2181,7 @@ rstrip() {
 # <$1> - N
 # <"$2"> - string
 # [$3] - type(
-#     '0' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -2245,7 +2245,10 @@ sq_arg() {
             _arg="${_arg#"$_pfix"}"
             _arg="${_arg%"$_sfix"}"
 
-            [ ! "$3" ] && printf "%s" "$_arg"
+            case "$3" in
+                '-nout') : ;;
+                *) printf "%s" "$_arg" ;;
+            esac
             return 0
         fi
     done
