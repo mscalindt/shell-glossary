@@ -1739,12 +1739,12 @@ parse_fd1() {
 #! .params:
 # <$1> - line number
 # <"$2"> - file
-# [$3] - type(
-#     '0' - no output
+# [$3] - options(
+#     '-striplt' - strip all leading/trailing whitespace characters
 #     .
 # )
-# [$4] - options(
-#     '1' - strip all leading/trailing whitespace characters
+# [$4] - type(
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -1771,14 +1771,14 @@ pline() {
     [ -f "$2" ] || return 2
     [ -r "$2" ] || return 3
 
-    case $4$3 in
-        *1*)
+    case "$3" in
+        '-striplt')
             _i=0; while read -r _line || [ "$_line" ]; do
                 _i=$((_i + 1))
                 case $_i in
                     "$1")
-                        case $3 in
-                            0) : ;;
+                        case "$3$4" in
+                            *'-nout'*) : ;;
                             *) printf "%s" "$_line" ;;
                         esac
 
@@ -1792,8 +1792,8 @@ pline() {
                 _i=$((_i + 1))
                 case $_i in
                     "$1")
-                        case $3 in
-                            0) : ;;
+                        case "$3$4" in
+                            *'-nout'*) : ;;
                             *) printf "%s" "$_line" ;;
                         esac
 
