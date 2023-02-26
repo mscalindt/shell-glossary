@@ -1477,11 +1477,11 @@ ltr_substr1() {
 # <$1> - N
 # <"$2"> - character
 # [$3] - options(
-#     '0' - whitespace-separated characters
+#     '-wschars' - whitespace-separated characters
 #     .
 # )
 # [$4] - type(
-#     '1' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -1499,8 +1499,8 @@ num_to_char() {
 
     _chars="$2"
 
-    case $3 in
-        0)
+    case "$3" in
+        '-wschars')
             _i=1; until [ "$_i" -eq "$1" ]; do
                 _chars="$_chars $2"
                 _i=$((_i + 1))
@@ -1514,8 +1514,8 @@ num_to_char() {
         ;;
     esac
 
-    case $4$3 in
-        *1*) : ;;
+    case "$3$4" in
+        *'-nout'*) : ;;
         *) printf "%s" "$_chars" ;;
     esac
 }
