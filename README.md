@@ -1815,12 +1815,12 @@ pline() {
 # Print specific line in stdin
 #! .params:
 # <$1> - line number
-# [$2] - type(
-#     '0' - no output
+# [$2] - options(
+#     '-striplt' - strip all leading/trailing whitespace characters
 #     .
 # )
-# [$3] - options(
-#     '1' - strip all leading/trailing whitespace characters
+# [$3] - type(
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -1840,14 +1840,14 @@ pline_fd1() {
         *) return 255 ;;
     esac
 
-    case $3$2 in
-        *1*)
+    case "$2" in
+        '-striplt')
             _i=0; while read -r _line || [ "$_line" ]; do
                 _i=$((_i + 1))
                 case $_i in
                     "$1")
-                        case $2 in
-                            0) : ;;
+                        case "$2$3" in
+                            *'-nout'*) : ;;
                             *) printf "%s" "$_line" ;;
                         esac
 
@@ -1861,8 +1861,8 @@ pline_fd1() {
                 _i=$((_i + 1))
                 case $_i in
                     "$1")
-                        case $2 in
-                            0) : ;;
+                        case "$2$3" in
+                            *'-nout'*) : ;;
                             *) printf "%s" "$_line" ;;
                         esac
 
