@@ -939,23 +939,23 @@ ltl_substr0() {
 # <"$4"> - up to "X" character(s)
 # <"$5"> - string
 # [$6] - options(
-#     '0' - strip all leading whitespace characters
-#     '1' - strip all trailing whitespace characters
-#     '2' - strip all leading/trailing whitespace characters
+#     '-stripl' - strip all leading whitespace characters
+#     '-stript' - strip all trailing whitespace characters
+#     '-striplt' - strip all leading/trailing whitespace characters
 #     .
 # )
 # [$7] - string_options(
-#     '3' - keep $2
-#     '4' - keep $4
-#     '5' - keep $2/$4
+#     '-keepl' - keep $2
+#     '-keepu' - keep $4
+#     '-keeplu' - keep $2/$4
 #     .
 # )
 # [$8] - accuracy(
-#     '6' - verify the expansion
+#     '-verifyexp' - verify the expansion
 #     .
 # )
 # [$9] - type(
-#     '7' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -996,8 +996,8 @@ ltl_substr1() {
 
     _str="$5"
 
-    case $8$7$6 in
-        *6*)
+    case "$6$7$8" in
+        *'-verifyexp'*)
             case $1 in
                 0)
                     case "$_str" in
@@ -1102,27 +1102,27 @@ ltl_substr1() {
 
     [ "$_str" ] || return 1
 
-    case $6 in
-        0)
+    case "$6" in
+        '-stripl')
             _str="${_str#"${_str%%[! ]*}"}"
         ;;
-        1)
+        '-stript')
             _str="${_str%"${_str##*[! ]}"}"
         ;;
-        2)
+        '-striplt')
             _str="${_str#"${_str%%[! ]*}"}"
             _str="${_str%"${_str##*[! ]}"}"
         ;;
     esac
 
-    case $7$6 in
-        *3*) _str="$_str$2" ;;
-        *4*) _str="$4$_str" ;;
-        *5*) _str="$4$_str$2" ;;
+    case "$6$7" in
+        *'-keepl'*) _str="$_str$2" ;;
+        *'-keepu'*) _str="$4$_str" ;;
+        *'-keeplu'*) _str="$4$_str$2" ;;
     esac
 
-    case $9$8$7$6 in
-        *7*) : ;;
+    case "$6$7$8$9" in
+        *'-nout'*) : ;;
         *) printf "%s" "$_str" ;;
     esac
 }
