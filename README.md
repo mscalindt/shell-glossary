@@ -1536,7 +1536,7 @@ num_to_char() {
 #     .
 # )
 # ["$3"] - parse_options(
-#     "5 N" - stop parsing further than "N" line
+#     "-stopat N" - stop parsing further than "N" line
 #     .
 # )
 #! .rc:
@@ -1553,7 +1553,7 @@ parse() {
     [ -f "$1" ] || return 1
     [ -r "$1" ] || return 2
 
-    case $3:$2 in
+    case "$3:$2" in
         :1)
             while IFS= read -r _line; do
                 printf " %s \n" "$_line"
@@ -1574,36 +1574,36 @@ parse() {
                 printf "%s\n" "$_line"
             done < "$1"
         ;;
-        :5*)
-            _maxN="${2#??}"; _i=0; while IFS= read -r _line; do
+        :'-stopat'*)
+            _maxN="${2#'-stopat '}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
                 printf "%s\n" "$_line"
             done < "$1"
         ;;
-        5*:1)
-            _maxN="${3#??}"; _i=0; while IFS= read -r _line; do
+        '-stopat'*:1)
+            _maxN="${3#'-stopat '}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
                 printf " %s \n" "$_line"
             done < "$1"
         ;;
-        5*:2)
-            _maxN="${3#??}"; _i=0; while IFS= read -r _line; do
+        '-stopat'*:2)
+            _maxN="${3#'-stopat '}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
                 printf "  %s  \n" "$_line"
             done < "$1"
         ;;
-        5*:3)
-            _maxN="${3#??}"; _i=0; while IFS= read -r _line; do
+        '-stopat'*:3)
+            _maxN="${3#'-stopat '}"; _i=0; while IFS= read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
                 [ "$_line" ] && printf "%s\n" "$_line"
             done < "$1"
         ;;
-        5*:4)
-            _maxN="${3#??}"; _i=0; while read -r _line; do
+        '-stopat'*:4)
+            _maxN="${3#'-stopat '}"; _i=0; while read -r _line; do
                 _i=$((_i + 1))
                 case $_i in "$_maxN") break ;; esac
                 printf "%s\n" "$_line"
@@ -1616,11 +1616,11 @@ parse() {
         ;;
     esac
 
-    case $3:$2 in
-        :1|5*:1)
+    case "$3:$2" in
+        :1|'-stopat'*:1)
             [ "$_line" ] && printf " %s " "$_line"
         ;;
-        :2|5*:2)
+        :2|'-stopat'*:2)
             [ "$_line" ] && printf "  %s  " "$_line"
         ;;
         *)
