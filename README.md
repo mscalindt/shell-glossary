@@ -1929,17 +1929,17 @@ remchars() {
 # <"$1"> - substring
 # <"$2"> - string
 # <$3> - removal_options(
-#     '1' - remove the first occurrence
-#     '2' - remove the last occurrence
-#     '3' - remove all occurrences
+#     '-remfst' - remove the first occurrence
+#     '-remlst' - remove the last occurrence
+#     '-remall' - remove all occurrences
 #     .
 # )
 # [$4] - options(
-#     '4' - whitespace is delimiter
+#     '-delimws' - whitespace is delimiter
 #     .
 # )
 # [$5] - type(
-#     '5' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -1956,17 +1956,17 @@ remstr() {
         *) return 2 ;;
     esac
 
-    case $3 in
-        1|3)
+    case "$3" in
+        '-remfst' | '-remall')
             _pfix="${2%%"$1"*}"
             _sfix="${2#*"$1"}"
         ;;
-        2)
+        '-remlst')
             _pfix="${2%"$1"*}"
             _sfix="${2##*"$1"}"
         ;;
-    esac; case $4 in
-        4)
+    esac; case "$4" in
+        '-delimws')
             case "$2" in
                 *" $1 "* | *" $1"* | *"$1 "*)
                     _pfix="${_pfix%"${_pfix##*[! ]}"}"
@@ -1980,15 +1980,15 @@ remstr() {
         ;;
     esac; _str="$_pfix$_sfix"
 
-    case $3 in
-        3)
+    case "$3" in
+        '-remall')
             while :; do case "$_str" in
                 *"$1"*)
                     _pfix="${_str%%"$1"*}"
                     _sfix="${_str#*"$1"}"
 
-                    case $4 in
-                        4)
+                    case "$4" in
+                        '-delimws')
                             case "$_str" in
                                 *" $1 "* | *" $1"* | *"$1 "*)
                                     _pfix="${_pfix%"${_pfix##*[! ]}"}"
@@ -2013,8 +2013,8 @@ remstr() {
 
     [ "$_str" ] || return 1
 
-    case $5$4 in
-        *5*) : ;;
+    case "$4$5" in
+        *'-nout'*) : ;;
         *) printf "%s" "$_str" ;;
     esac
 }
