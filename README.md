@@ -2264,9 +2264,9 @@ sq_arg() {
 # <"$1"> - substring
 # <"$2"> - string
 # [$3] - position(
-#     '1' - $1 is first character(s) of $2
-#     '2' - $1 is last character(s) of $2
-#     '3' - $1 is, on its own, $2
+#     '-posfst' - $1 is first character(s) of $2
+#     '-poslst' - $1 is last character(s) of $2
+#     '-same' - $1 is, on its own, $2
 #     .
 # )
 #! .rc:
@@ -2274,11 +2274,11 @@ sq_arg() {
 # (1) no match
 #.
 str() {
-    case $3:"$2" in
-        1:"$1"*) return 0 ;;
-        2:*"$1") return 0 ;;
-        3:"$1") return 0 ;;
-        :*"$1"*) return 0 ;;
+    case "$2":"$3" in
+        "$1"*:'-posfst') return 0 ;;
+        *"$1":'-poslst') return 0 ;;
+        "$1":'-same') return 0 ;;
+        *"$1"*:) return 0 ;;
     esac
 
     return 1
