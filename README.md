@@ -797,21 +797,21 @@ lstrip() {
 # <"$2"> - character(s)
 # <"$3"> - string
 # [$4] - options(
-#     '0' - strip all leading whitespace characters
-#     '1' - strip all trailing whitespace characters
-#     '2' - strip all leading/trailing whitespace characters
+#     '-stripl' - strip all leading whitespace characters
+#     '-stript' - strip all trailing whitespace characters
+#     '-striplt' - strip all leading/trailing whitespace characters
 #     .
 # )
 # [$5] - string_options(
-#     '3' - keep $2
+#     '-keepl' - keep $2
 #     .
 # )
 # [$6] - accuracy(
-#     '4' - verify the expansion
+#     '-verifyexp' - verify the expansion
 #     .
 # )
 # [$7] - type(
-#     '5' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -841,8 +841,8 @@ ltl_substr0() {
 
     _str="$3"
 
-    case $6$5$4 in
-        *4*)
+    case "$4$5$6" in
+        *'-verifyexp'*)
             case $1 in
                 0)
                     case "$_str" in
@@ -897,25 +897,25 @@ ltl_substr0() {
 
     [ "$_str" ] || return 1
 
-    case $4 in
-        0)
+    case "$4" in
+        '-stripl')
             _str="${_str#"${_str%%[! ]*}"}"
         ;;
-        1)
+        '-stript')
             _str="${_str%"${_str##*[! ]}"}"
         ;;
-        2)
+        '-striplt')
             _str="${_str#"${_str%%[! ]*}"}"
             _str="${_str%"${_str##*[! ]}"}"
         ;;
     esac
 
-    case $5$4 in
-        *3*) _str="$_str$2" ;;
+    case "$4$5" in
+        *'-keepl'*) _str="$_str$2" ;;
     esac
 
-    case $7$6$5$4 in
-        *5*) : ;;
+    case "$4$5$6$7" in
+        *'-nout'*) : ;;
         *) printf "%s" "$_str" ;;
     esac
 }
