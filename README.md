@@ -2030,7 +2030,7 @@ remstr() {
 # <"$2"> - character(s)
 # <"$3"> - string
 # [$4] - type(
-#     '0' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -2061,8 +2061,8 @@ replchars() {
         "$3") return 1 ;;
     esac
 
-    case $4 in
-        0) : ;;
+    case "$4" in
+        '-nout') : ;;
         *) printf "%s" "$_str" ;;
     esac
 }
