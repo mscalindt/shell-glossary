@@ -2293,9 +2293,9 @@ str() {
 #! .params:
 # <"$1"> - substring
 # [$2] - position(
-#     '1' - $1 is first character(s) of stdin
-#     '2' - $1 is last character(s) of stdin
-#     '3' - $1 is, on its own, stdin
+#     '-posfst' - $1 is first character(s) of stdin
+#     '-poslst' - $1 is last character(s) of stdin
+#     '-same' - $1 is, on its own, stdin
 #     .
 # )
 #! .rc:
@@ -2306,18 +2306,18 @@ str() {
 #   >> Fix: none
 #.
 str_fd1() {
-    case $2 in
-        1)
+    case "$2" in
+        '-posfst')
             while IFS= read -r _line || [ "$_line" ]; do
                 case "$_line" in "$1"*) return 0 ;; esac
             done
         ;;
-        2)
+        '-poslst')
             while IFS= read -r _line || [ "$_line" ]; do
                 case "$_line" in *"$1") return 0 ;; esac
             done
         ;;
-        3)
+        '-same')
             while IFS= read -r _line || [ "$_line" ]; do
                 case "$_line" in "$1") return 0 ;; esac
             done
