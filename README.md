@@ -2341,11 +2341,11 @@ str_fd1() {
 #! .params:
 # <"$1"> - string
 # [$2] - options(
-#     '0' - remove duplicate characters
+#     '-remdup' - remove duplicate characters
 #     .
 # )
 # [$3] - type(
-#     '1' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -2362,8 +2362,8 @@ str_fd1() {
 str_to_chars() {
     _old_lc="$LC_ALL"; _str="$1"; _chars=
 
-    export LC_ALL=C; case $2 in
-        0)
+    export LC_ALL=C; case "$2" in
+        '-remdup')
             _chars_set=; while [ "$_str" ]; do
                 _char="${_str%"${_str#?}"}"
                 _str="${_str#?}"
@@ -2400,8 +2400,8 @@ str_to_chars() {
 
     [ "$_chars" ] || return 1
 
-    case $3$2 in
-        *1*) : ;;
+    case "$2$3" in
+        *'-nout'*) : ;;
         *) printf "%s" "$_chars" ;;
     esac
 }
