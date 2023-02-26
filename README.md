@@ -1886,7 +1886,7 @@ pline_fd1() {
 # <"$1"> - character(s)
 # <"$2"> - string
 # [$3] - type(
-#     '0' - no output
+#     '-nout' - no output
 #     .
 # )
 #! .gives:
@@ -1913,8 +1913,8 @@ remchars() {
         "$2") return 1 ;;
     esac
 
-    case $3 in
-        0) : ;;
+    case "$3" in
+        '-nout') : ;;
         *) printf "%s" "$_str" ;;
     esac
 }
