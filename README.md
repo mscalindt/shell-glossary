@@ -799,7 +799,7 @@ lstrip() {
 # [$4] - options(
 #     '-stripl' - strip all leading whitespace characters
 #     '-stript' - strip all trailing whitespace characters
-#     '-striplt' - strip all leading/trailing whitespace characters
+#     '-ltstrip' - strip all leading/trailing whitespace characters
 #     .
 # )
 # [$5] - string_options(
@@ -904,7 +904,7 @@ ltl_substr0() {
         '-stript')
             _str="${_str%"${_str##*[! ]}"}"
         ;;
-        '-striplt')
+        '-ltstrip')
             _str="${_str#"${_str%%[! ]*}"}"
             _str="${_str%"${_str##*[! ]}"}"
         ;;
