@@ -947,7 +947,7 @@ ltl_substr0() {
 # [$7] - string_options(
 #     '-keepl' - keep $2
 #     '-keepu' - keep $4
-#     '-keeplu' - keep $2/$4
+#     '-lukeep' - keep $2/$4
 #     .
 # )
 # [$8] - accuracy(
@@ -1118,7 +1118,7 @@ ltl_substr1() {
     case "$6$7" in
         *'-keepl'*) _str="$_str$2" ;;
         *'-keepu'*) _str="$4$_str" ;;
-        *'-keeplu'*) _str="$4$_str$2" ;;
+        *'-lukeep'*) _str="$4$_str$2" ;;
     esac
 
     case "$6$7$8$9" in
