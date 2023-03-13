@@ -941,7 +941,7 @@ ltl_substr0() {
 # [$6] - options(
 #     '-stripl' - strip all leading whitespace characters
 #     '-stript' - strip all trailing whitespace characters
-#     '-striplt' - strip all leading/trailing whitespace characters
+#     '-ltstrip' - strip all leading/trailing whitespace characters
 #     .
 # )
 # [$7] - string_options(
@@ -1109,7 +1109,7 @@ ltl_substr1() {
         '-stript')
             _str="${_str%"${_str##*[! ]}"}"
         ;;
-        '-striplt')
+        '-ltstrip')
             _str="${_str#"${_str%%[! ]*}"}"
             _str="${_str%"${_str##*[! ]}"}"
         ;;
