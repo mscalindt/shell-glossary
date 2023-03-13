@@ -1740,7 +1740,7 @@ parse_fd1() {
 # <$1> - line number
 # <"$2"> - file
 # [$3] - options(
-#     '-striplt' - strip all leading/trailing whitespace characters
+#     '-ltstrip' - strip all leading/trailing whitespace characters
 #     .
 # )
 # [$4] - type(
@@ -1772,7 +1772,7 @@ pline() {
     [ -r "$2" ] || return 3
 
     case "$3" in
-        '-striplt')
+        '-ltstrip')
             _i=0; while read -r _line || [ "$_line" ]; do
                 _i=$((_i + 1))
                 case $_i in
