@@ -1816,7 +1816,7 @@ pline() {
 #! .params:
 # <$1> - line number
 # [$2] - options(
-#     '-striplt' - strip all leading/trailing whitespace characters
+#     '-ltstrip' - strip all leading/trailing whitespace characters
 #     .
 # )
 # [$3] - type(
@@ -1841,7 +1841,7 @@ pline_fd1() {
     esac
 
     case "$2" in
-        '-striplt')
+        '-ltstrip')
             _i=0; while read -r _line || [ "$_line" ]; do
                 _i=$((_i + 1))
                 case $_i in
