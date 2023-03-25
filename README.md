@@ -3,6 +3,7 @@ utility calls.
 
 # Normal functions:
 
+* [CCOUNT()](https://github.com/mscalindt/shell-glossary#ccount)
 * [CHARS_EVEN()](https://github.com/mscalindt/shell-glossary#chars_even)
 * [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary#confirm_cont)
 * [ERR()](https://github.com/mscalindt/shell-glossary#err)
@@ -33,6 +34,52 @@ utility calls.
 * [PARSE_FD1()](https://github.com/mscalindt/shell-glossary#parse_fd1)
 * [PLINE_FD1()](https://github.com/mscalindt/shell-glossary#pline_fd1)
 * [STR_FD1()](https://github.com/mscalindt/shell-glossary#str_fd1)
+
+## ccount
+
+```sh
+#! .desc:
+# Count the times a character appears in a string
+#! .params:
+# <"$1"> - character
+# <"$2"> - string
+# [$3] - type(
+#     '-nout' - no output
+#     .
+# )
+#! .gives:
+# <$_count> - the count
+#! .rc:
+# (0) count
+# (1) ! $1
+#.
+ccount() {
+    _ccount() {
+        _old_ifs="$IFS"; IFS="$1"
+
+        set -f; case "$2" in
+            *"$IFS") set -- $2; _count=$# ;;
+            *) set -- $2; _count=$(($# - 1)) ;;
+        esac; set +f
+
+        IFS="$_old_ifs"
+    }
+
+    _count=0
+
+    case "$2" in
+        *"$1"*) : ;;
+        *) return 1 ;;
+    esac
+
+    _ccount "$1" "$2"
+
+    case "$3" in
+        '-nout') : ;;
+        *) printf "%s" "$_count" ;;
+    esac
+}
+```
 
 ## chars_even
 
