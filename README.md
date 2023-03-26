@@ -2106,7 +2106,11 @@ remstr() {
 #.
 replchars() {
     replchar() {
-        _old_ifs="$IFS"; IFS="$1"; _chars="$2"
+        # Save IFS
+        _old_IFS="$IFS" 2> /dev/null
+        ${IFS+':'} unset _old_IFS 2> /dev/null
+
+        IFS="$1"; _chars="$2"
 
         set -f; set -- $3 "$3"; set +f
         _str=; while [ "$#" -ge 3 ]; do
@@ -2117,7 +2121,9 @@ replchars() {
             *) _str="$_str$1" ;;
         esac
 
-        IFS="$_old_ifs"
+        # Restore IFS
+        IFS="$_old_IFS" 2> /dev/null
+        ${_old_IFS+':'} unset IFS 2> /dev/null
     }
 
     replchar "$1" "$2" "$3"
