@@ -1956,14 +1956,20 @@ pline_fd1() {
 #.
 remchars() {
     remchar() {
-        _old_ifs="$IFS"; IFS="$1"
+        # Save IFS
+        _old_IFS="$IFS" 2> /dev/null
+        ${IFS+':'} unset _old_IFS 2> /dev/null
+
+        IFS="$1"
 
         set -f; set -- $2; set +f
         _str=; while [ "$#" -ge 1 ]; do
             _str="$_str$1"; shift
         done
 
-        IFS="$_old_ifs"
+        # Restore IFS
+        IFS="$_old_IFS" 2> /dev/null
+        ${_old_IFS+':'} unset IFS 2> /dev/null
     }
 
     remchar "$1" "$2"
