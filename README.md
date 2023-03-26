@@ -55,14 +55,20 @@ utility calls.
 #.
 ccount() {
     _ccount() {
-        _old_ifs="$IFS"; IFS="$1"
+        # Save IFS
+        _old_IFS="$IFS" 2> /dev/null
+        ${IFS+':'} unset _old_IFS 2> /dev/null
+
+        IFS="$1"
 
         set -f; case "$2" in
             *"$IFS") set -- $2; _count=$# ;;
             *) set -- $2; _count=$(($# - 1)) ;;
         esac; set +f
 
-        IFS="$_old_ifs"
+        # Restore IFS
+        IFS="$_old_IFS" 2> /dev/null
+        ${_old_IFS+':'} unset IFS 2> /dev/null
     }
 
     _count=0
