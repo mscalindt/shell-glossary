@@ -1550,10 +1550,17 @@ ltr_substr1() {
 # (255) bad input
 #.
 num_to_char() {
-    case $1:${1#*[!0123456789]} in
-        : | 0*) return 255 ;;
-        "$1:$1") : ;;
+    # Check if $1 is a whole number
+    case :"$1${1#*[!0123456789]}" in
+        :) return 255 ;;
+        :00) : ;;
+        :0*) return 255 ;;
+        :"$1$1") : ;;
         *) return 255 ;;
+    esac
+
+    case $1 in
+        0) _chars=; return 0 ;;
     esac
 
     _chars="$2"
