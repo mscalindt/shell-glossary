@@ -158,9 +158,11 @@ chars_even() {
 #     .
 # )
 #! .uses:
-# [NO_COLOR] $ - this environment variable disables colored output
+# [NO_COLOR] $ - environment variable;
+#                disables colored output
 #! .gives:
-# <"$_action"> - the raw input
+# <"$_action"> - string;
+#                raw input
 #! .rc:
 # (0) permitted
 # (1) forbidden
