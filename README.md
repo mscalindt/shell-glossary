@@ -1966,7 +1966,8 @@ pline_fd1() {
 #     .
 # )
 #! .gives:
-# (0) <"$_str"> - the modified string
+# (0) <"$_str"> - string;
+#                 modified $2
 #! .rc:
 # (0) modified $2
 # (1) ! $1
