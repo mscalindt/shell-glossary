@@ -2269,9 +2269,14 @@ rstrip() {
 
 ```sh
 #! .desc:
-# Get N single-quoted argument in a single-quote-escaped string
+# Get a single-quoted argument in a single-quote-escaped string
 #! .params:
-# <$1> - N
+# <$1> - arg(
+#     '-first' - get the first argument
+#     '-last' - get the last argument
+#     "-N" - get "N" argument
+#     .
+# )
 # <"$2"> - string
 # [$3] - type(
 #     '-nout' - no output
@@ -2279,13 +2284,13 @@ rstrip() {
 # )
 #! .gives:
 # (0) <"$_arg"> - string;
-#                 N argument
+#                 argument
 # (0) <"$_pfix"> - string;
-#                  left side single-quote-escaped pattern of the argument
+#                  left side single-quote-escaped pattern of argument
 # (0) <"$_sfix"> - string;
-#                  right side single-quote-escaped pattern of the argument
-# [$_i] - integer;
-#         iterations completed
+#                  right side single-quote-escaped pattern of argument
+# (0) <$_i> - integer;
+#             iterations completed
 #! .rc:
 # (0) argument
 # (1) argument does not exist
@@ -2312,15 +2317,80 @@ sq_arg() {
         [ "$((_count % 2))" -eq 0 ]
     }
 
+    char_even \' "$2" || return 2
+
+    case "$2" in
+        \'*\') : ;;
+        *) return 2 ;;
+    esac
+
+    _i=0
+
+    case "$1" in
+        '-first')
+            case "$2" in
+                *" '"*)
+                    _sfix="'${2#*\' \'}"; _pfix=
+
+                    _arg="$2"
+                    _arg="${_arg%%\' \'*}"
+                    _arg="${_arg#?}"
+                ;;
+                *)
+                    _sfix=; _pfix=
+
+                    _arg="$2"
+                    _arg="${_arg#?}"
+                    _arg="${_arg%?}"
+                ;;
+            esac
+
+            case "$3" in
+                '-nout') : ;;
+                *) printf "%s" "$_arg" ;;
+            esac
+            return 0
+        ;;
+        '-last')
+            case "$2" in
+                *" '"*)
+                    _pfix="${2%\' \'*}'"; _sfix=
+
+                    _arg="$2"
+                    _arg="${_arg##*\' \'}"
+                    _arg="${_arg%?}"
+                ;;
+                *)
+                    _pfix=; _sfix=
+
+                    _arg="$2"
+                    _arg="${_arg#?}"
+                    _arg="${_arg%?}"
+                ;;
+            esac
+
+            case "$3" in
+                '-nout') : ;;
+                *) printf "%s" "$_arg" ;;
+            esac
+            return 0
+        ;;
+        *)
+            if [ "$3" ]; then
+                set -- "${1#?}" "$2" "$3"
+            else
+                set -- "${1#?}" "$2"
+            fi
+        ;;
+    esac
+
     case :$1${1#*[!0123456789]} in
         : | :0*) return 255 ;;
         :"$1$1") : ;;
         *) return 255 ;;
     esac
 
-    char_even \' "$2" || return 2
-
-    _sfix="$2"; _i=0; while :; do
+    _sfix="$2"; while :; do
         _i=$((_i + 1))
 
         _sfix="${_sfix#*\'*\'}"; while :; do case :"$_sfix" in
