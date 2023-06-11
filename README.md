@@ -96,7 +96,7 @@ ccount() {
 # <"$1"> - character(s)
 # <"$2"> - string
 #! .gives:
-# (0|1) <$_count> - the count
+# (0|1) <$_count> - integer
 #! .rc:
 # (0) even
 # (1) uneven
