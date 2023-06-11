@@ -521,7 +521,7 @@ esc_str() {
 #     .
 # )
 #! .gives:
-# (0) <$_count> - the count
+# (0) <$_count> - integer
 #! .rc:
 # (0) count
 # (1) not a directory | directory does not exist
