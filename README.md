@@ -2414,6 +2414,13 @@ sq_arg() {
             _arg="$2"
             _arg="${_arg#"$_pfix"}"
             _arg="${_arg%"$_sfix"}"
+
+            if [ "$_pfix" ]; then
+                _pfix="${_pfix%?}"
+            fi
+            if [ "$_sfix" ]; then
+                _sfix="${_sfix#?}"
+            fi
             _arg="${_arg#?}"
             _arg="${_arg%?}"
 
