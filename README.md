@@ -1025,9 +1025,10 @@ ltl_substr0() {
 #     .
 # )
 #! .gives:
-# (0) <"$_str"> - the substring
-# [$_i] - the iterations completed;
-#         whole number
+# (0) <"$_str"> - string;
+#                 substring
+# [$_i] - integer;
+#         iterations completed
 #! .rc:
 # (0) substring | incorrect substring ($1/$3 > $2/$4)
 # (1) empty <unspecified/incorrect> expansion
