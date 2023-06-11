@@ -228,7 +228,8 @@ confirm_cont() {
 # )
 # <"$3"+> - text
 #! .uses:
-# [NO_COLOR] $ - this environment variable disables colored output
+# [NO_COLOR] $ - environment variable;
+#                disables colored output
 #! .rc:
 # (0) success
 # (255) bad input
