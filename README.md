@@ -691,9 +691,10 @@ fcount() {
 #     .
 # )
 #! .gives:
-# <"$_path"> - the absolute path | path
+# <"$_path"> - string;
+#              [absolute <$1>]
 #! .rc:
-# (0) absolute $1 | $1
+# (0) [absolute <$1>]
 #.
 get_fpath() {
     case "$1" in
