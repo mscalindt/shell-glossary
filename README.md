@@ -1900,7 +1900,7 @@ pline() {
 #     .
 # )
 #! .gives:
-# (0) <"$_line"> - the line
+# (0) <"$_line"> - string
 #! .rc:
 # (0) line's content | line empty
 # (1) line does not exist
