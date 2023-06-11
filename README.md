@@ -316,7 +316,8 @@ err() {
 # )
 # <"$3"+> - text
 #! .uses:
-# [NO_COLOR] $ - this environment variable disables colored output
+# [NO_COLOR] $ - environment variable;
+#                disables colored output
 #! .rc:
 # (*) success
 # (255) bad input
