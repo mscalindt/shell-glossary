@@ -2269,7 +2269,7 @@ rstrip() {
 
 ```sh
 #! .desc:
-# Get N single-quoted argument in a shell-folded string
+# Get N single-quoted argument in a single-quote-escaped string
 #! .params:
 # <$1> - N
 # <"$2"> - string
@@ -2281,9 +2281,9 @@ rstrip() {
 # (0) <"$_arg"> - string;
 #                 N argument
 # (0) <"$_pfix"> - string;
-#                  left side pattern of the argument
+#                  left side single-quote-escaped pattern of the argument
 # (0) <"$_sfix"> - string;
-#                  right side pattern of the argument
+#                  right side single-quote-escaped pattern of the argument
 # [$_i] - integer;
 #         iterations completed
 #! .rc:
