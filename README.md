@@ -412,12 +412,13 @@ errF() {
 #     .
 # )
 #! .gives:
-# (0) <"$_str"> - the modified string
-# <"$_chars"> - the characters;
-#               whitespace delimited;
-#               sorted by order parsed
+# (0) <"$_str"> - string;
+#                 modified $1
+# <"$_chars"> - string;
+#               character(s) used;
+#               whitespace delimited and sorted by order parsed
 #! .rc:
-# (0) escaped/stripped $1
+# (0) modified $1
 # (1) no meta characters in $1
 #.
 esc_str() {
