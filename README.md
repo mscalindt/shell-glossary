@@ -2344,6 +2344,8 @@ sq_arg() {
             _arg="$2"
             _arg="${_arg#"$_pfix"}"
             _arg="${_arg%"$_sfix"}"
+            _arg="${_arg#?}"
+            _arg="${_arg%?}"
 
             case "$3" in
                 '-nout') : ;;
