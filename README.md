@@ -48,7 +48,7 @@ utility calls.
 #     .
 # )
 #! .gives:
-# <$_count> - the count
+# <$_count> - integer
 #! .rc:
 # (0) count
 # (1) ! $1
