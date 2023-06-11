@@ -2449,7 +2449,7 @@ str_fd1() {
 #     .
 # )
 #! .gives:
-# (0) <"$_chars"> - the character(s)
+# (0) <"$_chars"> - string
 #! .rc:
 # (0) character(s)
 # (1) invalid $1
