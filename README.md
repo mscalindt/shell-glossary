@@ -2237,7 +2237,8 @@ replstr() {
 #     .
 # )
 #! .gives:
-# (0) <"$_str"> - the stripped string
+# (0) <"$_str"> - string;
+#                 stripped $2
 #! .rc:
 # (0) stripped $2
 # (1) ! $1
