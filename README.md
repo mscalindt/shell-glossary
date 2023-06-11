@@ -2278,13 +2278,14 @@ rstrip() {
 #     .
 # )
 #! .gives:
-# (0) <"$_arg"> - the argument
-# (0) <"$_pfix"> - a pattern;
-#                  left side of the argument
-# (0) <"$_sfix"> - a pattern;
-#                  right side of the argument
-# [$_i] - the iterations completed;
-#         natural number
+# (0) <"$_arg"> - string;
+#                 N argument
+# (0) <"$_pfix"> - string;
+#                  left side pattern of the argument
+# (0) <"$_sfix"> - string;
+#                  right side pattern of the argument
+# [$_i] - integer;
+#         iterations completed
 #! .rc:
 # (0) argument
 # (1) argument does not exist
