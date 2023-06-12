@@ -310,8 +310,8 @@ err() {
 # <$2> - type(
 #     '-' - raw
 #     '--' - raw, no newline
-#     '-1' - %H%M%S date fmt
-#     '-2' - %H%M%S date fmt, no newline
+#     '-date' - %H%M%S date fmt
+#     '-date-nolf' - %H%M%S date fmt, no newline
 #     .
 # )
 # <"$3"+> - text
@@ -348,11 +348,11 @@ errF() {
                 shift 2
                 printf "%s" "$*" >&2
             ;;
-            '-1')
+            '-date')
                 shift 2
                 printf "[%s] =>>: %s\n" "$(date "+%H:%M:%S")" "$*" >&2
             ;;
-            '-2')
+            '-date-nolf')
                 shift 2
                 printf "[%s] =>>: %s" "$(date "+%H:%M:%S")" "$*" >&2
             ;;
@@ -370,12 +370,12 @@ errF() {
                 shift 2
                 printf "%b%s%b" '\033[1;31m' "$*" '\033[0m' >&2
             ;;
-            '-1')
+            '-date')
                 shift 2
                 printf "%b[%s] =>>: %b%s%b\n" '\033[1;31m' \
                     "$(date "+%H:%M:%S")" '\033[1;37m' "$*" '\033[0m' >&2
             ;;
-            '-2')
+            '-date-nolf')
                 shift 2
                 printf "%b[%s] =>>: %b%s%b" '\033[1;31m' \
                     "$(date "+%H:%M:%S")" '\033[1;37m' "$*" '\033[0m' >&2
