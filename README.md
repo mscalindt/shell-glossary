@@ -2110,49 +2110,64 @@ remstr() {
 #! .desc:
 # Replace specific character(s) with character(s) in string
 #! .params:
-# <"$1"> - specific character(s)
-# <"$2"> - character(s)
-# <"$3"> - string
-# [$4] - type(
+# <$1> - backend(
+#     '-sed' - use the host version of `sed`
+#     '-shell' - use built-in shell word splitting
+#     .
+# )
+# <"$2"> - specific character(s)
+# <"$3"> - character(s)
+# <"$4"> - string
+# [$5] - type(
 #     '-nout' - no output
 #     .
 # )
 #! .gives:
 # (0) <"$_str"> - string;
-#                 modified $3
+#                 modified $4
 #! .rc:
-# (0) modified $3
-# (1) ! $1
+# (0) modified $4
+# (1) ! $2
 #.
 replchars() {
-    replchar() {
-        # Save IFS
-        _old_IFS="$IFS" 2> /dev/null
-        ${IFS+':'} unset _old_IFS 2> /dev/null
+    if [ "$1" = '-sed' ]; then
+        _p1=$(printf "%s" "$2" | sed 's/[]\/.*^$]/\\&/g' && printf x)
+        _p1="${_p1%?}"
+        _p2=$(printf "%s" "$3" | sed 's/[&/]/\\&/g; s/\\/\\\\/g' && printf x)
+        _p2="${_p2%?}"
 
-        IFS="$1"; _chars="$2"
+        _str=$(printf "%s" "$4" | sed "s/$_p1/$_p2/g" && printf x)
+        _str="${_str%?}"
+    elif [ "$1" = '-shell' ]; then
+        replchar() {
+            # Save IFS
+            _old_IFS="$IFS" 2> /dev/null
+            ${IFS+':'} unset _old_IFS 2> /dev/null
 
-        set -f; set -- $3 "$3"; set +f
-        _str=; while [ "$#" -ge 3 ]; do
-            _str="$_str$1$_chars"; shift
-        done
-        case "$IFS" in
-            *"${2#"${2%?}"}"*) _str="$_str$1$_chars" ;;
-            *) _str="$_str$1" ;;
-        esac
+            IFS="$1"; _chars="$2"
 
-        # Restore IFS
-        IFS="$_old_IFS" 2> /dev/null
-        ${_old_IFS+':'} unset IFS 2> /dev/null
-    }
+            set -f; set -- $3 "$3"; set +f
+            _str=; while [ "$#" -ge 3 ]; do
+                _str="$_str$1$_chars"; shift
+            done
+            case "$IFS" in
+                *"${2#"${2%?}"}"*) _str="$_str$1$_chars" ;;
+                *) _str="$_str$1" ;;
+            esac
 
-    replchar "$1" "$2" "$3"
+            # Restore IFS
+            IFS="$_old_IFS" 2> /dev/null
+            ${_old_IFS+':'} unset IFS 2> /dev/null
+        }
+
+        replchar "$2" "$3" "$4"
+    fi
 
     case "$_str" in
-        "$3") return 1 ;;
+        "$4") return 1 ;;
     esac
 
-    case "$4" in
+    case "$5" in
         '-nout') : ;;
         *) printf "%s" "$_str" ;;
     esac
