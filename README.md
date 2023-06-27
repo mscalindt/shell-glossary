@@ -2132,6 +2132,11 @@ remstr() {
 #.
 replchars() {
     replchar() {
+        case "$3" in
+            *"$1"*) : ;;
+            *) _str="$3"; return 0 ;;
+        esac
+
         # Save IFS
         _old_IFS="$IFS" 2> /dev/null
         ${IFS+':'} unset _old_IFS 2> /dev/null
@@ -2158,25 +2163,17 @@ replchars() {
 
     if [ "$1" = '-sed' ]; then
         replchar '\' '\\' "$2"; _mp="$_str"
-        case "$_mp" in
-            *'.'* | *'*'* | *'['* | *']'* | *'^'* | *'$'* | *'/'*)
-                replchar '.' '\.' "$_mp"; _mp="$_str"
-                replchar '*' '\*' "$_mp"; _mp="$_str"
-                replchar '[' '\[' "$_mp"; _mp="$_str"
-                replchar ']' '\]' "$_mp"; _mp="$_str"
-                replchar '^' '\^' "$_mp"; _mp="$_str"
-                replchar '$' '\$' "$_mp"; _mp="$_str"
-                replchar '/' '\/' "$_mp"; _mp="$_str"
-            ;;
-        esac
+        replchar '.' '\.' "$_mp"; _mp="$_str"
+        replchar '*' '\*' "$_mp"; _mp="$_str"
+        replchar '[' '\[' "$_mp"; _mp="$_str"
+        replchar ']' '\]' "$_mp"; _mp="$_str"
+        replchar '^' '\^' "$_mp"; _mp="$_str"
+        replchar '$' '\$' "$_mp"; _mp="$_str"
+        replchar '/' '\/' "$_mp"; _mp="$_str"
 
         replchar '\' '\\' "$3"; _rp="$_str"
-        case "$_rp" in
-            *'&'* | *'/'*)
-                replchar '&' '\&' "$_rp"; _rp="$_str"
-                replchar '/' '\/' "$_rp"; _rp="$_str"
-            ;;
-        esac
+        replchar '&' '\&' "$_rp"; _rp="$_str"
+        replchar '/' '\/' "$_rp"; _rp="$_str"
 
         _str=$(printf "%s" "$4" | sed "s/$_mp/$_rp/g" && printf x)
         _str="${_str%?}"
