@@ -2131,40 +2131,56 @@ remstr() {
 # (255) bad input/usage
 #.
 replchars() {
+    replchar() {
+        # Save IFS
+        _old_IFS="$IFS" 2> /dev/null
+        ${IFS+':'} unset _old_IFS 2> /dev/null
+
+        IFS="$1"; _chars="$2"
+
+        set -f; set -- $3 "$3"; set +f
+        _str=; while [ "$#" -ge 3 ]; do
+            _str="$_str$1$_chars"; shift
+        done
+        case "$IFS" in
+            *"${2#"${2%?}"}"*) _str="$_str$1$_chars" ;;
+            *) _str="$_str$1" ;;
+        esac
+
+        # Restore IFS
+        IFS="$_old_IFS" 2> /dev/null
+        ${_old_IFS+':'} unset IFS 2> /dev/null
+    }
+
     # Define sensible constraints for usage.
     [ "${#2}" -le 32 ] || return 255
     [ "${#3}" -le 6 ] || return 255
 
     if [ "$1" = '-sed' ]; then
-        _p1=$(printf "%s" "$2" | sed 's/[]\/.*^$]/\\&/g' && printf x)
-        _p1="${_p1%?}"
-        _p2=$(printf "%s" "$3" | sed 's/[&/]/\\&/g; s/\\/\\\\/g' && printf x)
-        _p2="${_p2%?}"
+        replchar '\' '\\' "$2"; _mp="$_str"
+        case "$_mp" in
+            *'.'* | *'*'* | *'['* | *']'* | *'^'* | *'$'* | *'/'*)
+                replchar '.' '\.' "$_mp"; _mp="$_str"
+                replchar '*' '\*' "$_mp"; _mp="$_str"
+                replchar '[' '\[' "$_mp"; _mp="$_str"
+                replchar ']' '\]' "$_mp"; _mp="$_str"
+                replchar '^' '\^' "$_mp"; _mp="$_str"
+                replchar '$' '\$' "$_mp"; _mp="$_str"
+                replchar '/' '\/' "$_mp"; _mp="$_str"
+            ;;
+        esac
 
-        _str=$(printf "%s" "$4" | sed "s/$_p1/$_p2/g" && printf x)
+        replchar '\' '\\' "$3"; _rp="$_str"
+        case "$_rp" in
+            *'&'* | *'/'*)
+                replchar '&' '\&' "$_rp"; _rp="$_str"
+                replchar '/' '\/' "$_rp"; _rp="$_str"
+            ;;
+        esac
+
+        _str=$(printf "%s" "$4" | sed "s/$_mp/$_rp/g" && printf x)
         _str="${_str%?}"
     elif [ "$1" = '-shell' ]; then
-        replchar() {
-            # Save IFS
-            _old_IFS="$IFS" 2> /dev/null
-            ${IFS+':'} unset _old_IFS 2> /dev/null
-
-            IFS="$1"; _chars="$2"
-
-            set -f; set -- $3 "$3"; set +f
-            _str=; while [ "$#" -ge 3 ]; do
-                _str="$_str$1$_chars"; shift
-            done
-            case "$IFS" in
-                *"${2#"${2%?}"}"*) _str="$_str$1$_chars" ;;
-                *) _str="$_str$1" ;;
-            esac
-
-            # Restore IFS
-            IFS="$_old_IFS" 2> /dev/null
-            ${_old_IFS+':'} unset IFS 2> /dev/null
-        }
-
         replchar "$2" "$3" "$4"
     fi
 
