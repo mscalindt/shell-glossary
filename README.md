@@ -2128,8 +2128,13 @@ remstr() {
 #! .rc:
 # (0) modified $4
 # (1) ! $2
+# (255) bad input/usage
 #.
 replchars() {
+    # Define sensible constraints for usage.
+    [ "${#2}" -le 32 ] || return 255
+    [ "${#3}" -le 6 ] || return 255
+
     if [ "$1" = '-sed' ]; then
         _p1=$(printf "%s" "$2" | sed 's/[]\/.*^$]/\\&/g' && printf x)
         _p1="${_p1%?}"
