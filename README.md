@@ -394,103 +394,222 @@ errF() {
 
 ```sh
 #! .desc:
-# Escape all POSIX-defined shell meta characters in a string; characters are:
-# \ | & ; < > ( ) $ ` " ' * ? [ ] # ~ = %
+# Escape shell-defined meta characters in a string
 #! .params:
 # <"$1"> - string
-# ["$2"] - escape_chars(
-#     "-chars X" - escape only "X" whitespace-separated character(s)
+# <"$2"> - type(
+#     "-chars X" - escape only "X" whitespace-delimited character(s)
+#     '-dq' - escape all special characters within double quotes; they are:
+#             $ ` " \ [:space:]
+#     '-sq' - escape all special characters within single quotes; they are:
+#             '
+#     '-ws' - escape all whitespace characters
 #     .
 # )
-# [$3] - options(
-#     '-sqesc' - escape single quote character with itself
-#     '-strip' - strip the characters
+# <$3> - backend(
+#     '-sed' - use the host version of `sed`
+#     '-shell' - use built-in shell word splitting
 #     .
 # )
-# [$4] - type(
+# [$4] - options(
+#     '-strip' - strip the characters instead
+#     .
+# )
+# [$5] - type(
 #     '-nout' - no output
 #     .
 # )
 #! .gives:
 # (0) <"$_str"> - string;
 #                 modified $1
+# <$_meta_flag> - integer (bool integer);
+#                 '1' if meta characters
 # <"$_chars"> - string;
 #               character(s) used;
-#               whitespace delimited and sorted by order parsed
+#               whitespace-delimited and sorted by order parsed
 #! .rc:
 # (0) modified $1
 # (1) no meta characters in $1
+# (255) bad input/usage
 #.
 esc_str() {
-    _str="$1"; _str_ref=
+    dup_chars() {
+        _str="$1"
+        _index=
+
+        while [ "$_str" ]; do
+            _char="${_str%"${_str#?}"}"
+
+            case "$_index" in
+                *"$_char"*) return 0 ;;
+                *) [ "$_char" = ' ' ] || _index="$_index$_char" ;;
+            esac
+
+            _str="${_str#?}"
+        done
+
+        return 1
+    }
+
+    replchar() {
+        case "$3" in
+            *"$1"*) : ;;
+            *) _str="$3"; return 0 ;;
+        esac
+
+        # Save IFS
+        _old_IFS="$IFS" 2> /dev/null
+        ${IFS+':'} unset _old_IFS 2> /dev/null
+
+        IFS="$1"; _chars="$2"
+
+        set -f; set -- $3 "$3"; set +f
+        _str=; while [ "$#" -ge 3 ]; do
+            _str="$_str$1$_chars"; shift
+        done
+        case "$IFS" in
+            *"${2#"${2%?}"}"*) _str="$_str$1$_chars" ;;
+            *) _str="$_str$1" ;;
+        esac
+
+        # Restore IFS
+        IFS="$_old_IFS" 2> /dev/null
+        ${_old_IFS+':'} unset IFS 2> /dev/null
+    }
+
+    # Define sensible constraints for usage.
+    [ "${#2}" -le 64 ] || return 255
 
     case "$2" in
-        '-chars'*) _chars="${2#'-chars '}" ;;
-        *) _chars='\ | & ; < > ( ) $ ` " '\'' * ? [ ] # ~ = %' ;;
+        '-chars '*)
+            _chars="${2#'-chars '}"
+
+            if dup_chars "$_chars"; then
+                return 255
+            fi
+
+            # It is required that `\` is escaped first as to not escape our own
+            # escapes since this character is used to escape the other
+            # characters. To make sure `\` will always be escaped first,
+            # reorder it to always come first if present.
+            case "$_chars" in
+                \\*) : ;;
+                *\\) _chars="\\ ${_chars%%\\*}${_chars#*\\}" ;;
+                *\\*) _chars="\\ ${_chars%%\\*}${_chars#*\\ }" ;;
+            esac
+        ;;
+        '-dq')
+            _chars='\ $ " `  '
+        ;;
+        '-sq')
+            _chars=\'
+        ;;
+        '-ws')
+            _chars=' '
+        ;;
     esac
 
-    case "$_chars" in
-        \\*) : ;;
-        *\\) _chars="\\ ${_chars%%\\*}${_chars#*\\}" ;;
-        *\\*) _chars="\\ ${_chars%%\\*}${_chars#*\\ }" ;;
-    esac
+    _str="$1"
+    _meta_flag=0
 
-    set -f; for _char in $_chars; do
+    _chars_ref="$_chars"; while [ "$_chars_ref" ]; do
+        case "$_chars_ref" in
+            '   '*)
+                _char=' '
+                _chars_ref="${_chars_ref#???}"
+            ;;
+            '  ' | ' ')
+                _char=' '
+                _chars_ref=
+            ;;
+            ' '*)
+                _chars_ref="${_chars_ref#?}"
+
+                continue
+            ;;
+            *)
+                if [ "${#_chars_ref}" -eq 1 ]; then
+                    _char="$_chars_ref"
+                    _chars_ref=
+                else
+                    _char="${_chars_ref%"${_chars_ref#?}"}"
+                    _chars_ref="${_chars_ref#?}"
+                fi
+            ;;
+        esac
+
         case "$_str" in
-            *"$_char"*) : ;;
+            *"$_char"*) _meta_flag=1 ;;
             *) continue ;;
         esac
 
-        case "$_char$2$3$4" in
-            \'*'-sqesc'*)
-                _str_ref="${_str%%\'*}'\\''"
-            ;;
-            *'-strip'*)
-                _str_ref="${_str%%"$_char"*}"
-            ;;
-            *)
-                _str_ref="${_str%%"$_char"*}\\$_char"
-            ;;
-        esac
-        _str="$_str_ref${_str#*"$_char"}"
+        if [ "$3" = '-sed' ]; then
+            if [ "$2" = '-sq' ]; then
+                if [ "$4" = '-strip' ]; then
+                    _str=$(
+                        printf "%s" "$_str" | sed "s/'//g" && \
+                        printf x
+                    )
+                else
+                    _str=$(
+                        printf "%s" "$_str" | sed "s/'/'\\\\''/g" && \
+                        printf x
+                    )
+                fi
+                _str="${_str%?}"
+            else
+                _str_ref="$_str"
 
-        case "$_char$2$3$4" in
-            \'*'-sqesc'*)
-                while :; do case "$_str" in
-                    "$_str_ref"*\'*)
-                        _str="${_str#*"$_str_ref"}"
-                        _str_ref="$_str_ref${_str%%\'*}'\\''"
-                        _str="$_str_ref${_str#*\'}"
-                    ;;
-                    *)
-                        break
-                    ;;
-                esac done
-            ;;
-            *'-strip'*)
-                while :; do case "$_str" in
-                    *"$_char"*) _str="${_str%%"$_char"*}${_str#*"$_char"}" ;;
-                    *) break ;;
-                esac done
-            ;;
-            *)
-                while :; do case "$_str" in
-                    "$_str_ref"*"$_char"*)
-                        _str="${_str#*"$_str_ref"}"
-                        _str_ref="$_str_ref${_str%%"$_char"*}\\$_char"
-                        _str="$_str_ref${_str#*"$_char"}"
-                    ;;
-                    *)
-                        break
-                    ;;
-                esac done
-            ;;
-        esac
-    done; set +f
+                replchar '\' '\\' "$_char"
+                replchar '.' '\.' "$_str"
+                replchar '*' '\*' "$_str"
+                replchar '[' '\[' "$_str"
+                replchar ']' '\]' "$_str"
+                replchar '^' '\^' "$_str"
+                replchar '$' '\$' "$_str"
+                replchar '/' '\/' "$_str"
+                _mp="$_str"
 
-    [ "$_str_ref" ] || return 1
+                replchar '\' '\\' "$_char"
+                replchar '&' '\&' "$_str"
+                replchar '/' '\/' "$_str"
+                _rp="$_str"
 
-    case "$2$3$4" in
+                _str="$_str_ref"
+
+                if [ "$4" = '-strip' ]; then
+                    _str=$(
+                        printf "%s" "$_str" | sed "s/$_mp//g" && \
+                        printf x
+                    )
+                else
+                    _str=$(
+                        printf "%s" "$_str" | sed "s/$_mp/\\\\$_rp/g" && \
+                        printf x
+                    )
+                fi
+                _str="${_str%?}"
+            fi
+        elif [ "$3" = '-shell' ]; then
+            if [ "$2" = '-sq' ]; then
+                if [ "$4" = '-strip' ]; then
+                    replchar \' '' "$_str"
+                else
+                    replchar \' "'\\''" "$_str"
+                fi
+            else
+                if [ "$4" = '-strip' ]; then
+                    replchar "$_char" '' "$_str"
+                else
+                    replchar "$_char" "\\$_char" "$_str"
+                fi
+            fi
+        fi
+    done
+
+    [ "$_meta_flag" -eq 1 ] || return 1
+
+    case "$4$5" in
         *'-nout'*) : ;;
         *) printf "%s" "$_str" ;;
     esac
