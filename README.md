@@ -2162,18 +2162,20 @@ replchars() {
     [ "${#3}" -le 6 ] || return 255
 
     if [ "$1" = '-sed' ]; then
-        replchar '\' '\\' "$2"; _mp="$_str"
-        replchar '.' '\.' "$_mp"; _mp="$_str"
-        replchar '*' '\*' "$_mp"; _mp="$_str"
-        replchar '[' '\[' "$_mp"; _mp="$_str"
-        replchar ']' '\]' "$_mp"; _mp="$_str"
-        replchar '^' '\^' "$_mp"; _mp="$_str"
-        replchar '$' '\$' "$_mp"; _mp="$_str"
-        replchar '/' '\/' "$_mp"; _mp="$_str"
+        replchar '\' '\\' "$2"
+        replchar '.' '\.' "$_str"
+        replchar '*' '\*' "$_str"
+        replchar '[' '\[' "$_str"
+        replchar ']' '\]' "$_str"
+        replchar '^' '\^' "$_str"
+        replchar '$' '\$' "$_str"
+        replchar '/' '\/' "$_str"
+        _mp="$_str"
 
-        replchar '\' '\\' "$3"; _rp="$_str"
-        replchar '&' '\&' "$_rp"; _rp="$_str"
-        replchar '/' '\/' "$_rp"; _rp="$_str"
+        replchar '\' '\\' "$3"
+        replchar '&' '\&' "$_str"
+        replchar '/' '\/' "$_str"
+        _rp="$_str"
 
         _str=$(printf "%s" "$4" | sed "s/$_mp/$_rp/g" && printf x)
         _str="${_str%?}"
