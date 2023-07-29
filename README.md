@@ -19,6 +19,7 @@ utility calls.
 * [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary#ltr_substr1)
 * [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary#num_to_char)
 * [PARSE()](https://github.com/mscalindt/shell-glossary#parse)
+* [PATH_SPEC()](https://github.com/mscalindt/shell-glossary#path_spec)
 * [PLINE()](https://github.com/mscalindt/shell-glossary#pline)
 * [REMCHARS()](https://github.com/mscalindt/shell-glossary#remchars)
 * [REMSTR()](https://github.com/mscalindt/shell-glossary#remstr)
@@ -1922,6 +1923,114 @@ parse_fd1() {
         *)
             printf "%s" "$_line"
         ;;
+    esac
+}
+```
+
+## path_spec
+
+```sh
+#! .desc:
+# Mangle and assert a path in a specified way
+#! .params:
+# <$1> - options(
+#     '-assert' - assert dir/file
+#     '-join' - join the two paths
+#     '-join-assert' - join the two paths and assert dir/file
+#     .
+# )
+# <"$2"> - absolute path
+# ["$3"] - join path
+# [$4] - type(
+#     '-nout' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_path"> - string;
+#                  [modified <$2>]
+#! .rc:
+# (0) [modified <$2>]
+# (255) bad input
+#.
+path_spec() {
+    case "$2" in
+        '/'*) : ;;
+        *) return 255 ;;
+    esac
+
+    case "$1" in
+        '-join' | '-join-assert')
+            { [ "$3" ] && [ "$3" != '-nout' ]; } || return 255
+        ;;
+    esac
+
+    while :; do case "$2" in
+        *'///'*)
+            return 255
+        ;;
+        *'//'*)
+            set -- "$1" "${2%'//'*}/${2#*'//'}" "$3" "$4"
+        ;;
+        *)
+            break
+        ;;
+    esac done
+
+    case "$1" in
+        '-join' | '-join-assert')
+            while :; do case "$3" in
+                *'///'*)
+                    return 255
+                ;;
+                *'//'*)
+                    set -- "$1" "$2" "${3%'//'*}/${3#*'//'}" "$4"
+                ;;
+                *)
+                    break
+                ;;
+            esac done
+
+            case "$2" in
+                *'/') set -- "$1" "${2%?}" "$3" "$4" ;;
+            esac
+
+            case "$3" in
+                '/'*) set -- "$1" "$2" "${3#?}" "$4" ;;
+            esac
+        ;;
+    esac
+
+    case "$1" in
+        '-assert')
+            case "$2" in
+                *'/') set -- "$1" "${2%?}" "$3" "$4" ;;
+            esac
+
+            _path="$2"
+        ;;
+        '-join')
+            _path="$2/$3"
+        ;;
+        '-join-assert')
+            case "$3" in
+                *'/') set -- "$1" "$2" "${3%?}" "$4" ;;
+            esac
+
+            _path="$2/$3"
+        ;;
+    esac
+
+    case "$1" in
+        '-assert' | '-join-assert')
+            if [ -d "$_path" ]; then
+                _path="$_path/"
+            fi
+        ;;
+    esac
+
+    case "$4$3" in
+        '-nout'*) : ;;
+        *) printf "%s" "$_path" ;;
     esac
 }
 ```
