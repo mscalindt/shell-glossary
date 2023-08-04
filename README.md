@@ -1723,7 +1723,7 @@ num_to_char() {
 #! .desc:
 # Parse the content of a file
 #! .params:
-# <"$1"> - file
+# <"$1"> - absolute path of a file
 # [$2] - options(
 #     '1' - add one leading/trailing whitespace character
 #     '2' - add two leading/trailing whitespace characters
