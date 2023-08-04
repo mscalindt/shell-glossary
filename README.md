@@ -2042,7 +2042,7 @@ path_spec() {
 # Print specific line in file
 #! .params:
 # <$1> - line number
-# <"$2"> - file
+# <"$2"> - absolute path of a file
 # [$3] - options(
 #     '-ltstrip' - strip all leading/trailing whitespace characters
 #     .
