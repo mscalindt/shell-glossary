@@ -623,7 +623,7 @@ esc_str() {
 #! .desc:
 # Count files and directories in a directory
 #! .params:
-# <"$1"> - directory
+# <"$1"> - absolute path of a directory
 # ["$2"] - count_type(
 #     "0X" - count files and directories ending with "X"
 #     '1' - count only files
