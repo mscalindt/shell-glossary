@@ -1,0 +1,25 @@
+#! .desc:
+# Convert relative path to absolute path
+#! .params:
+# <"$1"> - path
+# [$2] - type(
+#     '-nout' - no output
+#     .
+# )
+#! .gives:
+# <"$_path"> - string;
+#              [absolute <$1>]
+#! .rc:
+# (0) [absolute <$1>]
+#.
+get_fpath() {
+    case "$1" in
+        '/'*) _path="$1" ;;
+        *) _path="$PWD/$1" ;;
+    esac
+
+    case "$2" in
+        '-nout') : ;;
+        *) printf "%s" "$_path" ;;
+    esac
+}

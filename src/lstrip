@@ -1,0 +1,36 @@
+#! .desc:
+# Strip character(s) from left of string
+#! .params:
+# <"$1"> - character(s)
+# <"$2"> - string
+# [$3] - type(
+#     '-nout' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_str"> - string;
+#                 stripped $2
+#! .rc:
+# (0) stripped $2
+# (1) ! $1
+# (2) $1 = $2
+#.
+lstrip() {
+    case "$2" in
+        "$1")
+            return 2
+        ;;
+        "$1"*)
+            _str="${2#"$1"}"
+
+            case "$3" in
+                '-nout') : ;;
+                *) printf "%s" "$_str" ;;
+            esac
+
+            return 0
+        ;;
+    esac
+
+    return 1
+}

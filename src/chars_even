@@ -1,0 +1,54 @@
+#! .desc:
+# Test if the character(s) count (combined), in a given string, is even
+#! .params:
+# <"$1"> - character(s)
+# <"$2"> - string
+#! .gives:
+# (0|1) <$_count> - integer
+#! .rc:
+# (0) even
+# (1) uneven
+# (2) ! $1
+#.
+chars_even() {
+    char_even() {
+        # Save IFS
+        _old_IFS="$IFS" 2> /dev/null
+        ${IFS+':'} unset _old_IFS 2> /dev/null
+
+        IFS="$1"
+
+        set -f; case "$2" in
+            *"$IFS") set -- $2; _count=$# ;;
+            *) set -- $2; _count=$(($# - 1)) ;;
+        esac; set +f
+
+        # Restore IFS
+        IFS="$_old_IFS" 2> /dev/null
+        ${_old_IFS+':'} unset IFS 2> /dev/null
+
+        [ "$((_count % 2))" -eq 0 ]
+    }
+
+    case ${#1} in
+        1)
+            char_even "$1" "$2"
+        ;;
+        *)
+            char_even "$1" "$2"
+
+            case "$1" in
+                *"${2#"${2%?}"}"*)
+                    case "$2" in
+                        *"$1") : ;;
+                        *) _count=$((_count + 1)) ;;
+                    esac
+                ;;
+            esac
+        ;;
+    esac
+
+    case $_count in 0) return 2 ;; esac
+
+    [ "$((_count % 2))" -eq 0 ]
+}

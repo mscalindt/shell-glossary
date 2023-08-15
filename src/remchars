@@ -1,0 +1,45 @@
+#! .desc:
+# Remove specific character(s) in string
+#! .params:
+# <"$1"> - character(s)
+# <"$2"> - string
+# [$3] - type(
+#     '-nout' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_str"> - string;
+#                 modified $2
+#! .rc:
+# (0) modified $2
+# (1) ! $1
+#.
+remchars() {
+    remchar() {
+        # Save IFS
+        _old_IFS="$IFS" 2> /dev/null
+        ${IFS+':'} unset _old_IFS 2> /dev/null
+
+        IFS="$1"
+
+        set -f; set -- $2; set +f
+        _str=; while [ "$#" -ge 1 ]; do
+            _str="$_str$1"; shift
+        done
+
+        # Restore IFS
+        IFS="$_old_IFS" 2> /dev/null
+        ${_old_IFS+':'} unset IFS 2> /dev/null
+    }
+
+    remchar "$1" "$2"
+
+    case "$_str" in
+        "$2") return 1 ;;
+    esac
+
+    case "$3" in
+        '-nout') : ;;
+        *) printf "%s" "$_str" ;;
+    esac
+}

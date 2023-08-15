@@ -1,0 +1,69 @@
+#! .desc:
+# Convert a string to whitespace-separated characters
+#! .params:
+# <"$1"> - string
+# [$2] - options(
+#     '-remdup' - remove duplicate characters
+#     .
+# )
+# [$3] - type(
+#     '-nout' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_chars"> - string
+#! .rc:
+# (0) character(s)
+# (1) invalid $1
+#! .caveats:
+# > Only printable ASCII characters will be included and any characters outside
+#   of this set will be excluded.
+#   >> The printable set: [\x20-\x7E]; [[:print:]]; ASCII 0x20-0x7E
+#   >> Fix: not applicable
+#.
+str_to_chars() {
+    _old_lc="$LC_ALL"; _str="$1"; _chars=
+
+    export LC_ALL=C; case "$2" in
+        '-remdup')
+            _chars_set=; while [ "$_str" ]; do
+                _char="${_str%"${_str#?}"}"
+                _str="${_str#?}"
+
+                case "$_chars_set" in *"$_char"*) continue ;; esac
+
+                case $_char in
+                    ' ')
+                        :
+                    ;;
+                    [[:print:]])
+                        _chars_set="$_chars_set$_char"
+                        _chars="$_chars$_char "
+                    ;;
+                esac
+            done
+        ;;
+        *)
+            while [ "$_str" ]; do
+                _char="${_str%"${_str#?}"}"
+                _str="${_str#?}"
+
+                case $_char in
+                    ' ')
+                        :
+                    ;;
+                    [[:print:]])
+                        _chars="$_chars$_char "
+                    ;;
+                esac
+            done
+        ;;
+    esac; _chars="${_chars%?}"; export LC_ALL="$_old_lc"
+
+    [ "$_chars" ] || return 1
+
+    case "$2$3" in
+        *'-nout'*) : ;;
+        *) printf "%s" "$_chars" ;;
+    esac
+}

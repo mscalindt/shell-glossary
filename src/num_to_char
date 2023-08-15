@@ -1,0 +1,55 @@
+#! .desc:
+# Convert N to that amount of a character
+#! .params:
+# <$1> - N
+# <"$2"> - character
+# [$3] - options(
+#     '-wschars' - whitespace-separated characters
+#     .
+# )
+# [$4] - type(
+#     '-nout' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_chars"> - string
+#! .rc:
+# (0) character(s)
+# (255) bad input
+#.
+num_to_char() {
+    # Check if $1 is a whole number
+    case :"$1${1#*[!0123456789]}" in
+        :) return 255 ;;
+        :00) : ;;
+        :0*) return 255 ;;
+        :"$1$1") : ;;
+        *) return 255 ;;
+    esac
+
+    case $1 in
+        0) _chars=; return 0 ;;
+    esac
+
+    _chars="$2"
+
+    case "$3" in
+        '-wschars')
+            _i=1; until [ "$_i" -eq "$1" ]; do
+                _chars="$_chars $2"
+                _i=$((_i + 1))
+            done
+        ;;
+        *)
+            _i=1; until [ "$_i" -eq "$1" ]; do
+                _chars="$_chars$2"
+                _i=$((_i + 1))
+            done
+        ;;
+    esac
+
+    case "$3$4" in
+        *'-nout'*) : ;;
+        *) printf "%s" "$_chars" ;;
+    esac
+}

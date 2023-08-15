@@ -1,0 +1,85 @@
+#! .desc:
+# Print red-colored formatted text to stderr and exit
+#! .params:
+# <$1> - exit code
+# <$2> - type(
+#     '-' - raw
+#     '--' - raw, no newline
+#     '-date' - %H%M%S date fmt
+#     '-date-nolf' - %H%M%S date fmt, no newline
+#     .
+# )
+# <"$3"+> - text
+#! .uses:
+# [NO_COLOR] $ - environment variable;
+#                disables colored output
+#! .rc:
+# (*) success
+# (255) bad input
+#.
+errF() {
+    [ "$#" -ge 3 ] || return 255
+
+    # Check if $1 is a whole number
+    case :"$1${1#*[!0123456789]}" in
+        :) return 255 ;;
+        :00) : ;;
+        :0*) return 255 ;;
+        :"$1$1") : ;;
+        *) return 255 ;;
+    esac
+
+    [ "$1" -le 255 ] || return 255
+
+    _exit_code="$1"
+
+    if [ "$NO_COLOR" ]; then
+        case $2 in
+            '-')
+                shift 2
+                printf "%s\n" "$*" >&2
+            ;;
+            '--')
+                shift 2
+                printf "%s" "$*" >&2
+            ;;
+            '-date')
+                shift 2
+                printf "[%s] =>>: %s\n" "$(date "+%H:%M:%S")" "$*" >&2
+            ;;
+            '-date-nolf')
+                shift 2
+                printf "[%s] =>>: %s" "$(date "+%H:%M:%S")" "$*" >&2
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    else
+        case $2 in
+            '-')
+                shift 2
+                printf "%b%s%b\n" '\033[1;31m' "$*" '\033[0m' >&2
+            ;;
+            '--')
+                shift 2
+                printf "%b%s%b" '\033[1;31m' "$*" '\033[0m' >&2
+            ;;
+            '-date')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b\n" '\033[1;31m' \
+                    "$(date "+%H:%M:%S")" '\033[1;37m' "$*" '\033[0m' >&2
+            ;;
+            '-date-nolf')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b" '\033[1;31m' \
+                    "$(date "+%H:%M:%S")" '\033[1;37m' "$*" '\033[0m' >&2
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    fi
+
+    exit "$_exit_code"
+}

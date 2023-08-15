@@ -1,0 +1,25 @@
+#! .desc:
+# Check the existence/position of a substring in string
+#! .params:
+# <"$1"> - substring
+# <"$2"> - string
+# [$3] - position(
+#     '-posfst' - $1 is first character(s) of $2
+#     '-poslst' - $1 is last character(s) of $2
+#     '-same' - $1 is, on its own, $2
+#     .
+# )
+#! .rc:
+# (0) match
+# (1) no match
+#.
+str() {
+    case "$2":"$3" in
+        "$1"*:'-posfst') return 0 ;;
+        *"$1":'-poslst') return 0 ;;
+        "$1":'-same') return 0 ;;
+        *"$1"*:) return 0 ;;
+    esac
+
+    return 1
+}

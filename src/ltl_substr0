@@ -1,0 +1,133 @@
+#! .desc:
+# Get positional substring, (left of) (N)character(s), in a string
+#! .params:
+# <$1> - "N"_LTR(
+#     '0' - max
+#     .
+# )
+# <"$2"> - character(s)
+# <"$3"> - string
+# [$4] - options(
+#     '-stripl' - strip all leading whitespace characters
+#     '-stript' - strip all trailing whitespace characters
+#     '-ltstrip' - strip all leading/trailing whitespace characters
+#     .
+# )
+# [$5] - string_options(
+#     '-keepl' - keep $2
+#     .
+# )
+# [$6] - accuracy(
+#     '-verifyexp' - verify the expansion
+#     .
+# )
+# [$7] - type(
+#     '-nout' - no output
+#     .
+# )
+#! .gives:
+# (0) <"$_str"> - string;
+#                 substring
+# [$_i] - integer;
+#         iterations completed
+#! .rc:
+# (0) substring | incorrect substring ($1 > $2)
+# (1) empty <unspecified/incorrect> expansion
+# (2) unspecified <empty/incorrect> expansion
+# (255) bad input
+#! .rc (accuracy '4'):
+# (0) substring
+# (1) empty expansion ($2 is the first character by the given ruleset)
+# (2) unspecified expansion (! $2)
+# (3) incorrect expansion ($1 > $2)
+# (255) bad input
+#.
+ltl_substr0() {
+    case :$1${1#*[!0123456789]} in
+        :) return 255 ;;
+        :00) : ;;
+        :0*) return 255 ;;
+        :"$1$1") : ;;
+        *) return 255 ;;
+    esac
+
+    _str="$3"
+
+    case "$4$5$6" in
+        *'-verifyexp'*)
+            case $1 in
+                0)
+                    case "$_str" in
+                        *"$2"*"$2"*) : ;;
+                        "$2"*) return 1 ;;
+                        *"$2"*) : ;;
+                        *) return 2 ;;
+                    esac
+
+                    _str="${_str%"$2"*}"
+                ;;
+                *)
+                    case $1:"$_str" in
+                        1:"$2"*) return 1 ;;
+                        "$1":*"$2"*) : ;;
+                        *) return 2 ;;
+                    esac
+
+                    _sfix="$_str"; _i=0; until [ "$_i" -eq "$1" ]; do
+                        _sfix="${_sfix#*"$2"}"
+
+                        case "$_sfix" in
+                            *"$2"*) : ;;
+                            *) [ "$((_i + 1))" -eq "$1" ] || return 3 ;;
+                        esac
+
+                        _i=$((_i + 1))
+                    done
+
+                    _str="${_str%"$2$_sfix"}"
+                ;;
+            esac
+        ;;
+        *)
+            case $1 in
+                0)
+                    _str="${_str%"$2"*}"
+                ;;
+                *)
+                    _sfix="$_str"; _i=0; until [ "$_i" -eq "$1" ]; do
+                        _sfix="${_sfix#*"$2"}"
+                        _i=$((_i + 1))
+                    done
+
+                    _str="${_str%"$2$_sfix"}"
+                ;;
+            esac
+
+            [ "$_str" = "$3" ] && return 2
+        ;;
+    esac
+
+    [ "$_str" ] || return 1
+
+    case "$4" in
+        '-stripl')
+            _str="${_str#"${_str%%[! ]*}"}"
+        ;;
+        '-stript')
+            _str="${_str%"${_str##*[! ]}"}"
+        ;;
+        '-ltstrip')
+            _str="${_str#"${_str%%[! ]*}"}"
+            _str="${_str%"${_str##*[! ]}"}"
+        ;;
+    esac
+
+    case "$4$5" in
+        *'-keepl'*) _str="$_str$2" ;;
+    esac
+
+    case "$4$5$6$7" in
+        *'-nout'*) : ;;
+        *) printf "%s" "$_str" ;;
+    esac
+}

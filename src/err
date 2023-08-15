@@ -1,0 +1,94 @@
+#! .desc:
+# Print formatted text to stderr
+#! .params:
+# <$1> - color(
+#     '-'  - none
+#     '-bk' - black
+#     '-r' - red
+#     '-g' - green
+#     '-y' - yellow
+#     '-be' - blue
+#     '-m' - magenta
+#     '-c' - cyan
+#     '-w' - white
+#     .
+# )
+# <$2> - type(
+#     '-' - raw
+#     '--' - raw, no newline
+#     '-date' - %H%M%S date fmt
+#     '-date-nolf' - %H%M%S date fmt, no newline
+#     .
+# )
+# <"$3"+> - text
+#! .uses:
+# [NO_COLOR] $ - environment variable;
+#                disables colored output
+#! .rc:
+# (0) success
+# (255) bad input
+#.
+err() {
+    [ "$#" -ge 3 ] || return 255
+
+    case $1 in
+        '-') _color= ;;
+        '-bk') _color='\033[1;30m' ;;
+        '-r') _color='\033[1;31m' ;;
+        '-g') _color='\033[1;32m' ;;
+        '-y') _color='\033[1;33m' ;;
+        '-be') _color='\033[1;34m' ;;
+        '-m') _color='\033[1;35m' ;;
+        '-c') _color='\033[1;36m' ;;
+        '-w') _color='\033[1;37m' ;;
+        *) return 255 ;;
+    esac
+
+    if [ "$NO_COLOR" ]; then
+        case $2 in
+            '-')
+                shift 2
+                printf "%s\n" "$*" >&2
+            ;;
+            '--')
+                shift 2
+                printf "%s" "$*" >&2
+            ;;
+            '-date')
+                shift 2
+                printf "[%s] =>>: %s\n" "$(date "+%H:%M:%S")" "$*" >&2
+            ;;
+            '-date-nolf')
+                shift 2
+                printf "[%s] =>>: %s" "$(date "+%H:%M:%S")" "$*" >&2
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    else
+        case $2 in
+            '-')
+                shift 2
+                printf "%b%s%b\n" "$_color" "$*" '\033[0m' >&2
+            ;;
+            '--')
+                shift 2
+                printf "%b%s%b" "$_color" "$*" '\033[0m' >&2
+            ;;
+            '-date')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b\n" "$_color" "$(date "+%H:%M:%S")" \
+                    '\033[1;37m' "$*" '\033[0m' >&2
+            ;;
+            '-date-nolf')
+                shift 2
+                printf "%b[%s] =>>: %b%s%b" "$_color" "$(date "+%H:%M:%S")" \
+                    '\033[1;37m' "$*" '\033[0m' >&2
+            ;;
+            *)
+                return 255
+            ;;
+        esac
+    fi
+}

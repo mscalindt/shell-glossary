@@ -1,0 +1,47 @@
+#! .desc:
+# Count the times a character appears in a string
+#! .params:
+# <"$1"> - character
+# <"$2"> - string
+# [$3] - type(
+#     '-nout' - no output
+#     .
+# )
+#! .gives:
+# <$_count> - integer
+#! .rc:
+# (0) count
+# (1) ! $1
+#.
+ccount() {
+    _ccount() {
+        # Save IFS
+        _old_IFS="$IFS" 2> /dev/null
+        ${IFS+':'} unset _old_IFS 2> /dev/null
+
+        IFS="$1"
+
+        set -f; case "$2" in
+            *"$IFS") set -- $2; _count=$# ;;
+            *) set -- $2; _count=$(($# - 1)) ;;
+        esac; set +f
+
+        # Restore IFS
+        IFS="$_old_IFS" 2> /dev/null
+        ${_old_IFS+':'} unset IFS 2> /dev/null
+    }
+
+    _count=0
+
+    case "$2" in
+        *"$1"*) : ;;
+        *) return 1 ;;
+    esac
+
+    _ccount "$1" "$2"
+
+    case "$3" in
+        '-nout') : ;;
+        *) printf "%s" "$_count" ;;
+    esac
+}
