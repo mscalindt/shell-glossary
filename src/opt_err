@@ -1,0 +1,23 @@
+#! .desc:
+# Signify invalid option argument
+#! .params:
+# <"$1"> - option
+# <"$2"> - argument
+# ["$3"+] - valid arguments
+#.
+opt_err() {
+    printf "%s: Invalid argument '%s' for '%s'\n" \
+        "${0##*/}" "$2" "$1"
+    shift 2
+
+    if [ "$1" ]; then
+        echo "Valid arguments are:"
+
+        for _arg in "$@"; do
+            printf " > '%s'\n" "$_arg"
+        done
+    fi
+
+    printf "%s: Try '%s --help' for more information.\n" \
+        "${0##*/}" "${0##*/}"
+} >&2

@@ -1,0 +1,51 @@
+#! .desc:
+# True if specific optional-complex (possible argument) option
+#! .params:
+# <"$1"+> - *
+#! .uses:
+# <opt> $ - string;
+#           first positional parameter of the main environment
+#! .gives:
+# (0) <"$opt_arg"> - string;
+#                    option argument
+# (0) <"$_opt_match"> - string;
+#                       literal option matched
+# (0) <$shiftN> - integer;
+#                 shift count
+#! .rc:
+# (0) match
+# (1) no match
+#.
+scopt_optional() {
+    scopt_optional_arg_invalid() {
+        printf "%s: Invalid argument specification for: '%s'\n" \
+            "${0##*/}" "$1"
+        printf "%s: Try '%s --help' for more information.\n" \
+            "${0##*/}" "${0##*/}"
+    } >&2
+
+    [ "$opt" ] || return 1
+
+    for _arg in "$@"; do
+        case "$opt" in
+            "$_arg"'=')
+                scopt_optional_arg_invalid "$_arg"
+
+                exit 2
+            ;;
+            "$_arg"'='*)
+                opt_arg="${opt#"$_arg"=}"; opt=; _opt_match="$_arg"; \
+                shiftN=1
+
+                return 0
+            ;;
+            "$_arg")
+                opt=; opt_arg=; _opt_match="$_arg"; shiftN=1
+
+                return 0
+            ;;
+        esac
+    done
+
+    return 1
+}

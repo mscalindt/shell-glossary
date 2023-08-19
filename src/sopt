@@ -1,0 +1,61 @@
+#! .desc:
+# True if simple (no argument) option
+#! .params (<1+>):
+# ["$1"] - -*
+# ["$2"] - --*
+#! .uses:
+# <opt> $ - string;
+#           first positional parameter of the main environment
+#! .gives:
+# (0) <"$_opt_match"> - string;
+#                       literal option matched
+# (0) <$shiftN> - integer;
+#                 shift count
+# (0) ["$_sopt_index"] - string;
+#                        index with encountered short options
+#! .rc:
+# (0) match
+# (1) no match
+#.
+sopt() {
+    [ "$opt" ] || return 1
+
+    case "$opt" in
+        '--'*)
+            case "$1$2" in
+                '--'*) : ;;
+                "$1"'--'*) set -- "$2" ;;
+                *) return 1 ;;
+            esac
+
+            case "$opt" in
+                "$1")
+                    opt=; _opt_match="$1"; shiftN=1
+
+                    return 0
+                ;;
+            esac
+        ;;
+        '-'*)
+            case "$1$2" in
+                '-'*) : ;;
+                *) return 1 ;;
+            esac
+
+            case "$opt" in
+                "$1"*)
+                    case :"$_sopt_index" in
+                        :) _sopt_index="${1#?}" ;;
+                        *) _sopt_index="$_sopt_index${1#?}" ;;
+                    esac
+
+                    opt="-${opt#??}"; _opt_match="$1"; shiftN=1
+
+                    return 0
+                ;;
+            esac
+        ;;
+    esac
+
+    return 1
+}

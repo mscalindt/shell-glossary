@@ -1,0 +1,14 @@
+#! .desc:
+# Signify invalid operand count (max)[X>X]
+#! .params:
+# <$1> - invalid count
+# [$2] - valid count
+#.
+opd_cmax() {
+    printf "%s: Too many operands: %s\n" "${0##*/}" "$1"
+
+    [ "$2" ] && printf " > max allowed: %s\n" "$2"
+
+    printf "%s: Try '%s --help' for more information.\n" \
+        "${0##*/}" "${0##*/}"
+} >&2

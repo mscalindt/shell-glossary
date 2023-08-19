@@ -1,0 +1,61 @@
+#! .desc:
+# Assert a string
+#! .params:
+# <$1> - type(
+#     '-n' - N [0,1,00,01...]
+#     '-natural-n' - natural N [1...]
+#     '-whole-n' - whole N [0,1...]
+#     '-path' - valid path
+#     '-absolute-path' - absolute path
+#     '-relative-path' - relative path
+#     .
+# )
+# <"$2"> - string
+#! .rc:
+# (0) true
+# (1) false
+#.
+assert() {
+    case "$1" in
+        '-n')
+            case :"$2${2#*[!0123456789]}" in
+                :) return 1 ;;
+                :"$2$2") : ;;
+                *) return 1 ;;
+            esac
+        ;;
+        '-natural-n')
+            case :"$2${2#*[!0123456789]}" in
+                : | :0*) return 1 ;;
+                :"$2$2") : ;;
+                *) return 1 ;;
+            esac
+        ;;
+        '-whole-n')
+            case :"$2${2#*[!0123456789]}" in
+                :) return 1 ;;
+                :00) : ;;
+                :0*) return 1 ;;
+                :"$2$2") : ;;
+                *) return 1 ;;
+            esac
+        ;;
+        '-path')
+            case "$2" in
+                *'//'*) return 1 ;;
+            esac
+        ;;
+        '-absolute-path')
+            case "$2" in
+                *'//'*) return 1 ;;
+                '/'*) : ;;
+                *) return 1 ;;
+            esac
+        ;;
+        '-relative-path')
+            case "$2" in
+                *'//'* | '/'*) return 1 ;;
+            esac
+        ;;
+    esac
+}

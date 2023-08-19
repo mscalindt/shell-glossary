@@ -1,0 +1,14 @@
+#! .desc:
+# Convert relative path and/or store the full path in $_fpath
+#! .params:
+# <"$1"> - path
+#! .gives:
+# <"$_fpath"> - string;
+#               [absolute <$1>]
+#.
+fpath() {
+    case "$1" in
+        '/'*) _fpath="$1" ;;
+        *) _fpath="$PWD/$1" ;;
+    esac
+}

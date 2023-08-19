@@ -1,0 +1,8 @@
+#! .desc:
+# Signify invalid operand count (min)[0>X]
+#.
+opd_min() {
+    printf "%s: No operand specified.\n" "${0##*/}"
+    printf "%s: Try '%s --help' for more information.\n" \
+        "${0##*/}" "${0##*/}"
+} >&2

@@ -1,0 +1,17 @@
+#! .desc:
+# Signify invalid operand count (max)[X>1]
+#! .params:
+# <"$1"> - first operand
+# <"$2"> - second operand
+# ["$3"] - the next practicable operand
+#.
+opd_max() {
+    if [ "$3" ]; then
+        printf "%s: Too many operands: '[%s]; [%s]; ...'\n" \
+            "${0##*/}" "$1" "$2"
+    else
+        printf "%s: Too many operands: '[%s]; [%s]'\n" "${0##*/}" "$1" "$2"
+    fi
+    printf "%s: Try '%s --help' for more information.\n" \
+        "${0##*/}" "${0##*/}"
+} >&2

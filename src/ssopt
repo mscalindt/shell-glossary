@@ -1,0 +1,31 @@
+#! .desc:
+# True if specific simple (no argument) option
+#! .params:
+# <"$1"+> - *
+#! .uses:
+# <opt> $ - string;
+#           first positional parameter of the main environment
+#! .gives:
+# (0) <"$_opt_match"> - string;
+#                       literal option matched
+# (0) <$shiftN> - integer;
+#                 shift count
+#! .rc:
+# (0) match
+# (1) no match
+#.
+ssopt() {
+    [ "$opt" ] || return 1
+
+    for _arg in "$@"; do
+        case "$opt" in
+            "$_arg")
+                opt=; _opt_match="$_arg"; shiftN=1
+
+                return 0
+            ;;
+        esac
+    done
+
+    return 1
+}

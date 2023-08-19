@@ -1,0 +1,10 @@
+#! .desc:
+# Signify invalid option
+#! .params:
+# <"$1"> - option
+#.
+opt_invalid() {
+    printf "%s: Invalid option: '%s'\n" "${0##*/}" "$1"
+    printf "%s: Try '%s --help' for more information.\n" \
+        "${0##*/}" "${0##*/}"
+} >&2

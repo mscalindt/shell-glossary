@@ -1,0 +1,80 @@
+#! .desc:
+# True if optional-complex (possible argument) option
+#! .params (<1+>):
+# ["$1"] - -*
+# ["$2"] - --*
+#! .uses:
+# <opt> $ - string;
+#           first positional parameter of the main environment
+#! .gives:
+# (0) <"$opt_arg"> - string;
+#                    option argument
+# (0) <"$_opt_match"> - string;
+#                       literal option matched
+# (0) <$shiftN> - integer;
+#                 shift count
+#! .rc:
+# (0) match
+# (1) no match
+#.
+copt_optional() {
+    copt_optional_arg_invalid() {
+        printf "%s: Invalid argument specification for: '%s'\n" \
+            "${0##*/}" "$1"
+        printf "%s: Try '%s --help' for more information.\n" \
+            "${0##*/}" "${0##*/}"
+    } >&2
+
+    [ "$opt" ] || return 1
+
+    case "$opt" in
+        '--'*)
+            case "$1$2" in
+                '--'*) : ;;
+                "$1"'--'*) set -- "$2" ;;
+                *) return 1 ;;
+            esac
+
+            case "$opt" in
+                "$1"'=')
+                    copt_optional_arg_invalid "$1"
+
+                    exit 2
+                ;;
+                "$1"'='*)
+                    opt_arg="${opt#"$1"=}"; opt=; _opt_match="$1"; \
+                    shiftN=1
+
+                    return 0
+                ;;
+                "$1")
+                    opt=; opt_arg=; _opt_match="$1"; shiftN=1
+
+                    return 0
+                ;;
+            esac
+        ;;
+        '-'*)
+            case "$1$2" in
+                '-'*) : ;;
+                *) return 1 ;;
+            esac
+
+            case "$opt" in
+                "$1")
+                    opt=; opt_arg=; _opt_match="$1"; shiftN=1
+
+                    return 0
+                ;;
+                "$1"*)
+                    opt_arg="${opt#"$1"}"; opt=; _opt_match="$1"; \
+                    shiftN=1
+
+                    return 0
+                ;;
+            esac
+        ;;
+    esac
+
+    return 1
+}
