@@ -15,9 +15,9 @@
 # )
 # <$2> - type(
 #     '-' - raw
-#     '--' - raw, no newline
+#     '--' - raw, no linefeed
 #     '-date' - %H%M%S date fmt
-#     '-date-nolf' - %H%M%S date fmt, no newline
+#     '-date-nolf' - %H%M%S date fmt, no linefeed
 #     .
 # )
 # <"$3"+> - text
