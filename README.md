@@ -10,6 +10,7 @@ a breeze.
 - [OPD_CMAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_cmax)
 - [OPD_MAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_max)
 - [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
+- [OPT_COMPAT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_fail)
 - [OPT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_err)
 - [OPT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_fail)
 - [OPT_INVALID()](https://github.com/mscalindt/main-functions/blob/main/src/opt_invalid)
@@ -42,6 +43,9 @@ Signify invalid operand count (max)[X>1]
 
 ### [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
 Signify invalid operand count (min)[0>X]
+
+### [OPT_COMPAT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_fail)
+Signify option incompatibility with previous option
 
 ### [OPT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_err)
 Signify invalid option argument
