@@ -2,7 +2,7 @@
 # Escape shell-defined meta characters in a string
 #! .params:
 # <"$1"> - string
-# <"$2"> - type(
+# <"$2"> - chars(
 #     "-chars X" - escape only "X" whitespace-delimited character(s)
 #     '-dq' - escape all special characters within double quotes; they are:
 #             $ ` " \ [:space:]
