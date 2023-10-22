@@ -6,8 +6,8 @@
 # <opt> $ - string;
 #           first positional parameter of the main environment
 #! .gives:
-# (0) <"$_opt_match"> - string;
-#                       literal option matched
+# (0) <"$opt_match"> - string;
+#                      literal option matched
 # (0) <$shiftN> - integer;
 #                 shift count
 #! .rc:
@@ -20,7 +20,7 @@ ssopt() {
     for _arg in "$@"; do
         case "$opt" in
             "$_arg")
-                opt=; _opt_match="$_arg"; shiftN=1
+                opt=; opt_match="$_arg"; shiftN=1
 
                 return 0
             ;;
