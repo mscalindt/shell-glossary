@@ -11,8 +11,8 @@
 #                      literal option matched
 # (0) <$shiftN> - integer;
 #                 shift count
-# (0) ["$_sopt_index"] - string;
-#                        index with encountered short options
+# (0) ["$sopt_index"] - string;
+#                       index with encountered short options
 #! .rc:
 # (0) match
 # (1) no match
@@ -44,9 +44,9 @@ sopt() {
 
             case "$opt" in
                 "$1"*)
-                    case :"$_sopt_index" in
-                        :) _sopt_index="${1#?}" ;;
-                        *) _sopt_index="$_sopt_index${1#?}" ;;
+                    case :"$sopt_index" in
+                        :) sopt_index="${1#?}" ;;
+                        *) sopt_index="$sopt_index${1#?}" ;;
                     esac
 
                     opt="-${opt#??}"; opt_match="$1"; shiftN=1
