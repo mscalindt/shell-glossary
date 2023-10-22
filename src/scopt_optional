@@ -8,8 +8,8 @@
 #! .gives:
 # (0) <"$opt_arg"> - string;
 #                    option argument
-# (0) <"$_opt_match"> - string;
-#                       literal option matched
+# (0) <"$opt_match"> - string;
+#                      literal option matched
 # (0) <$shiftN> - integer;
 #                 shift count
 #! .rc:
@@ -34,13 +34,13 @@ scopt_optional() {
                 exit 2
             ;;
             "$_arg"'='*)
-                opt_arg="${opt#"$_arg"=}"; opt=; _opt_match="$_arg"; \
+                opt_arg="${opt#"$_arg"=}"; opt=; opt_match="$_arg"; \
                 shiftN=1
 
                 return 0
             ;;
             "$_arg")
-                opt=; opt_arg=; _opt_match="$_arg"; shiftN=1
+                opt=; opt_arg=; opt_match="$_arg"; shiftN=1
 
                 return 0
             ;;
