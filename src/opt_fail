@@ -6,7 +6,7 @@
 # <opt_arg> $ - string;
 #               second positional parameter of the main environment
 # <opt_match> $ - string;
-#                 literal option matched
+#                 literal option previously matched
 #! .rc:
 # (2)
 #.
