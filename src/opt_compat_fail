@@ -3,14 +3,14 @@
 #! .params:
 # <"$1"> - incompatible option
 #! .uses:
-# <_opt_match> $ - string;
-#                  literal option matched
+# <opt_match> $ - string;
+#                 literal option matched
 #! .rc:
 # (2)
 #.
 opt_compat_fail() {
     printf "%s: '%s': Incompatible with: '%s'\n" \
-        "${0##*/}" "$_opt_match" "$1"
+        "${0##*/}" "$opt_match" "$1"
     printf "%s: Try '%s --help' for more information.\n" \
         "${0##*/}" "${0##*/}"
 
