@@ -9,8 +9,8 @@
 #! .gives:
 # (0) <"$opt_arg"> - string;
 #                    option argument
-# (0) <"$_opt_match"> - string;
-#                       literal option matched
+# (0) <"$opt_match"> - string;
+#                      literal option matched
 # (0) <$shiftN> - integer;
 #                 shift count
 #! .rc:
@@ -42,13 +42,13 @@ copt_optional() {
                     exit 2
                 ;;
                 "$1"'='*)
-                    opt_arg="${opt#"$1"=}"; opt=; _opt_match="$1"; \
+                    opt_arg="${opt#"$1"=}"; opt=; opt_match="$1"; \
                     shiftN=1
 
                     return 0
                 ;;
                 "$1")
-                    opt=; opt_arg=; _opt_match="$1"; shiftN=1
+                    opt=; opt_arg=; opt_match="$1"; shiftN=1
 
                     return 0
                 ;;
@@ -62,12 +62,12 @@ copt_optional() {
 
             case "$opt" in
                 "$1")
-                    opt=; opt_arg=; _opt_match="$1"; shiftN=1
+                    opt=; opt_arg=; opt_match="$1"; shiftN=1
 
                     return 0
                 ;;
                 "$1"*)
-                    opt_arg="${opt#"$1"}"; opt=; _opt_match="$1"; \
+                    opt_arg="${opt#"$1"}"; opt=; opt_match="$1"; \
                     shiftN=1
 
                     return 0
