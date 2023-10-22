@@ -7,8 +7,8 @@
 # <opt> $ - string;
 #           first positional parameter of the main environment
 #! .gives:
-# (0) <"$_opt_match"> - string;
-#                       literal option matched
+# (0) <"$opt_match"> - string;
+#                      literal option matched
 # (0) <$shiftN> - integer;
 #                 shift count
 # (0) ["$_sopt_index"] - string;
@@ -30,7 +30,7 @@ sopt() {
 
             case "$opt" in
                 "$1")
-                    opt=; _opt_match="$1"; shiftN=1
+                    opt=; opt_match="$1"; shiftN=1
 
                     return 0
                 ;;
@@ -49,7 +49,7 @@ sopt() {
                         *) _sopt_index="$_sopt_index${1#?}" ;;
                     esac
 
-                    opt="-${opt#??}"; _opt_match="$1"; shiftN=1
+                    opt="-${opt#??}"; opt_match="$1"; shiftN=1
 
                     return 0
                 ;;
