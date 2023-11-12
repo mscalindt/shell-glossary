@@ -17,6 +17,8 @@ utility calls.
 - [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltl_substr1)
 - [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltr_substr0)
 - [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltr_substr1)
+- [MASK_CHECK()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_check)
+- [MASK_SET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_set)
 - [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char)
 - [PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/parse)
 - [PARSE_FD1()](https://github.com/mscalindt/shell-glossary/blob/main/src/parse_fd1)
@@ -76,6 +78,12 @@ Get positional substring, (right of) (N)character(s), in a string
 
 ### [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltr_substr1)
 Get positional substring, (right of, up to) (N)character(s), in a string
+
+### [MASK_CHECK()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_check)
+Check a bit, the power of 2, in a pseudo-bitmask shell variable
+
+### [MASK_SET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_set)
+Set a bit, the power of 2, for a pseudo-bitmask shell variable
 
 ### [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char)
 Convert N to that amount of a character

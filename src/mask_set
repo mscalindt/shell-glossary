@@ -1,0 +1,34 @@
+#! .desc:
+# Set a bit, the power of 2, for a pseudo-bitmask shell variable
+#! .params:
+# <$1> - variable name
+# <$2> - bit
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input
+#.
+mask_set() {
+    [ "$1" ] || return 255
+
+    set -- "$1" "${2#0x}"
+
+    # Assert $1 is a valid shell variable name.
+    case "$1" in
+        [0123456789]*)
+            return 255
+        ;;
+        *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]*)
+            return 255
+        ;;
+    esac
+
+    # Assert $2 is a whole number and a valid bit.
+    case :"$2${2#*[!0123456789]}" in
+        : | :0*) return 255 ;;
+        :"$2$2") [ "$(($2 & ($2 - 1)))" -eq 0 ] || return 255 ;;
+        *) return 255 ;;
+    esac
+
+    eval "$1=\$(($1 + $2))"
+}
