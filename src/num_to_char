@@ -18,7 +18,7 @@
 # (255) bad input
 #.
 num_to_char() {
-    # Check if $1 is a whole number
+    # Assert $1 is a whole number.
     case :"$1${1#*[!0123456789]}" in
         :) return 255 ;;
         :00) : ;;
