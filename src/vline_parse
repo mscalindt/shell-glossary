@@ -1,0 +1,32 @@
+#! .desc:
+# Process each populated line of a variable (string) using a specified function
+#! .params:
+# <"$1"> - string
+# <$2> - function name
+# [$3] - options(
+#     '-fast-pass' - pass all lines at once as function arguments
+#     .
+# )
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input
+#.
+vline_parse() {
+    [ "$#" -ge 2 ] || return 255
+
+    # Save IFS
+    _old_IFS="$IFS" 2> /dev/null
+    ${IFS+':'} unset _old_IFS 2> /dev/null
+
+    IFS='
+'
+    case "$3" in
+        '-fast-pass') set -- "$2" $1; "$@" ;;
+        *) for _line in $1; do "$2" "$_line"; done ;;
+    esac
+
+    # Restore IFS
+    IFS="$_old_IFS" 2> /dev/null
+    ${_old_IFS+':'} unset IFS 2> /dev/null
+}

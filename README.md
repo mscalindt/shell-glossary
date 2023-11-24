@@ -34,6 +34,7 @@ utility calls.
 - [STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/str)
 - [STR_FD1()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_fd1)
 - [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_to_chars)
+- [VLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/vline_parse)
 
 ## Brief Descriptions:
 
@@ -129,3 +130,6 @@ Check the existence/position of a substring in stdin
 
 ### [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_to_chars)
 Convert a string to whitespace-separated characters
+
+### [VLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/vline_parse)
+Process each populated line of a variable (string) using a specified function
