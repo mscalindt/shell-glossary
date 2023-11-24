@@ -20,8 +20,6 @@ utility calls.
 - [MASK_CHECK()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_check)
 - [MASK_SET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_set)
 - [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char)
-- [PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/parse)
-- [PARSE_FD1()](https://github.com/mscalindt/shell-glossary/blob/main/src/parse_fd1)
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
 - [PLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/pline)
 - [PLINE_FD1()](https://github.com/mscalindt/shell-glossary/blob/main/src/pline_fd1)
@@ -87,12 +85,6 @@ Set a bit, the power of 2, for a pseudo-bitmask shell variable
 
 ### [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char)
 Convert N to that amount of a character
-
-### [PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/parse)
-Parse the content of a file
-
-### [PARSE_FD1()](https://github.com/mscalindt/shell-glossary/blob/main/src/parse_fd1)
-Parse the content of stdin
 
 ### [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
 Mangle and assert a path in a specified way
