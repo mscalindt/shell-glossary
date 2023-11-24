@@ -11,6 +11,7 @@ utility calls.
 - [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
 - [FCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/fcount)
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
+- [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
 - [GET_FPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/get_fpath)
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info)
 - [LSTRIP()](https://github.com/mscalindt/shell-glossary/blob/main/src/lstrip)
@@ -59,6 +60,9 @@ Count files and directories in a directory
 
 ### [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
 Read a file raw into $_file
+
+### [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
+Process each line of a file using a specified function
 
 ### [GET_FPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/get_fpath)
 Convert relative path to absolute path

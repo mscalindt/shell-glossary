@@ -1,0 +1,18 @@
+#! .desc:
+# Process each line of a file using a specified function
+#! .params:
+# <"$1"> - absolute file path
+# <$2> - function name
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input
+#.
+fline_parse() {
+    [ -f "$1" ] || return 255
+    [ -r "$1" ] || return 255
+
+    exec 9<"$1"
+    while IFS= read -r _line <&9; do "$2" "$_line"; done; "$2" "$_line"
+    exec 9<&-
+}
