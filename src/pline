@@ -26,6 +26,7 @@
 #   >> Fix: `cat`
 #.
 pline() {
+    # Assert $1 is a natural number.
     case $1:${1#*[!0123456789]} in
         : | 0*) return 255 ;;
         "$1:$1") : ;;
