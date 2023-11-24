@@ -1,0 +1,41 @@
+#! .desc:
+# Read a file raw into $_file
+#! .params:
+# <"$1"> - absolute file path
+# [$2] - options(
+#     '-direct' - use string concatenation rather than command substitution
+#     .
+# )
+#! .gives:
+# (0) <"$_file"> - raw content of the file
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input
+#.
+file_preload() {
+    [ -f "$1" ] || return 255
+    [ -r "$1" ] || return 255
+
+    case "$2" in
+        '-direct')
+            exec 9<"$1"
+            _file=; while IFS= read -r _line <&9; do
+                _file="$_file$_line
+"
+            done; _file="$_file$_line"
+            exec 9<&-
+        ;;
+        *)
+            _file=$(
+                exec 9<"$1"
+                while IFS= read -r _line <&9; do
+                    printf "%s\n" "$_line"
+                done; printf "%s" "$_line"
+                exec 9<&-
+
+                printf "%s" ' '
+            ) 2> /dev/null; _file="${_file%?}"
+        ;;
+    esac
+}

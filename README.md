@@ -10,6 +10,7 @@ utility calls.
 - [ERRF()](https://github.com/mscalindt/shell-glossary/blob/main/src/errF)
 - [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
 - [FCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/fcount)
+- [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
 - [GET_FPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/get_fpath)
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info)
 - [LSTRIP()](https://github.com/mscalindt/shell-glossary/blob/main/src/lstrip)
@@ -55,6 +56,9 @@ Escape shell-defined meta characters in a string
 
 ### [FCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/fcount)
 Count files and directories in a directory
+
+### [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
+Read a file raw into $_file
 
 ### [GET_FPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/get_fpath)
 Convert relative path to absolute path
