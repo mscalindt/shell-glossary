@@ -7,14 +7,10 @@
 #     '-wschars' - whitespace-separated characters
 #     .
 # )
-# [$4] - type(
-#     '-nout' - no output
-#     .
-# )
 #! .gives:
 # (0) <"$_chars"> - string
 #! .rc:
-# (0) character(s)
+# (0) success
 # (255) bad input
 #.
 num_to_char() {
@@ -46,10 +42,5 @@ num_to_char() {
                 _i=$((_i + 1))
             done
         ;;
-    esac
-
-    case "$3$4" in
-        *'-nout'*) : ;;
-        *) printf "%s" "$_chars" ;;
     esac
 }
