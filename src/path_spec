@@ -1,5 +1,5 @@
 #! .desc:
-# Mangle and assert a path in a specified way into $_path
+# Mangle and assert a path in a specified way
 #! .params:
 # <$1> - options(
 #     '-assert' - assert dir/file
