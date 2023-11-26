@@ -20,9 +20,9 @@ confirm_cont() {
     case "$1" in
         '-n')
             if [ "$NO_COLOR" ]; then
-                printf 'Continue? [Y/n] '
+                printf 'Continue? [y/N] '
             else
-                printf "%bContinue? [Y/n]%b " '\033[1;37m' '\033[0m'
+                printf "%bContinue? [y/N]%b " '\033[1;37m' '\033[0m'
             fi
             read -r _action
 
