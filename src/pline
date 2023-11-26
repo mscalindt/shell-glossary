@@ -7,14 +7,10 @@
 #     '-ltstrip' - strip all leading/trailing whitespace characters
 #     .
 # )
-# [$4] - type(
-#     '-nout' - no output
-#     .
-# )
 #! .gives:
 # (0) <"$_line"> - string
 #! .rc:
-# (0) line's content | line empty
+# (0) success
 # (1) line does not exist
 # (2) not a file | file does not exist
 # (3) file access error
@@ -42,11 +38,6 @@ pline() {
                 _i=$((_i + 1))
                 case $_i in
                     "$1")
-                        case "$3$4" in
-                            *'-nout'*) : ;;
-                            *) printf "%s" "$_line" ;;
-                        esac
-
                         return 0
                     ;;
                 esac
@@ -57,11 +48,6 @@ pline() {
                 _i=$((_i + 1))
                 case $_i in
                     "$1")
-                        case "$3$4" in
-                            *'-nout'*) : ;;
-                            *) printf "%s" "$_line" ;;
-                        esac
-
                         return 0
                     ;;
                 esac
