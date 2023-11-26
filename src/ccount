@@ -3,14 +3,10 @@
 #! .params:
 # <"$1"> - character
 # <"$2"> - string
-# [$3] - type(
-#     '-nout' - no output
-#     .
-# )
 #! .gives:
 # <$_count> - integer
 #! .rc:
-# (0) count
+# (0) success
 # (1) ! $1
 #.
 ccount() {
@@ -39,9 +35,4 @@ ccount() {
     esac
 
     _ccount "$1" "$2"
-
-    case "$3" in
-        '-nout') : ;;
-        *) printf "%s" "$_count" ;;
-    esac
 }
