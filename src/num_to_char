@@ -23,24 +23,24 @@ num_to_char() {
         *) return 255 ;;
     esac
 
-    case $1 in
-        0) _chars=; return 0 ;;
+    # Support `-wschars`. The added trailing whitespace character will be
+    # removed after the function completes operation.
+    case "$3" in
+        '-wschars') set -- "$1" "$2 " "$3" ;;
     esac
 
-    _chars="$2"
+    # Repeat the character ($2) N times ($1) to create the desired string.
+    # When N is `0`, no characters are created, and $_chars is set to an empty
+    # string. This helps in seamlessly integrating the function in cases where
+    # character generation is not needed.
+    _chars=; _i=0; until [ "$_i" -eq "$1" ]; do
+        _chars="$_chars$2"; _i=$((_i + 1))
+    done
 
+    # Remove the trailing whitespace character used to support `-wschars`. The
+    # option check is essential as to not accidentally remove a whitespace when
+    # $2 (character) to be repeated is a literal whitespace.
     case "$3" in
-        '-wschars')
-            _i=1; until [ "$_i" -eq "$1" ]; do
-                _chars="$_chars $2"
-                _i=$((_i + 1))
-            done
-        ;;
-        *)
-            _i=1; until [ "$_i" -eq "$1" ]; do
-                _chars="$_chars$2"
-                _i=$((_i + 1))
-            done
-        ;;
+        '-wschars') _chars="${_chars% }" ;;
     esac
 }
