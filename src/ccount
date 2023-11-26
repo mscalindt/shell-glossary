@@ -7,7 +7,6 @@
 # <$_count> - integer
 #! .rc:
 # (0) success
-# (1) ! $1
 #.
 ccount() {
     _ccount() {
@@ -26,13 +25,6 @@ ccount() {
         IFS="$_old_IFS" 2> /dev/null
         ${_old_IFS+':'} unset IFS 2> /dev/null
     }
-
-    _count=0
-
-    case "$2" in
-        *"$1"*) : ;;
-        *) return 1 ;;
-    esac
 
     _ccount "$1" "$2"
 }
