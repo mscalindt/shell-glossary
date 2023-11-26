@@ -3,10 +3,6 @@
 #! .params:
 # <$1> - line number
 # <"$2"> - absolute path of a file
-# [$3] - options(
-#     '-ltstrip' - strip all leading/trailing whitespace characters
-#     .
-# )
 #! .gives:
 # (0) <"$_line"> - string
 #! .rc:
@@ -30,28 +26,14 @@ pline() {
     [ -f "$2" ] || return 255
     [ -r "$2" ] || return 255
 
-    case "$3" in
-        '-ltstrip')
-            _i=0; while read -r _line || [ "$_line" ]; do
-                _i=$((_i + 1))
-                case $_i in
-                    "$1")
-                        return 0
-                    ;;
-                esac
-            done < "$2"
-        ;;
-        *)
-            _i=0; while IFS= read -r _line || [ "$_line" ]; do
-                _i=$((_i + 1))
-                case $_i in
-                    "$1")
-                        return 0
-                    ;;
-                esac
-            done < "$2"
-        ;;
-    esac
+    _i=0; while IFS= read -r _line || [ "$_line" ]; do
+        _i=$((_i + 1))
+        case $_i in
+            "$1")
+                return 0
+            ;;
+        esac
+    done < "$2"
 
     return 1
 }
