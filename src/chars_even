@@ -1,54 +1,47 @@
 #! .desc:
-# Test if the character(s) count (combined), in a given string, is even
+# Test if the sum of a character in a string is even
 #! .params:
-# <"$1"> - character(s)
+# <"$1"> - character
 # <"$2"> - string
-#! .gives:
-# (0|1) <$_count> - integer
 #! .rc:
 # (0) even
 # (1) uneven
-# (2) ! $1
+# (255) bad input
 #.
 chars_even() {
-    char_even() {
-        # Save IFS
-        _old_IFS="$IFS" 2> /dev/null
-        ${IFS+':'} unset _old_IFS 2> /dev/null
+    # Assert $1 is a single character; multiple characters are currently not
+    # supported.
+    [ "${#1}" -eq 1 ] || return 255
 
-        IFS="$1"
+    # Save $IFS.
+    _old_IFS="$IFS" 2> /dev/null
+    ${IFS+':'} unset _old_IFS 2> /dev/null
 
-        set -f; case "$2" in
-            *"$IFS") set -- $2; _count=$# ;;
-            *) set -- $2; _count=$(($# - 1)) ;;
-        esac; set +f
-
-        # Restore IFS
-        IFS="$_old_IFS" 2> /dev/null
-        ${_old_IFS+':'} unset IFS 2> /dev/null
-
-        [ "$((_count % 2))" -eq 0 ]
-    }
-
-    case ${#1} in
-        1)
-            char_even "$1" "$2"
-        ;;
-        *)
-            char_even "$1" "$2"
-
-            case "$1" in
-                *"${2#"${2%?}"}"*)
-                    case "$2" in
-                        *"$1") : ;;
-                        *) _count=$((_count + 1)) ;;
-                    esac
-                ;;
-            esac
-        ;;
+    # Save the state of the pathname expansion flag and disable it if active;
+    # disabled to disable the expansion of `*`.
+    case "$-" in
+        *'f'*) _pn=0 ;;
+        *) _pn=1; set -f ;;
     esac
 
-    case $_count in 0) return 2 ;; esac
+    # Word split $2 (string) based on $1 (character) and store the number of
+    # arguments produced into $_count. The character placement check is crucial
+    # to avoid off-by-one error due to how the word split functions.
+    IFS="$1"; case "$2" in
+        *"$IFS") set -- $2; _count=$# ;;
+        *) set -- $2; _count=$(($# - 1)) ;;
+    esac
 
+    # Restore the active state of the pathname expansion flag if appropriate.
+    if [ "$_pn" = 1 ]; then
+        set +f
+    fi
+
+    # Restore $IFS.
+    IFS="$_old_IFS" 2> /dev/null
+    ${_old_IFS+':'} unset IFS 2> /dev/null
+
+    # Assert $_count is even using modulo. `0` if even, `1` if odd, which also
+    # aligns with the return code of `test` (`[`).
     [ "$((_count % 2))" -eq 0 ]
 }
