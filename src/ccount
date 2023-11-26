@@ -7,24 +7,38 @@
 # <$_count> - integer
 #! .rc:
 # (0) success
+# (255) bad input
 #.
 ccount() {
-    _ccount() {
-        # Save IFS
-        _old_IFS="$IFS" 2> /dev/null
-        ${IFS+':'} unset _old_IFS 2> /dev/null
+    # Assert $1 is a single character; multiple characters are currently not
+    # supported.
+    [ "${#1}" -eq 1 ] || return 255
 
-        IFS="$1"
+    # Save $IFS.
+    _old_IFS="$IFS" 2> /dev/null
+    ${IFS+':'} unset _old_IFS 2> /dev/null
 
-        set -f; case "$2" in
-            *"$IFS") set -- $2; _count=$# ;;
-            *) set -- $2; _count=$(($# - 1)) ;;
-        esac; set +f
+    # Save the state of the pathname expansion flag and disable it if active;
+    # disabled to disable the expansion of `*`.
+    case "$-" in
+        *'f'*) _pn=0 ;;
+        *) _pn=1; set -f ;;
+    esac
 
-        # Restore IFS
-        IFS="$_old_IFS" 2> /dev/null
-        ${_old_IFS+':'} unset IFS 2> /dev/null
-    }
+    # Word split $2 (string) based on $1 (character) and count the number of
+    # arguments produced. The character placement check is crucial to avoid
+    # off-by-one error due to how the word split functions.
+    IFS="$1"; case "$2" in
+        *"$IFS") set -- $2; _count=$# ;;
+        *) set -- $2; _count=$(($# - 1)) ;;
+    esac
 
-    _ccount "$1" "$2"
+    # Restore the active state of the pathname expansion flag if appropriate.
+    if [ "$_pn" = 1 ]; then
+        set +f
+    fi
+
+    # Restore $IFS.
+    IFS="$_old_IFS" 2> /dev/null
+    ${_old_IFS+':'} unset IFS 2> /dev/null
 }
