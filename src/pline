@@ -11,7 +11,6 @@
 # (255) bad input/usage
 #! .caveats:
 # > Reading /proc is unreliable.
-#   >> Fix: `cat`
 #.
 pline() {
     # Assert $1 is a natural number.
