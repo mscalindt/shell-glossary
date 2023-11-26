@@ -24,7 +24,6 @@ utility calls.
 - [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char)
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
 - [PLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/pline)
-- [PLINE_FD1()](https://github.com/mscalindt/shell-glossary/blob/main/src/pline_fd1)
 - [REMCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/remchars)
 - [REMSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/remstr)
 - [REPLCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchars)
@@ -32,7 +31,6 @@ utility calls.
 - [RSTRIP()](https://github.com/mscalindt/shell-glossary/blob/main/src/rstrip)
 - [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
 - [STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/str)
-- [STR_FD1()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_fd1)
 - [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_to_chars)
 - [VLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/vline_parse)
 
@@ -101,9 +99,6 @@ Mangle and assert a path in a specified way
 ### [PLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/pline)
 Print specific line in file
 
-### [PLINE_FD1()](https://github.com/mscalindt/shell-glossary/blob/main/src/pline_fd1)
-Print specific line in stdin
-
 ### [REMCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/remchars)
 Remove specific character(s) in string
 
@@ -124,9 +119,6 @@ Get a single-quoted argument in a single-quote-escaped string
 
 ### [STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/str)
 Check the existence/position of a substring in string
-
-### [STR_FD1()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_fd1)
-Check the existence/position of a substring in stdin
 
 ### [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_to_chars)
 Convert a string to whitespace-separated characters
