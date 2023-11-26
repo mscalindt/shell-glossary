@@ -10,8 +10,6 @@
 # (1) line does not exist
 # (255) bad input/usage
 #! .caveats:
-# > NULL character.
-#   >> Fix: none
 # > Reading /proc is unreliable.
 #   >> Fix: `cat`
 #.
