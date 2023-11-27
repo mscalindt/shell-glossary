@@ -8,7 +8,6 @@
 #             $ ` " \ [:space:]
 #     '-sq' - escape all special characters within single quotes; they are:
 #             '
-#     '-ws' - escape all whitespace characters
 #     .
 # )
 # <$3> - backend(
@@ -99,9 +98,6 @@ esc_str() {
         ;;
         '-sq')
             _chars=\'
-        ;;
-        '-ws')
-            _chars=' '
         ;;
     esac
 
