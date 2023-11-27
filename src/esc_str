@@ -16,10 +16,6 @@
 #     '-shell' - use built-in shell word splitting
 #     .
 # )
-# [$4] - options(
-#     '-strip' - strip the characters instead
-#     .
-# )
 #! .gives:
 # (0) <"$_str"> - string;
 #                 modified $1
@@ -145,17 +141,10 @@ esc_str() {
 
         if [ "$3" = '-sed' ]; then
             if [ "$2" = '-sq' ]; then
-                if [ "$4" = '-strip' ]; then
-                    _str=$(
-                        printf "%s" "$_str" | sed "s/'//g" && \
-                        printf x
-                    )
-                else
-                    _str=$(
-                        printf "%s" "$_str" | sed "s/'/'\\\\''/g" && \
-                        printf x
-                    )
-                fi
+                _str=$(
+                    printf "%s" "$_str" | sed "s/'/'\\\\''/g" && \
+                    printf x
+                )
                 _str="${_str%?}"
             else
                 _str_ref="$_str"
@@ -177,32 +166,17 @@ esc_str() {
 
                 _str="$_str_ref"
 
-                if [ "$4" = '-strip' ]; then
-                    _str=$(
-                        printf "%s" "$_str" | sed "s/$_mp//g" && \
-                        printf x
-                    )
-                else
-                    _str=$(
-                        printf "%s" "$_str" | sed "s/$_mp/\\\\$_rp/g" && \
-                        printf x
-                    )
-                fi
+                _str=$(
+                    printf "%s" "$_str" | sed "s/$_mp/\\\\$_rp/g" && \
+                    printf x
+                )
                 _str="${_str%?}"
             fi
         elif [ "$3" = '-shell' ]; then
             if [ "$2" = '-sq' ]; then
-                if [ "$4" = '-strip' ]; then
-                    replchar \' '' "$_str"
-                else
-                    replchar \' "'\\''" "$_str"
-                fi
+                replchar \' "'\\''" "$_str"
             else
-                if [ "$4" = '-strip' ]; then
-                    replchar "$_char" '' "$_str"
-                else
-                    replchar "$_char" "\\$_char" "$_str"
-                fi
+                replchar "$_char" "\\$_char" "$_str"
             fi
         fi
     done
