@@ -20,10 +20,6 @@
 #     '-strip' - strip the characters instead
 #     .
 # )
-# [$5] - type(
-#     '-nout' - no output
-#     .
-# )
 #! .gives:
 # (0) <"$_str"> - string;
 #                 modified $1
@@ -33,7 +29,7 @@
 #               character(s) used;
 #               whitespace-delimited and sorted by order parsed
 #! .rc:
-# (0) modified $1
+# (0) success
 # (1) no meta characters in $1
 # (255) bad input/usage
 #.
@@ -212,10 +208,5 @@ esc_str() {
         fi
     done
 
-    [ "$_meta_flag" -eq 1 ] || return 1
-
-    case "$4$5" in
-        *'-nout'*) : ;;
-        *) printf "%s" "$_str" ;;
-    esac
+    [ "$_meta_flag" -eq 1 ]
 }
