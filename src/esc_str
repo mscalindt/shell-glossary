@@ -30,7 +30,6 @@
 #               whitespace-delimited and sorted by order parsed
 #! .rc:
 # (0) success
-# (1) no meta characters in $1
 # (255) bad input/usage
 #.
 esc_str() {
@@ -207,6 +206,4 @@ esc_str() {
             fi
         fi
     done
-
-    [ "$_meta_flag" -eq 1 ]
 }
