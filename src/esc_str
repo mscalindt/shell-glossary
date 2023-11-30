@@ -28,24 +28,6 @@
 # (255) bad input/usage
 #.
 esc_str() {
-    dup_chars() {
-        _str="$1"
-        _index=
-
-        while [ "$_str" ]; do
-            _char="${_str%"${_str#?}"}"
-
-            case "$_index" in
-                *"$_char"*) return 0 ;;
-                *) [ "$_char" = ' ' ] || _index="$_index$_char" ;;
-            esac
-
-            _str="${_str#?}"
-        done
-
-        return 1
-    }
-
     replchar() {
         case "$3" in
             *"$1"*) : ;;
@@ -78,10 +60,6 @@ esc_str() {
     case "$2" in
         '-chars '*)
             _chars="${2#'-chars '}"
-
-            if dup_chars "$_chars"; then
-                return 255
-            fi
 
             # It is required that `\` is escaped first as to not escape our own
             # escapes since this character is used to escape the other
