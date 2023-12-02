@@ -2,7 +2,6 @@
 # Replace specific character(s) with character(s) in string
 #! .params:
 # <$1> - backend(
-#     '-sed' - use the host version of `sed`
 #     '-shell' - use built-in shell word splitting
 #     .
 # )
@@ -52,27 +51,7 @@ replchars() {
     [ "${#2}" -le 32 ] || return 255
     [ "${#3}" -le 6 ] || return 255
 
-    if [ "$1" = '-sed' ]; then
-        replchar '\' '\\' "$2"
-        replchar '.' '\.' "$_str"
-        replchar '*' '\*' "$_str"
-        replchar '[' '\[' "$_str"
-        replchar ']' '\]' "$_str"
-        replchar '^' '\^' "$_str"
-        replchar '$' '\$' "$_str"
-        replchar '/' '\/' "$_str"
-        _mp="$_str"
-
-        replchar '\' '\\' "$3"
-        replchar '&' '\&' "$_str"
-        replchar '/' '\/' "$_str"
-        _rp="$_str"
-
-        _str=$(printf "%s" "$4" | sed "s/$_mp/$_rp/g" && printf x)
-        _str="${_str%?}"
-    elif [ "$1" = '-shell' ]; then
-        replchar "$2" "$3" "$4"
-    fi
+    replchar "$2" "$3" "$4"
 
     case "$_str" in
         "$4") return 1 ;;
