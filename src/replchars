@@ -43,8 +43,9 @@ replchars() {
     }
 
     # Define sensible constraints for usage.
-    [ "${#2}" -le 32 ] || return 255
-    [ "${#3}" -le 6 ] || return 255
+    # `128` denotes the ASCII set.
+    [ "${#2}" -le 128 ] || return 255
+    [ "${#3}" -le 128 ] || return 255
 
     replchar "$2" "$3" "$4"
 }
