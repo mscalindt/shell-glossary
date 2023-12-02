@@ -17,7 +17,6 @@
 #                 modified $4
 #! .rc:
 # (0) modified $4
-# (1) ! $2
 # (255) bad input/usage
 #.
 replchars() {
@@ -52,10 +51,6 @@ replchars() {
     [ "${#3}" -le 6 ] || return 255
 
     replchar "$2" "$3" "$4"
-
-    case "$_str" in
-        "$4") return 1 ;;
-    esac
 
     case "$5" in
         '-nout') : ;;
