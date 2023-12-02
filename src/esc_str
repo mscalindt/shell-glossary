@@ -55,7 +55,8 @@ esc_str() {
     }
 
     # Define sensible constraints for usage.
-    [ "${#2}" -le 64 ] || return 255
+    # `128` denotes the ASCII set.
+    [ "${#2}" -le 128 ] || return 255
 
     case "$2" in
         '-chars '*)
