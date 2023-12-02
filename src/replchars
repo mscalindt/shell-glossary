@@ -8,15 +8,11 @@
 # <"$2"> - specific character(s)
 # <"$3"> - character(s)
 # <"$4"> - string
-# [$5] - type(
-#     '-nout' - no output
-#     .
-# )
 #! .gives:
 # (0) <"$_str"> - string;
 #                 modified $4
 #! .rc:
-# (0) modified $4
+# (0) success
 # (255) bad input/usage
 #.
 replchars() {
@@ -51,9 +47,4 @@ replchars() {
     [ "${#3}" -le 6 ] || return 255
 
     replchar "$2" "$3" "$4"
-
-    case "$5" in
-        '-nout') : ;;
-        *) printf "%s" "$_str" ;;
-    esac
 }
