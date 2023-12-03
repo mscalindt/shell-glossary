@@ -1,51 +1,68 @@
 #! .desc:
-# Replace specific character(s) with character(s) in string
+# Replace specific character with character(s) in string
 #! .params:
-# <$1> - backend(
-#     '-shell' - use built-in shell word splitting
-#     .
-# )
-# <"$2"> - specific character(s)
-# <"$3"> - character(s)
-# <"$4"> - string
+# <"$1"> - specific character
+# <"$2"> - character(s)
+# <"$3"> - string
 #! .gives:
 # (0) <"$_str"> - string;
-#                 modified $4
+#                 [modified <$3>]
 #! .rc:
 # (0) success
+# (*) error
 # (255) bad input/usage
 #.
 replchars() {
-    replchar() {
-        case "$3" in
-            *"$1"*) : ;;
-            *) _str="$3"; return 0 ;;
-        esac
-
-        # Save IFS
-        _old_IFS="$IFS" 2> /dev/null
-        ${IFS+':'} unset _old_IFS 2> /dev/null
-
-        IFS="$1"; _chars="$2"
-
-        set -f; set -- $3 "$3"; set +f
-        _str=; while [ "$#" -ge 3 ]; do
-            _str="$_str$1$_chars"; shift
-        done
-        case "$IFS" in
-            *"${2#"${2%?}"}"*) _str="$_str$1$_chars" ;;
-            *) _str="$_str$1" ;;
-        esac
-
-        # Restore IFS
-        IFS="$_old_IFS" 2> /dev/null
-        ${_old_IFS+':'} unset IFS 2> /dev/null
-    }
+    # Assert $1 is a single character; multiple characters are currently not
+    # supported.
+    [ "${#1}" -eq 1 ] || return 255
 
     # Define sensible constraints for usage.
     # `128` denotes the ASCII set.
     [ "${#2}" -le 128 ] || return 255
-    [ "${#3}" -le 128 ] || return 255
 
-    replchar "$2" "$3" "$4"
+    # Save $IFS.
+    _old_IFS="$IFS" 2> /dev/null
+    ${IFS+':'} unset _old_IFS 2> /dev/null
+
+    # Save the state of the pathname expansion flag and disable it if active;
+    # disabled to disable the expansion of `*`.
+    case "$-" in
+        *'f'*) _pn=0 ;;
+        *) _pn=1; set -f ;;
+    esac
+
+    # Word split $3 (string) based on $1 (character). The character placement
+    # check is crucial to appropriately set the flag $_strip, used to determine
+    # whether to add $2 (replacement character(s)) to the end of the string due
+    # to how the word split functions. Consider:
+    #
+    # (set -- 'ab'; IFS=a; set -- $1) = ($# = 2; $@ = '' 'b')
+    # (set -- 'aba'; IFS=a; set -- $1) = ($# = 2; $@ = '' 'b')
+    #
+    # The word split behaves the same regardless, so we explicitly need to
+    # differentiate it to ensure correct replacement in the final split chunk.
+    IFS="$1"; _chars="$2"; case "$3" in
+        *"$IFS") set -- $3; _strip=1 ;;
+        *) set -- $3; _strip=0 ;;
+    esac
+
+    # Reassemble the modified string into $_str by concatenating the split
+    # chunks with $_chars (replacement character(s)). The final chunk is
+    # intentionally excluded here, to be handled based on $_strip.
+    _str=; while [ "$#" -ge 2 ]; do
+        _str="$_str$1$_chars"; shift
+    done
+
+    # Handle the final split chunk according to $_strip.
+    [ "$_strip" = 1 ] && _str="$_str$1$_chars" || _str="$_str$1"
+
+    # Restore the active state of the pathname expansion flag if appropriate.
+    if [ "$_pn" = 1 ]; then
+        set +f
+    fi
+
+    # Restore $IFS.
+    IFS="$_old_IFS" 2> /dev/null
+    ${_old_IFS+':'} unset IFS 2> /dev/null
 }
