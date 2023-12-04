@@ -1,0 +1,44 @@
+#! .desc:
+# Escape a string to be used literally as a POSIX `sed` pattern
+#! .params:
+# <$1> - pattern_type(
+#     '-pattern' - the pattern section
+#     '-replacement' - the replacement section
+#     .
+# )
+# <"$2"> - string
+#! .uses:
+# <replchars> ()
+#! .gives:
+# (0) <"$_str"> - string;
+#                 [modified <$2>]
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input
+#.
+esc_sed() {
+    # Assert all required parameters are present.
+    [ "$#" -eq 2 ] || return 255
+
+    # Escape all special characters for `sed` in the given pattern type. Note
+    # that the special characters in `sed`'s extended regular expressions
+    # (`-E`) are not escaped, specifically: ( ) { } | + ?
+    case "$1" in
+        '-pattern')
+            replchars '\' '\\' "$2" || return "$?"
+            replchars '.' '\.' "$_str" || return "$?"
+            replchars '*' '\*' "$_str" || return "$?"
+            replchars '[' '\[' "$_str" || return "$?"
+            replchars ']' '\]' "$_str" || return "$?"
+            replchars '^' '\^' "$_str" || return "$?"
+            replchars '$' '\$' "$_str" || return "$?"
+            replchars '/' '\/' "$_str" || return "$?"
+        ;;
+        '-replacement')
+            replchars '\' '\\' "$2" || return "$?"
+            replchars '&' '\&' "$_str" || return "$?"
+            replchars '/' '\/' "$_str" || return "$?"
+        ;;
+    esac
+}
