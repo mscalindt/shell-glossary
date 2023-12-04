@@ -11,7 +11,6 @@
 #     .
 # )
 # <$3> - backend(
-#     '-sed' - use the host version of `sed`
 #     '-shell' - use built-in shell word splitting
 #     .
 # )
@@ -114,45 +113,10 @@ esc_str() {
             *) continue ;;
         esac
 
-        if [ "$3" = '-sed' ]; then
-            if [ "$2" = '-sq' ]; then
-                _str=$(
-                    printf "%s" "$_str" | sed "s/'/'\\\\''/g" && \
-                    printf x
-                )
-                _str="${_str%?}"
-            else
-                _str_ref="$_str"
-
-                replchar '\' '\\' "$_char"
-                replchar '.' '\.' "$_str"
-                replchar '*' '\*' "$_str"
-                replchar '[' '\[' "$_str"
-                replchar ']' '\]' "$_str"
-                replchar '^' '\^' "$_str"
-                replchar '$' '\$' "$_str"
-                replchar '/' '\/' "$_str"
-                _mp="$_str"
-
-                replchar '\' '\\' "$_char"
-                replchar '&' '\&' "$_str"
-                replchar '/' '\/' "$_str"
-                _rp="$_str"
-
-                _str="$_str_ref"
-
-                _str=$(
-                    printf "%s" "$_str" | sed "s/$_mp/\\\\$_rp/g" && \
-                    printf x
-                )
-                _str="${_str%?}"
-            fi
-        elif [ "$3" = '-shell' ]; then
-            if [ "$2" = '-sq' ]; then
-                replchar \' "'\\''" "$_str"
-            else
-                replchar "$_char" "\\$_char" "$_str"
-            fi
+        if [ "$2" = '-sq' ]; then
+            replchar \' "'\\''" "$_str"
+        else
+            replchar "$_char" "\\$_char" "$_str"
         fi
     done
 }
