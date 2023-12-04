@@ -4,6 +4,11 @@
 # <"$1"> - specific character
 # <"$2"> - character(s)
 # <"$3"> - string
+# [$4] - backend(
+#     '-sed' - use the host version of `sed`
+# )
+#! .uses:
+# <esc_sed> ()
 #! .gives:
 # (0) <"$_str"> - string;
 #                 [modified <$3>]
@@ -20,6 +25,33 @@ replchars() {
     # Define sensible constraints for usage.
     # `128` denotes the ASCII set.
     [ "${#2}" -le 128 ] || return 255
+
+    # Use an alternative backend if specified.
+    case "$4" in
+        '-sed')
+            # Escape any `sed` "pattern" special characters in $1.
+            esc_sed -pattern "$1" || return "$?"
+            _p="$_str"
+
+            # Escape any `sed` "replacement" special characters in $2.
+            esc_sed -replacement "$2" || return "$?"
+            _r="$_str"
+
+            # Store the output of `sed` in $_str using command substitution.
+            # The combination of `printf x` and subsequent removal of `x`
+            # ensures preservation of any trailing linefeeds, addressing a
+            # quirk in command substitution where trailing linefeeds are
+            # stripped.
+            _str=$(
+                printf "%s" "$3" | sed "s/$_p/$_r/g" || return "$?"
+                printf x
+            ) || return "$?"
+            _str="${_str%?}"
+
+            # The alternative backend has successfully finished operation.
+            return 0
+        ;;
+    esac
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
