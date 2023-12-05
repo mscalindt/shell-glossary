@@ -1,122 +1,68 @@
 #! .desc:
-# Escape shell-defined meta characters in a string
+# Escape meta characters in a string
 #! .params:
 # <"$1"> - string
 # <"$2"> - chars(
-#     "-chars X" - escape only "X" whitespace-delimited character(s)
-#     '-dq' - escape all special characters within double quotes; they are:
+#     "-chars X" - backslash escape "X" character(s)
+#     '-dq' - backslash escape all characters special within double quotes:
 #             $ ` " \ [:space:]
-#     '-sq' - escape all special characters within single quotes; they are:
+#     '-sq' - single-quote escape all characters special within single quotes:
 #             '
 #     .
 # )
-# <$3> - backend(
-#     '-shell' - use built-in shell word splitting
-#     .
-# )
+#! .uses:
+# <replchars> ()
 #! .gives:
 # (0) <"$_str"> - string;
-#                 modified $1
-# <$_meta_flag> - integer (bool integer);
-#                 '1' if meta characters
-# <"$_chars"> - string;
-#               character(s) used;
-#               whitespace-delimited and sorted by order parsed
+#                 [modified <$1>]
 #! .rc:
 # (0) success
+# (*) error
 # (255) bad input/usage
 #.
 esc_str() {
-    replchar() {
-        case "$3" in
-            *"$1"*) : ;;
-            *) _str="$3"; return 0 ;;
-        esac
-
-        # Save IFS
-        _old_IFS="$IFS" 2> /dev/null
-        ${IFS+':'} unset _old_IFS 2> /dev/null
-
-        IFS="$1"; _chars="$2"
-
-        set -f; set -- $3 "$3"; set +f
-        _str=; while [ "$#" -ge 3 ]; do
-            _str="$_str$1$_chars"; shift
-        done
-        case "$IFS" in
-            *"${2#"${2%?}"}"*) _str="$_str$1$_chars" ;;
-            *) _str="$_str$1" ;;
-        esac
-
-        # Restore IFS
-        IFS="$_old_IFS" 2> /dev/null
-        ${_old_IFS+':'} unset IFS 2> /dev/null
-    }
-
     # Define sensible constraints for usage.
     # `128` denotes the ASCII set.
     [ "${#2}" -le 128 ] || return 255
 
+    # Prepare the character set ($_chars) to be used.
     case "$2" in
         '-chars '*)
+            # Get the specified characters in $2 into $_chars.
             _chars="${2#'-chars '}"
 
-            # It is required that `\` is escaped first as to not escape our own
-            # escapes since this character is used to escape the other
-            # characters. To make sure `\` will always be escaped first,
-            # reorder it to always come first if present.
+            # It is required that the character `\` is escaped first as to not
+            # later escape our own escapes, since this character is used to
+            # escape the other characters. To make sure `\` will always be
+            # escaped first, reorder it to always come first if present in the
+            # character set.
             case "$_chars" in
                 \\*) : ;;
-                *\\) _chars="\\ ${_chars%%\\*}${_chars#*\\}" ;;
-                *\\*) _chars="\\ ${_chars%%\\*}${_chars#*\\ }" ;;
+                *\\*) _chars="\\${_chars%%\\*}${_chars#*\\}" ;;
             esac
         ;;
         '-dq')
-            _chars='\ $ " `  '
+            # The character set special within double quotes, specifically:
+            # $ ` " \ [:space:]
+            _chars='\$"` '
         ;;
         '-sq')
+            # The character set special within single quotes, specifically:
+            # '
             _chars=\'
         ;;
     esac
 
-    _str="$1"
-    _meta_flag=0
+    # Store the string ($1) into $_str and set $_chars as the function's sole
+    # positional parameter ($1).
+    _str="$1"; set -- "$_chars"; while [ "$1" ]; do
+        # Extract the first character of $1.
+        _char="${1%"${1#?}"}"
 
-    _chars_ref="$_chars"; while [ "$_chars_ref" ]; do
-        case "$_chars_ref" in
-            '   '*)
-                _char=' '
-                _chars_ref="${_chars_ref#???}"
-            ;;
-            '  ' | ' ')
-                _char=' '
-                _chars_ref=
-            ;;
-            ' '*)
-                _chars_ref="${_chars_ref#?}"
+        # Replace each instance of a character with an escaped one.
+        replchars "$_char" "\\$_char" "$_str" || return "$?"
 
-                continue
-            ;;
-            *)
-                if [ "${#_chars_ref}" -eq 1 ]; then
-                    _char="$_chars_ref"
-                    _chars_ref=
-                else
-                    _char="${_chars_ref%"${_chars_ref#?}"}"
-                    _chars_ref="${_chars_ref#?}"
-                fi
-            ;;
-        esac
-
-        case "$_str" in
-            *"$_char"*) _meta_flag=1 ;;
-            *) continue ;;
-        esac
-
-        if [ "$2" = '-sq' ]; then
-            replchar \' "'\\''" "$_str"
-        else
-            replchar "$_char" "\\$_char" "$_str"
-        fi
+        # Remove the first character from $1.
+        set -- "${1#?}"
     done
 }
