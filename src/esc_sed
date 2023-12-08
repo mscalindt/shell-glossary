@@ -40,5 +40,8 @@ esc_sed() {
             replchars '&' '\&' "$_str" || return "$?"
             replchars '/' '\/' "$_str" || return "$?"
         ;;
+        *)
+            return 255
+        ;;
     esac
 }
