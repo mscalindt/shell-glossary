@@ -45,7 +45,7 @@ replchars() {
             _str=$(
                 printf "%s" "$3" | sed "s/$_p/$_r/g" || return "$?"
                 printf x
-            ) || return "$?"
+            ) 2> /dev/null || return "$?"
             _str="${_str%?}"
 
             # The alternative backend has successfully finished operation.
