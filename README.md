@@ -46,7 +46,7 @@ utility calls.
 Count the times a character appears in a string
 
 ### [CHARS_EVEN()](https://github.com/mscalindt/shell-glossary/blob/main/src/chars_even)
-Test if the character(s) count (combined), in a given string, is even
+Test if the sum of a character in a string is even
 
 ### [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary/blob/main/src/confirm_cont)
 Ask for confirmation to continue
