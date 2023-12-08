@@ -16,7 +16,6 @@ utility calls.
 - [ERRF()](https://github.com/mscalindt/shell-glossary/blob/main/src/errF)
 - [ESC_SED()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_sed)
 - [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
-- [FCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/fcount)
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
 - [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
 - [GET_FPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/get_fpath)
@@ -81,9 +80,6 @@ Escape a string to be used literally as a POSIX `sed` pattern
 
 ### [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
 Escape meta characters in a string
-
-### [FCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/fcount)
-Count files and directories in a directory
 
 ### [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
 Read a file raw into $_file
