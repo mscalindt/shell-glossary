@@ -18,9 +18,6 @@
 # (255) bad input
 #.
 esc_sed() {
-    # Assert all required parameters are present.
-    [ "$#" -eq 2 ] || return 255
-
     # Escape all special characters for `sed` in the given pattern type. Note
     # that the special characters in `sed`'s extended regular expressions
     # (`-E`) are not escaped, specifically: ( ) { } | + ?
