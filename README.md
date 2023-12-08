@@ -14,6 +14,7 @@ utility calls.
 - [COUNT_OBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_obj)
 - [ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/err)
 - [ERRF()](https://github.com/mscalindt/shell-glossary/blob/main/src/errF)
+- [ESC_SED()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_sed)
 - [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
 - [FCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/fcount)
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
@@ -74,6 +75,9 @@ Print formatted text to stderr
 
 ### [ERRF()](https://github.com/mscalindt/shell-glossary/blob/main/src/errF)
 Print red-colored formatted text to stderr and exit
+
+### [ESC_SED()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_sed)
+Escape a string to be used literally as a POSIX `sed` pattern
 
 ### [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
 Escape shell-defined meta characters in a string
