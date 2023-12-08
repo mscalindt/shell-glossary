@@ -1,0 +1,28 @@
+#! .desc:
+# Count all visible file objects in a directory
+#! .params:
+# <"$1"> - absolute directory path
+# ["$2"] - file suffix
+#! .uses:
+# <count_dirs> ("$1" "$2")
+#! .gives:
+# (0) <$_count> - integer
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input/usage
+#! .caveats:
+# > `ARG_MAX`.
+#.
+count_files() {
+    # Use count_obj() to obtain the count of visible files and directories into
+    # $_count and set it as the third positional parameter.
+    count_obj "$1" "$2" || return "$?"
+    set -- "$1" "$2" "$_count"
+
+    # Use count_dirs() to obtain the count of visible directories into $_count
+    # and subtract it from the total count to determine the count of visible
+    # files, updating $_count.
+    count_dirs "$1" "$2" || return "$?"
+    _count=$(($3 - _count))
+}

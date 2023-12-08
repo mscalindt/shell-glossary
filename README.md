@@ -6,6 +6,12 @@ utility calls.
 - [CCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/ccount)
 - [CHARS_EVEN()](https://github.com/mscalindt/shell-glossary/blob/main/src/chars_even)
 - [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary/blob/main/src/confirm_cont)
+- [COUNT_DDIRS()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_ddirs)
+- [COUNT_DFILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dfiles)
+- [COUNT_DIRS()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dirs)
+- [COUNT_DOBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dobj)
+- [COUNT_FILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_files)
+- [COUNT_OBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_obj)
 - [ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/err)
 - [ERRF()](https://github.com/mscalindt/shell-glossary/blob/main/src/errF)
 - [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
@@ -44,6 +50,24 @@ Test if the character(s) count (combined), in a given string, is even
 
 ### [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary/blob/main/src/confirm_cont)
 Ask for confirmation to continue
+
+### [COUNT_DDIRS()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_ddirs)
+Count all hidden (.*) directories in a directory
+
+### [COUNT_DFILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dfiles)
+Count all hidden (.*) file objects in a directory
+
+### [COUNT_DIRS()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dirs)
+Count all visible directories in a directory
+
+### [COUNT_DOBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dobj)
+Count all hidden (.*) objects in a directory
+
+### [COUNT_FILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_files)
+Count all visible file objects in a directory
+
+### [COUNT_OBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_obj)
+Count all visible objects in a directory
 
 ### [ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/err)
 Print formatted text to stderr

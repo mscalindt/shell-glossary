@@ -1,0 +1,29 @@
+#! .desc:
+# Count all hidden (.*) file objects in a directory
+#! .params:
+# <"$1"> - absolute directory path
+# ["$2"] - file suffix
+#! .uses:
+# <count_ddirs> ("$1" "$2")
+# <count_dobj> ("$1" "$2")
+#! .gives:
+# (0) <$_count> - integer
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input/usage
+#! .caveats:
+# > `ARG_MAX`.
+#.
+count_dfiles() {
+    # Use count_dobj() to obtain the count of hidden files and directories into
+    # $_count and set it as the third positional parameter.
+    count_dobj "$1" "$2" || return "$?"
+    set -- "$1" "$2" "$_count"
+
+    # Use count_ddirs() to obtain the count of hidden directories into $_count
+    # and subtract it from the total count to determine the count of hidden
+    # files, updating $_count.
+    count_ddirs "$1" "$2" || return "$?"
+    _count=$(($3 - _count))
+}
