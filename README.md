@@ -80,7 +80,7 @@ Print red-colored formatted text to stderr and exit
 Escape a string to be used literally as a POSIX `sed` pattern
 
 ### [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
-Escape shell-defined meta characters in a string
+Escape meta characters in a string
 
 ### [FCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/fcount)
 Count files and directories in a directory
