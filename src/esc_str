@@ -51,6 +51,9 @@ esc_str() {
             # '
             _chars=\'
         ;;
+        *)
+            return 255
+        ;;
     esac
 
     # Store the string ($1) into $_str and set $_chars as the function's sole
