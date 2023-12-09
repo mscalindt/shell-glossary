@@ -8,6 +8,8 @@
 #     .
 # )
 # <"$2"> - string
+#! .uses:
+# <char_even> ('\' "$2")
 #! .gives:
 # (0) <"$_arg"> - string;
 #                 argument
