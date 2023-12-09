@@ -8,10 +8,6 @@
 #     .
 # )
 # <"$2"> - string
-# [$3] - type(
-#     '-nout' - no output
-#     .
-# )
 #! .gives:
 # (0) <"$_arg"> - string;
 #                 argument
@@ -75,10 +71,6 @@ sq_arg() {
                 ;;
             esac
 
-            case "$3" in
-                '-nout') : ;;
-                *) printf "%s" "$_arg" ;;
-            esac
             return 0
         ;;
         '-last')
@@ -99,10 +91,6 @@ sq_arg() {
                 ;;
             esac
 
-            case "$3" in
-                '-nout') : ;;
-                *) printf "%s" "$_arg" ;;
-            esac
             return 0
         ;;
         *)
@@ -154,10 +142,6 @@ sq_arg() {
             _arg="${_arg#?}"
             _arg="${_arg%?}"
 
-            case "$3" in
-                '-nout') : ;;
-                *) printf "%s" "$_arg" ;;
-            esac
             return 0
         fi
     done
