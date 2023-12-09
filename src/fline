@@ -12,7 +12,7 @@
 #! .caveats:
 # > Reading /proc is unreliable.
 #.
-pline() {
+fline() {
     # Assert $1 is a natural number.
     case $1:${1#*[!0123456789]} in
         : | 0*) return 255 ;;

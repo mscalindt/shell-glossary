@@ -17,13 +17,13 @@ utility calls.
 - [ESC_SED()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_sed)
 - [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
+- [FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline)
 - [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info)
 - [MASK_CHECK()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_check)
 - [MASK_SET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_set)
 - [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char)
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
-- [PLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/pline)
 - [REMCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/remchars)
 - [REMSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/remstr)
 - [REPLCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchars)
@@ -77,6 +77,9 @@ Escape meta characters in a string
 ### [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
 Read a file raw
 
+### [FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline)
+Get a specific line in a file
+
 ### [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
 Process each line of a file using a specified function
 
@@ -94,9 +97,6 @@ Convert N to that amount of a character
 
 ### [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
 Mangle and assert a path in a specified way
-
-### [PLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/pline)
-Get a specific line in a file
 
 ### [REMCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/remchars)
 Remove specific character(s) in string
