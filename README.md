@@ -18,7 +18,6 @@ utility calls.
 - [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str)
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
 - [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
-- [GET_FPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/get_fpath)
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info)
 - [LSTRIP()](https://github.com/mscalindt/shell-glossary/blob/main/src/lstrip)
 - [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltl_substr0)
@@ -86,9 +85,6 @@ Read a file raw
 
 ### [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
 Process each line of a file using a specified function
-
-### [GET_FPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/get_fpath)
-Convert relative path to absolute path
 
 ### [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info)
 Print formatted text to stdout
