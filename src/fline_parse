@@ -6,13 +6,10 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input
+# (255) bad input/usage
 #.
 fline_parse() {
-    [ -f "$1" ] || return 255
-    [ -r "$1" ] || return 255
-
-    exec 9<"$1"
-    while IFS= read -r _line <&9; do "$2" "$_line"; done; "$2" "$_line"
-    exec 9<&-
+    { while IFS= read -r _line; do
+        "$2" "$_line"
+    done < "$1"; } || return 255; "$2" "$_line"
 }
