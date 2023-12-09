@@ -44,6 +44,7 @@ path_spec() {
     case "$1" in
         '-assert') _path="$2" ;;
         '-join' | '-join-assert') _path="$2/$3" ;;
+        *) return 255 ;;
     esac
 
     # Assert the type of path in $_path.
