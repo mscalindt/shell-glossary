@@ -22,15 +22,14 @@
 #! .rc:
 # (0) argument
 # (1) argument does not exist
-# (2) invalid $2
 # (255) bad input
 #.
 sq_arg() {
-    char_even \' "$2" || return 2
+    char_even \' "$2" || return 255
 
     case "$2" in
         \'*\') : ;;
-        *) return 2 ;;
+        *) return 255 ;;
     esac
 
     _i=0
@@ -94,7 +93,7 @@ sq_arg() {
             :'\'*) _sfix="${_sfix#???*\'}" ;;
             :' '*) break ;;
             :) [ "$1" -eq "$_i" ] && break || return 1 ;;
-            *) return 2 ;;
+            *) return 255 ;;
         esac done
 
         if [ "$1" -eq "$_i" ]; then
@@ -105,7 +104,7 @@ sq_arg() {
             while :; do case :"${_pfix#"${_pfix%??}"}" in
                 :"\\'") _pfix="${_pfix%\'*???}" ;;
                 :*' ' | :) break ;;
-                *) return 2 ;;
+                *) return 255 ;;
             esac done
 
             _arg="$2"
