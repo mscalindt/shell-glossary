@@ -1,9 +1,10 @@
 #! .desc:
-# Read a file raw into $_file
+# Read a file raw
 #! .params:
 # <"$1"> - absolute file path
-# [$2] - options(
-#     '-direct' - use string concatenation rather than command substitution
+# <$2> - method(
+#     '-subshell' - use command substitution
+#     '-var' - use string concatenation
 #     .
 # )
 #! .gives:
@@ -11,31 +12,44 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input
+# (255) bad input/usage
 #.
 file_preload() {
-    [ -f "$1" ] || return 255
-    [ -r "$1" ] || return 255
+    # Open the file specified by $1 and assign it to file descriptor `9`. The
+    # usage of a file descriptor simplifies the error handling and allows for a
+    # more uniform parsing.
+    exec 9< "$1" || return 255
 
+    # Read the file with the specified method.
+    # `-subshell` performs better on big files.
+    # `-var` performs better on small files.
     case "$2" in
-        '-direct')
-            exec 9<"$1"
+        '-subshell')
+            # Store the output of each `printf` in $_file using command
+            # substitution. The combination of a manually added `x` at the end
+            # and subsequent removal of it ensures preservation of any trailing
+            # linefeeds, addressing a quirk in command substitution where
+            # trailing linefeeds are stripped.
+            _file=$(
+                while IFS= read -r _line <&9; do
+                    printf "%s\n" "$_line"
+                done; printf "%s" "${_line}x"
+            ) 2> /dev/null
+            _file="${_file%?}"
+        ;;
+        '-var')
+            # Append with a linefeed each $_line to an initially empty $_file
+            # to build the raw content of the file.
             _file=; while IFS= read -r _line <&9; do
                 _file="$_file$_line
 "
             done; _file="$_file$_line"
-            exec 9<&-
         ;;
         *)
-            _file=$(
-                exec 9<"$1"
-                while IFS= read -r _line <&9; do
-                    printf "%s\n" "$_line"
-                done; printf "%s" "$_line"
-                exec 9<&-
-
-                printf "%s" ' '
-            ) 2> /dev/null; _file="${_file%?}"
+            return 255
         ;;
     esac
+
+    # Release file descriptor `9` to close the associated file.
+    exec 9<&-
 }

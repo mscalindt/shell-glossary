@@ -82,7 +82,7 @@ Escape a string to be used literally as a POSIX `sed` pattern
 Escape meta characters in a string
 
 ### [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
-Read a file raw into $_file
+Read a file raw
 
 ### [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
 Process each line of a file using a specified function
