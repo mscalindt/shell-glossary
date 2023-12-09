@@ -8,7 +8,7 @@
 # (1) uneven
 # (255) bad input
 #.
-chars_even() {
+char_even() {
     # Assert $1 is a single character; multiple characters are currently not
     # supported.
     [ "${#1}" -eq 1 ] || return 255

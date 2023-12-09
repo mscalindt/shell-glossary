@@ -4,7 +4,7 @@ utility calls.
 ## Functions List:
 
 - [CCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/ccount)
-- [CHARS_EVEN()](https://github.com/mscalindt/shell-glossary/blob/main/src/chars_even)
+- [CHAR_EVEN()](https://github.com/mscalindt/shell-glossary/blob/main/src/char_even)
 - [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary/blob/main/src/confirm_cont)
 - [COUNT_DDIRS()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_ddirs)
 - [COUNT_DFILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dfiles)
@@ -35,7 +35,7 @@ utility calls.
 ### [CCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/ccount)
 Count the times a character appears in a string
 
-### [CHARS_EVEN()](https://github.com/mscalindt/shell-glossary/blob/main/src/chars_even)
+### [CHAR_EVEN()](https://github.com/mscalindt/shell-glossary/blob/main/src/char_even)
 Test if the sum of a character in a string is even
 
 ### [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary/blob/main/src/confirm_cont)
