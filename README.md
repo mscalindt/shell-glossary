@@ -19,7 +19,6 @@ utility calls.
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
 - [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info)
-- [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltl_substr0)
 - [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltl_substr1)
 - [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltr_substr0)
 - [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltr_substr1)
@@ -86,9 +85,6 @@ Process each line of a file using a specified function
 
 ### [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info)
 Print formatted text to stdout
-
-### [LTL_SUBSTR0()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltl_substr0)
-Get positional substring, (left of) (N)character(s), in a string
 
 ### [LTL_SUBSTR1()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltl_substr1)
 Get positional substring, (left of, up to) (N)character(s), in a string
