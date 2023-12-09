@@ -24,7 +24,6 @@ utility calls.
 - [MASK_SET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_set)
 - [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char)
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
-- [REMCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/remchars)
 - [REMSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/remstr)
 - [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar)
 - [REPLSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replstr)
@@ -97,9 +96,6 @@ Convert N to that amount of a character
 
 ### [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
 Mangle and assert a path in a specified way
-
-### [REMCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/remchars)
-Remove specific character(s) in string
 
 ### [REMSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/remstr)
 Remove a positional substring of a string
