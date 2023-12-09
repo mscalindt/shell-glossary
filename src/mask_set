@@ -9,11 +9,14 @@
 # (255) bad input
 #.
 mask_set() {
-    [ "$1" ] || return 255
-
+    # Remove `0x` from $2 (bit) if present.
     set -- "$1" "${2#0x}"
 
-    # Assert $1 is a valid shell variable name.
+    # Assert $1 is not empty.
+    [ "$1" ] || return 255
+
+    # Assert $1 is a valid shell variable name. The character classes have been
+    # intentionally expanded to be locale-independent.
     case "$1" in
         [0123456789]*)
             return 255
@@ -23,12 +26,13 @@ mask_set() {
         ;;
     esac
 
-    # Assert $2 is a whole number and a valid bit.
+    # Assert $2 is a natural number and a valid bit.
     case :"$2${2#*[!0123456789]}" in
         : | :0*) return 255 ;;
         :"$2$2") [ "$(($2 & ($2 - 1)))" -eq 0 ] || return 255 ;;
         *) return 255 ;;
     esac
 
+    # Set $2 (the specified bit) in $1 (the bitmask).
     eval "$1=\$(($1 + $2))"
 }
