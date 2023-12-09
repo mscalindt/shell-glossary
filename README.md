@@ -26,7 +26,7 @@ utility calls.
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
 - [REMCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/remchars)
 - [REMSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/remstr)
-- [REPLCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchars)
+- [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar)
 - [REPLSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replstr)
 - [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
 - [STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/str)
@@ -104,7 +104,7 @@ Remove specific character(s) in string
 ### [REMSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/remstr)
 Remove a positional substring of a string
 
-### [REPLCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchars)
+### [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar)
 Replace specific character(s) with character(s) in string
 
 ### [REPLSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replstr)
