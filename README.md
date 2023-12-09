@@ -32,7 +32,6 @@ utility calls.
 - [REMSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/remstr)
 - [REPLCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchars)
 - [REPLSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replstr)
-- [RSTRIP()](https://github.com/mscalindt/shell-glossary/blob/main/src/rstrip)
 - [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
 - [STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/str)
 - [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_to_chars)
@@ -126,9 +125,6 @@ Replace specific character(s) with character(s) in string
 
 ### [REPLSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replstr)
 Replace a substring of a string with character(s)
-
-### [RSTRIP()](https://github.com/mscalindt/shell-glossary/blob/main/src/rstrip)
-Strip character(s) from right of string
 
 ### [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
 Get a single-quoted argument in a single-quote-escaped string
