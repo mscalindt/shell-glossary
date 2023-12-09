@@ -19,7 +19,6 @@ utility calls.
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload)
 - [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse)
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info)
-- [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltr_substr0)
 - [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltr_substr1)
 - [MASK_CHECK()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_check)
 - [MASK_SET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_set)
@@ -84,9 +83,6 @@ Process each line of a file using a specified function
 
 ### [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info)
 Print formatted text to stdout
-
-### [LTR_SUBSTR0()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltr_substr0)
-Get positional substring, (right of) (N)character(s), in a string
 
 ### [LTR_SUBSTR1()](https://github.com/mscalindt/shell-glossary/blob/main/src/ltr_substr1)
 Get positional substring, (right of, up to) (N)character(s), in a string
