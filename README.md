@@ -25,7 +25,6 @@ utility calls.
 - [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char)
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
 - [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar)
-- [REPLSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replstr)
 - [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
 - [STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/str)
 - [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_to_chars)
@@ -98,9 +97,6 @@ Mangle and assert a path in a specified way
 
 ### [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar)
 Replace specific character(s) with character(s) in string
-
-### [REPLSTR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replstr)
-Replace a substring of a string with character(s)
 
 ### [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
 Get a single-quoted argument in a single-quote-escaped string
