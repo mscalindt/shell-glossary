@@ -96,7 +96,7 @@ Convert N to that amount of a character
 Mangle and assert a path in a specified way
 
 ### [PLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/pline)
-Print specific line in file
+Get a specific line in a file
 
 ### [REMCHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/remchars)
 Remove specific character(s) in string
