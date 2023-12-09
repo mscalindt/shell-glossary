@@ -13,11 +13,11 @@
 #     '-w' - white
 #     .
 # )
-# <$2> - type(
+# <$2> - format(
 #     '-' - raw
-#     '--' - raw, no linefeed
-#     '-date' - %H%M%S date fmt
-#     '-date-nolf' - %H%M%S date fmt, no linefeed
+#     '--' - raw; no linefeed
+#     '-date' - `date` %H%M%S
+#     '--date' - `date` %H%M%S; no linefeed
 #     .
 # )
 # <"$3"+> - text
@@ -29,66 +29,51 @@
 # (255) bad input
 #.
 info() {
+    # Assert all required parameters are present.
     [ "$#" -ge 3 ] || return 255
 
-    case $1 in
-        '-') _color= ;;
-        '-bk') _color='\033[1;30m' ;;
-        '-r') _color='\033[1;31m' ;;
-        '-g') _color='\033[1;32m' ;;
-        '-y') _color='\033[1;33m' ;;
-        '-be') _color='\033[1;34m' ;;
-        '-m') _color='\033[1;35m' ;;
-        '-c') _color='\033[1;36m' ;;
-        '-w') _color='\033[1;37m' ;;
-        *) return 255 ;;
-    esac
-
+    # Check if color codes should be used.
     if [ "$NO_COLOR" ]; then
-        case $2 in
-            '-')
-                shift 2
-                printf "%s\n" "$*"
-            ;;
-            '--')
-                shift 2
-                printf "%s" "$*"
-            ;;
-            '-date')
-                shift 2
-                printf "[%s] =>>: %s\n" "$(date "+%H:%M:%S")" "$*"
-            ;;
-            '-date-nolf')
-                shift 2
-                printf "[%s] =>>: %s" "$(date "+%H:%M:%S")" "$*"
-            ;;
-            *)
-                return 255
-            ;;
-        esac
+        _color=
+        _reset=
     else
-        case $2 in
-            '-')
-                shift 2
-                printf "%b%s%b\n" "$_color" "$*" '\033[0m'
-            ;;
-            '--')
-                shift 2
-                printf "%b%s%b" "$_color" "$*" '\033[0m'
-            ;;
-            '-date')
-                shift 2
-                printf "%b[%s] =>>: %b%s%b\n" "$_color" "$(date "+%H:%M:%S")" \
-                    '\033[1;37m' "$*" '\033[0m'
-            ;;
-            '-date-nolf')
-                shift 2
-                printf "%b[%s] =>>: %b%s%b" "$_color" "$(date "+%H:%M:%S")" \
-                    '\033[1;37m' "$*" '\033[0m'
-            ;;
-            *)
-                return 255
-            ;;
+        case $1 in
+            '-') _color= ;;
+            '-bk') _color='\033[1;30m' ;;
+            '-r') _color='\033[1;31m' ;;
+            '-g') _color='\033[1;32m' ;;
+            '-y') _color='\033[1;33m' ;;
+            '-be') _color='\033[1;34m' ;;
+            '-m') _color='\033[1;35m' ;;
+            '-c') _color='\033[1;36m' ;;
+            '-w') _color='\033[1;37m' ;;
+            *) return 255 ;;
         esac
+        _reset='\033[0m'
     fi
+
+    # Save the format into $_format and shift both the color ($1) and the
+    # format ($2) parameters; what will remain of $@ is the text parameter(s).
+    _format="$2"; shift 2
+
+    # Print the specified format.
+    case "$_format" in
+        '-')
+            printf "%b%s%b\n" "$_color" "$*" "$_reset"
+        ;;
+        '--')
+            printf "%b%s%b" "$_color" "$*" "$_reset"
+        ;;
+        '-date')
+            printf "%b[%s] =>>: %s%b\n" "$_color" "$(date '+%H:%M:%S')" "$*" \
+                "$_reset"
+        ;;
+        '--date')
+            printf "%b[%s] =>>: %s%b" "$_color" "$(date '+%H:%M:%S')" "$*" \
+                "$_reset"
+        ;;
+        *)
+            return 255
+        ;;
+    esac
 }
