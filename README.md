@@ -96,7 +96,7 @@ Convert N to that amount of a character
 Mangle and assert a path in a specified way
 
 ### [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar)
-Replace specific character(s) with character(s) in string
+Replace a specific character with character(s) in a string
 
 ### [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
 Get a single-quoted argument in a single-quote-escaped string

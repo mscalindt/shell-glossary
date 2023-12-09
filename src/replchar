@@ -1,5 +1,5 @@
 #! .desc:
-# Replace specific character with character(s) in string
+# Replace a specific character with character(s) in a string
 #! .params:
 # <"$1"> - specific character
 # <"$2"> - character(s)
