@@ -8,7 +8,7 @@
 # )
 # <"$2"> - string
 #! .uses:
-# <replchars> ()
+# <replchar> ()
 #! .gives:
 # (0) <"$_str"> - string;
 #                 [modified <$2>]
@@ -23,19 +23,19 @@ esc_sed() {
     # (`-E`) are not escaped, specifically: ( ) { } | + ?
     case "$1" in
         '-pattern')
-            replchars '\' '\\' "$2" || return "$?"
-            replchars '.' '\.' "$_str" || return "$?"
-            replchars '*' '\*' "$_str" || return "$?"
-            replchars '[' '\[' "$_str" || return "$?"
-            replchars ']' '\]' "$_str" || return "$?"
-            replchars '^' '\^' "$_str" || return "$?"
-            replchars '$' '\$' "$_str" || return "$?"
-            replchars '/' '\/' "$_str" || return "$?"
+            replchar '\' '\\' "$2" || return "$?"
+            replchar '.' '\.' "$_str" || return "$?"
+            replchar '*' '\*' "$_str" || return "$?"
+            replchar '[' '\[' "$_str" || return "$?"
+            replchar ']' '\]' "$_str" || return "$?"
+            replchar '^' '\^' "$_str" || return "$?"
+            replchar '$' '\$' "$_str" || return "$?"
+            replchar '/' '\/' "$_str" || return "$?"
         ;;
         '-replacement')
-            replchars '\' '\\' "$2" || return "$?"
-            replchars '&' '\&' "$_str" || return "$?"
-            replchars '/' '\/' "$_str" || return "$?"
+            replchar '\' '\\' "$2" || return "$?"
+            replchar '&' '\&' "$_str" || return "$?"
+            replchar '/' '\/' "$_str" || return "$?"
         ;;
         *)
             return 255
