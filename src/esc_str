@@ -11,7 +11,7 @@
 #     .
 # )
 #! .uses:
-# <replchars> ()
+# <replchar> ()
 #! .gives:
 # (0) <"$_str"> - string;
 #                 [modified <$1>]
@@ -63,7 +63,7 @@ esc_str() {
         _char="${1%"${1#?}"}"
 
         # Replace each instance of a character with an escaped one.
-        replchars "$_char" "\\$_char" "$_str" || return "$?"
+        replchar "$_char" "\\$_char" "$_str" || return "$?"
 
         # Remove the first character from $1.
         set -- "${1#?}"
