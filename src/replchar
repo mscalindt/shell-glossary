@@ -8,7 +8,7 @@
 #     '-sed' - use the host version of `sed`
 # )
 #! .uses:
-# <esc_sed> ()
+# (-sed) <esc_sed> ()
 #! .gives:
 # (0) <"$_str"> - string;
 #                 [modified <$3>]
