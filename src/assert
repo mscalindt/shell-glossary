@@ -5,7 +5,6 @@
 #     '-n' - N [0,1,00,01...]
 #     '-natural-n' - natural N [1...]
 #     '-whole-n' - whole N [0,1...]
-#     '-path' - valid path
 #     '-absolute-path' - absolute path
 #     '-relative-path' - relative path
 #     .
@@ -16,8 +15,10 @@
 # (1) false
 #.
 assert() {
+    # Assert the specified string type.
     case "$1" in
         '-n')
+            # Assert $2 is a number (`0`, `1`, `00`, `01`, ...).
             case :"$2${2#*[!0123456789]}" in
                 :) return 1 ;;
                 :"$2$2") : ;;
@@ -25,6 +26,7 @@ assert() {
             esac
         ;;
         '-natural-n')
+            # Assert $2 is a natural number (`1`, `2`, ...).
             case :"$2${2#*[!0123456789]}" in
                 : | :0*) return 1 ;;
                 :"$2$2") : ;;
@@ -32,6 +34,7 @@ assert() {
             esac
         ;;
         '-whole-n')
+            # Assert $2 is a whole number (`0`, `1`, `2`, ...).
             case :"$2${2#*[!0123456789]}" in
                 :) return 1 ;;
                 :00) : ;;
@@ -40,21 +43,17 @@ assert() {
                 *) return 1 ;;
             esac
         ;;
-        '-path')
-            case "$2" in
-                *'//'*) return 1 ;;
-            esac
-        ;;
         '-absolute-path')
+            # Assert $2 is an absolute (full) path.
             case "$2" in
-                *'//'*) return 1 ;;
                 '/'*) : ;;
                 *) return 1 ;;
             esac
         ;;
         '-relative-path')
+            # Assert $2 is a relative (partial) path.
             case "$2" in
-                *'//'* | '/'*) return 1 ;;
+                '/'*) return 1 ;;
             esac
         ;;
     esac
