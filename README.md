@@ -99,7 +99,7 @@ Mangle and assert a path in a specified way
 Replace a specific character with character(s) in a string
 
 ### [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
-Get a single-quoted argument in a single-quote-escaped string
+Get N single-quoted argument in a single-quote-escaped string
 
 ### [STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/str)
 Check the existence/position of a substring in string

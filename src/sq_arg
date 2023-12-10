@@ -1,126 +1,79 @@
 #! .desc:
-# Get a single-quoted argument in a single-quote-escaped string
+# Get N single-quoted argument in a single-quote-escaped string
 #! .params:
-# <$1> - arg(
-#     '-first' - get the first argument
-#     '-last' - get the last argument
-#     "-N" - get "N" argument
+# <$1> - "N"_arg(
+#     '0' - last
 #     .
 # )
-# <"$2"> - string
-#! .uses:
-# <char_even> ('\' "$2")
+# <"$2"> - single-quote-escaped string
 #! .gives:
 # (0) <"$_arg"> - string;
-#                 argument
-# (0) <"$_pfix"> - string;
-#                  left side single-quote-escaped pattern of argument
-# (0) <"$_sfix"> - string;
-#                  right side single-quote-escaped pattern of argument
-# (0) <$_i> - integer;
-#             iterations completed
+#                 single-quote-escaped argument
 #! .rc:
-# (0) argument
+# (0) success
 # (1) argument does not exist
 # (255) bad input
 #.
 sq_arg() {
-    char_even \' "$2" || return 255
-
-    case "$2" in
-        \'*\') : ;;
-        *) return 255 ;;
-    esac
-
-    _i=0
-
-    case "$1" in
-        '-first')
-            case "$2" in
-                *" '"*)
-                    _sfix="'${2#*\' \'}"; _pfix=
-
-                    _arg="$2"
-                    _arg="${_arg%%\' \'*}"
-                    _arg="${_arg#?}"
-                ;;
-                *)
-                    _sfix=; _pfix=
-
-                    _arg="$2"
-                    _arg="${_arg#?}"
-                    _arg="${_arg%?}"
-                ;;
-            esac
-
-            return 0
-        ;;
-        '-last')
-            case "$2" in
-                *" '"*)
-                    _pfix="${2%\' \'*}'"; _sfix=
-
-                    _arg="$2"
-                    _arg="${_arg##*\' \'}"
-                    _arg="${_arg%?}"
-                ;;
-                *)
-                    _pfix=; _sfix=
-
-                    _arg="$2"
-                    _arg="${_arg#?}"
-                    _arg="${_arg%?}"
-                ;;
-            esac
-
-            return 0
-        ;;
-        *)
-            set -- "${1#?}" "$2"
-        ;;
-    esac
-
-    case :$1${1#*[!0123456789]} in
-        : | :0*) return 255 ;;
+    # Assert $1 is a whole number.
+    case :"$1${1#*[!0123456789]}" in
+        :) return 255 ;;
+        :00) : ;;
+        :0*) return 255 ;;
         :"$1$1") : ;;
         *) return 255 ;;
     esac
 
-    _sfix="$2"; while :; do
-        _i=$((_i + 1))
+    # Iterate over $2/$_str (the single-quote-escaped arguments) until the
+    # desired or the last one is reached.
+    _i=0; _str="$2"; while :; do
+        # `break` if the desired argument is reached.
+        _i=$((_i + 1)); [ "$_i" -ne "$1" ] || break
 
-        _sfix="${_sfix#*\'*\'}"; while :; do case :"$_sfix" in
-            :'\'*) _sfix="${_sfix#???*\'}" ;;
-            :' '*) break ;;
-            :) [ "$1" -eq "$_i" ] && break || return 1 ;;
-            *) return 255 ;;
-        esac done
+        # "shift" the argument (strip the first argument) from $_str.
+        case "$_str" in
+            *\'\ \'*) _str="'${_str#*\' \'}"; continue ;;
+        esac
 
-        if [ "$1" -eq "$_i" ]; then
-            _pfix="$2"
-            _pfix="${_pfix%"$_sfix"}"
-            _pfix="${_pfix%\'*\'*}"
+        # Here, what remained of $_str is the last argument. If the desired
+        # argument was not reached and the last argument is not wished for,
+        # return `1` to indicate failure in reaching the desired argument.
+        [ "$1" -eq 0 ] && break || return 1
+    done
 
-            while :; do case :"${_pfix#"${_pfix%??}"}" in
-                :"\\'") _pfix="${_pfix%\'*???}" ;;
-                :*' ' | :) break ;;
-                *) return 255 ;;
-            esac done
+    # Set the desired argument as the first and sole positional parameter of
+    # the function.
+    case "$_str" in
+        *\'\ \'*) set -- "${_str%%\' \'*}'" ;;
+        *) set -- "$_str" ;;
+    esac
 
-            _arg="$2"
-            _arg="${_arg#"$_pfix"}"
-            _arg="${_arg%"$_sfix"}"
-
-            if [ "$_pfix" ]; then
-                _pfix="${_pfix%?}"
-            fi
-            if [ "$_sfix" ]; then
-                _sfix="${_sfix#?}"
-            fi
+    # Assert $1 is a valid single-quote-escaped argument.
+    _arg="$1"; case "$_arg" in
+        \'*\')
+            # Strip the base single quote characters.
             _arg="${_arg#?}"
             _arg="${_arg%?}"
 
-            return 0
-        fi
-    done
+            # Verify whether every single quote is a proper escape sequence
+            # (`'\''`) for a single quote character.
+            while :; do case "$_arg" in
+                *\'*)
+                    _arg="${_arg#*\'}"; case "$_arg" in
+                        "\\''"*) _arg="${_arg#???}" ;;
+                        *) return 255 ;;
+                    esac
+                ;;
+                *)
+                    break
+                ;;
+            esac done
+        ;;
+        *)
+            return 255
+        ;;
+    esac
+
+    # Store the single-quote-escaped argument in $_arg.
+    _arg="$1"
 }
