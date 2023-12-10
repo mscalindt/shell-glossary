@@ -26,7 +26,6 @@ utility calls.
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec)
 - [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar)
 - [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
-- [STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/str)
 - [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_to_chars)
 - [VLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/vline_parse)
 
@@ -100,9 +99,6 @@ Replace a specific character with character(s) in a string
 
 ### [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg)
 Get N single-quoted argument in a single-quote-escaped string
-
-### [STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/str)
-Check the existence/position of a substring in string
 
 ### [STR_TO_CHARS()](https://github.com/mscalindt/shell-glossary/blob/main/src/str_to_chars)
 Convert a string to whitespace-separated characters
