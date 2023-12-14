@@ -56,7 +56,7 @@ Signify invalid (`-`...) option
 Signify unknown (*) option
 
 ### [OPT_UNRECOGNIZED()](https://github.com/mscalindt/main-functions/blob/main/src/opt_unrecognized)
-Signify unrecognized ('--') option
+Signify unrecognized (`--`...) option
 
 ### [SCOPT()](https://github.com/mscalindt/main-functions/blob/main/src/scopt)
 True if specific complex (argument) option
