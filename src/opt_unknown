@@ -4,7 +4,10 @@
 # <"$1"> - option
 #.
 opt_unknown() {
-    printf "%s: Unknown option: '%s'\n" "${0##*/}" "$1"
+    # Print the unknown option.
+    printf "%s: Unknown option: '%s'\n" "${0##*/}" "$1" >&2
+
+    # Print the usual `--help` hint.
     printf "%s: Try '%s --help' for more information.\n" \
-        "${0##*/}" "${0##*/}"
-} >&2
+        "${0##*/}" "${0##*/}" >&2
+}
