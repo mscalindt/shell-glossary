@@ -4,7 +4,7 @@
 # <$1> - invalid count
 # [$2] - valid count
 #.
-opd_cmax() {
+opd_max() {
     # Print the invalid count of operands.
     printf "%s: Too many operands: %s\n" "${0##*/}" "$1" >&2
 
