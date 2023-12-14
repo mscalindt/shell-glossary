@@ -10,7 +10,7 @@ opd_cmax() {
 
     # Print the limit of operands if given.
     if [ "$2" ]; then
-        printf " > max allowed: %s\n" "$2"
+        printf " > max allowed: %s\n" "$2" >&2
     fi
 
     # Print the usual `--help` hint.
