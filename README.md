@@ -7,7 +7,7 @@ a breeze.
 - [COPT()](https://github.com/mscalindt/main-functions/blob/main/src/copt)
 - [COPT_OPTIONAL()](https://github.com/mscalindt/main-functions/blob/main/src/copt_optional)
 - [FPATH()](https://github.com/mscalindt/main-functions/blob/main/src/fpath)
-- [OPD_CMAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_cmax)
+- [OPD_MAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_max)
 - [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
 - [OPT_COMPAT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_fail)
 - [OPT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_err)
@@ -34,7 +34,7 @@ True if optional-complex (possible argument) option
 ### [FPATH()](https://github.com/mscalindt/main-functions/blob/main/src/fpath)
 Get the absolute path into $_fpath
 
-### [OPD_CMAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_cmax)
+### [OPD_MAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_max)
 Signify invalid operand count (exceeds maximum allowed); ($1 > $2)
 
 ### [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
