@@ -8,7 +8,6 @@ a breeze.
 - [COPT_OPTIONAL()](https://github.com/mscalindt/main-functions/blob/main/src/copt_optional)
 - [FPATH()](https://github.com/mscalindt/main-functions/blob/main/src/fpath)
 - [OPD_CMAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_cmax)
-- [OPD_MAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_max)
 - [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
 - [OPT_COMPAT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_fail)
 - [OPT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_err)
@@ -37,9 +36,6 @@ Convert relative path and/or store the full path in $_fpath
 
 ### [OPD_CMAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_cmax)
 Signify invalid operand count (max)[X>X]
-
-### [OPD_MAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_max)
-Signify invalid operand count (max)[X>1]
 
 ### [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
 Signify invalid operand count (min)[0>X]
