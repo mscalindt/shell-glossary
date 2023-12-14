@@ -3,21 +3,26 @@
 #! .params:
 # <"$1"> - option
 # <"$2"> - argument
-# ["$3"+] - valid arguments
+# ["$3"+] - valid argument(s)
 #.
 opt_arg_err() {
+    # Print the invalid argument.
     printf "%s: Invalid argument '%s' for '%s'\n" \
-        "${0##*/}" "$2" "$1"
+        "${0##*/}" "$2" "$1" >&2
+
+    # Shift $1 (option) and $2 (argument).
     shift 2
 
+    # Print valid argument(s) if given.
     if [ "$1" ]; then
         echo "Valid arguments are:"
 
-        for _arg in "$@"; do
-            printf " > '%s'\n" "$_arg"
+        while [ "$1" ]; do
+            printf " > '%s'\n" "$1" >&2; shift
         done
     fi
 
+    # Print the usual `--help` hint.
     printf "%s: Try '%s --help' for more information.\n" \
-        "${0##*/}" "${0##*/}"
-} >&2
+        "${0##*/}" "${0##*/}" >&2
+}
