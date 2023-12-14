@@ -18,76 +18,84 @@
 #! .rc:
 # (0) match
 # (1) no match
+# (2) bad argument specification
 #.
 copt() {
-    copt_arg_invalid() {
-        printf "%s: Invalid argument specification for: '%s'\n" \
-            "${0##*/}" "$1"
-        printf "%s: Try '%s --help' for more information.\n" \
-            "${0##*/}" "${0##*/}"
-    } >&2
-
-    copt_arg_missing() {
-        printf "%s: Option '%s' requires an argument.\n" \
-            "${0##*/}" "$1"
-        printf "%s: Try '%s --help' for more information.\n" \
-            "${0##*/}" "${0##*/}"
-    } >&2
-
-    [ "$opt" ] || return 1
-
+    # Set the appropriate option argument to match proportional to $opt.
     case "$opt" in
         '--'*)
+            # $2 might be the long variant of the option.
             case "$1$2" in
                 '--'*) : ;;
                 "$1"'--'*) set -- "$2" ;;
                 *) return 1 ;;
             esac
-
-            case "$opt " in
-                "$1"'= ')
-                    copt_arg_invalid "$1"
-
-                    exit 2
-                ;;
-                "$1"'='*)
-                    opt_arg="${opt#"$1"=}"; opt=; opt_match="$1"; \
-                    shiftN=1
-
-                    return 0
-                ;;
-                "$1"' ')
-                    [ "$opt_arg" ] || { copt_arg_missing "$1"; exit 2; }
-
-                    opt=; opt_match="$1"; shiftN=2
-
-                    return 0
-                ;;
-            esac
         ;;
         '-'*)
+            # $1 should already be the short variant of the option.
             case "$1$2" in
                 '-'*) : ;;
                 *) return 1 ;;
             esac
+        ;;
+        *)
+            return 1
+        ;;
+    esac
 
+    # Try to match a long option with an argument separated by `=`; example:
+    # `<--foo><=><bar>`
+    case "$1" in
+        '--'*)
+            # A long option cannot end with `=`, otherwise it's deemed invalid.
             case "$opt " in
-                "$1"' ')
-                    [ "$opt_arg" ] || { copt_arg_missing "$1"; exit 2; }
-
-                    opt=; opt_match="$1"; shiftN=2
-
-                    return 0
+                "$1"'= ')
+                    printf "%s: Invalid argument specification for: '%s'\n" \
+                        "${0##*/}" "$1" >&2
+                    printf "%s: Try '%s --help' for more information.\n" \
+                        "${0##*/}" "${0##*/}" >&2
+                    exit 2
                 ;;
-                "$1"*)
-                    opt_arg="${opt#"$1"}"; opt=; opt_match="$1"; \
-                    shiftN=1
-
+                "$1"'='*)
+                    opt_arg="${opt#"$1"=}"; opt=; opt_match="$1"; shiftN=1
                     return 0
                 ;;
             esac
         ;;
     esac
 
+    # Try to match a short/long option with a separate argument.
+    case "$opt " in
+        "$1 )
+            # Assert $opt_arg (the argument) is present.
+            if [ ! "$opt_arg" ]; then
+                printf "%s: Option '%s' requires an argument.\n" \
+                    "${0##*/}" "$1" >&2
+                printf "%s: Try '%s --help' for more information.\n" \
+                    "${0##*/}" "${0##*/}" >&2
+                exit 2
+            fi
+
+            opt=; opt_match="$1"; shiftN=2
+            return 0
+        ;;
+    esac
+
+    # Here, it cannot be a long option anymore; return early to prevent a false
+    # match below.
+    case "$opt" in
+        '--'*) return 1 ;;
+    esac
+
+    # Try to match a short option together with an argument; example:
+    # `<-o><foo>`
+    case "$opt" in
+        "$1"*)
+            opt_arg="${opt#"$1"}"; opt=; opt_match="$1"; shiftN=1
+            return 0
+        ;;
+    esac
+
+    # No match.
     return 1
 }
