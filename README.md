@@ -41,7 +41,7 @@ Signify invalid operand count (exceeds maximum allowed); ($1 > $2)
 Signify insufficient operand count (below minimum required); ($1 < $2)
 
 ### [OPT_COMPAT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_fail)
-Signify option incompatibility with previous option
+Signify option incompatibility with a previous option
 
 ### [OPT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_err)
 Signify invalid option argument
