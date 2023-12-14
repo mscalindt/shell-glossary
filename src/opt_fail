@@ -1,5 +1,5 @@
 #! .desc:
-# opt_err() wrapper
+# opt_arg_err() wrapper
 #! .params:
 # ["$1"+] - valid arguments
 #! .uses:
@@ -11,7 +11,7 @@
 # (2)
 #.
 opt_fail() {
-    opt_err "$opt_match" "$opt_arg" "$@"
+    opt_arg_err "$opt_match" "$opt_arg" "$@"
 
     exit 2
 }

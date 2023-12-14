@@ -5,7 +5,7 @@
 # <"$2"> - argument
 # ["$3"+] - valid arguments
 #.
-opt_err() {
+opt_arg_err() {
     printf "%s: Invalid argument '%s' for '%s'\n" \
         "${0##*/}" "$2" "$1"
     shift 2

@@ -9,8 +9,8 @@ a breeze.
 - [FPATH()](https://github.com/mscalindt/main-functions/blob/main/src/fpath)
 - [OPD_MAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_max)
 - [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
+- [OPT_ARG_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_arg_err)
 - [OPT_COMPAT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_err)
-- [OPT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_err)
 - [OPT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_fail)
 - [OPT_INVALID()](https://github.com/mscalindt/main-functions/blob/main/src/opt_invalid)
 - [OPT_UNKNOWN()](https://github.com/mscalindt/main-functions/blob/main/src/opt_unknown)
@@ -40,14 +40,14 @@ Signify invalid operand count (exceeds maximum allowed); ($1 > $2)
 ### [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
 Signify insufficient operand count (below minimum required); ($1 < $2)
 
+### [OPT_ARG_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_arg_err)
+Signify invalid option argument
+
 ### [OPT_COMPAT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_err)
 Signify option incompatibility with a previous option
 
-### [OPT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_err)
-Signify invalid option argument
-
 ### [OPT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_fail)
-opt_err() wrapper
+opt_arg_err() wrapper
 
 ### [OPT_INVALID()](https://github.com/mscalindt/main-functions/blob/main/src/opt_invalid)
 Signify invalid option
