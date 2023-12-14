@@ -50,7 +50,7 @@ Signify option incompatibility with a previous option
 Wrapper for opt_arg_err()
 
 ### [OPT_INVALID()](https://github.com/mscalindt/main-functions/blob/main/src/opt_invalid)
-Signify invalid option
+Signify invalid (`-`...) option
 
 ### [OPT_UNKNOWN()](https://github.com/mscalindt/main-functions/blob/main/src/opt_unknown)
 Signify unknown (*) option
