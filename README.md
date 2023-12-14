@@ -32,7 +32,7 @@ True if complex (argument) option
 True if optional-complex (possible argument) option
 
 ### [FPATH()](https://github.com/mscalindt/main-functions/blob/main/src/fpath)
-Convert relative path and/or store the full path in $_fpath
+Get the absolute path into $_fpath
 
 ### [OPD_CMAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_cmax)
 Signify invalid operand count (max)[X>X]
