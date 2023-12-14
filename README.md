@@ -38,7 +38,7 @@ Get the absolute path into $_fpath
 Signify invalid operand count (exceeds maximum allowed); ($1 > $2)
 
 ### [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
-Signify invalid operand count (min)[0>X]
+Signify insufficient operand count (below minimum required); ($1 < $2)
 
 ### [OPT_COMPAT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_fail)
 Signify option incompatibility with previous option
