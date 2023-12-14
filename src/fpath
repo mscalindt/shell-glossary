@@ -1,12 +1,14 @@
 #! .desc:
-# Convert relative path and/or store the full path in $_fpath
+# Get the absolute path into $_fpath
 #! .params:
-# <"$1"> - path
+# <"$1"> - relative path
 #! .gives:
 # <"$_fpath"> - string;
 #               [absolute <$1>]
 #.
 fpath() {
+    # Use $PWD (the pathname of the current working directory) to convert a
+    # relative path into an absolute one if it's not already.
     case "$1" in
         '/'*) _fpath="$1" ;;
         *) _fpath="$PWD/$1" ;;
