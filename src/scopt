@@ -17,46 +17,43 @@
 #! .rc:
 # (0) match
 # (1) no match
+# (2) bad argument specification
 #.
 scopt() {
-    scopt_arg_invalid() {
-        printf "%s: Invalid argument specification for: '%s'\n" \
-            "${0##*/}" "$1"
-        printf "%s: Try '%s --help' for more information.\n" \
-            "${0##*/}" "${0##*/}"
-    } >&2
-
-    scopt_arg_missing() {
-        printf "%s: Option '%s' requires an argument.\n" \
-            "${0##*/}" "$1"
-        printf "%s: Try '%s --help' for more information.\n" \
-            "${0##*/}" "${0##*/}"
-    } >&2
-
-    [ "$opt" ] || return 1
-
-    for _arg in "$@"; do
+    # Try to match the given option(s) with an argument.
+    while [ "$1" ]; do
+        # The option cannot end with `=`, otherwise it's deemed invalid.
         case "$opt " in
-            "$_arg"'= ')
-                scopt_arg_invalid "$_arg"
-
+            "$1"'= ')
+                printf "%s: Invalid argument specification for: '%s'\n" \
+                    "${0##*/}" "$1" >&2
+                printf "%s: Try '%s --help' for more information.\n" \
+                    "${0##*/}" "${0##*/}" >&2
                 exit 2
             ;;
-            "$_arg"'='*)
-                opt_arg="${opt#"$_arg"=}"; opt=; opt_match="$_arg"; \
-                shiftN=1
-
+            "$1"'='*)
+                opt_arg="${opt#"$1"=}"; opt=; opt_match="$1"; shiftN=1
                 return 0
             ;;
-            "$_arg"' ')
-                [ "$opt_arg" ] || { scopt_arg_missing "$_arg"; exit 2; }
+            "$1"' ')
+                # Assert $opt_arg (the argument) is present.
+                if [ ! "$opt_arg" ]; then
+                    printf "%s: Option '%s' requires an argument.\n" \
+                        "${0##*/}" "$1" >&2
+                    printf "%s: Try '%s --help' for more information.\n" \
+                        "${0##*/}" "${0##*/}" >&2
+                    exit 2
+                fi
 
-                opt=; opt_match="$_arg"; shiftN=2
-
+                opt=; opt_match="$1"; shiftN=2
                 return 0
             ;;
         esac
+
+        # $1 (the current option) doesn't match; shift it to try the next one.
+        shift
     done
 
+    # No match.
     return 1
 }
