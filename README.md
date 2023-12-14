@@ -47,7 +47,7 @@ Signify invalid option argument
 Signify option incompatibility with a previous option
 
 ### [OPT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_fail)
-opt_arg_err() wrapper
+Wrapper for opt_arg_err()
 
 ### [OPT_INVALID()](https://github.com/mscalindt/main-functions/blob/main/src/opt_invalid)
 Signify invalid option

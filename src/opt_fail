@@ -1,17 +1,19 @@
 #! .desc:
-# opt_arg_err() wrapper
+# Wrapper for opt_arg_err()
 #! .params:
-# ["$1"+] - valid arguments
+# ["$1"+] - valid argument(s)
 #! .uses:
 # <opt_arg> $ - string;
 #               second positional parameter of the main environment
 # <opt_match> $ - string;
-#                 literal option previously matched
+#                 option previously matched
 #! .rc:
 # (2)
 #.
 opt_fail() {
+    # Give opt_arg_err() the necessary arguments.
     opt_arg_err "$opt_match" "$opt_arg" "$@"
 
+    # Issue the exit for incorrect option usage (`2`).
     exit 2
 }
