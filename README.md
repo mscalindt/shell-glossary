@@ -35,7 +35,7 @@ True if optional-complex (possible argument) option
 Get the absolute path into $_fpath
 
 ### [OPD_CMAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_cmax)
-Signify invalid operand count (max)[X>X]
+Signify invalid operand count (exceeds maximum allowed); ($1 > $2)
 
 ### [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min)
 Signify invalid operand count (min)[0>X]
