@@ -66,7 +66,7 @@ copt() {
 
     # Try to match a short/long option with a separate argument.
     case "$opt " in
-        "$1 )
+        "$1 ")
             # Assert $opt_arg (the argument) is present.
             if [ ! "$opt_arg" ]; then
                 printf "%s: Option '%s' requires an argument.\n" \
