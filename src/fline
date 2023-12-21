@@ -20,16 +20,18 @@ fline() {
         *) return 255 ;;
     esac
 
-    # Assert $2 is a valid file.
-    [ -f "$2" ] || return 255
-    [ -r "$2" ] || return 255
+    # Open the file specified by $2 and assign it to file descriptor `9`. The
+    # usage of a file descriptor simplifies the error handling. Additionally,
+    # TOCTOU flaws are completely avoided this way.
+    { exec 9< "$2"; } 2> /dev/null || return 255
 
-    # Read the file, counting the lines; if we land on the specified one, do
-    # `return 0`.
-    _i=0; while IFS= read -r _line || [ "$_line" ]; do
-        _i=$((_i + 1)); [ "$_i" -ne "$1" ] || return 0
-    done < "$2"
+    # Read the file, counting the lines; if we land on the specified one,
+    # release file descriptor `9` and signal it.
+    _i=0; while IFS= read -r _line <&9 || [ "$_line" ]; do
+        _i=$((_i + 1)); [ "$_i" -ne "$1" ] || { exec 9<&-; return 0; }
+    done
 
-    # If we are here, the specified line doesn't exist.
-    return 1
+    # Release file descriptor `9` to close the associated file and signal the
+    # specified line doesn't exist.
+    exec 9<&-; return 1
 }
