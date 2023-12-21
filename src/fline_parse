@@ -11,5 +11,5 @@
 fline_parse() {
     { while IFS= read -r _line; do
         "$2" "$_line"
-    done < "$1"; } || return 255; "$2" "$_line"
+    done < "$1"; } 2> /dev/null || return 255; "$2" "$_line"
 }
