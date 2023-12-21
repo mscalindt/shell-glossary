@@ -15,6 +15,9 @@
 # (255) bad input/usage
 #.
 file_preload() {
+    # For flexibility and modularity, missing files will not be signaled.
+    [ -f "$1" ] || { _file=; return 0; }
+
     # Open the file specified by $1 and assign it to file descriptor `9`. The
     # usage of a file descriptor simplifies the error handling and allows for a
     # more uniform parsing. Additionally, TOCTOU flaws are completely avoided
