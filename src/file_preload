@@ -22,7 +22,7 @@ file_preload() {
     # usage of a file descriptor simplifies the error handling and allows for a
     # more uniform parsing. Additionally, TOCTOU flaws are completely avoided
     # this way.
-    { exec 9< "$1"; } 2> /dev/null || return 255
+    { exec 9< "$1"; } || return 255
 
     # Read the file with the specified method.
     # `-subshell` performs better on big files.
