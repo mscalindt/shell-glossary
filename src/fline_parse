@@ -9,6 +9,9 @@
 # (255) bad input/usage
 #.
 fline_parse() {
+    # For flexibility and modularity, missing files will not be signaled.
+    [ -f "$1" ] || return 0
+
     # Open the file specified by $1 and assign it to file descriptor `9`. The
     # usage of a file descriptor simplifies the error handling. Additionally,
     # TOCTOU flaws are completely avoided this way.
