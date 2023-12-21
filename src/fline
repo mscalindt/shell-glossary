@@ -20,6 +20,9 @@ fline() {
         *) return 255 ;;
     esac
 
+    # Assert $2 exists and is a file.
+    [ -f "$2" ] || return 1
+
     # Open the file specified by $2 and assign it to file descriptor `9`. The
     # usage of a file descriptor simplifies the error handling. Additionally,
     # TOCTOU flaws are completely avoided this way.
