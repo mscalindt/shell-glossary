@@ -36,7 +36,12 @@ vline_parse() {
     IFS="$_old_IFS" 2> /dev/null
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
+    # Avoid giving the function an empty string or a string that initially
+    # consisted of just empty lines (linefeeds).
+    [ "$2" ] || return 0
+
     # Give $1 (the function) the lines to be processed as positional
-    # parameters.
+    # parameters. The function will be called only if there is something to
+    # process, as noted in the comment above.
     "$@"
 }
