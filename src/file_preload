@@ -34,7 +34,7 @@ file_preload() {
                 while IFS= read -r _line <&9; do
                     printf "%s\n" "$_line"
                 done; printf "%s" "${_line}x"
-            ) 2> /dev/null
+            )
             _file="${_file%?}"
         ;;
         '-var')
