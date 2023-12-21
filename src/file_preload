@@ -18,7 +18,7 @@ file_preload() {
     # Open the file specified by $1 and assign it to file descriptor `9`. The
     # usage of a file descriptor simplifies the error handling and allows for a
     # more uniform parsing.
-    exec 9< "$1" || return 255
+    { exec 9< "$1"; } 2> /dev/null || return 255
 
     # Read the file with the specified method.
     # `-subshell` performs better on big files.
