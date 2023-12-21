@@ -9,7 +9,17 @@
 # (255) bad input/usage
 #.
 fline_parse() {
-    { while IFS= read -r _line; do
-        "$2" "$_line"
-    done < "$1"; } 2> /dev/null || return 255; "$2" "$_line"
+    # Open the file specified by $1 and assign it to file descriptor `9`. The
+    # usage of a file descriptor simplifies the error handling. Additionally,
+    # TOCTOU flaws are completely avoided this way.
+    { exec 9< "$1"; } 2> /dev/null || return 255
+
+    # Pass each line individually to $1 (the function). If an error is
+    # received, file descriptor `9` will be released and the error signaled.
+    while IFS= read -r _line <&9 || [ "$_line" ]; do
+        "$2" "$_line" || { set -- "$?"; exec 9<&-; return "$1"; }
+    done
+
+    # Release file descriptor `9` to close the associated file.
+    exec 9<&-
 }
