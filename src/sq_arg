@@ -32,7 +32,41 @@ sq_arg() {
 
         # "shift" the argument (strip the first argument) from $_str.
         case "$_str" in
-            *\'\ \'*) _str="'${_str#*\' \'}"; continue ;;
+            *\'\ \'*)
+                # To properly shift the argument, the escape sequence of `' '`,
+                # `'\'' '\''`, must also be properly distinguished amidst the
+                # argument delimiter, `' '` again.
+                _arg="$_str"; while :; do
+                    # Here, if `\''` matches after stripping up to the first
+                    # `' '`, we are in the middle of an escape sequence of
+                    # `' '`; this match is reproducible as long as we don't
+                    # encounter the actual `' '` argument delimiter, so just
+                    # "continue" doing it.
+                    #
+                    # To prevent infinite looping, the string assert acts as a
+                    # sanity check that the parameter expansion actually
+                    # expanded; in POSIX and most shells, invalid parameter
+                    # expansion produces the original string being evaluated.
+                    case "${_str#*\' \'}" in
+                        "$_str") : ;;
+                        \\\'\'*) _str="${_str#*\' \'}"; continue ;;
+                    esac
+
+                    # Here, it is known the next `' '`, if present, is the
+                    # delimiter between the current and the next argument;
+                    # strip up to it to effectively shift the current argument.
+                    case "$_str" in
+                        *\'\ \'*) _str="'${_str#*\' \'}"; continue 2 ;;
+                    esac
+
+                    # Here, it means we already are on the last argument. But
+                    # notably, $_str has to be restored to the state ($_arg)
+                    # before this `' '` parse loop to account for any
+                    # stripping done due to the escape sequence(s) of `' '`
+                    # that could be present in the argument.
+                    _str="$_arg"; break
+                done
+            ;;
         esac
 
         # Here, what remained of $_str is the last argument. If the desired
@@ -43,9 +77,41 @@ sq_arg() {
 
     # Set the desired argument as the first and sole positional parameter of
     # the function.
-    case "$_str" in
-        *\'\ \'*) set -- "${_str%%\' \'*}'" ;;
-        *) set -- "$_str" ;;
+    set -- "$_str"; case "$1" in
+        *\'\ \'*)
+            # To properly extract the first argument from $_str, which could
+            # contain multiple arguments, the escape sequence of `' '`,
+            # `'\'' '\''`, must also be properly distinguished amidst the
+            # argument delimiter, `' '` again.
+            while :; do
+                # Here, if `\''` matches after stripping up to the first `' '`,
+                # we are in the middle of an escape sequence of `' '`; this
+                # match is reproducible as long as we don't encounter the
+                # actual `' '` argument delimiter, so just "continue" doing it.
+                #
+                # To prevent infinite looping, the string assert acts as a
+                # sanity check that the parameter expansion actually expanded;
+                # in POSIX and most shells, invalid parameter expansion
+                # produces the original string being evaluated.
+                case "${_str#*\' \'}" in
+                    "$_str") : ;;
+                    \\\'\'*) _str="${_str#*\' \'}"; continue ;;
+                esac
+
+                # Here, it is known the next `' '`, if present, is the
+                # delimiter between the current and the next argument; delimit
+                # the first argument by effectively stripping everything that
+                # comes after it.
+                case "$_str" in
+                    *\'\ \'*) set -- "${1%"' '${_str#*\' \'}"}'"; break ;;
+                esac
+
+                # Here, there is nothing to be done. The original $_str (now
+                # $1) already is a sole argument that just contained escape
+                # sequence(s) of `' '`.
+                break
+            done
+        ;;
     esac
 
     # Assert $1 is a valid single-quote-escaped argument.
