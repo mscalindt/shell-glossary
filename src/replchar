@@ -87,7 +87,11 @@ replchar() {
     done
 
     # Handle the final split chunk according to $_strip.
-    [ "$_strip" = 1 ] && _str="$_str$1$_chars" || _str="$_str$1"
+    if [ "$_strip" = 1 ]; then
+        _str="$_str$1$_chars"
+    else
+        _str="$_str$1"
+    fi
 
     # Restore the active state of the pathname expansion flag if appropriate.
     if [ "$_pn" = 1 ]; then
