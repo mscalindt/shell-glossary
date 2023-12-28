@@ -72,7 +72,11 @@ sq_arg() {
         # Here, what remained of $_str is the last argument. If the desired
         # argument was not reached and the last argument is not wished for,
         # return `1` to indicate failure in reaching the desired argument.
-        [ "$1" -eq 0 ] && break || return 1
+        if [ "$1" -eq 0 ]; then
+            break
+        else
+            return 1
+        fi
     done
 
     # Set the desired argument as the first and sole positional parameter of
