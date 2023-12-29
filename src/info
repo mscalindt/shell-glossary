@@ -1,5 +1,5 @@
 #! .desc:
-# Print formatted text to stdout
+# Print formatted text
 #! .params:
 # <$1> - color(
 #     '-'  - none
