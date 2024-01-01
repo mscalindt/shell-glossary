@@ -1,0 +1,53 @@
+#! .desc:
+# Extract a single-quoted argument in a single-quote-escaped string
+#! .params:
+# <"$1"> - token
+# <"$2"> - single-quote-escaped string
+#! .gives:
+# (0) <"$_arg"> - string;
+#                 evaluated argument
+#! .rc:
+# (0) success
+# (1) argument does not exist
+# (255) bad input
+#.
+sq_arg_extract() {
+    # Assert $2 is a valid single-quote-escaped string.
+    _str="$2"; while :; do
+        # This "main" loop should only run if $_str is currently positioned
+        # outside a single-quote-escaped argument; as such, `'` must be present
+        # and it must be the first character.
+        case "$_str" in
+            \'*) _str="${_str#?}" ;;
+            *) return 255 ;;
+        esac
+
+        # This "sub" loop effectively verifies that any occurences of `'`
+        # inside the single-quote-escaped argument are proper escapes of `'` or
+        # the delimiter between arguments.
+        while [ "$_str" ]; do
+            case "${_str#*\'}" in
+                \\\'\'*) _str="${_str#*\'\\\'\'}"; continue ;;
+                \ \'*) _str="${_str#*\'\ }"; continue 2 ;;
+                '') break 2 ;;
+                *) return 255 ;;
+            esac
+        done
+
+        # Account for an abrupt string termination, specifically a string
+        # terminated with an escape of `'` or a literal `'`.
+        return 255
+    done
+
+    # Extract the specified argument by matching the given token ($1) as a
+    # pattern present anywhere in the argument.
+    _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
+        case "$1" in
+            *"$_token"*) _arg="$1"; return 0 ;;
+            *) shift && continue ;;
+        esac
+    done
+
+    # No match.
+    return 1
+}

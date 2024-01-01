@@ -26,4 +26,5 @@ utility calls.
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec): Mangle and assert a path in a specified way
 - [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar): Replace a specific character with character(s) in a string
 - [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg): Get N single-quoted argument in a single-quote-escaped string
+- [SQ_ARG_EXTRACT()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg_extract): Extract a single-quoted argument in a single-quote-escaped string
 - [VLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/vline_parse): Process each populated line of a variable (string) using a specified function
