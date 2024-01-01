@@ -6,8 +6,6 @@
 #     "-chars X" - backslash escape "X" character(s)
 #     '-dq' - backslash escape all characters special within double quotes:
 #             $ ` " \ [:space:]
-#     '-sq' - single-quote escape all characters special within single quotes:
-#             '
 #     .
 # )
 #! .uses:
@@ -45,11 +43,6 @@ esc_str() {
             # The character set special within double quotes, specifically:
             # $ ` " \ [:space:]
             _chars='\$"` '
-        ;;
-        '-sq')
-            # The character set special within single quotes, specifically:
-            # '
-            _chars=\'
         ;;
         *)
             return 255
