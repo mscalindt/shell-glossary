@@ -5,8 +5,8 @@
 #! .uses:
 # <opt_match> $ - string;
 #                 option previously matched
-#! .rc:
-# (2)
+#! .ec:
+# (2) incompatible option
 #.
 opt_compat_err() {
     # Print the incompatible option.
