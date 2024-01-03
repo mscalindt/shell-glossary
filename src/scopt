@@ -17,6 +17,7 @@
 #! .rc:
 # (0) match
 # (1) no match
+#! .ec:
 # (2) bad argument specification
 #.
 scopt() {
