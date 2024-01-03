@@ -7,8 +7,8 @@
 #               second positional parameter of the main environment
 # <opt_match> $ - string;
 #                 option previously matched
-#! .rc:
-# (2)
+#! .ec:
+# (2) invalid option argument
 #.
 opt_fail() {
     # Give opt_arg_err() the necessary arguments.
