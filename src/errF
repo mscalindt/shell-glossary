@@ -14,8 +14,9 @@
 # [NO_COLOR] $ - environment variable;
 #                disables colored output
 #! .rc:
-# (*)
 # (255) bad input
+#! .ec:
+# ($1) *
 #.
 errF() {
     # Assert all required parameters are present.
