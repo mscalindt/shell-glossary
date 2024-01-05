@@ -1,5 +1,5 @@
 #! .desc:
-# Count all visible directories in a directory
+# Count visible directories in a directory
 #! .params:
 # <"$1"> - absolute directory path
 # ["$2"] - directory suffix
