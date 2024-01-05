@@ -10,7 +10,7 @@ utility calls.
 - [COUNT_DFILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dfiles): Count hidden (.*) file objects in a directory
 - [COUNT_DIRS()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dirs): Count visible directories in a directory
 - [COUNT_DOBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dobj): Count all hidden (.*) objects in a directory
-- [COUNT_FILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_files): Count all visible file objects in a directory
+- [COUNT_FILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_files): Count visible file objects in a directory
 - [COUNT_OBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_obj): Count all visible objects in a directory
 - [ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/err): Print formatted text to stderr
 - [ERRF()](https://github.com/mscalindt/shell-glossary/blob/main/src/errF): Print red-colored formatted text to stderr and exit

@@ -1,5 +1,5 @@
 #! .desc:
-# Count all visible file objects in a directory
+# Count visible file objects in a directory
 #! .params:
 # <"$1"> - absolute directory path
 # ["$2"] - file suffix
