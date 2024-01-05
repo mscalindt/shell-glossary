@@ -50,7 +50,7 @@ file_preload() {
             done; _file="$_file$_line"
         ;;
         *)
-            return 255
+            exec 9<&-; return 255
         ;;
     esac
 
