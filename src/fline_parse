@@ -5,7 +5,6 @@
 # <$2> - function name
 #! .rc:
 # (0) success
-# (*) error
 # (255) bad input/usage
 #.
 fline_parse() {
