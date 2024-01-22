@@ -10,7 +10,6 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input/usage
 #! .caveats:
 # > `ARG_MAX`.
 #.
