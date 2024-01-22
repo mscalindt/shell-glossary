@@ -1,58 +1,70 @@
 #! .desc:
-# Mangle and assert a path in a specified way
+# Normalize a path into an assertable path specification
 #! .params:
-# <$1> - options(
-#     '-assert' - assert dir/file
-#     '-join' - join the two paths
-#     '-join-assert' - join the two paths and assert dir/file
-#     .
-# )
-# <"$2"> - absolute path
-# ["$3"] - join path
+# <"$1"> - absolute path
+# ["$2"] - join path
 #! .gives:
 # (0) <"$_path"> - string;
 #                  [modified <$2>]
 #! .rc:
 # (0) success
+# (1) bad path result
 # (255) bad input
 #.
 path_spec() {
-    # Assert $2 is an absolute path.
-    [ "$2" != "${2#/}" ] || return 255
+    # Assert $1 is an absolute path.
+    [ "$1" != "${1#/}" ] || return 255
 
-    # Bail out on absurd paths.
-    case "$2$3" in
-        *'///'*) return 255 ;;
+    # If given, fuse $2 (join path) into $1.
+    set -- "$1/$2"
+
+    # Save $IFS.
+    _old_IFS="$IFS" 2> /dev/null
+    ${IFS+':'} unset _old_IFS 2> /dev/null
+
+    # Save the state of the pathname expansion flag and disable it if active;
+    # disabled to disable the expansion of `*`.
+    case "$-" in
+        *'f'*) _pn=0 ;;
+        *) _pn=1; set -f ;;
     esac
 
-    # Prepare the paths being asserted/joined.
-    set -- "$1" "${2%/}" "${3#/}"
+    # Word split the path ($1) based on `/`. Note that the following code
+    # snippet is not usable outside of this function's context due to a quirk
+    # in word splitting.
+    IFS='/'; set -- $1
 
-    # Remove artifact joins or assertivity from $2.
-    while :; do case "$2" in
-        *'//'*) set -- "$1" "${2%'//'*}/${2#*'//'}" "$3" ;;
-        *) break ;;
-    esac done
+    # Restore the active state of the pathname expansion flag if appropriate.
+    if [ "$_pn" = 1 ]; then
+        set +f
+    fi
 
-    # Remove artifact joins or assertivity from $3.
-    while :; do case "$3" in
-        *'//'*) set -- "$1" "$2" "${3%'//'*}/${3#*'//'}" ;;
-        *) break ;;
-    esac done
+    # Restore $IFS.
+    IFS="$_old_IFS" 2> /dev/null
+    ${_old_IFS+':'} unset IFS 2> /dev/null
 
-    # Save the asserted/joined path into $_path.
-    case "$1" in
-        '-assert') _path="$2" ;;
-        '-join' | '-join-assert') _path="$2/$3" ;;
-        *) return 255 ;;
-    esac
+    # Build a normalized and assertable path according to the split chunks.
+    _path=; for _segment in "$@"; do
+        # Assert $_segment is a chunk of the path.
+        [ "$_segment" ] || continue
 
-    # Assert the type of path in $_path.
-    case "$1" in
-        '-assert' | '-join-assert')
-            if [ -d "$_path" ]; then
-                _path="$_path/"
-            fi
-        ;;
-    esac
+        # Resolve the path.
+        # `.` -- the special directory name for the current directory.
+        # `..` -- the special directory name for the parent directory.
+        case "$_segment" in
+            '.') continue ;;
+            '..') _path="${_path%/*}" ;;
+            *) _path="$_path/$_segment" ;;
+        esac
+
+        # Assert the path result is valid. Paths that attempt to resolve above
+        # their root are intentionally rejected.
+        [ "$_path" ] || return 1
+    done
+
+    # If $_path is resolved to a directory, add a trailing slash to align it
+    # with the directory path specification.
+    if [ -d "$_path" ]; then
+        _path="$_path/"
+    fi
 }
