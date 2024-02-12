@@ -7,7 +7,7 @@
 # (0) success
 # (*) error
 #.
-vline_parse() {
+map_vline() {
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
     ${IFS+':'} unset _old_IFS 2> /dev/null
