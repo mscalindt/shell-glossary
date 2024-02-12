@@ -36,7 +36,10 @@ map_vline() {
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
     # Avoid giving the function an empty string or a string that initially
-    # consisted of just empty lines (linefeeds).
+    # consisted of just empty lines (linefeeds). This works because the shell's
+    # word splitting treats the core IFS characters (whitespace; tab; linefeed)
+    # specially, ignoring consecutive appearances, which ensures $2 is
+    # non-empty only with actual content.
     [ "$2" ] || return 0
 
     # Give $1 (the function) the lines to be processed as positional
