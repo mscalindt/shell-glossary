@@ -18,8 +18,8 @@ utility calls.
 - [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str): Escape meta characters in a string
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload): Read a file raw
 - [FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline): Get a specific line in a file
-- [FLINE_PARSE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline_parse): Process each line of a file using a specified function
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info): Print formatted text
+- [MAP_FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_fline): Process each line of a file using a specified function
 - [MASK_CHECK()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_check): Check a bit, the power of 2, in a pseudo-bitmask shell variable
 - [MASK_SET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_set): Set a bit, the power of 2, for a pseudo-bitmask shell variable
 - [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char): Convert N to that amount of a character
