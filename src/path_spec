@@ -45,7 +45,9 @@ path_spec() {
 
     # Build a normalized and assertable path according to the split chunks.
     _path=; for _segment in "$@"; do
-        # Assert $_segment is a chunk of the path.
+        # Assert $_segment is an actual chunk of the path (non-empty argument);
+        # empty arguments can be produced if the path contains a pattern of
+        # consecutive forward slashes.
         [ "$_segment" ] || continue
 
         # Resolve the path.
