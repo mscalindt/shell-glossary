@@ -1,0 +1,39 @@
+#! .desc:
+# Process all segments of a path with a function
+#! .params:
+# <"$1"> - absolute/relative path
+# <$2> - function name
+#! .rc:
+# (0) success
+# (*) error
+#.
+map_pseg() {
+    # Save $IFS.
+    _old_IFS="$IFS" 2> /dev/null
+    ${IFS+':'} unset _old_IFS 2> /dev/null
+
+    # Save the state of the pathname expansion flag and disable it if active;
+    # disabled to disable the expansion of `*`.
+    case "$-" in
+        *'f'*) _pn=0 ;;
+        *) _pn=1; set -f ;;
+    esac
+
+    # Word split the path ($1) based on `/`. The positional parameters are
+    # reassigned such that $2 (the function) becomes $1 and the produced
+    # arguments are the remaining positional parameters.
+    IFS='/'; set -- "$2" $1
+
+    # Restore the active state of the pathname expansion flag if appropriate.
+    if [ "$_pn" = 1 ]; then
+        set +f
+    fi
+
+    # Restore $IFS.
+    IFS="$_old_IFS" 2> /dev/null
+    ${_old_IFS+':'} unset IFS 2> /dev/null
+
+    # Give $1 (the function) the segments to be processed as positional
+    # parameters.
+    "$@"
+}
