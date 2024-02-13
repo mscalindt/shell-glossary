@@ -34,6 +34,8 @@ map_pseg() {
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
     # Give $1 (the function) the segments to be processed as positional
-    # parameters.
+    # parameters. Note that the receiver function must account for any empty
+    # positional parameters that could be passed if the path contained a
+    # pattern of consecutive forward slashes.
     "$@"
 }
