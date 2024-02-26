@@ -6,6 +6,7 @@
 # <"$3"> - string
 # [$4] - backend(
 #     '-sed' - use the host version of `sed`
+#     .
 # )
 #! .uses:
 # (-sed) <esc_sed> ()
