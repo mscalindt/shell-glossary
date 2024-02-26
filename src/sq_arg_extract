@@ -3,6 +3,11 @@
 #! .params:
 # <"$1"> - token
 # <"$2"> - single-quote-escaped string
+# [$3] - match_type(
+#     '-pfix' - the token is a prefix
+#     '-sfix' - the token is a suffix
+#     .
+# )
 #! .gives:
 # (0) <"$_arg"> - string;
 #                 evaluated argument
@@ -40,13 +45,34 @@ sq_arg_extract() {
     done
 
     # Extract the specified argument by matching the given token ($1) as a
-    # pattern present anywhere in the argument.
-    _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
-        case "$1" in
-            *"$_token"*) _arg="$1"; return 0 ;;
-            *) shift && continue ;;
-        esac
-    done
+    # pattern present anywhere in the argument, unless $3 (specific pattern
+    # match) is specified.
+    case "$3" in
+        '-pfix')
+            _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
+                case "$1" in
+                    "$_token"*) _arg="$1"; return 0 ;;
+                    *) shift && continue ;;
+                esac
+            done
+        ;;
+        '-sfix')
+            _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
+                case "$1" in
+                    *"$_token") _arg="$1"; return 0 ;;
+                    *) shift && continue ;;
+                esac
+            done
+        ;;
+        *)
+            _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
+                case "$1" in
+                    *"$_token"*) _arg="$1"; return 0 ;;
+                    *) shift && continue ;;
+                esac
+            done
+        ;;
+    esac
 
     # No match.
     return 1
