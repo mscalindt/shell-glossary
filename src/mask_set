@@ -5,7 +5,7 @@
 # <$2> - bit
 #! .rc:
 # (0) success
-# (255) bad input
+# (255) bad input/usage
 #.
 mask_set() {
     # Remove `0x` from $2 (bit) if present.
@@ -33,5 +33,5 @@ mask_set() {
     esac
 
     # Set $2 (the specified bit) in $1 (the bitmask).
-    eval "$1=\$(($1 + $2))"
+    { eval "$1=\$(($1 + $2))"; } 2> /dev/null || return 255
 }
