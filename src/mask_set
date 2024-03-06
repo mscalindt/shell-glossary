@@ -1,22 +1,29 @@
 #! .desc:
 # Set a bit, the power of 2, for a pseudo-bitmask shell variable
 #! .params:
-# <$1> - variable name
-# <$2> - bit
+# <$1> - bit
+# <$2> - variable name
 #! .rc:
 # (0) success
 # (255) bad input/usage
 #.
 mask_set() {
-    # Remove `0x` from $2 (bit) if present.
-    set -- "$1" "${2#0x}"
+    # Remove `0x` from $1 (bit) if present.
+    set -- "${1#0x}" "$2"
 
-    # Assert $1 is not empty.
-    [ "$1" ] || return 255
+    # Assert $1 is a natural number and a valid bit.
+    case :"$1${1#*[!0123456789]}" in
+        : | :0*) return 255 ;;
+        :"$1$1") [ "$(($1 & ($1 - 1)))" -eq 0 ] || return 255 ;;
+        *) return 255 ;;
+    esac
 
-    # Assert $1 is a valid shell variable name. The character classes have been
+    # Assert $2 is not empty.
+    [ "$2" ] || return 255
+
+    # Assert $2 is a valid shell variable name. The character classes have been
     # intentionally expanded to be locale-independent.
-    case "$1" in
+    case "$2" in
         [0123456789]*)
             return 255
         ;;
@@ -25,13 +32,6 @@ mask_set() {
         ;;
     esac
 
-    # Assert $2 is a natural number and a valid bit.
-    case :"$2${2#*[!0123456789]}" in
-        : | :0*) return 255 ;;
-        :"$2$2") [ "$(($2 & ($2 - 1)))" -eq 0 ] || return 255 ;;
-        *) return 255 ;;
-    esac
-
-    # Set $2 (the specified bit) in $1 (the bitmask).
-    { eval "$1=\$(($1 + $2))"; } 2> /dev/null || return 255
+    # Set $1 (the specified bit) in $2 (the bitmask).
+    { eval "$2=\$(($2 + $1))"; } 2> /dev/null || return 255
 }
