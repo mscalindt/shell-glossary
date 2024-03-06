@@ -1,5 +1,5 @@
 #! .desc:
-# Set a bit, the power of 2, for a pseudo-bitmask shell variable
+# Set a bit, the power of 2, in a pseudo-bitmask shell variable
 #! .params:
 # <$1> - bit
 # <$2> - variable name
