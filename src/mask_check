@@ -18,7 +18,7 @@ mask_check() {
         [0123456789]*)
             return 255
         ;;
-        *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]*)
+        *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_]*)
             return 255
         ;;
     esac
