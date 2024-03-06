@@ -30,9 +30,21 @@ mask_check() {
         *) return 255 ;;
     esac
 
-    # Safely evaluate $1 (variable name) into its literal content, updating $1
-    # in the process, and assert it expanded to something.
-    eval set -- "\$$1" "$2"; [ "$1" ] || return 255
+    # Safely evaluate $1 (variable name) into its literal content.
+    eval set -- "\$$1" "$2"
+
+    # Assert the variable expanded to a whole number. If the variable was/has
+    # evaluated empty, due to the `eval` construct used, $1 would take the
+    # value of $2, therefore $2 has to be asserted before the number assert
+    # takes place.
+    [ "$2" ] || return 255
+    case :"$1${1#*[!0123456789]}" in
+        :) return 255 ;;
+        :00) : ;;
+        :0*) return 255 ;;
+        :"$1$1") : ;;
+        *) return 255 ;;
+    esac
 
     # Assert whether $2 (the specified bit) is set in $1 (the bitmask).
     [ "$(($1 & $2))" -eq "$2" ]
