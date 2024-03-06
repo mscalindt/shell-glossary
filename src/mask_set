@@ -3,18 +3,11 @@
 #! .params:
 # <$1> - bit
 # <$2> - variable name
-#! .uses:
-# <mask_check> ("$1", "$2") - robust bit assertivity
 #! .rc:
 # (0) success
 # (255) bad input/usage
 #.
 mask_set() {
-    # Assert the bit is not already set.
-    if mask_check "$1" "$2"; then
-        return 0
-    fi
-
     # Remove `0x` from $1 (bit) if present.
     set -- "${1#0x}" "$2"
 
@@ -40,5 +33,5 @@ mask_set() {
     esac
 
     # Set $1 (the specified bit) in $2 (the bitmask).
-    { eval "$2=\$(($2 + $1))"; } 2> /dev/null || return 255
+    { eval "$2=\$(($2 | $1))"; } 2> /dev/null || return 255
 }
