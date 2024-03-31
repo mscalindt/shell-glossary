@@ -8,7 +8,7 @@
 #! .ec:
 # (2) incompatible option
 #.
-opt_compat_err() {
+opt_compat_fail() {
     # Print the incompatible option.
     printf "%s: '%s': Incompatible with: '%s'\n" \
         "${0##*/}" "$opt_match" "$1" >&2

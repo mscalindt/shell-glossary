@@ -10,7 +10,7 @@ a breeze.
 - [OPD_MAX()](https://github.com/mscalindt/main-functions/blob/main/src/opd_max): Signify invalid operand count (exceeds maximum allowed); ($1 > $2)
 - [OPD_MIN()](https://github.com/mscalindt/main-functions/blob/main/src/opd_min): Signify insufficient operand count (below minimum required); ($1 < $2)
 - [OPT_ARG_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_arg_err): Signify invalid option argument
-- [OPT_COMPAT_ERR()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_err): Signify option incompatibility with a previous option and exit
+- [OPT_COMPAT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_compat_fail): Signify option incompatibility with a previous option and exit
 - [OPT_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/opt_fail): Wrapper for opt_arg_err()
 - [OPT_INVALID()](https://github.com/mscalindt/main-functions/blob/main/src/opt_invalid): Signify invalid (`-`...) option
 - [OPT_UNKNOWN()](https://github.com/mscalindt/main-functions/blob/main/src/opt_unknown): Signify unknown (*) option
