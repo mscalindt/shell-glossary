@@ -1,5 +1,5 @@
 #! .desc:
-# Signify option incompatibility with a previous option
+# Signify option incompatibility with a previous option and exit
 #! .params:
 # <"$1"> - incompatible option
 #! .uses:
