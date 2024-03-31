@@ -1,5 +1,5 @@
 #! .desc:
-# Wrapper for opt_arg_err()
+# Signify failed option and exit
 #! .params:
 # ["$1"+] - valid argument(s)
 #! .uses:
@@ -8,12 +8,13 @@
 # <opt_match> $ - string;
 #                 option previously matched
 #! .ec:
-# (2) invalid option argument
+# (2) failed option
 #.
 opt_fail() {
-    # Give opt_arg_err() the necessary arguments.
+    # Signify the failed option ($opt_match) with its arg ($opt_arg) and any
+    # valid option arguments ($@).
     opt_arg_err "$opt_match" "$opt_arg" "$@"
 
-    # Issue the exit for incorrect option usage (`2`).
+    # Issue the exit for failed option (`2`).
     exit 2
 }
