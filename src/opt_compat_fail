@@ -4,7 +4,7 @@
 # <"$1"> - incompatible option
 #! .uses:
 # <opt_match> $ - string;
-#                 option previously matched
+#                 last literal option successfully matched
 #! .ec:
 # (2) incompatible option
 #.
