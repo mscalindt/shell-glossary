@@ -5,7 +5,7 @@
 # ["$2"] - argument
 # ["$3"+] - valid argument(s)
 #.
-opt_arg_err() {
+opt_err() {
     # Print the failed option and argument (if any) and discard the relevant
     # positional parameters.
     if [ "$2" ]; then

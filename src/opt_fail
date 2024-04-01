@@ -13,7 +13,7 @@
 opt_fail() {
     # Signify the failed option ($opt_match) with its arg ($opt_arg) and any
     # valid option arguments ($@).
-    opt_arg_err "$opt_match" "$opt_arg" "$@"
+    opt_err "$opt_match" "$opt_arg" "$@"
 
     # Issue the exit for failed option (`2`).
     exit 2
