@@ -4,6 +4,7 @@ a breeze.
 ## Functions List:
 
 - [ASSERT()](https://github.com/mscalindt/main-functions/blob/main/src/assert): Assert a string
+- [CONF_FAIL()](https://github.com/mscalindt/main-functions/blob/main/src/conf_fail): Signify bad configuration file and exit
 - [COPT()](https://github.com/mscalindt/main-functions/blob/main/src/copt): True if complex (argument) option
 - [COPT_OPTIONAL()](https://github.com/mscalindt/main-functions/blob/main/src/copt_optional): True if optional-complex (possible argument) option
 - [FPATH()](https://github.com/mscalindt/main-functions/blob/main/src/fpath): Get the absolute path into $_fpath
