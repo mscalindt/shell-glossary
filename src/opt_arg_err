@@ -1,19 +1,24 @@
 #! .desc:
-# Signify invalid option argument
+# Signify failed option
 #! .params:
 # <"$1"> - option
-# <"$2"> - argument
+# ["$2"] - argument
 # ["$3"+] - valid argument(s)
 #.
 opt_arg_err() {
-    # Print the invalid argument.
-    printf "%s: Invalid argument '%s' for '%s'\n" \
-        "${0##*/}" "$2" "$1" >&2
+    # Print the failed option and argument (if any) and discard the relevant
+    # positional parameters.
+    if [ "$2" ]; then
+        printf "%s: Bad argument '%s' for '%s'\n" \
+            "${0##*/}" "$2" "$1" >&2
+        shift 2
+    else
+        printf "%s: '%s': Failed.\n" \
+            "${0##*/}" "$1" >&2
+        shift
+    fi
 
-    # Shift $1 (option) and $2 (argument).
-    shift 2
-
-    # Print valid argument(s) if given.
+    # Print any valid argument(s) given ($@).
     if [ "$1" ]; then
         echo "Valid arguments are:"
 
