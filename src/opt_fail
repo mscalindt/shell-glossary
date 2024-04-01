@@ -6,7 +6,7 @@
 # <opt_arg> $ - string;
 #               second positional parameter of the main environment
 # <opt_match> $ - string;
-#                 option previously matched
+#                 last literal option successfully matched
 #! .ec:
 # (2) failed option
 #.
