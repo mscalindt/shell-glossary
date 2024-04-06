@@ -4,7 +4,8 @@
 # <"$1"> - absolute directory path
 # ["$2"] - file suffix
 #! .uses:
-# <count_dirs> ("$1" "$2")
+# <count_dirs> ('$1' '$2');
+#              Count visible directories in a directory
 #! .gives:
 # (0) <$_count> - integer
 #! .rc:
