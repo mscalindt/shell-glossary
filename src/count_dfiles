@@ -4,8 +4,10 @@
 # <"$1"> - absolute directory path
 # ["$2"] - file suffix
 #! .uses:
-# <count_ddirs> ("$1" "$2")
-# <count_dobj> ("$1" "$2")
+# <count_ddirs> ('$1' '$2');
+#               Count hidden (.*) directories in a directory
+# <count_dobj> ('$1' '$2');
+#              Count all hidden (.*) objects in a directory
 #! .gives:
 # (0) <$_count> - integer
 #! .rc:
