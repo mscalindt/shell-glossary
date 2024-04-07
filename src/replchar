@@ -9,7 +9,9 @@
 #     .
 # )
 #! .uses:
-# (-sed) <esc_sed> ()
+# (-sed) <esc_sed> ("pattern_type" "string");
+#                  Escape a string to be used literally as a POSIX `sed`
+#                  pattern
 #! .gives:
 # (0) <"$_str"> - string;
 #                 [modified <$3>]
