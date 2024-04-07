@@ -4,7 +4,7 @@
 # <"$1"> - character
 # <"$2"> - string
 #! .gives:
-# <$_count> - integer
+# (0) <$_count> - integer
 #! .rc:
 # (0) success
 # (255) bad input
