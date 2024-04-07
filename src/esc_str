@@ -9,7 +9,8 @@
 #     .
 # )
 #! .uses:
-# <replchar> ()
+# <replchar> ("specific character" "character(s)" '$1');
+#            Replace a specific character with character(s) in a string
 #! .gives:
 # (0) <"$_str"> - string;
 #                 [modified <$1>]
