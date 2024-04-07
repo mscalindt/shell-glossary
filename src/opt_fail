@@ -5,8 +5,8 @@
 #! .uses:
 # <opt_match> $ - string;
 #                 last literal option successfully matched
-# <opt_err> ("$opt_match", "$opt_arg", "$@");
-#           signify failed option
+# <opt_err> ('$opt_match' '$opt_arg' '$@');
+#           Signify failed option
 # [opt_arg] $ - string;
 #               second positional parameter of the main environment
 #! .ec:
