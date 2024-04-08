@@ -12,13 +12,8 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input/usage
 #.
 esc_str() {
-    # Define sensible constraints for usage.
-    # `128` denotes the ASCII set.
-    [ "${#2}" -le 128 ] || return 255
-
     # As a matter of courtesy and simple robustness, account for a bad semantic
     # specification of `\` among the characters. The backslash is used to
     # escape other characters, therefore it should be escaped first.
