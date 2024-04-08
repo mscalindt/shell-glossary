@@ -1,11 +1,8 @@
 #! .desc:
-# Escape meta characters in a string
+# Backslash escape character(s) in a string
 #! .params:
 # <"$1"> - string
-# <"$2"> - chars(
-#     "-chars X" - backslash escape "X" character(s)
-#     .
-# )
+# <"$2"> - character(s)
 #! .uses:
 # <replchar> ("specific character" "character(s)" '$1');
 #            Replace a specific character with character(s) in a string
@@ -22,30 +19,17 @@ esc_str() {
     # `128` denotes the ASCII set.
     [ "${#2}" -le 128 ] || return 255
 
-    # Prepare the character set ($_chars) to be used.
+    # As a matter of courtesy and simple robustness, account for a bad semantic
+    # specification of `\` among the characters. The backslash is used to
+    # escape other characters, therefore it should be escaped first.
     case "$2" in
-        '-chars '*)
-            # Get the specified characters in $2 into $_chars.
-            _chars="${2#'-chars '}"
-
-            # It is required that the character `\` is escaped first as to not
-            # later escape our own escapes, since this character is used to
-            # escape the other characters. To make sure `\` will always be
-            # escaped first, reorder it to always come first if present in the
-            # character set.
-            case "$_chars" in
-                \\*) : ;;
-                *\\*) _chars="\\${_chars%%\\*}${_chars#*\\}" ;;
-            esac
-        ;;
-        *)
-            return 255
-        ;;
+        \\*) : ;;
+        *\\*) set -- "$1" "\\${2%%\\*}${2#*\\}" ;;
     esac
 
-    # Store the string ($1) into $_str and set $_chars as the function's sole
+    # Store the string ($1) into $_str and set $2 as the function's sole
     # positional parameter ($1).
-    _str="$1"; set -- "$_chars"; while [ "$1" ]; do
+    _str="$1"; set -- "$2"; while [ "$1" ]; do
         # Extract the first character of $1.
         _char="${1%"${1#?}"}"
 
