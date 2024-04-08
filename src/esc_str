@@ -4,8 +4,6 @@
 # <"$1"> - string
 # <"$2"> - chars(
 #     "-chars X" - backslash escape "X" character(s)
-#     '-dq' - backslash escape all characters special within double quotes:
-#             $ ` " \ [:space:]
 #     .
 # )
 #! .uses:
@@ -39,11 +37,6 @@ esc_str() {
                 \\*) : ;;
                 *\\*) _chars="\\${_chars%%\\*}${_chars#*\\}" ;;
             esac
-        ;;
-        '-dq')
-            # The character set special within double quotes, specifically:
-            # $ ` " \ [:space:]
-            _chars='\$"` '
         ;;
         *)
             return 255
