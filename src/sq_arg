@@ -26,18 +26,34 @@ sq_arg() {
 
     # Assert $2 is a valid single-quote-escaped string.
     _str="$2"; while :; do
-        # This "main" loop should only run if $_str is currently positioned
-        # outside a single-quote-escaped argument; as such, `'` must be present
-        # and it must be the first character.
+        # Here, the position of $_str must always be outside the single quotes
+        # of an argument. This marks a new iteration of the parsing logic for a
+        # valid single-quote-escaped argument. Crucially, the first character
+        # must be `'`.
         case "$_str" in
             \'*) _str="${_str#?}" ;;
             *) return 255 ;;
         esac
 
-        # This "sub" loop effectively verifies that any occurences of `'`
-        # inside the single-quote-escaped argument are proper escapes of `'` or
-        # the delimiter between arguments.
+        # Here, the position of $_str is right inside the single-quote-escaped
+        # argument. This marks a new iteration of the process of verification
+        # that the next `'` is either:
+        # - A properly escaped single quote inside single quotes.
+        # - The end of an argument.
+        #
+        # The next `'` will be stripped and the subsequent pattern asserted.
         while [ "$_str" ]; do
+            # For an escaped single quote, naturally, what follows as a pattern
+            # is `\''`; it will be stripped, marking a new iteration of the
+            # verification process.
+            #
+            # For the end of an argument, naturally, what follows is ` '`;
+            # only `' ` will be stripped, marking a new iteration of the
+            # parsing logic for a valid single-quote-escaped argument.
+            #
+            # For the end of the final argument, naturally, the strip results
+            # in an empty string and therefore denotes the end of a valid
+            # single-quote-escaped string.
             case "${_str#*\'}" in
                 \\\'\'*) _str="${_str#*\'\\\'\'}"; continue ;;
                 \ \'*) _str="${_str#*\'\ }"; continue 2 ;;
@@ -46,12 +62,17 @@ sq_arg() {
             esac
         done
 
-        # Account for an abrupt string termination, specifically a string
-        # terminated with an escape of `'` or a literal `'`.
+        # Here, $_str has terminated abruptly: the parse position is beyond the
+        # valid boundaries.
         return 255
     done
 
     # Extract the specified N argument in the array of arguments.
+    #
+    # The usage of `eval` here is safe; arbitrary code execution is not
+    # possible because $2 has been asserted as a strict single-quote-escaped
+    # string and its nature (strings wrapped in single quotes) naturally
+    # prevents code execution.
     _i=1; _n="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
         [ "$_i" -eq "$_n" ] || { _i=$((_i + 1)); shift && continue; }
 
