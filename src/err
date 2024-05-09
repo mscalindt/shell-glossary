@@ -29,9 +29,6 @@
 # (255) bad input
 #.
 err() {
-    # Assert all required parameters are present.
-    [ "$#" -ge 3 ] || return 255
-
     # Check if color codes should be used.
     if [ "$NO_COLOR" ]; then
         _color=
