@@ -19,9 +19,6 @@
 # ($1) *
 #.
 errF() {
-    # Assert all required parameters are present.
-    [ "$#" -ge 3 ] || return 255
-
     # Assert $1 is a whole number.
     case :"$1${1#*[!0123456789]}" in
         :) return 255 ;;
