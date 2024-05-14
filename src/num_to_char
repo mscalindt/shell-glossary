@@ -14,6 +14,12 @@
 # (255) bad input
 #.
 num_to_char() {
+    # Handle negative N ($1) gracefully: $_chars is set to an empty string and
+    # success is returned.
+    case "$1" in
+        '-'[0123456789]*) _chars=; return 0 ;;
+    esac
+
     # Assert $1 is a whole number.
     case :"$1${1#*[!0123456789]}" in
         :) return 255 ;;
