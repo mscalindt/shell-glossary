@@ -3,6 +3,7 @@ utility calls.
 
 ## Functions List:
 
+- [ARG_SAVE()](https://github.com/mscalindt/shell-glossary/blob/main/src/arg_save): Single-quote append a string to a single-quote-escaped shell variable
 - [CCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/ccount): Count the times a character appears in a string
 - [CHAR_EVEN()](https://github.com/mscalindt/shell-glossary/blob/main/src/char_even): Test if the sum of a character in a string is even
 - [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary/blob/main/src/confirm_cont): Ask for confirmation to continue

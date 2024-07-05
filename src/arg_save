@@ -1,0 +1,47 @@
+#! .desc:
+# Single-quote append a string to a single-quote-escaped shell variable
+#! .params:
+# <$1> - string
+# <$2> - variable name
+#! .uses:
+# <replchar> ('\'' '\'\\\'\'' '$1');
+#            Replace a specific character with character(s) in a string
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input/usage
+#.
+arg_save() {
+    # Escape any single quotes in the string ($1).
+    case "$1" in
+        *\'*)
+            replchar \' \'\\\'\' "$1" || return "$?"  # -> $_str
+            set -- "$_str" "$2"
+        ;;
+    esac
+
+    # Assert $2 is a valid shell variable name. The character classes have been
+    # intentionally expanded to be locale-independent.
+    case "$2" in
+        [0123456789]*)
+            return 255
+        ;;
+        *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_]*)
+            return 255
+        ;;
+    esac
+
+    # The usage of `eval` here is safe. Assuming $1 is `"'\''abc` (we escape
+    # single quotes in $1 before they're passed to `eval`) and $2 is `a`:
+    #
+    # First expansion (current shell):
+    # `eval "$2=\"\$$2 '\$1'\""` -> `eval a="$a '$1'"` (lit.)
+    #
+    # Second expansion (`eval`); assuming the content of $a is `'b'`:
+    # `eval a="$a '$1'"` -> `a = 'b' '"'\''abc'` (illust. of meta expansion)
+    #
+    # Key points:
+    # - Due to the sophisticated escaping, single quotes from the first
+    #   expansion carry their significance to the second expansion.
+    { eval "$2=\"\$$2 '\$1'\""; } 2> /dev/null || return 255
+}
