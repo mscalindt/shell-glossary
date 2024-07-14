@@ -1,7 +1,7 @@
 # History of the shell-glossary Repository
 
-This document outlines the major changes and milestones in the evolution of
-the `shell-glossary` repository.
+This document outlines the major changes and milestones in the evolution of the
+`shell-glossary` repository.
 
 ## Merge of main-functions Repository - 2024-07-14
 
@@ -17,12 +17,13 @@ functions for shell option parsing to `shell-glossary`, extending its value as
 a glossary of functions.
 
 2. **Updated README**: To ease referencing, `README.md` was revamped to
-separate the functions of `shell-glossary` and `main-functions` into
-respective collections.
+separate the functions of `shell-glossary` and `main-functions` into respective
+collections.
 
 3. **Git Tagging**: To help users and contributors reference the previous
-structure, a Git tag named [`pre-merge`](https://github.com/mscalindt/shell-glossary/releases/tag/pre-merge) was created. This tag points to the last commit before the merge
-of `main-functions`.
+structure, a Git tag named [`pre-merge`](https://github.com/mscalindt/shell-glossary/releases/tag/pre-merge)
+was created. This tag points to the last commit before the merge of
+`main-functions`.
 
 ## Reconstruction of Repository Structure - 2023-08-15
 
@@ -59,8 +60,9 @@ function file in the `src` directory. This ensures that the repository remains
 user-friendly, with the README serving as an index to all available functions.
 
 3. **Git Tagging**: To help users and contributors reference the previous
-structure, a Git tag named [`pre-split`](https://github.com/mscalindt/shell-glossary/releases/tag/pre-split) was created. This tag points to the last
-commit where all functions were contained within the `README.md`.
+structure, a Git tag named [`pre-split`](https://github.com/mscalindt/shell-glossary/releases/tag/pre-split)
+was created. This tag points to the last commit where all functions were
+contained within the `README.md`.
 
 ### Rationale:
 
