@@ -1,0 +1,91 @@
+#! .desc:
+# True if optional-complex (possible argument) option
+#! .params (<1+>):
+# ["$1"] - -*
+# ["$2"] - --*
+#! .uses:
+# <opt> $ - string;
+#           first positional parameter of the main environment
+#! .gives:
+# (0) <"$opt_arg"> - string;
+#                    option argument
+# (0) <"$opt_match"> - string;
+#                      literal option matched
+# (0) <$shiftN> - integer;
+#                 shift count
+#! .rc:
+# (0) match
+# (1) no match
+#! .ec:
+# (2) bad argument specification
+#.
+copt_optional() {
+    # Set the appropriate option argument to match proportional to $opt.
+    case "$opt" in
+        '--'*)
+            # $2 might be the long variant of the option.
+            case "$1$2" in
+                '--'*) : ;;
+                "$1"'--'*) set -- "$2" ;;
+                *) return 1 ;;
+            esac
+        ;;
+        '-'*)
+            # $1 should already be the short variant of the option.
+            case "$1$2" in
+                '-'*) : ;;
+                *) return 1 ;;
+            esac
+        ;;
+        *)
+            return 1
+        ;;
+    esac
+
+    # Try to match a long option with an argument separated by `=`; example:
+    # `<--foo><=><bar>`
+    case "$1" in
+        '--'*)
+            # A long option cannot end with `=`, otherwise it's deemed invalid.
+            case "$opt " in
+                "$1"'= ')
+                    printf "%s: Invalid argument specification for: '%s'\n" \
+                        "${0##*/}" "$1" >&2
+                    printf "%s: Try '%s --help' for more information.\n" \
+                        "${0##*/}" "${0##*/}" >&2
+                    exit 2
+                ;;
+                "$1"'='*)
+                    opt_arg="${opt#"$1"=}"; opt=; opt_match="$1"; shiftN=1
+                    return 0
+                ;;
+            esac
+        ;;
+    esac
+
+    # Try to match a short/long option without an argument.
+    case "$opt" in
+        "$1")
+            opt_arg=; opt=; opt_match="$1"; shiftN=1
+            return 0
+        ;;
+    esac
+
+    # Here, it cannot be a long option anymore; return early to prevent a false
+    # match below.
+    case "$opt" in
+        '--'*) return 1 ;;
+    esac
+
+    # Try to match a short option together with an argument; example:
+    # `<-o><foo>`
+    case "$opt" in
+        "$1"*)
+            opt_arg="${opt#"$1"}"; opt=; opt_match="$1"; shiftN=1
+            return 0
+        ;;
+    esac
+
+    # No match.
+    return 1
+}

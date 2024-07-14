@@ -1,0 +1,22 @@
+#! .desc:
+# Signify failed option and exit
+#! .params:
+# ["$1"+] - valid argument(s)
+#! .uses:
+# <opt_match> $ - string;
+#                 last literal option successfully matched
+# <opt_err> ('$opt_match' '$opt_arg' '$@');
+#           Signify failed option
+# [opt_arg] $ - string;
+#               second positional parameter of the main environment
+#! .ec:
+# (2) failed option
+#.
+opt_fail() {
+    # Signify the failed option ($opt_match), with its arg ($opt_arg) and valid
+    # option arguments ($@), if any.
+    opt_err "$opt_match" "$opt_arg" "$@"
+
+    # Issue the exit for failed option (`2`).
+    exit 2
+}

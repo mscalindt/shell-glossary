@@ -1,0 +1,60 @@
+#! .desc:
+# True if specific complex (argument) option
+#! .params:
+# <"$1"+> - *
+#! .uses:
+# <opt> $ - string;
+#           first positional parameter of the main environment
+# <opt_arg> $ - string;
+#               second positional parameter of the main environment
+#! .gives:
+# (0) <"$opt_arg"> - string;
+#                    option argument
+# (0) <"$opt_match"> - string;
+#                      literal option matched
+# (0) <$shiftN> - integer;
+#                 shift count
+#! .rc:
+# (0) match
+# (1) no match
+#! .ec:
+# (2) bad argument specification
+#.
+scopt() {
+    # Try to match the given option(s) with an argument.
+    while [ "$1" ]; do
+        # The option cannot end with `=`, otherwise it's deemed invalid.
+        case "$opt " in
+            "$1"'= ')
+                printf "%s: Invalid argument specification for: '%s'\n" \
+                    "${0##*/}" "$1" >&2
+                printf "%s: Try '%s --help' for more information.\n" \
+                    "${0##*/}" "${0##*/}" >&2
+                exit 2
+            ;;
+            "$1"'='*)
+                opt_arg="${opt#"$1"=}"; opt=; opt_match="$1"; shiftN=1
+                return 0
+            ;;
+            "$1"' ')
+                # Assert $opt_arg (the argument) is present.
+                if [ ! "$opt_arg" ]; then
+                    printf "%s: Option '%s' requires an argument.\n" \
+                        "${0##*/}" "$1" >&2
+                    printf "%s: Try '%s --help' for more information.\n" \
+                        "${0##*/}" "${0##*/}" >&2
+                    exit 2
+                fi
+
+                opt=; opt_match="$1"; shiftN=2
+                return 0
+            ;;
+        esac
+
+        # $1 (the current option) doesn't match; shift it to try the next one.
+        shift
+    done
+
+    # No match.
+    return 1
+}

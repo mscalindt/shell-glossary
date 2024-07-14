@@ -1,0 +1,13 @@
+#! .desc:
+# Signify unrecognized (`--`...) option
+#! .params:
+# <"$1"> - option
+#.
+opt_unrecognized() {
+    # Print the unrecognized option.
+    printf "%s: Unrecognized option: '%s'\n" "${0##*/}" "$1" >&2
+
+    # Print the usual `--help` hint.
+    printf "%s: Try '%s --help' for more information.\n" \
+        "${0##*/}" "${0##*/}" >&2
+}

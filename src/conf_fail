@@ -1,0 +1,19 @@
+#! .desc:
+# Signify bad configuration file and exit
+#! .params:
+# <"$1"> - absolute path
+#! .ec:
+# (2) bad configuration file
+#.
+conf_fail() {
+    # Print the bad configuration file.
+    printf "%s: Bad config file: '%s'\n" \
+        "${0##*/}" "$1" >&2
+
+    # Print the usual `--help` hint.
+    printf "%s: Try '%s --help' for more information.\n" \
+        "${0##*/}" "${0##*/}" >&2
+
+    # Issue the exit for bad configuration file (`2`).
+    exit 2
+}

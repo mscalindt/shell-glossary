@@ -1,0 +1,33 @@
+#! .desc:
+# Signify failed option
+#! .params:
+# <"$1"> - option
+# ["$2"] - argument
+# ["$3"+] - valid argument(s)
+#.
+opt_err() {
+    # Print the failed option and argument (if any) and discard the relevant
+    # positional parameters.
+    if [ "$2" ]; then
+        printf "%s: Bad argument '%s' for '%s'\n" \
+            "${0##*/}" "$2" "$1" >&2
+        shift 2
+    else
+        printf "%s: '%s': Failed.\n" \
+            "${0##*/}" "$1" >&2
+        shift
+    fi
+
+    # Print any valid argument(s) given ($@).
+    if [ "$1" ]; then
+        echo "Valid arguments are:"
+
+        while [ "$1" ]; do
+            printf " > '%s'\n" "$1" >&2; shift
+        done
+    fi
+
+    # Print the usual `--help` hint.
+    printf "%s: Try '%s --help' for more information.\n" \
+        "${0##*/}" "${0##*/}" >&2
+}

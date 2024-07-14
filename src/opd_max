@@ -1,0 +1,19 @@
+#! .desc:
+# Signify invalid operand count (exceeds maximum allowed); ($1 > $2)
+#! .params:
+# <$1> - invalid count
+# [$2] - valid count
+#.
+opd_max() {
+    # Print the invalid count of operands.
+    printf "%s: Too many operands: %s\n" "${0##*/}" "$1" >&2
+
+    # Print the limit of operands if given.
+    if [ "$2" ]; then
+        printf " > max allowed: %s\n" "$2" >&2
+    fi
+
+    # Print the usual `--help` hint.
+    printf "%s: Try '%s --help' for more information.\n" \
+        "${0##*/}" "${0##*/}" >&2
+}
