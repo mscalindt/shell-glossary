@@ -28,7 +28,9 @@ assert() {
             esac
         ;;
         '-natural-n')
-            # Assert $2 is a natural number (`1`, `2`, ...).
+            # Assert $2 is a natural number (`1`, `2`, ...). A natural number
+            # is any string consisting only of digits, of which the first is
+            # not `0`.
             case :"$2${2#*[!0123456789]}" in
                 : | :0*) return 1 ;;
                 :"$2$2") : ;;
