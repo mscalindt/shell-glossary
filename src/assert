@@ -7,6 +7,7 @@
 #     '-whole-n' - whole N [0,1...]
 #     '-absolute-path' - absolute path (/*)
 #     '-relative-path' - relative path
+#     '-shell-name' - shell name
 #     .
 # )
 # <"$2"> - string
@@ -54,6 +55,22 @@ assert() {
             # Assert $2 is a relative (partial) path.
             case "$2" in
                 '/'*) return 1 ;;
+            esac
+        ;;
+        '-shell-name')
+            # Assert $2 is a shell name. The character classes have been
+            # intentionally expanded to be locale-independent.
+            #
+            # For more information, refer to:
+            # > "POSIX.1-2017, Volume: Base Definitions, Section: Definitions,
+            #   Subsection: Name".
+            case "$2" in
+                [0123456789]*)
+                    return 1
+                ;;
+                *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_]*)
+                    return 1
+                ;;
             esac
         ;;
     esac
