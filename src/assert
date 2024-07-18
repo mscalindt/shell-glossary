@@ -50,7 +50,8 @@ assert() {
             esac
         ;;
         '-absolute-path')
-            # Assert $2 is an absolute (/*) path.
+            # Assert $2 is an absolute (/*) path. An absolute path is any
+            # string of which the first character is `/`.
             case "$2" in
                 '/'*) : ;;
                 *) return 1 ;;
