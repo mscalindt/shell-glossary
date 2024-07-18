@@ -52,7 +52,8 @@ assert() {
             esac
         ;;
         '-relative-path')
-            # Assert $2 is a relative (partial) path.
+            # Assert $2 is a relative (partial) path. A relative path is any
+            # string of which the first character is not `/`.
             case "$2" in
                 '/'*) return 1 ;;
             esac
