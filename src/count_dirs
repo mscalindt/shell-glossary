@@ -3,6 +3,9 @@
 #! .params:
 # <"$1"> - absolute directory path
 # ["$2"] - directory suffix
+#! .uses:
+# <assert> ('-absolute-path' '$1');
+#          Assert a string
 #! .gives:
 # (0) <$_count> - integer
 #! .rc:
@@ -13,7 +16,7 @@
 #.
 count_dirs() {
     # Assert $1 is an absolute path.
-    [ "$1" != "${1#/}" ] || return 255
+    assert -absolute-path "$1" || return 255
 
     # Assert $1 is a valid directory.
     [ -d "$1" ] || return 255
