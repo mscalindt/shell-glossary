@@ -5,7 +5,7 @@
 #     '-n' - N [0,1,00,01...]
 #     '-natural-n' - natural N [1...]
 #     '-whole-n' - whole N [0,1...]
-#     '-absolute-path' - absolute path
+#     '-absolute-path' - absolute path (/*)
 #     '-relative-path' - relative path
 #     .
 # )
@@ -44,7 +44,7 @@ assert() {
             esac
         ;;
         '-absolute-path')
-            # Assert $2 is an absolute (full) path.
+            # Assert $2 is an absolute (/*) path.
             case "$2" in
                 '/'*) : ;;
                 *) return 1 ;;
