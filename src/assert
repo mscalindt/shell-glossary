@@ -19,7 +19,8 @@ assert() {
     # Assert the specified string type.
     case "$1" in
         '-n')
-            # Assert $2 is a number (`0`, `1`, `00`, `01`, ...).
+            # Assert $2 is a number (`0`, `1`, `00`, `01`, ...). A number is
+            # any string consisting only of digits.
             case :"$2${2#*[!0123456789]}" in
                 :) return 1 ;;
                 :"$2$2") : ;;
