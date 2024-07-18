@@ -38,7 +38,9 @@ assert() {
             esac
         ;;
         '-whole-n')
-            # Assert $2 is a whole number (`0`, `1`, `2`, ...).
+            # Assert $2 is a whole number (`0`, `1`, `2`, ...). A whole number
+            # is `0` and any string consisting only of digits, of which the
+            # first is not `0`.
             case :"$2${2#*[!0123456789]}" in
                 :) return 1 ;;
                 :00) : ;;
