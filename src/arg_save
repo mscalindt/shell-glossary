@@ -4,6 +4,8 @@
 # <$1> - string
 # <$2> - variable name
 #! .uses:
+# <assert> ('-shell-name' '$2');
+#          Assert a string
 # <replchar> ('\'' '\'\\\'\'' '$1');
 #            Replace a specific character with character(s) in a string
 #! .rc:
@@ -20,16 +22,8 @@ arg_save() {
         ;;
     esac
 
-    # Assert $2 is a valid shell variable name. The character classes have been
-    # intentionally expanded to be locale-independent.
-    case "$2" in
-        [0123456789]*)
-            return 255
-        ;;
-        *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_]*)
-            return 255
-        ;;
-    esac
+    # Assert $2 is a valid shell variable name.
+    assert -shell-name "$2" || return 255
 
     # The usage of `eval` here is safe. Assuming $1 is `"'\''abc` (we escape
     # single quotes in $1 before they're passed to `eval`) and $2 is `a`:
