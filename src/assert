@@ -71,6 +71,8 @@ assert() {
             # For more information, refer to:
             # > "POSIX.1-2017, Volume: Base Definitions, Section: Definitions,
             #   Subsection: Name".
+            # > "POSIX.1-2017, Volume: Base Definitions, Section: Regular
+            #   Expressions, Subsection: RE Bracket Expression".
             case "$2" in
                 [0123456789]*)
                     return 1
