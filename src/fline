@@ -3,6 +3,9 @@
 #! .params:
 # <$1> - line number
 # <"$2"> - absolute file path
+#! .uses:
+# <assert> ('-natural-n' '$1');
+#          Assert a string
 #! .gives:
 # (0) <"$_line"> - string
 #! .rc:
@@ -14,11 +17,7 @@
 #.
 fline() {
     # Assert $1 is a natural number.
-    case $1:${1#*[!0123456789]} in
-        : | 0*) return 255 ;;
-        "$1:$1") : ;;
-        *) return 255 ;;
-    esac
+    assert -natural-n "$1" || return 255
 
     # Assert $2 exists and is a file.
     [ -f "$2" ] || return 1
