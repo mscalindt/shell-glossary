@@ -2,6 +2,7 @@
 # Assert a string
 #! .params:
 # <$1> - type(
+#     '-bit' - N in base 2 that represents a valid bit
 #     '-n' - N [0,1,00,01...]
 #     '-natural-n' - natural N [1...]
 #     '-whole-n' - whole N [0,1...]
@@ -18,6 +19,19 @@
 assert() {
     # Assert the specified string type.
     case "$1" in
+        '-bit')
+            # Assert $2 is a number in base 2 that represents a valid bit. A
+            # valid bit is a natural number that represents a specific bit
+            # position in a bitmask and is always a power of 2 (`1`, `2`, `4`,
+            # `8`, ...).
+            #
+            # A number is a power of 2 if performing bitwise AND in the
+            # expression `N & (N - 1)` results in zero (the binary
+            # representation turns to all zeroes due to the single 1-bit being
+            # flipped off, given N was an actual power of 2 in base 2).
+            assert -natural-n "$2" || return 1
+            [ "$(($2 & ($2 - 1)))" -eq 0 ] || return 1
+        ;;
         '-n')
             # Assert $2 is a number (`0`, `1`, `00`, `01`, ...). A number is
             # any string consisting only of digits.
