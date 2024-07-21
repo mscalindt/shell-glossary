@@ -76,6 +76,7 @@ assert() {
             # string of which the first character is not `/`.
             case "$2" in
                 '/'*) return 1 ;;
+                *) [ "$2" ] || return 1 ;;
             esac
         ;;
         '-shell-name')
