@@ -3,6 +3,9 @@
 #! .params:
 # <$1> - bit
 # <$2> - variable name
+#! .uses:
+# <assert> ("type" "string");
+#          Assert a string
 #! .rc:
 # (0) true
 # (1) false
@@ -13,34 +16,16 @@ mask_check() {
     set -- "${1#0x}" "$2"
 
     # Assert $1 is a natural number and a valid bit.
-    case :"$1${1#*[!0123456789]}" in
-        : | :0*) return 255 ;;
-        :"$1$1") [ "$(($1 & ($1 - 1)))" -eq 0 ] || return 255 ;;
-        *) return 255 ;;
-    esac
+    assert -bit "$1" || return 255
 
-    # Assert $2 is a valid shell variable name. The character classes have been
-    # intentionally expanded to be locale-independent.
-    case "$2" in
-        [0123456789]*)
-            return 255
-        ;;
-        *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_]*)
-            return 255
-        ;;
-    esac
+    # Assert $2 is a valid shell variable name.
+    assert -shell-name "$2" || return 255
 
     # Safely evaluate $2 (variable name) into its literal content.
     eval set -- "$1" "\$$2"
 
     # Assert the variable expanded to a whole number.
-    case :"$2${2#*[!0123456789]}" in
-        :) return 255 ;;
-        :00) : ;;
-        :0*) return 255 ;;
-        :"$2$2") : ;;
-        *) return 255 ;;
-    esac
+    assert -whole-n "$2" || return 255
 
     # Assert whether $1 (the specified bit) is set in $2 (the bitmask).
     [ "$(($1 & $2))" -eq "$1" ]
