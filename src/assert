@@ -95,6 +95,9 @@ assert() {
                 *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_]*)
                     return 1
                 ;;
+                *)
+                    [ "$2" ] || return 1
+                ;;
             esac
         ;;
     esac
