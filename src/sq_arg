@@ -6,6 +6,9 @@
 #     .
 # )
 # <"$2"> - single-quote-escaped string
+#! .uses:
+# <assert> ('-whole-n' '$1');
+#          Assert a string
 #! .gives:
 # (0) <"$_arg"> - string;
 #                 evaluated argument
@@ -16,13 +19,7 @@
 #.
 sq_arg() {
     # Assert $1 is a whole number.
-    case :"$1${1#*[!0123456789]}" in
-        :) return 255 ;;
-        :00) : ;;
-        :0*) return 255 ;;
-        :"$1$1") : ;;
-        *) return 255 ;;
-    esac
+    assert -whole-n "$1" || return 255
 
     # Assert $2 is a valid single-quote-escaped string.
     _str="$2"; while :; do
