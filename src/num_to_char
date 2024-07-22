@@ -7,6 +7,9 @@
 #     '-wschars' - whitespace-separated characters
 #     .
 # )
+#! .uses:
+# <assert> ('-whole-n' '$1');
+#          Assert a string
 #! .gives:
 # (0) <"$_chars"> - string
 #! .rc:
@@ -21,13 +24,7 @@ num_to_char() {
     esac
 
     # Assert $1 is a whole number.
-    case :"$1${1#*[!0123456789]}" in
-        :) return 255 ;;
-        :00) : ;;
-        :0*) return 255 ;;
-        :"$1$1") : ;;
-        *) return 255 ;;
-    esac
+    assert -whole-n "$1" || return 255
 
     # Support `-wschars`. The added trailing whitespace character will be
     # removed after the function completes operation.
