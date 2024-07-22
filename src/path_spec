@@ -3,6 +3,9 @@
 #! .params:
 # <"$1"> - absolute path
 # ["$2"] - join path
+#! .uses:
+# <assert> ('-absolute-path' '$1');
+#          Assert a string
 #! .gives:
 # (0) <"$_path"> - string;
 #                  [modified <$2>]
@@ -13,7 +16,7 @@
 #.
 path_spec() {
     # Assert $1 is an absolute path.
-    [ "$1" != "${1#/}" ] || return 255
+    assert -absolute-path "$1" || return 255
 
     # If given, fuse $2 (join path) into $1.
     set -- "$1/$2"
