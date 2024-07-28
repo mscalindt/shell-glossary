@@ -14,8 +14,6 @@
 # (1) forbidden
 #.
 confirm_cont() {
-    # Asserting the variables to be used are empty is crucial for string safety
-    # due to the missing input validation.
     _prompt=; _def_action=
 
     # Determine the default action and the prompt to be printed. Missing $1
@@ -28,18 +26,17 @@ confirm_cont() {
         _def_action='Y'
     fi
 
-    # Apply color to the prompt if $NO_COLOR is not set.
+    # Apply color to the prompt unless $NO_COLOR is set.
     if [ ! "$NO_COLOR" ]; then
         _prompt='\033[1;37m'"$_prompt"'\033[0m'
     fi
 
-    # Print the prompt.
     printf "%b" "$_prompt"
 
-    # Store the input in $_action; if empty, $_def_action will be used instead.
+    # Store user input in $_action; if empty, $_def_action will be used
+    # instead.
     read -r _action; [ "$_action" ] || _action="$_def_action"
 
-    # Check the supplied input or perform the default action.
     case "$_action" in
         [Yy]*) return 0 ;;
         [Nn]*) return 1 ;;
