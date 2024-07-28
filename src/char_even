@@ -3,43 +3,17 @@
 #! .params:
 # <"$1"> - character
 # <"$2"> - string
+#! .uses:
+# <ccount> ('$1' '$2');
+#          Count the times a character appears in a string
 #! .rc:
 # (0) even
 # (1) uneven
+# (*) error
 # (255) bad input
 #.
 char_even() {
-    # Assert $1 is a single character; multiple characters are currently not
-    # supported.
-    [ "${#1}" -eq 1 ] || return 255
-
-    # Save $IFS.
-    _old_IFS="$IFS" 2> /dev/null
-    ${IFS+':'} unset _old_IFS 2> /dev/null
-
-    # Save the state of the pathname expansion flag and disable it if active;
-    # disabled to disable the expansion of `*`.
-    case "$-" in
-        *'f'*) _pn=0 ;;
-        *) _pn=1; set -f ;;
-    esac
-
-    # Word split $2 (string) based on $1 (character) and store the number of
-    # arguments produced into $_count. The character placement check is crucial
-    # to avoid off-by-one error due to how the word split functions.
-    IFS="$1"; case "$2" in
-        *"$IFS") set -- $2; _count=$# ;;
-        *) set -- $2; _count=$(($# - 1)) ;;
-    esac
-
-    # Restore the active state of the pathname expansion flag if appropriate.
-    if [ "$_pn" = 1 ]; then
-        set +f
-    fi
-
-    # Restore $IFS.
-    IFS="$_old_IFS" 2> /dev/null
-    ${_old_IFS+':'} unset IFS 2> /dev/null
+    ccount "$1" "$2" || return "$?"  # -> $_count
 
     # Assert $_count is even using modulo. `0` if even, `1` if odd, which also
     # aligns with the return code of `test` (`[`).
