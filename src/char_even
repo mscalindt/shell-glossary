@@ -15,7 +15,6 @@
 char_even() {
     ccount "$1" "$2" || return "$?"  # -> $_count
 
-    # Assert $_count is even using modulo. `0` if even, `1` if odd, which also
-    # aligns with the return code of `test` (`[`).
+    # Assert $_count is even using modulo.
     [ "$((_count % 2))" -eq 0 ]
 }
