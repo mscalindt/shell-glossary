@@ -16,7 +16,7 @@
 #! .caveats:
 # > `ARG_MAX`.
 #.
-count_dfiles() {
+count_file_dot() {
     # Use count_dobj() to obtain the count of hidden files and directories into
     # $_count and set it as the third positional parameter.
     count_dobj "$1" "$2" || return "$?"

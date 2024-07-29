@@ -11,10 +11,10 @@ utility calls.
 - [CCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/ccount): Count the times a character appears in a string
 - [CHAR_EVEN()](https://github.com/mscalindt/shell-glossary/blob/main/src/char_even): Test if the sum of a character in a string is even
 - [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary/blob/main/src/confirm_cont): Ask for confirmation to continue
-- [COUNT_DFILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dfiles): Count hidden (.*) file objects in a directory
 - [COUNT_DIR_DOT()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dir_dot): Count hidden (.*) directories in a directory
 - [COUNT_DIRS()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dirs): Count visible directories in a directory
 - [COUNT_DOBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dobj): Count all hidden (.*) objects in a directory
+- [COUNT_FILE_DOT()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_file_dot): Count hidden (.*) file objects in a directory
 - [COUNT_FILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_files): Count visible file objects in a directory
 - [COUNT_OBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_obj): Count all visible objects in a directory
 - [ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/err): Print formatted text to stderr
