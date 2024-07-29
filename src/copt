@@ -1,42 +1,71 @@
 #! .desc:
-# True if complex (argument) option
+# Match `-`-delimited short/long option with a mandatory option argument
 #! .params (<1+>):
-# ["$1"] - -*
-# ["$2"] - --*
+# ["$1"] - -* (short)
+# ["$2"] - --* (long)
 #! .uses:
 # <opt> $ - string;
-#           first positional parameter of the main environment
+#           first positional parameter
 # <opt_arg> $ - string;
-#               second positional parameter of the main environment
+#               second positional parameter
 #! .gives:
 # (0) <"$opt_arg"> - string;
 #                    option argument
 # (0) <"$opt_match"> - string;
 #                      literal option matched
-# (0) <$shiftN> - integer;
-#                 shift count
+# (0) <$opt_shift> - integer;
+#                    shift count for option
 #! .rc:
-# (0) match
+# (0) success
 # (1) no match
 #! .ec:
 # (2) bad argument specification
+# (255) bad input
 #.
 copt() {
-    # Set the appropriate option argument to match proportional to $opt.
+    # Assert the usage of the function is appropriate (else `return 1`) or
+    # correct (else `exit 255`) and set the appropriate short/long option
+    # variant as $1 to simplify further operations.
     case "$opt" in
         '--'*)
-            # $2 might be the long variant of the option.
-            case "$1$2" in
-                '--'*) : ;;
-                "$1"'--'*) set -- "$2" ;;
-                *) return 1 ;;
+            [ "${#opt}" -gt 2 ] || return 1
+
+            case "$2" in
+                '--'*)
+                    [ "${#2}" -gt 2 ] || exit 255
+
+                    set -- "$2"
+                ;;
+                *)
+                    [ ! "$2" ] || exit 255
+
+                    case "$1" in
+                        '--'*)
+                            [ "${#1}" -gt 2 ] || exit 255
+                        ;;
+                        '-'*)
+                            return 1
+                        ;;
+                        *)
+                            exit 255
+                        ;;
+                    esac
+                ;;
             esac
         ;;
         '-'*)
-            # $1 should already be the short variant of the option.
-            case "$1$2" in
-                '-'*) : ;;
-                *) return 1 ;;
+            [ "${#opt}" -gt 1 ] || return 1
+
+            case "$1" in
+                '--'*)
+                    return 1
+                ;;
+                '-'*)
+                    [ "${#1}" -gt 1 ] || exit 255
+                ;;
+                *)
+                    exit 255
+                ;;
             esac
         ;;
         *)
@@ -44,31 +73,11 @@ copt() {
         ;;
     esac
 
-    # Try to match a long option with an argument separated by `=`; example:
-    # `<--foo><=><bar>`
-    case "$1" in
-        '--'*)
-            # A long option cannot end with `=`, otherwise it's deemed invalid.
-            case "$opt " in
-                "$1"'= ')
-                    printf "%s: Invalid argument specification for: '%s'\n" \
-                        "${0##*/}" "$1" >&2
-                    printf "%s: Try '%s --help' for more information.\n" \
-                        "${0##*/}" "${0##*/}" >&2
-                    exit 2
-                ;;
-                "$1"'='*)
-                    opt_arg="${opt#"$1"=}"; opt=; opt_match="$1"; shiftN=1
-                    return 0
-                ;;
-            esac
-        ;;
-    esac
-
-    # Try to match a short/long option with a separate argument.
-    case "$opt " in
-        "$1 ")
-            # Assert $opt_arg (the argument) is present.
+    # Try to match a short/long option. The second positional parameter is
+    # presumably its argument.
+    case "$opt" in
+        "$1")
+            # Assert the second positional parameter is present.
             if [ ! "$opt_arg" ]; then
                 printf "%s: Option '%s' requires an argument.\n" \
                     "${0##*/}" "$1" >&2
@@ -77,26 +86,62 @@ copt() {
                 exit 2
             fi
 
-            opt=; opt_match="$1"; shiftN=2
+            opt_match="$1"
+            opt_shift=2
+            opt=
+
             return 0
         ;;
     esac
 
-    # Here, it cannot be a long option anymore; return early to prevent a false
-    # match below.
-    case "$opt" in
-        '--'*) return 1 ;;
-    esac
+    # Try to match a long option with an argument.
+    case "$1" in
+        '--'*)
+            # Assert any potential argument specification is valid. A long
+            # option cannot end with `=` after being matched, otherwise it's
+            # invalid; example: `--foo=`.
+            case "$opt" in
+                "$1"'=')
+                    printf "%s: Invalid argument specification for: '%s'\n" \
+                        "${0##*/}" "$1" >&2
+                    printf "%s: Try '%s --help' for more information.\n" \
+                        "${0##*/}" "${0##*/}" >&2
+                    exit 2
+                ;;
+            esac
 
-    # Try to match a short option together with an argument; example:
-    # `<-o><foo>`
-    case "$opt" in
-        "$1"*)
-            opt_arg="${opt#"$1"}"; opt=; opt_match="$1"; shiftN=1
-            return 0
+            # Try to match a long option with an argument separated by `=` on
+            # the same positional parameter; example: `--foo=bar`.
+            case "$opt" in
+                "$1"'='*)
+                    opt_arg="${opt#"$1"=}"
+                    opt_match="$1"
+                    opt_shift=1
+                    opt=
+
+                    return 0
+                ;;
+            esac
         ;;
     esac
 
-    # No match.
+    # Try to match a short option with an argument.
+    case "$1" in
+        '-'*)
+            # Try to match a short option together with its argument; example
+            # with short option `-a` and argument `foo`: `-afoo`.
+            case "$opt" in
+                "$1"*)
+                    opt_arg="${opt#"$1"}"
+                    opt_match="$1"
+                    opt_shift=1
+                    opt=
+
+                    return 0
+                ;;
+            esac
+        ;;
+    esac
+
     return 1
 }
