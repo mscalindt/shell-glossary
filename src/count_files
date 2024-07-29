@@ -4,8 +4,8 @@
 # <"$1"> - absolute directory path
 # ["$2"] - file suffix
 #! .uses:
-# <count_dirs> ('$1' '$2');
-#              Count visible directories in a directory
+# <count_dir> ('$1' '$2');
+#             Count visible directories in a directory
 # <count_obj> ('$1' '$2');
 #             Count all visible objects in a directory
 #! .gives:
@@ -22,9 +22,9 @@ count_files() {
     count_obj "$1" "$2" || return "$?"
     set -- "$1" "$2" "$_count"
 
-    # Use count_dirs() to obtain the count of visible directories into $_count
+    # Use count_dir() to obtain the count of visible directories into $_count
     # and subtract it from the total count to determine the count of visible
     # files, updating $_count.
-    count_dirs "$1" "$2" || return "$?"
+    count_dir "$1" "$2" || return "$?"
     _count=$(($3 - _count))
 }
