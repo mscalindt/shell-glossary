@@ -48,7 +48,7 @@ a breeze.
 - [ASSERT()](https://github.com/mscalindt/shell-glossary/blob/main/src/assert): Assert a string
 - [CONF_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/conf_fail): Signify bad configuration file and exit
 - [COPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/copt): Match `-`-delimited short/long option with a mandatory option argument
-- [COPT_OPTIONAL()](https://github.com/mscalindt/shell-glossary/blob/main/src/copt_optional): True if optional-complex (possible argument) option
+- [COPT_OPTIONAL()](https://github.com/mscalindt/shell-glossary/blob/main/src/copt_optional): Match `-`-delimited short/long option with an optional option argument
 - [FPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/fpath): Get the absolute path into $_fpath
 - [OPD_MAX()](https://github.com/mscalindt/shell-glossary/blob/main/src/opd_max): Signify invalid operand count (exceeds maximum allowed); ($1 > $2)
 - [OPD_MIN()](https://github.com/mscalindt/shell-glossary/blob/main/src/opd_min): Signify insufficient operand count (below minimum required); ($1 < $2)
