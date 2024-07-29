@@ -2,7 +2,7 @@
 # Count visible directories in a directory
 #! .params:
 # <"$1"> - absolute directory path
-# ["$2"] - directory suffix
+# ["$2"] - suffix
 #! .uses:
 # <assert> ('-absolute-path' '$1');
 #          Assert a string
@@ -22,10 +22,14 @@ count_dir() {
     [ -d "$1" ] || return 255
     [ -r "$1" ] || return 255
 
-    # Initialize $_count to `0`. Use a glob pattern to match visible
-    # directories in $1 (the directory) with an optional $2 (suffix).
-    _count=0; set -- "${1%/}"/*"$2"/
+    _count=0
 
-    # Assert the glob expanded, otherwise $_count rightfully remains `0`.
-    { [ -e "$1" ] && _count=$#; } || :
+    # Use a glob pattern to match the visible directories in $1 (the directory)
+    # with an optional $2 (suffix).
+    set -- "${1%/}"/*"$2"/
+
+    # Assert the glob expanded.
+    if [ -e "$1" ]; then
+        _count=$#
+    fi
 }
