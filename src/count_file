@@ -16,7 +16,7 @@
 #! .caveats:
 # > `ARG_MAX`.
 #.
-count_files() {
+count_file() {
     # Use count_obj() to obtain the count of visible files and directories into
     # $_count and set it as the third positional parameter.
     count_obj "$1" "$2" || return "$?"
