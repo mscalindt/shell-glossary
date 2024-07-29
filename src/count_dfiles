@@ -4,8 +4,8 @@
 # <"$1"> - absolute directory path
 # ["$2"] - file suffix
 #! .uses:
-# <count_ddirs> ('$1' '$2');
-#               Count hidden (.*) directories in a directory
+# <count_dir_dot> ('$1' '$2');
+#                 Count hidden (.*) directories in a directory
 # <count_dobj> ('$1' '$2');
 #              Count all hidden (.*) objects in a directory
 #! .gives:
@@ -22,9 +22,9 @@ count_dfiles() {
     count_dobj "$1" "$2" || return "$?"
     set -- "$1" "$2" "$_count"
 
-    # Use count_ddirs() to obtain the count of hidden directories into $_count
-    # and subtract it from the total count to determine the count of hidden
-    # files, updating $_count.
-    count_ddirs "$1" "$2" || return "$?"
+    # Use count_dir_dot() to obtain the count of hidden directories into
+    # $_count and subtract it from the total count to determine the count of
+    # hidden files, updating $_count.
+    count_dir_dot "$1" "$2" || return "$?"
     _count=$(($3 - _count))
 }

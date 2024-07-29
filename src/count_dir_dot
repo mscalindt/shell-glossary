@@ -14,7 +14,7 @@
 #! .caveats:
 # > `ARG_MAX`.
 #.
-count_ddirs() {
+count_dir_dot() {
     # Assert $1 is an absolute path.
     assert -absolute-path "$1" || return 255
 
