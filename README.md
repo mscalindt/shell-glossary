@@ -13,10 +13,10 @@ utility calls.
 - [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary/blob/main/src/confirm_cont): Ask for confirmation to continue
 - [COUNT_DIR()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dir): Count visible directories in a directory
 - [COUNT_DIR_DOT()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dir_dot): Count hidden (.*) directories in a directory
-- [COUNT_DOBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dobj): Count all hidden (.*) objects in a directory
 - [COUNT_FILE_DOT()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_file_dot): Count hidden (.*) file objects in a directory
 - [COUNT_FILES()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_files): Count visible file objects in a directory
 - [COUNT_OBJ()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_obj): Count all visible objects in a directory
+- [COUNT_OBJ_DOT()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_obj_dot): Count all hidden (.*) objects in a directory
 - [ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/err): Print formatted text to stderr
 - [ERRF()](https://github.com/mscalindt/shell-glossary/blob/main/src/errF): Print red-colored formatted text to stderr and exit
 - [ESC_SED()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_sed): Escape a string to be used literally as a POSIX `sed` pattern

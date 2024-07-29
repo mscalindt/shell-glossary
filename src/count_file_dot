@@ -6,8 +6,8 @@
 #! .uses:
 # <count_dir_dot> ('$1' '$2');
 #                 Count hidden (.*) directories in a directory
-# <count_dobj> ('$1' '$2');
-#              Count all hidden (.*) objects in a directory
+# <count_obj_dot> ('$1' '$2');
+#                 Count all hidden (.*) objects in a directory
 #! .gives:
 # (0) <$_count> - integer
 #! .rc:
@@ -17,9 +17,9 @@
 # > `ARG_MAX`.
 #.
 count_file_dot() {
-    # Use count_dobj() to obtain the count of hidden files and directories into
-    # $_count and set it as the third positional parameter.
-    count_dobj "$1" "$2" || return "$?"
+    # Use count_obj_dot() to obtain the count of hidden files and directories
+    # into $_count and set it as the third positional parameter.
+    count_obj_dot "$1" "$2" || return "$?"
     set -- "$1" "$2" "$_count"
 
     # Use count_dir_dot() to obtain the count of hidden directories into
