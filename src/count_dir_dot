@@ -1,8 +1,8 @@
 #! .desc:
-# Count hidden (.*) directories in a directory
+# Count `.*` (dot/hidden) directories in a directory
 #! .params:
 # <"$1"> - absolute directory path
-# ["$2"] - directory suffix
+# ["$2"] - suffix
 #! .uses:
 # <assert> ('-absolute-path' '$1');
 #          Assert a string
