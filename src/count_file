@@ -2,7 +2,7 @@
 # Count visible file objects in a directory
 #! .params:
 # <"$1"> - absolute directory path
-# ["$2"] - file suffix
+# ["$2"] - suffix
 #! .uses:
 # <count_dir> ('$1' '$2');
 #             Count visible directories in a directory
@@ -17,14 +17,9 @@
 # > `ARG_MAX`.
 #.
 count_file() {
-    # Use count_obj() to obtain the count of visible files and directories into
-    # $_count and set it as the third positional parameter.
-    count_obj "$1" "$2" || return "$?"
+    count_obj "$1" "$2" || return "$?"  # -> $_count
     set -- "$1" "$2" "$_count"
 
-    # Use count_dir() to obtain the count of visible directories into $_count
-    # and subtract it from the total count to determine the count of visible
-    # files, updating $_count.
-    count_dir "$1" "$2" || return "$?"
+    count_dir "$1" "$2" || return "$?"  # -> $_count
     _count=$(($3 - _count))
 }
