@@ -22,18 +22,20 @@ count_dir_dot() {
     [ -d "$1" ] || return 255
     [ -r "$1" ] || return 255
 
-    # Initialize $_count to `0`. Use a glob pattern to match hidden (.*)
-    # directories in $1 (the directory) with an optional $2/$_sfix (suffix).
-    _count=0; _sfix="$2"; set -- "${1%/}"/.*"$2"/
+    _count=0
 
-    # Assert the glob expanded beyond `.` and/or `..`, otherwise $_count
-    # rightfully remains `0`. The argument count ($#) is used to accommodate
-    # the unspecified order of glob expansion results.
-    if [ "$_sfix" = '.' ] && [ "$#" -ge 2 ]; then
-        _count=$(($# - 1))
-    elif [ "$_sfix" ] && [ -e "$1" ]; then
+    # Use a glob pattern to match dot/hidden directories in $1 (the directory)
+    # with an optional $2 (suffix).
+    set -- "${1%/}"/.*"$2"/
+
+    # Shift `.` and `..` to simplify glob assert.
+    while [ "$1" ]; do case "$1" in
+        */'.'/ | */'..'/) shift ;;
+        *) break ;;
+    esac done
+
+    # Assert the glob expanded.
+    if [ -e "$1" ]; then
         _count=$#
-    elif [ "$#" -ge 3 ]; then
-        _count=$(($# - 2))
     fi
 }
