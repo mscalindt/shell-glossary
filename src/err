@@ -49,11 +49,8 @@ err() {
         _reset='\033[0m'
     fi
 
-    # Save the format into $_format and shift both the color ($1) and the
-    # format ($2) parameters; what will remain of $@ is the text parameter(s).
     _format="$2"; shift 2
 
-    # Print the specified format.
     case "$_format" in
         '-')
             printf "%b%s%b\n" "$_color" "$*" "$_reset" >&2
