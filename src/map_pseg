@@ -23,9 +23,13 @@ map_pseg() {
         *) _pn=1; set -f ;;
     esac
 
-    # Word split the path ($1) based on `/`. The positional parameters are
-    # reassigned such that $2 (the function) becomes $1 and the produced
+    # Field split $1 (path) based on `/`. The positional parameters are
+    # reassigned such that $2 (function name) becomes $1 and the produced
     # arguments are the remaining positional parameters.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
+    #   Language, Subsection: Field Splitting".
     IFS='/'; set -- "$2" $1
 
     # Restore the active state of the pathname expansion flag if appropriate.
@@ -37,9 +41,6 @@ map_pseg() {
     IFS="$_old_IFS" 2> /dev/null
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
-    # Give $1 (the function) the segments to be processed as positional
-    # parameters. Note that the receiver function must account for any empty
-    # positional parameters that could be passed if the path contained a
-    # pattern of consecutive forward slashes.
+    # The receiver function must account for any empty positional parameters.
     "$@"
 }
