@@ -1,7 +1,7 @@
 #! .desc:
-# Get the absolute path into $_fpath
+# Convert a path to absolute
 #! .params:
-# <"$1"> - relative path
+# <"$1"> - path
 #! .gives:
 # <"$_fpath"> - string;
 #               [absolute <$1>]
