@@ -5,13 +5,12 @@
 # <"$2"> - character(s)
 # <"$3"> - string
 # [$4] - backend(
-#     '-sed' - use the host version of `sed`
+#     '-sed' - use the host version of `sed`; $1 cannot be newline
 #     .
 # )
 #! .uses:
-# (-sed) <esc_sed> ("pattern_type" "string");
-#                  Escape a string to be used literally as a POSIX `sed`
-#                  pattern
+# (-sed) <esc_sed> ("sed_string_type" '/' "string");
+#                  Escape a string to be used literally as a POSIX `sed` string
 #! .gives:
 # (0) <"$_str"> - string;
 #                 [modified <$3>]
@@ -32,12 +31,12 @@ replchar() {
     # Use an alternative backend if specified.
     case "$4" in
         '-sed')
-            # Escape any `sed` "pattern" special characters in $1.
-            esc_sed -pattern "$1" || return "$?"
+            # Escape any `sed` "BRE" special characters in $1.
+            esc_sed -BRE / "$1" || return "$?"
             _p="$_str"
 
             # Escape any `sed` "replacement" special characters in $2.
-            esc_sed -replacement "$2" || return "$?"
+            esc_sed -replacement / "$2" || return "$?"
             _r="$_str"
 
             # Store the output of `sed` in $_str using command substitution.

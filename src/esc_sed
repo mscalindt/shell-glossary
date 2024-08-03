@@ -1,42 +1,72 @@
 #! .desc:
-# Escape a string to be used literally as a POSIX `sed` pattern
+# Escape a string to be used literally as a POSIX `sed` string;
+# newlines cannot be used in BRE.
 #! .params:
-# <$1> - pattern_type(
-#     '-pattern' - the pattern section
-#     '-replacement' - the replacement section
+# <$1> - sed_string_type(
+#     '-BRE'
+#     '-replacement'
 #     .
 # )
-# <"$2"> - string
+# <"$2"> - delimiter character
+# <"$3"> - string
 #! .uses:
-# <replchar> ("specific character" "character(s)" '$2');
+# <replchar> ("specific character" "character(s)" '$3');
 #            Replace a specific character with character(s) in a string
 #! .gives:
 # (0) <"$_str"> - string;
-#                 [modified <$2>]
+#                 [modified <$3>]
 #! .rc:
 # (0) success
 # (*) error
 # (255) bad input
 #.
 esc_sed() {
-    # Escape all special characters for `sed` in the given pattern type. Note
-    # that the special characters in `sed`'s extended regular expressions
-    # (`-E`) are not escaped, specifically: ( ) { } | + ?
+    # Escape all special characters for `sed` in the given string type
+    # according to POSIX.1-2017. Note that `sed -E` is not POSIX, therefore any
+    # special characters for `sed`'s ERE mode are not escaped, specifically
+    # (but not limited to): `( ) { } | + ?`.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2017, Volume: Base Definitions, Section: Regular Expressions".
+    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Utilities, Utility:
+    #   sed".
     case "$1" in
-        '-pattern')
-            replchar '\' '\\' "$2" || return "$?"
+        '-BRE')
+            # Newlines cannot be directly matched in BRE according to
+            # POSIX.1-2017. The handling of newlines in BRE is out of the
+            # function's scope.
+            case "$3" in
+                *'
+'*)
+                    return 255
+;;
+            esac
+
+            # Escape RE special characters. The <backslash> is used to escape
+            # other characters, therefore it must be escaped first.
+            replchar '\' '\\' "$3" || return "$?"
             replchar '.' '\.' "$_str" || return "$?"
             replchar '*' '\*' "$_str" || return "$?"
             replchar '[' '\[' "$_str" || return "$?"
             replchar ']' '\]' "$_str" || return "$?"
             replchar '^' '\^' "$_str" || return "$?"
             replchar '$' '\$' "$_str" || return "$?"
-            replchar '/' '\/' "$_str" || return "$?"
+
+            # Escape `sed` specified delimiter character.
+            replchar "$2" '\'"$2" "$_str" || return "$?"
         ;;
         '-replacement')
-            replchar '\' '\\' "$2" || return "$?"
+            # Escape RE special characters. The <backslash> is used to escape
+            # other characters, therefore it must be escaped first.
+            replchar '\' '\\' "$3" || return "$?"
+
+            # Escape replacement string special characters.
             replchar '&' '\&' "$_str" || return "$?"
-            replchar '/' '\/' "$_str" || return "$?"
+            replchar '
+' '\n' "$_str" || return "$?"
+
+            # Escape `sed` specified delimiter character.
+            replchar "$2" '\'"$2" "$_str" || return "$?"
         ;;
         *)
             return 255

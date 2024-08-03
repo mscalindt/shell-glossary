@@ -19,7 +19,7 @@ utility calls.
 - [COUNT_OBJ_DOT()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_obj_dot): Count all `.*` (dot/hidden) objects in a directory
 - [ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/err): Print formatted text to stderr
 - [ERRF()](https://github.com/mscalindt/shell-glossary/blob/main/src/errF): Print red-colored formatted text to stderr and exit
-- [ESC_SED()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_sed): Escape a string to be used literally as a POSIX `sed` pattern
+- [ESC_SED()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_sed): Escape a string to be used literally as a POSIX `sed` string
 - [ESC_STR()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_str): Backslash escape character(s) in a string
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload): Read a file raw
 - [FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline): Get a specific line in a file
