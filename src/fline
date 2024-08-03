@@ -6,6 +6,7 @@
 #! .uses:
 # <assert> ('-natural-n' '$1');
 #          Assert a string
+# <&9>
 #! .gives:
 # (0) <"$_line"> - string
 #! .rc:
