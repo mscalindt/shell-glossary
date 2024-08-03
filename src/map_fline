@@ -3,6 +3,8 @@
 #! .params:
 # <"$1"> - absolute file path
 # <$2> - function name
+#! .uses:
+# <&9>
 #! .rc:
 # (0) success
 # (255) bad input/usage
