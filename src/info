@@ -31,11 +31,13 @@
 info() {
     # Check if color codes should be used.
     if [ "$NO_COLOR" ]; then
-        _color=
         _reset=
+        _color=
     else
+        _reset='\033[0m'
+
         case $1 in
-            '-') _color= ;;
+            '-') _color= _reset= ;;
             '-bk') _color='\033[1;30m' ;;
             '-r') _color='\033[1;31m' ;;
             '-g') _color='\033[1;32m' ;;
@@ -46,7 +48,6 @@ info() {
             '-w') _color='\033[1;37m' ;;
             *) return 255 ;;
         esac
-        _reset='\033[0m'
     fi
 
     _format="$2"; shift 2
