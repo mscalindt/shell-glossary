@@ -15,7 +15,7 @@ mask_check() {
     # Remove `0x` from $1 (bit) if present.
     set -- "${1#0x}" "$2"
 
-    # Assert $1 is a natural number and a valid bit.
+    # Assert $1 is a natural number and a valid bit (power of 2).
     assert -bit "$1" || return 255
 
     # Assert $2 is a valid shell variable name.
@@ -27,6 +27,6 @@ mask_check() {
     # Assert the variable expanded to a whole number.
     assert -whole-n "$2" || return 255
 
-    # Assert whether $1 (the specified bit) is set in $2 (the bitmask).
+    # Assert whether $1 (bit) is set in $2 (bitmask).
     [ "$(($1 & $2))" -eq "$1" ]
 }
