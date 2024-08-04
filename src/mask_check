@@ -1,7 +1,10 @@
 #! .desc:
 # Check a bit, the power of 2, in a pseudo-bitmask shell variable
 #! .params:
-# <$1> - bit
+# <$1> - bit(
+#     '0' - check if no bits are set
+#     .
+# )
 # <$2> - variable name
 #! .uses:
 # <assert> ("type" "string");
@@ -14,6 +17,23 @@
 mask_check() {
     # Remove `0x` from $1 (bit) if present.
     set -- "${1#0x}" "$2"
+
+    # Handle value `0` for $1 (bit) specially: check if no bits are set.
+    case "$1" in
+        '0')
+            # Assert $2 is a valid shell variable name.
+            assert -shell-name "$2" || return 255
+
+            # Safely evaluate $2 (variable name) into its literal content.
+            eval set -- "$1" "\$$2"
+
+            # Assert the variable expanded to a whole number.
+            assert -whole-n "$2" || return 255
+
+            # Assert whether $2 (bitmask) is `0`, i.e. no bits are set.
+            [ "$2" -eq 0 ] && return 0 || return 1
+        ;;
+    esac
 
     # Assert $1 is a natural number and a valid bit (power of 2).
     assert -bit "$1" || return 255
