@@ -23,9 +23,13 @@ map_vline() {
         *) _pn=1; set -f ;;
     esac
 
-    # Word split $1 (string) based on the linefeed(s). The positional
-    # parameters are reassigned such that $2 (the function) becomes $1 and the
-    # produced arguments are the remaining positional parameters.
+    # Field split $1 (string) based on a newline. The positional parameters are
+    # reassigned such that $2 (function name) becomes $1 and the produced
+    # arguments are the remaining positional parameters.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
+    #   Language, Subsection: Field Splitting".
     IFS='
 '
     set -- "$2" $1
@@ -39,17 +43,11 @@ map_vline() {
     IFS="$_old_IFS" 2> /dev/null
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
-    # Avoid giving the function an empty string or a string that initially
-    # consisted of just empty lines (linefeeds). This works due to the special
-    # meaning of <space>, <tab>, and <newline> in $IFS (field splitting).
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Field Splitting".
+    # Due to <space>, <tab>, and <newline> ("IFS white space") possessing a
+    # special behavior in $IFS (field splitting), $2 is populated only if the
+    # string contains characters other than a newline. Assert the string is not
+    # empty.
     [ "$2" ] || return 0
 
-    # Give $1 (the function) the lines to be processed as positional
-    # parameters. The function will be called only if there is something to
-    # process, as noted in the comment above.
     "$@"
 }
