@@ -1,7 +1,10 @@
 #! .desc:
 # Unset a bit, the power of 2, in a pseudo-bitmask shell variable
 #! .params:
-# <$1> - bit
+# <$1> - bit(
+#     '0' - unset all bits
+#     .
+# )
 # <$2> - variable name
 #! .uses:
 # <assert> ("type" "string");
@@ -13,6 +16,17 @@
 mask_unset() {
     # Remove `0x` from $1 (bit) if present.
     set -- "${1#0x}" "$2"
+
+    # Handle value `0` for $1 (bit) specially: unset all bits.
+    case "$1" in
+        '0')
+            # Assert $2 is a valid shell variable name.
+            assert -shell-name "$2" || return 255
+
+            # Unset all bits in $2 (bitmask).
+            eval "$2=0"
+        ;;
+    esac
 
     # Assert $1 is a natural number and a valid bit (power of 2).
     assert -bit "$1" || return 255
