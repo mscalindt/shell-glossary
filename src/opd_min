@@ -1,19 +1,16 @@
 #! .desc:
-# Signify insufficient operand count (below minimum required); ($1 < $2)
+# Signify operand count below minimum required
 #! .params:
-# <$1> - current operand count
-# [$2] - minimum required count
+# <$1> - operand count
+# [$2] - minimum count
 #.
 opd_min() {
-    # Print a message for insufficient number of operands.
     printf "%s: Insufficient operands: %s\n" "${0##*/}" "$1" >&2
 
-    # Print the minimum required operand count if given.
     if [ "$2" ]; then
         printf " > min required: %s\n" "$2" >&2
     fi
 
-    # Print the usual `--help` hint.
     printf "%s: Try '%s --help' for more information.\n" \
         "${0##*/}" "${0##*/}" >&2
 }
