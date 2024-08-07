@@ -4,19 +4,16 @@
 # <"$1"> - incompatible option
 #! .uses:
 # <opt_match> $ - string;
-#                 last literal option successfully matched
+#                 previous option
 #! .ec:
 # (2) incompatible option
 #.
 opt_compat_fail() {
-    # Print the incompatible option.
     printf "%s: '%s': Incompatible with: '%s'\n" \
         "${0##*/}" "$opt_match" "$1" >&2
 
-    # Print the usual `--help` hint.
     printf "%s: Try '%s --help' for more information.\n" \
         "${0##*/}" "${0##*/}" >&2
 
-    # Issue the exit for incompatible option usage (`2`).
     exit 2
 }
