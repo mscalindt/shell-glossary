@@ -54,7 +54,7 @@ a breeze.
 - [OPT_COMPAT_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_compat_fail): Signify option incompatibility with a previous option and exit
 - [OPT_ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_err): Signify option failure
 - [OPT_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_fail): Signify option failure and exit
-- [OPT_INVALID()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_invalid): Signify invalid (`-`...) option
+- [OPT_INVALID()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_invalid): Signify invalid short option
 - [OPT_UNKNOWN()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_unknown): Signify unknown (*) option
 - [OPT_UNRECOGNIZED()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_unrecognized): Signify unrecognized (`--`...) option
 - [SCOPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/scopt): True if specific complex (argument) option
