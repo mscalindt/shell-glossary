@@ -52,7 +52,7 @@ a breeze.
 - [OPD_MAX()](https://github.com/mscalindt/shell-glossary/blob/main/src/opd_max): Signify operand count exceeds maximum allowed
 - [OPD_MIN()](https://github.com/mscalindt/shell-glossary/blob/main/src/opd_min): Signify operand count below minimum required
 - [OPT_COMPAT_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_compat_fail): Signify option incompatibility with a previous option and exit
-- [OPT_ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_err): Signify failed option
+- [OPT_ERR()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_err): Signify option failure
 - [OPT_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_fail): Signify failed option and exit
 - [OPT_INVALID()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_invalid): Signify invalid (`-`...) option
 - [OPT_UNKNOWN()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_unknown): Signify unknown (*) option
