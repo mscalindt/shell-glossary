@@ -69,7 +69,7 @@ path_spec() {
 
     # If $_path is resolved to a directory, add a trailing slash to align it
     # with the directory path specification.
-    if [ -d "$_path" ]; then
+    if [ ! -h "$_path" ] && [ -d "$_path" ]; then
         _path="$_path/"
     fi
 }
