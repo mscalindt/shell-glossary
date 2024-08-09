@@ -1,27 +1,40 @@
 #! .desc:
-# True if specific optional-complex (possible argument) option
+# Match specific option(s) with an optional option argument
 #! .params:
-# <"$1"+> - *
+# <"$1"+> - option(s)
 #! .uses:
 # <opt> $ - string;
-#           first positional parameter of the main environment
+#           first positional parameter
 #! .gives:
 # (0) <"$opt_arg"> - string;
 #                    option argument
 # (0) <"$opt_match"> - string;
 #                      literal option matched
-# (0) <$shiftN> - integer;
-#                 shift count
+# (0) <$opt_shift> - integer;
+#                    shift count for option
 #! .rc:
-# (0) match
+# (0) success
 # (1) no match
 #! .ec:
 # (2) bad argument specification
 #.
 scopt_optional() {
-    # Try to match the given option(s) possibly with an argument.
     while [ "$1" ]; do
-        # The option cannot end with `=`, otherwise it's deemed invalid.
+        # Try to match an option without an argument.
+        case "$opt" in
+            "$1")
+                opt_arg=
+                opt_match="$1"
+                opt_shift=1
+                opt=
+
+                return 0
+            ;;
+        esac
+
+        # Assert any potential argument specification is valid. An option
+        # cannot end with `=` after being matched, otherwise it's invalid;
+        # example: `foo=`.
         case "$opt" in
             "$1"'=')
                 printf "%s: Invalid argument specification for: '%s'\n" \
@@ -30,20 +43,23 @@ scopt_optional() {
                     "${0##*/}" "${0##*/}" >&2
                 exit 2
             ;;
+        esac
+
+        # Try to match an option with an argument separated by `=` on the same
+        # positional parameter; example: `foo=bar`.
+        case "$opt" in
             "$1"'='*)
-                opt_arg="${opt#"$1"=}"; opt=; opt_match="$1"; shiftN=1
-                return 0
-            ;;
-            "$1")
-                opt_arg=; opt=; opt_match="$1"; shiftN=1
+                opt_arg="${opt#"$1"=}"
+                opt_match="$1"
+                opt_shift=1
+                opt=
+
                 return 0
             ;;
         esac
 
-        # $1 (the current option) doesn't match; shift it to try the next one.
         shift
     done
 
-    # No match.
     return 1
 }

@@ -58,6 +58,6 @@ a breeze.
 - [OPT_UNKNOWN()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_unknown): Signify unknown option
 - [OPT_UNRECOGNIZED()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_unrecognized): Signify unrecognized long option
 - [SCOPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/scopt): Match specific option(s) with a mandatory option argument
-- [SCOPT_OPTIONAL()](https://github.com/mscalindt/shell-glossary/blob/main/src/scopt_optional): True if specific optional-complex (possible argument) option
+- [SCOPT_OPTIONAL()](https://github.com/mscalindt/shell-glossary/blob/main/src/scopt_optional): Match specific option(s) with an optional option argument
 - [SOPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/sopt): True if simple (no argument) option
 - [SSOPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/ssopt): True if specific simple (no argument) option
