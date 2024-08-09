@@ -8,7 +8,7 @@
 #          Assert a string
 #! .gives:
 # (0) <"$_path"> - string;
-#                  [modified <$2>]
+#                  [modified <$1>]
 #! .rc:
 # (0) success
 # (1) bad path result
