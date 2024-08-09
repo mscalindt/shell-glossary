@@ -27,26 +27,26 @@ replchar() {
     # Use an alternative backend if specified.
     case "$4" in
         '-sed')
-            # Escape any `sed` "BRE" special characters in $1.
             esc_sed -BRE / "$1" || return "$?"
-            _p="$_str"
+            set -- "$_str" "$2" "$3"
 
-            # Escape any `sed` "replacement" special characters in $2.
             esc_sed -replacement / "$2" || return "$?"
-            _r="$_str"
+            set -- "$1" "$_str" "$3"
 
             # Store the output of `sed` in $_str using command substitution.
-            # The combination of `printf x` and subsequent removal of `x`
-            # ensures preservation of any trailing linefeeds, addressing a
-            # quirk in command substitution where trailing linefeeds are
-            # stripped.
+            # The custom `x` character at the end and its subsequent removal
+            # outside the command substitution preserves any trailing linefeeds
+            # stripped by the command substitution.
+            #
+            # For more information, refer to:
+            # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell
+            #   Command Language, Subsection: Command Substitution".
             _str=$(
-                printf "%s" "$3" | sed "s/$_p/$_r/g" || return "$?"
-                printf x
+                printf "%s" "$3" | sed "s/$1/$2/g" || return "$?"
+                printf "%s" 'x'
             ) 2> /dev/null || return "$?"
             _str="${_str%?}"
 
-            # The alternative backend has successfully finished operation.
             return 0
         ;;
     esac
