@@ -11,7 +11,7 @@
 #                  [modified <$1>]
 #! .rc:
 # (0) success
-# (1) bad path result
+# (1) bad path resolution
 # (255) bad input
 #.
 path_spec() {
@@ -33,9 +33,11 @@ path_spec() {
         *) _pn=1; set -f ;;
     esac
 
-    # Word split the path ($1) and any join path ($2) based on `/`. Note that
-    # the following code snippet is not usable outside of this function's
-    # context due to a quirk in word splitting.
+    # Field split $1 (path) and $2 (join path) based on `/`.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
+    #   Language, Subsection: Field Splitting".
     IFS='/'; set -- $1/$2
 
     # Restore the active state of the pathname expansion flag if appropriate.
@@ -47,29 +49,29 @@ path_spec() {
     IFS="$_old_IFS" 2> /dev/null
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
-    # Build a normalized and assertable path according to the split chunks.
     _path=; for _segment in "$@"; do
-        # Assert $_segment is an actual chunk of the path (non-empty argument);
-        # empty arguments can be produced if the path contains a pattern of
-        # consecutive forward slashes.
+        # Skip empty arguments. Our case of field splitting (the method used to
+        # turn the path into individual segments) produces empty arguments on
+        # consecutive delimiter appearances.
         [ "$_segment" ] || continue
 
         # Resolve the path.
-        # `.` -- the special directory name for the current directory.
-        # `..` -- the special directory name for the parent directory.
+        # `.`: special directory name denoting the current directory.
+        # `..`: special directory name denoting the parent directory.
         case "$_segment" in
             '.') continue ;;
             '..') _path="${_path%/*}" ;;
             *) _path="$_path/$_segment" ;;
         esac
 
-        # Assert the path result is valid. Paths that attempt to resolve above
-        # their root are intentionally rejected.
+        # Assert the path resolution is valid. Paths that attempt to resolve
+        # above their root at any point in resolution are intentionally
+        # rejected.
         [ "$_path" ] || return 1
     done
 
-    # If $_path is resolved to a directory, add a trailing slash to align it
-    # with the directory path specification.
+    # If the path is resolved to a true directory (not a symbolic link), add a
+    # trailing slash to align it with the directory specification.
     if [ ! -h "$_path" ] && [ -d "$_path" ]; then
         _path="$_path/"
     fi
