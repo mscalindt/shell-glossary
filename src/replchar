@@ -24,10 +24,6 @@ replchar() {
     # supported.
     [ "${#1}" -eq 1 ] || return 255
 
-    # Define sensible constraints for usage.
-    # `128` denotes the ASCII set.
-    [ "${#2}" -le 128 ] || return 255
-
     # Use an alternative backend if specified.
     case "$4" in
         '-sed')
