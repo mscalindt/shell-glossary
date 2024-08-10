@@ -4,6 +4,7 @@
 # <"$1"> - token
 # <"$2"> - single-quote-escaped string
 # [$3] - match_type(
+#     '-exact' - the token is a literal argument
 #     '-prefix' - the token is a prefix
 #     '-suffix' - the token is a suffix
 #     .
@@ -69,6 +70,14 @@ sq_arg_extract() {
     # string and its nature (strings wrapped in single quotes) naturally
     # prevents code execution.
     case "$3" in
+        '-exact')
+            _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
+                case "$1" in
+                    "$_token") _arg="$1"; return 0 ;;
+                    *) shift && continue ;;
+                esac
+            done
+        ;;
         '-prefix')
             _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
