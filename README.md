@@ -60,4 +60,4 @@ a breeze.
 - [SCOPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/scopt): Match specific option(s) with a mandatory option argument
 - [SCOPT_OPTIONAL()](https://github.com/mscalindt/shell-glossary/blob/main/src/scopt_optional): Match specific option(s) with an optional option argument
 - [SOPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/sopt): Match `-`-delimited short/long option without an option argument
-- [SSOPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/ssopt): True if specific simple (no argument) option
+- [SSOPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/ssopt): Match specific option(s) without an option argument

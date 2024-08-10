@@ -1,33 +1,35 @@
 #! .desc:
-# True if specific simple (no argument) option
+# Match specific option(s) without an option argument
 #! .params:
-# <"$1"+> - *
+# <"$1"+> - option(s)
 #! .uses:
 # <opt> $ - string;
-#           first positional parameter of the main environment
+#           first positional parameter
 #! .gives:
 # (0) <"$opt_match"> - string;
 #                      literal option matched
-# (0) <$shiftN> - integer;
-#                 shift count
+# (0) <$opt_shift> - integer;
+#                    shift count for option
 #! .rc:
-# (0) match
+# (0) success
 # (1) no match
 #.
 ssopt() {
-    # Try to match the given option(s) without an argument.
     while [ "$1" ]; do
+        # Try to match an option without an argument.
         case "$opt" in
             "$1")
-                opt=; opt_match="$1"; shiftN=1
+                opt_arg=
+                opt_match="$1"
+                opt_shift=1
+                opt=
+
                 return 0
             ;;
         esac
 
-        # $1 (the current option) doesn't match; shift it to try the next one.
         shift
     done
 
-    # No match.
     return 1
 }
