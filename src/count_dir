@@ -15,7 +15,6 @@
 # > `ARG_MAX`.
 #.
 count_dir() {
-    # Assert $1 is an absolute path.
     assert -absolute-path "$1" || return 255
 
     # Assert $1 is a valid directory.
