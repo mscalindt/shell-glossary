@@ -6,6 +6,8 @@
 #! .uses:
 # <ccount> ('$1' '$2');
 #          Count the times a character appears in a string
+#! .gives:
+# (0|1) <$_count> - integer
 #! .rc:
 # (0) even
 # (1) uneven
