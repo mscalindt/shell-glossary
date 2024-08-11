@@ -20,7 +20,6 @@ mask_unset() {
     # Handle value `0` for $1 (bit) specially: unset all bits.
     case "$1" in
         '0')
-            # Assert $2 is a valid shell variable name.
             assert -shell-name "$2" || return 255
 
             # Unset all bits in $2 (bitmask).
@@ -28,10 +27,7 @@ mask_unset() {
         ;;
     esac
 
-    # Assert $1 is a natural number and a valid bit (power of 2).
     assert -bit "$1" || return 255
-
-    # Assert $2 is a valid shell variable name.
     assert -shell-name "$2" || return 255
 
     # Unset $1 (bit) in $2 (bitmask).
