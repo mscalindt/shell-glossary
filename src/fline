@@ -17,7 +17,6 @@
 # > Reading /proc is unreliable.
 #.
 fline() {
-    # Assert $1 is a natural number.
     assert -natural-n "$1" || return 255
 
     # Assert $2 exists and is a file.
