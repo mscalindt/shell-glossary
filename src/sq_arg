@@ -18,7 +18,6 @@
 # (255) bad input
 #.
 sq_arg() {
-    # Assert $1 is a whole number.
     assert -whole-n "$1" || return 255
 
     # Assert $2 is a valid single-quote-escaped string.
