@@ -9,6 +9,9 @@
 #! .uses:
 # [NO_COLOR] $ - environment variable;
 #                disables colored output
+#! .sets:
+# <_action> $ - "read -r" | "$_def_action";
+# <_def_action> $ - 'N' | 'Y';
 #! .rc:
 # (0) permitted
 # (1) forbidden
