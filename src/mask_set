@@ -14,10 +14,7 @@ mask_set() {
     # Remove `0x` from $1 (bit) if present.
     set -- "${1#0x}" "$2"
 
-    # Assert $1 is a natural number and a valid bit (power of 2).
     assert -bit "$1" || return 255
-
-    # Assert $2 is a valid shell variable name.
     assert -shell-name "$2" || return 255
 
     # Set $1 (bit) in $2 (bitmask).
