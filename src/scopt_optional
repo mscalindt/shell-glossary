@@ -10,8 +10,9 @@
 #                    option argument
 # (0) <"$opt_match"> - string;
 #                      literal option matched
-# (0) <$opt_shift> - integer;
-#                    shift count for option
+#! .sets:
+# (0) <opt> $ - '';
+# (0) <opt_shift> $ - '1';
 #! .rc:
 # (0) success
 # (1) no match
