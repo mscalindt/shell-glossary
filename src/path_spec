@@ -15,7 +15,6 @@
 # (255) bad input
 #.
 path_spec() {
-    # Assert $1 is an absolute path.
     assert -absolute-path "$1" || return 255
 
     # Save $IFS.
