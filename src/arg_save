@@ -22,7 +22,6 @@ arg_save() {
         ;;
     esac
 
-    # Assert $2 is a valid shell variable name.
     assert -shell-name "$2" || return 255
 
     # The usage of `eval` here is safe. Assuming $1 is `"'\''abc` (we escape
