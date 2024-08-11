@@ -1,5 +1,5 @@
 #! .desc:
-# Escape a string to be used literally as a POSIX `sed` string;
+# Escape a string to be used literally as a POSIX.1-2017 `sed` string;
 # newlines cannot be used in BRE.
 #! .params:
 # <$1> - sed_string_type(

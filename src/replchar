@@ -10,7 +10,8 @@
 # )
 #! .uses:
 # (-sed) <esc_sed> ("sed_string_type" '/' "string");
-#                  Escape a string to be used literally as a POSIX `sed` string
+#                  Escape a string to be used literally as a POSIX.1-2017 `sed`
+#                  string
 #! .gives:
 # (0) <"$_str"> - string;
 #                 [modified <$3>]
