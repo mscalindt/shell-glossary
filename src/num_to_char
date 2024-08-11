@@ -23,7 +23,6 @@ num_to_char() {
         '-'[0123456789]*) _chars=; return 0 ;;
     esac
 
-    # Assert $1 is a whole number.
     assert -whole-n "$1" || return 255
 
     # Support `-wschars`. The added trailing whitespace character will be
