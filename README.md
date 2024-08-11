@@ -2,8 +2,8 @@
 
 ### Overview
 
-A collection of reusable pure POSIX `sh` functions with optional external
-utility calls.
+A collection of reusable pure POSIX.1-2017 `sh` functions with optional
+external utility calls.
 
 ### Functions List:
 
@@ -39,8 +39,8 @@ utility calls.
 
 ### Overview
 
-A collection of reusable pure POSIX `sh` functions to make shell option parsing
-a breeze.
+A collection of reusable pure POSIX.1-2017 `sh` functions to make shell option
+parsing a breeze.
 
 ### Functions List:
 
