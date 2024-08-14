@@ -38,7 +38,7 @@ arg_save() {
     #   expansion carry their significance to the second expansion.
     #
     # For more information, refer to:
-    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Quoting".
     { eval "$2=\"\$$2 '\$1'\""; } 2> /dev/null || return 255
 }
