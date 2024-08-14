@@ -85,9 +85,9 @@ assert() {
             # intentionally expanded to be locale-independent.
             #
             # For more information, refer to:
-            # > "POSIX.1-2017, Volume: Base Definitions, Section: Definitions,
+            # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
             #   Subsection: Name".
-            # > "POSIX.1-2017, Volume: Base Definitions, Section: Regular
+            # > "POSIX.1-2024, Volume: Base Definitions, Section: Regular
             #   Expressions, Subsection: RE Bracket Expression".
             case "$2" in
                 [0123456789]*)
