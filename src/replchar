@@ -10,8 +10,7 @@
 # )
 #! .uses:
 # (-sed) <esc_sed> ("sed_string_type" '/' "string");
-#                  Escape a string to be used literally as a POSIX.1-2017 `sed`
-#                  string
+#                  Escape a string to be used literally as a POSIX `sed` string
 #! .gives:
 # (0) <"$_str"> - string;
 #                 [modified <$3>]
@@ -28,7 +27,7 @@ replchar() {
     # Use an alternative backend if specified.
     case "$4" in
         '-sed')
-            esc_sed -BRE / "$1" || return "$?"
+            esc_sed -RE / "$1" || return "$?"
             set -- "$_str" "$2" "$3"
 
             esc_sed -replacement / "$2" || return "$?"

@@ -1,9 +1,9 @@
 #! .desc:
-# Escape a string to be used literally as a POSIX.1-2017 `sed` string;
-# newlines cannot be used in BRE.
+# Escape a string to be used literally as a POSIX `sed` string;
+# newlines cannot be used in RE.
 #! .params:
 # <$1> - sed_string_type(
-#     '-BRE'
+#     '-RE'
 #     '-replacement'
 #     .
 # )
@@ -22,18 +22,17 @@
 #.
 esc_sed() {
     # Escape all special characters for `sed` in the given string type
-    # according to POSIX.1-2017. Note that `sed -E` is not POSIX, therefore any
-    # special characters for `sed`'s ERE mode are not escaped, specifically
-    # (but not limited to): `( ) { } | + ?`.
+    # according to POSIX.1-2024. Since POSIX.1-2024, `sed -E` is specified,
+    # therefore all ERE special characters will also be escaped.
     #
     # For more information, refer to:
-    # > "POSIX.1-2017, Volume: Base Definitions, Section: Regular Expressions".
-    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Utilities, Utility:
+    # > "POSIX.1-2024, Volume: Base Definitions, Section: Regular Expressions".
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
     #   sed".
     case "$1" in
-        '-BRE')
-            # Newlines cannot be directly matched in BRE according to
-            # POSIX.1-2017. The handling of newlines in BRE is out of the
+        '-RE')
+            # Newlines cannot be directly matched in RE according to
+            # POSIX.1-2024. The handling of newlines in RE is out of the
             # function's scope.
             case "$3" in
                 *'
@@ -51,6 +50,13 @@ esc_sed() {
             replchar ']' '\]' "$_str" || return "$?"
             replchar '^' '\^' "$_str" || return "$?"
             replchar '$' '\$' "$_str" || return "$?"
+            replchar '(' '\(' "$_str" || return "$?"
+            replchar ')' '\)' "$_str" || return "$?"
+            replchar '{' '\{' "$_str" || return "$?"
+            replchar '}' '\}' "$_str" || return "$?"
+            replchar '|' '\|' "$_str" || return "$?"
+            replchar '+' '\+' "$_str" || return "$?"
+            replchar '?' '\?' "$_str" || return "$?"
 
             # Escape `sed` specified delimiter character.
             replchar "$2" '\'"$2" "$_str" || return "$?"
