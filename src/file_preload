@@ -36,7 +36,7 @@ file_preload() {
             # trailing linefeeds stripped by the command substitution.
             #
             # For more information, refer to:
-            # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell
+            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Command Substitution".
             _file=$(
                 while IFS= read -r _line <&9; do
