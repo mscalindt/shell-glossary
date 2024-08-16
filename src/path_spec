@@ -1,5 +1,5 @@
 #! .desc:
-# Normalize a path into an assertable path specification
+# Normalize a path into an assertable canonical path specification
 #! .params:
 # <"$1"> - absolute path
 # ["$2"] - join path
@@ -11,7 +11,6 @@
 #                  [modified <$1>]
 #! .rc:
 # (0) success
-# (1) bad path resolution
 # (255) bad input
 #.
 path_spec() {
@@ -25,7 +24,7 @@ path_spec() {
     # disabled to disable the expansion of `*`.
     #
     # For more information, refer to:
-    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Pathname Expansion".
     case "$-" in
         *'f'*) _pn=0 ;;
@@ -35,9 +34,9 @@ path_spec() {
     # Field split $1 (path) and $2 (join path) based on `/`.
     #
     # For more information, refer to:
-    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Field Splitting".
-    IFS='/'; set -- $1/$2
+    IFS='/'; set -- "$1" "/$2"; set -- $1$2
 
     # Restore the active state of the pathname expansion flag if appropriate.
     if [ "$_pn" = 1 ]; then
@@ -48,30 +47,58 @@ path_spec() {
     IFS="$_old_IFS" 2> /dev/null
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
-    _path=; for _segment in "$@"; do
-        # Skip empty arguments. Our case of field splitting (the method used to
-        # turn the path into individual segments) produces empty arguments on
-        # consecutive delimiter appearances.
+    # Define initial $_path with a slash (`/`); necessary to establish a
+    # standard resolving behavior independent of how the field splitting
+    # handled the `/` delimiter.
+    _path=/; for _segment in "$@"; do
+        # Skip empty arguments; field splitting may have produced empty
+        # arguments on consecutive delimiter appearances.
         [ "$_segment" ] || continue
 
-        # Resolve the path.
+        # Resolve the path to its canonical representation.
         # `.`: special directory name denoting the current directory.
         # `..`: special directory name denoting the parent directory.
+        #
+        # As specified by the standard, when `..` is encountered at the root
+        # (`/`), the path remains unchanged.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+        #   Subsection: Pathname Resolution".
         case "$_segment" in
-            '.') continue ;;
-            '..') _path="${_path%/*}" ;;
-            *) _path="$_path/$_segment" ;;
+            '.')
+                continue
+            ;;
+            '..')
+                _path="${_path%/}"
+                _path="${_path%/*}"
+                _path="${_path%/}/"
+            ;;
+            *)
+                _path="$_path$_segment/"
+            ;;
         esac
-
-        # Assert the path resolution is valid. Paths that attempt to resolve
-        # above their root at any point in resolution are intentionally
-        # rejected.
-        [ "$_path" ] || return 1
     done
 
-    # If the path is resolved to a true directory (not a symbolic link), add a
-    # trailing slash to align it with the directory specification.
-    if [ ! -h "$_path" ] && [ -d "$_path" ]; then
-        _path="$_path/"
+    # If $_path is a true directory and not lit. root (`/`), add a trailing
+    # slash to align it with the specification of a directory. Otherwise, make
+    # sure $_path doesn't end with a trailing slash. Note that these practices
+    # are more about convention and consistency rather than strict requirements
+    # of the POSIX standard.
+    #
+    # A trailing slash, if present, will be removed for operator `-h` of
+    # `test`, because otherwise it will cause the link to be followed and thus
+    # the assert `! -h` may always be a false-positive.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+    #   Subsection: Pathname Resolution".
+    case "$_path" in
+        '/') return 0 ;;
+    esac
+    if [ -d "$_path" ] && [ ! -h "${_path%/}" ]; then
+        _path="${_path%/}/"
+    else
+        _path="${_path%/}"
     fi
 }
