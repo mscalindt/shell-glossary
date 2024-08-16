@@ -41,6 +41,7 @@ map_pseg() {
     IFS="$_old_IFS" 2> /dev/null
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
-    # The receiver function must account for any empty positional parameters.
+    # The receiver function may have to account for any empty positional
+    # parameters.
     "$@"
 }
