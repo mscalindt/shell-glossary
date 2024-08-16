@@ -16,7 +16,7 @@ map_vline() {
     # disabled to disable the expansion of `*`.
     #
     # For more information, refer to:
-    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Pathname Expansion".
     case "$-" in
         *'f'*) _pn=0 ;;
@@ -28,7 +28,7 @@ map_vline() {
     # arguments are the remaining positional parameters.
     #
     # For more information, refer to:
-    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Field Splitting".
     IFS='
 '
