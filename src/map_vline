@@ -49,5 +49,7 @@ map_vline() {
     # empty.
     [ "$2" ] || return 0
 
+    # The receiver function doesn't have to account for empty positional
+    # parameters.
     "$@"
 }
