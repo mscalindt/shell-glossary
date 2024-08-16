@@ -67,6 +67,10 @@ assert() {
         '-absolute-path')
             # Assert $2 is an absolute (/*) path. An absolute path is any
             # string of which the first character is `/`.
+            #
+            # For more information, refer to:
+            # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+            #   Subsection: Absolute Pathname".
             case "$2" in
                 '/'*) : ;;
                 *) return 1 ;;
