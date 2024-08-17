@@ -79,11 +79,13 @@ replchar() {
     #   Language, Subsection: Field Splitting".
     #
     # (2024-08-16) Note:
-    # According to POSIX.1-2024, the usage of field splitting is not POSIX
-    # anymore due to IFS white space being implementation-defined. To address
+    # According to POSIX.1-2024, stable usage of field splitting is not POSIX
+    # anymore due to "IFS white space" being implementation-defined. To address
     # the issues brought upon, the environment variable `POSIX_COMPAT`, if set,
     # forces the function to always use parameter expansion; otherwise default
-    # behavior applies.
+    # behavior applies. Field splitting is preferred and remains the default
+    # due to its generally superior performance, which scales better with
+    # larger input sizes compared to parameter expansion.
     if [ "$POSIX_COMPAT" ]; then
         # Traverse $3 (string), replacing the occurences of $1 with $2.
         _str=; _a="$3"; while :; do case "$_a" in
