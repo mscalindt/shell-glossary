@@ -5,7 +5,7 @@
 #     '-bit' - N in base 2 that represents a valid bit
 #     '-n' - N [0,1,00,01...]
 #     '-natural-n' - natural N [1...]
-#     '-whole-n' - whole N [0,1...]
+#     '-whole-n' - whole N [0,1...] (non-negative integer)
 #     '-absolute-path' - absolute path (/*)
 #     '-relative-path' - relative path
 #     '-shell-name' - shell name
@@ -55,7 +55,8 @@ assert() {
         '-whole-n')
             # Assert $2 is a whole number (`0`, `1`, `2`, ...). A whole number
             # is `0` and any string consisting only of digits, of which the
-            # first is not `0`.
+            # first is not `0`. Also known as "non-negative integer" in the
+            # POSIX standard.
             case :"$2${2#*[!0123456789]}" in
                 :) return 1 ;;
                 :00) : ;;
