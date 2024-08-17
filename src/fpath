@@ -5,8 +5,12 @@
 #! .gives:
 # <"$_path"> - string;
 #              [absolute <$1>]
+#! .ec:
+# (255) bad input
 #.
 fpath() {
+    [ "$1" ] || exit 255
+
     # Use $PWD (the pathname of the current working directory) to convert a
     # relative path into an absolute one if it's not already.
     case "$1" in
