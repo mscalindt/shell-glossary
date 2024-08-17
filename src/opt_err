@@ -4,8 +4,12 @@
 # <"$1"> - option
 # ["$2"] - argument
 # ["$3"+] - valid argument(s)
+#! .ec:
+# (255) bad input
 #.
 opt_err() {
+    [ "$1" ] || exit 255
+
     if [ "$2" ]; then
         printf "%s: Bad argument '%s' for '%s'\n" \
             "${0##*/}" "$2" "$1" >&2
