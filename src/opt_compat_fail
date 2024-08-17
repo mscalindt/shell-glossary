@@ -7,8 +7,11 @@
 #                 previous option
 #! .ec:
 # (2) incompatible option
+# (255) bad input
 #.
 opt_compat_fail() {
+    [ "$1" ] || exit 255
+
     printf "%s: '%s': Incompatible with: '%s'\n" \
         "${0##*/}" "$opt_match" "$1" >&2
 
