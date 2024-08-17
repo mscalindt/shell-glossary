@@ -2,8 +2,12 @@
 # Signify invalid short option
 #! .params:
 # <"$1"> - option
+#! .ec:
+# (255) bad input
 #.
 opt_invalid() {
+    [ "$1" ] || exit 255
+
     printf "%s: Invalid option: '%s'\n" "${0##*/}" "$1" >&2
 
     printf "%s: Try '%s --help' for more information.\n" \
