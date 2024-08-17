@@ -2,8 +2,12 @@
 # Signify unrecognized long option
 #! .params:
 # <"$1"> - option
+#! .ec:
+# (255) bad input
 #.
 opt_unrecognized() {
+    [ "$1" ] || exit 255
+
     printf "%s: Unrecognized option: '%s'\n" "${0##*/}" "$1" >&2
 
     printf "%s: Try '%s --help' for more information.\n" \
