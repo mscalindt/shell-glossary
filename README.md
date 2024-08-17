@@ -44,11 +44,11 @@ option parsing a breeze.
 
 ### Functions List:
 
+- [ABSPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/abspath): Convert a path to absolute
 - [ASSERT()](https://github.com/mscalindt/shell-glossary/blob/main/src/assert): Assert a string
 - [CONF_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/conf_fail): Signify bad configuration file and exit
 - [COPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/copt): Match `-`-delimited short/long option with a mandatory option argument
 - [COPT_OPTIONAL()](https://github.com/mscalindt/shell-glossary/blob/main/src/copt_optional): Match `-`-delimited short/long option with an optional option argument
-- [FPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/fpath): Convert a path to absolute
 - [OPD_MAX()](https://github.com/mscalindt/shell-glossary/blob/main/src/opd_max): Signify operand count exceeds maximum allowed
 - [OPD_MIN()](https://github.com/mscalindt/shell-glossary/blob/main/src/opd_min): Signify operand count below minimum required
 - [OPT_COMPAT_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/opt_compat_fail): Signify option incompatibility with a previous option and exit
