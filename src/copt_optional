@@ -3,7 +3,7 @@
 #! .params (<1+>):
 # ["$1"] - -* (short)
 # ["$2"] - --* (long)
-#! .uses:
+#! .uses.var:
 # <opt> $ - string;
 #           first positional parameter
 #! .gives:
