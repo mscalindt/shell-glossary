@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - absolute directory path
 # ["$2"] - suffix
-#! .uses:
+#! .uses.fn:
 # <count_dir_dot> ('$1' '$2');
 #                 Count `.*` (dot/hidden) directories in a directory
 # <count_obj_dot> ('$1' '$2');
