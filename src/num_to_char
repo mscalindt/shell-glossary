@@ -7,7 +7,7 @@
 #     '-wschars' - whitespace-separated characters
 #     .
 # )
-#! .uses:
+#! .uses.fn:
 # <assert> ('-whole-n' '$1');
 #          Assert a string
 #! .gives:
