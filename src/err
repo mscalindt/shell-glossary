@@ -21,7 +21,7 @@
 #     .
 # )
 # <"$3"+> - text
-#! .uses:
+#! .uses.var:
 # [NO_COLOR] $ - environment variable;
 #                disables colored output
 #! .rc:
