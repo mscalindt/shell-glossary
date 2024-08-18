@@ -4,9 +4,10 @@
 # <$1> - line number
 # <"$2"> - absolute file path
 #! .uses:
+# <&9>
+#! .uses.fn:
 # <assert> ('-natural-n' '$1');
 #          Assert a string
-# <&9>
 #! .gives:
 # (0) <"$_line"> - string
 #! .rc:
