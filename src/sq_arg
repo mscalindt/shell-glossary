@@ -28,10 +28,7 @@ sq_arg() {
         # $_str 1: `a'\''' 'b'`
         # $_str 2: `a' 'b'`
         # $_str 3: `a'`
-        case "$_str" in
-            \'*) _str="${_str#?}" ;;
-            *) return 255 ;;
-        esac
+        _str="${_str#\'}"
 
         while [ "$_str" ]; do
             # $_str 1: `\''' 'b'` -> `' 'b'` -> ` 'b'`
