@@ -6,7 +6,7 @@
 #     '-y' - default action: yes
 #     .
 # )
-#! .uses:
+#! .uses.var:
 # [NO_COLOR] $ - environment variable;
 #                disables colored output
 #! .sets:
