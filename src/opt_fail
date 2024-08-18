@@ -2,13 +2,14 @@
 # Signify option failure and exit
 #! .params:
 # ["$1"+] - valid argument(s)
-#! .uses:
+#! .uses.var:
 # <opt_match> $ - string;
 #                 option
-# <opt_err> ('$opt_match' '$opt_arg' '$@');
-#           Signify option failure
 # [opt_arg] $ - string;
 #               argument
+#! .uses.fn:
+# <opt_err> ('$opt_match' '$opt_arg' '$@');
+#           Signify option failure
 #! .ec:
 # (2) option failure
 #.
