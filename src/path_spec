@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - absolute path
 # ["$2"] - join path
-#! .uses:
+#! .uses.fn:
 # <assert> ('-absolute-path' '$1');
 #          Assert a string
 #! .gives:
