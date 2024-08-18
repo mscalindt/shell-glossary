@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - absolute directory path
 # ["$2"] - suffix
-#! .uses:
+#! .uses.fn:
 # <assert> ('-absolute-path' '$1');
 #          Assert a string
 #! .gives:
