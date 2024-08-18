@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - character
 # <"$2"> - string
-#! .uses:
+#! .uses.var:
 # [POSIX_COMPAT] $ - environment variable;
 #                    forces the usage of parameter expansion; necessary for
 #                    POSIX.1-2024 compliance
