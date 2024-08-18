@@ -112,6 +112,8 @@ copt_optional() {
                     return 0
                 ;;
             esac
+
+            return 1
         ;;
     esac
 
