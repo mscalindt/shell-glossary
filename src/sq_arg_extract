@@ -39,8 +39,9 @@ sq_arg_extract() {
                 \\\'\'*) _str="${_str#*\'\\\'\'}"; continue ;;
                 \ \'*) _str="${_str#*\'\ }"; continue 2 ;;
                 '') break 2 ;;
-                *) return 255 ;;
             esac
+
+            break
         done
 
         return 255
