@@ -6,7 +6,7 @@
 #     .
 # )
 # <"$2"> - single-quote-escaped string
-#! .uses:
+#! .uses.fn:
 # <assert> ('-whole-n' '$1');
 #          Assert a string
 #! .gives:
