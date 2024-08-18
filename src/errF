@@ -10,11 +10,12 @@
 #     .
 # )
 # <"$3"+> - text
-#! .uses:
-# <assert> ('-whole-n' '$1');
-#          Assert a string
+#! .uses.var:
 # [NO_COLOR] $ - environment variable;
 #                disables colored output
+#! .uses.fn:
+# <assert> ('-whole-n' '$1');
+#          Assert a string
 #! .rc:
 # (255) bad input
 #! .ec:
