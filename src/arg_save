@@ -3,7 +3,7 @@
 #! .params:
 # <$1> - string
 # <$2> - variable name
-#! .uses:
+#! .uses.fn:
 # <assert> ('-shell-name' '$2');
 #          Assert a string
 # <replchar> ('\'' '\'\\\'\'' '$1');
