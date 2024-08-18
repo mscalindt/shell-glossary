@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - absolute directory path
 # ["$2"] - suffix
-#! .uses:
+#! .uses.fn:
 # <count_dir> ('$1' '$2');
 #             Count visible directories in a directory
 # <count_obj> ('$1' '$2');
