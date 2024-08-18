@@ -3,7 +3,7 @@
 #! .params:
 # <$1> - bit
 # <$2> - variable name
-#! .uses:
+#! .uses.fn:
 # <assert> ("type" "string");
 #          Assert a string
 #! .rc:
