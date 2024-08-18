@@ -6,7 +6,7 @@
 # (2) bad configuration file
 # (255) bad input
 #.
-conf_fail() {
+cfg_fail() {
     [ "$1" ] || exit 255
 
     printf "%s: Bad configuration file: '%s'\n" \

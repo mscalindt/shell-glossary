@@ -45,7 +45,7 @@ option parsing a breeze.
 
 - [ABSPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/abspath): Convert a path to absolute
 - [ASSERT()](https://github.com/mscalindt/shell-glossary/blob/main/src/assert): Assert a string
-- [CONF_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/conf_fail): Signify bad configuration file and exit
+- [CFG_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/cfg_fail): Signify bad configuration file and exit
 - [COPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/copt): Match `-`-delimited short/long option with a mandatory option argument
 - [COPT_OPTIONAL()](https://github.com/mscalindt/shell-glossary/blob/main/src/copt_optional): Match `-`-delimited short/long option with an optional option argument
 - [OPD_MAX()](https://github.com/mscalindt/shell-glossary/blob/main/src/opd_max): Signify operand count exceeds maximum allowed
