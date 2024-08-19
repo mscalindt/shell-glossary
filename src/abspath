@@ -8,6 +8,8 @@
 #! .gives:
 # <"$_path"> - string;
 #              [absolute <$1>]
+#! .rc:
+# (0) success
 #! .ec:
 # (255) bad input
 #.
