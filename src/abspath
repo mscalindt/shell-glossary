@@ -1,5 +1,5 @@
 #! .desc:
-# Convert a path to absolute
+# Convert a relative pathname into an absolute pathname
 #! .params:
 # <"$1"> - path
 #! .uses.var:

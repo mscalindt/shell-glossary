@@ -43,7 +43,7 @@ option parsing a breeze.
 
 ### Functions List:
 
-- [ABSPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/abspath): Convert a path to absolute
+- [ABSPATH()](https://github.com/mscalindt/shell-glossary/blob/main/src/abspath): Convert a relative pathname into an absolute pathname
 - [ASSERT()](https://github.com/mscalindt/shell-glossary/blob/main/src/assert): Assert a string
 - [CFG_FAIL()](https://github.com/mscalindt/shell-glossary/blob/main/src/cfg_fail): Signify bad configuration file and exit
 - [COPT()](https://github.com/mscalindt/shell-glossary/blob/main/src/copt): Match `-`-delimited short/long option with a mandatory option argument
