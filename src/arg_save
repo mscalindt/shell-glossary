@@ -10,8 +10,10 @@
 #            Replace a specific character with character(s) in a string
 #! .rc:
 # (0) success
-# (*) error
-# (255) bad input/usage
+# (255) bad usage
+#! .rc.fn:
+# (assert) (255) bad input
+# (replchar) (*) error
 #.
 arg_save() {
     # Escape any single quotes in the string ($1).
