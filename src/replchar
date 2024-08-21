@@ -20,8 +20,11 @@
 #                 [modified <$3>]
 #! .rc:
 # (0) success
-# (*) error
 # (255) bad input
+#! .rc.fn:
+# (esc_sed) (*) error
+#! .rc.util:
+# (sed) (*) error
 #.
 replchar() {
     # Assert $1 is a single character; multiple characters are currently not
