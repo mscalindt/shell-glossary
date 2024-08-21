@@ -14,7 +14,8 @@
 # (0) <"$_chars"> - string
 #! .rc:
 # (0) success
-# (255) bad input
+#! .rc.fn:
+# (assert) (255) bad input
 #.
 num_to_char() {
     # Handle negative N ($1) gracefully: $_chars is set to an empty string and
