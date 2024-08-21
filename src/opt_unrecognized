@@ -2,6 +2,8 @@
 # Signify unrecognized long option
 #! .params:
 # <"$1"> - option
+#! .rc:
+# (0) success
 #! .ec:
 # (255) bad input
 #.
