@@ -16,6 +16,8 @@
 # (0) success
 # (1) argument does not exist
 # (255) bad input
+#! .rc.fn:
+# (assert) (255) bad input
 #.
 sq_arg() {
     assert -whole-n "$1" || return 255
