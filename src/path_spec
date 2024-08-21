@@ -11,7 +11,8 @@
 #                  [modified <$1>]
 #! .rc:
 # (0) success
-# (255) bad input
+#! .rc.fn:
+# (assert) (255) bad input
 #.
 path_spec() {
     assert -absolute-path "$1" || return 255
