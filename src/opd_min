@@ -3,6 +3,8 @@
 #! .params:
 # <$1> - operand count
 # [$2] - minimum count
+#! .rc:
+# (0) success
 #! .ec:
 # (255) bad input
 #.
