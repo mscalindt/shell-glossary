@@ -5,7 +5,8 @@
 # <$2> - function name
 #! .rc:
 # (0) success
-# (*) error
+#! .rc.fn:
+# ($2) (*) error
 #.
 map_vline() {
     # Save $IFS.
