@@ -42,8 +42,8 @@ replchar() {
 
             # Store the output of `sed` in $_str using command substitution.
             # The custom `x` character at the end and its subsequent removal
-            # outside the command substitution preserves any trailing linefeeds
-            # stripped by the command substitution.
+            # outside the command substitution preserves any trailing <newline>
+            # characters stripped by command substitution.
             #
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
