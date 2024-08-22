@@ -1,6 +1,6 @@
 #! .desc:
 # Escape a string to be used literally as a POSIX `sed` string;
-# newlines cannot be used in RE.
+# <newline> cannot be used in RE.
 #! .params:
 # <$1> - sed_string_type(
 #     '-RE'
@@ -37,7 +37,7 @@ esc_sed() {
     case "$1" in
         '-RE')
             # Newlines cannot be directly matched in RE according to
-            # POSIX.1-2024. The handling of newlines in RE is out of the
+            # POSIX.1-2024. The handling of <newline> in RE is out of the
             # function's scope.
             case "$3" in
                 *'
