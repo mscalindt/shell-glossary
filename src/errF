@@ -4,9 +4,9 @@
 # <$1> - exit code
 # <$2> - format(
 #     '-' - raw
-#     '--' - raw; no linefeed
+#     '--' - raw; no <newline>
 #     '-date' - `date` %H%M%S
-#     '-date-' - `date` %H%M%S; no linefeed
+#     '-date-' - `date` %H%M%S; no <newline>
 #     .
 # )
 # <"$3"+> - text
