@@ -33,7 +33,7 @@ file_preload() {
             # Store the output of each `printf` in $_file using command
             # substitution. The custom `x` character at the end and its
             # subsequent removal outside the command substitution preserves any
-            # trailing linefeeds stripped by the command substitution.
+            # trailing <newline> characters stripped by command substitution.
             #
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
@@ -46,8 +46,8 @@ file_preload() {
             _file="${_file%?}"
         ;;
         '-var')
-            # Append with a linefeed each $_line to an initially empty $_file
-            # to build the raw content of the file.
+            # Append with <newline> each $_line to an initially empty $_file to
+            # build the raw content of the file.
             _file=; while IFS= read -r _line <&9; do
                 _file="$_file$_line
 "
