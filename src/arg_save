@@ -1,7 +1,7 @@
 #! .desc:
-# Single-quote append a string to a single-quote-escaped shell variable
+# Append with single-quote escape an argument to a single-quote-escaped array
 #! .params:
-# <$1> - string
+# <$1> - argument
 # <$2> - variable name
 #! .uses.fn:
 # <assert> ('-shell-name' '$2');
@@ -16,7 +16,7 @@
 # (replchar) (*) error
 #.
 arg_save() {
-    # Escape any single quotes in the string ($1).
+    # Escape any single quotes in the argument ($1).
     case "$1" in
         *\'*)
             replchar \' \'\\\'\' "$1" || return "$?"  # -> $_str
