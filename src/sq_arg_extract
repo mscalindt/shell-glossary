@@ -1,9 +1,9 @@
 #! .desc:
-# Extract a single-quoted argument, in a single-quote-escaped string, by token
+# Extract an evaluated argument, in a single-quote-escaped array, by pattern
 #! .params:
-# <"$1"> - token
-# <"$2"> - single-quote-escaped string
-# [$3] - match_type(
+# <"$1"> - pattern
+# <"$2"> - single-quote-escaped array
+# [$3] - pattern_type(
 #     '-exact' - $1 is the literal argument
 #     '-prefix' - $1 is the prefix of an argument
 #     '-suffix' - $1 is the suffix of an argument
@@ -18,7 +18,7 @@
 # (255) bad input
 #.
 sq_arg_extract() {
-    # Assert $2 is a valid single-quote-escaped string.
+    # Assert $2 is a valid single-quote-escaped array.
     # Example 1: `'a'\''' 'b'`.
     # Example 2: `'a' 'b'`.
     # Example 3: `'a'`
@@ -44,37 +44,37 @@ sq_arg_extract() {
         return 255
     done
 
-    # Extract the specified argument. The usage of `eval` here is safe because
-    # $2 has been asserted as a strict single-quote-escaped string.
+    # Extract the specified evaluated argument. The usage of `eval` here is
+    # safe because $2 has been asserted as a strict single-quote-escaped array.
     case "$3" in
         '-exact')
-            _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
+            _pattern="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
-                    "$_token") _arg="$1"; return 0 ;;
+                    "$_pattern") _arg="$1"; return 0 ;;
                     *) shift && continue ;;
                 esac
             done
         ;;
         '-prefix')
-            _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
+            _pattern="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
-                    "$_token"*) _arg="$1"; return 0 ;;
+                    "$_pattern"*) _arg="$1"; return 0 ;;
                     *) shift && continue ;;
                 esac
             done
         ;;
         '-suffix')
-            _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
+            _pattern="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
-                    *"$_token") _arg="$1"; return 0 ;;
+                    *"$_pattern") _arg="$1"; return 0 ;;
                     *) shift && continue ;;
                 esac
             done
         ;;
         *)
-            _token="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
+            _pattern="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
-                    *"$_token"*) _arg="$1"; return 0 ;;
+                    *"$_pattern"*) _arg="$1"; return 0 ;;
                     *) shift && continue ;;
                 esac
             done
