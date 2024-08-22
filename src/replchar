@@ -5,7 +5,7 @@
 # <"$2"> - character(s)
 # <"$3"> - string
 # [$4] - backend(
-#     '-sed' - use the host version of `sed`; $1 cannot be newline
+#     '-sed' - use the host version of `sed`; $1 cannot be <newline>
 #     .
 # )
 #! .uses.var:
