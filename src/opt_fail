@@ -12,7 +12,10 @@
 #           Signify option failure
 #! .ec:
 # (2) option failure
+# (255) bad usage
 #.
 opt_fail() {
+    [ "$opt_match" ] || exit 255
+
     opt_err "$opt_match" "$opt_arg" "$@"; exit 2
 }
