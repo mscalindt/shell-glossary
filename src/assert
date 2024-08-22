@@ -15,6 +15,7 @@
 #! .rc:
 # (0) true
 # (1) false
+#! .ec:
 # (255) bad input
 #.
 assert() {
@@ -111,7 +112,7 @@ assert() {
             esac
         ;;
         *)
-            return 255
+            exit 255
         ;;
     esac
 }
