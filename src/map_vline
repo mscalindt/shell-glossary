@@ -24,7 +24,7 @@ map_vline() {
         *) _pn=1; set -f ;;
     esac
 
-    # Field split $1 (string) based on a newline. The positional parameters are
+    # Field split $1 (string) based on <newline>. The positional parameters are
     # reassigned such that $2 (function name) becomes $1 and the produced
     # arguments are the remaining positional parameters.
     #
@@ -46,7 +46,7 @@ map_vline() {
 
     # Due to <space>, <tab>, and <newline> ("IFS white space") possessing a
     # special behavior in $IFS (field splitting), $2 is populated only if the
-    # string contains characters other than a newline. Assert the string is not
+    # string contains characters other than <newline>. Assert the string is not
     # empty.
     [ "$2" ] || return 0
 
