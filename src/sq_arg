@@ -1,11 +1,11 @@
 #! .desc:
-# Get N single-quoted argument in a single-quote-escaped string
+# Get N evaluated argument in a single-quote-escaped array
 #! .params:
 # <$1> - "N"_arg(
 #     '0' - last
 #     .
 # )
-# <"$2"> - single-quote-escaped string
+# <"$2"> - single-quote-escaped array
 #! .uses.fn:
 # <assert> ('-whole-n' '$1');
 #          Assert a string
@@ -22,7 +22,7 @@
 sq_arg() {
     assert -whole-n "$1" || return 255
 
-    # Assert $2 is a valid single-quote-escaped string.
+    # Assert $2 is a valid single-quote-escaped array.
     # Example 1: `'a'\''' 'b'`.
     # Example 2: `'a' 'b'`.
     # Example 3: `'a'`
@@ -48,8 +48,8 @@ sq_arg() {
         return 255
     done
 
-    # Extract the specified argument. The usage of `eval` here is safe because
-    # $2 has been asserted as a strict single-quote-escaped string.
+    # Extract the specified evaluated argument. The usage of `eval` here is
+    # safe because $2 has been asserted as a strict single-quote-escaped array.
     _i=1; _n="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
         [ "$_i" -eq "$_n" ] || { _i=$((_i + 1)); shift && continue; }
 
