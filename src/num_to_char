@@ -4,7 +4,7 @@
 # <$1> - N
 # <"$2"> - character
 # [$3] - options(
-#     '-wschars' - whitespace-separated characters
+#     '-wschars' - <whitespace>-separated characters
 #     .
 # )
 #! .uses.fn:
@@ -26,8 +26,8 @@ num_to_char() {
 
     assert -whole-n "$1" || return 255
 
-    # Support `-wschars`. The added trailing whitespace character will be
-    # removed after the function completes operation.
+    # Support `-wschars`. The added trailing <whitespace> will be removed after
+    # the function completes operation.
     case "$3" in
         '-wschars') set -- "$1" "$2 " "$3" ;;
     esac
@@ -40,9 +40,9 @@ num_to_char() {
         _chars="$_chars$2"; _i=$((_i + 1))
     done
 
-    # Remove the trailing whitespace character used to support `-wschars`. The
-    # option check is essential as to not accidentally remove a whitespace when
-    # $2 (character) to be repeated is a literal whitespace.
+    # Remove the trailing <whitespace> used to support `-wschars`. The option
+    # check is essential as to not accidentally remove a <whitespace> when $2
+    # (character) to be repeated is a literal <whitespace>.
     case "$3" in
         '-wschars') _chars="${_chars% }" ;;
     esac
