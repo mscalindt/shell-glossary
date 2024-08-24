@@ -32,7 +32,7 @@ external utility calls.
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec): Normalize a path into an assertable canonical path specification
 - [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar): Replace a specific character with character(s) in a string
 - [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg): Get N evaluated argument in a single-quotes array of arguments
-- [SQ_ARG_EXTRACT()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg_extract): Extract an evaluated argument, in a single-quote-escaped array, by pattern
+- [SQ_ARG_EXTRACT()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg_extract): Extract an evaluated argument in a single-quotes array of arguments
 
 ## Collection 2: POSIX `sh` Functions for Shell Option Parsing
 
