@@ -1,5 +1,5 @@
 #! .desc:
-# Append with single-quote escape an argument to a single-quote-escaped array
+# Save with single-quote escape an argument into a variable
 #! .params:
 # <$1> - argument
 # <$2> - variable name

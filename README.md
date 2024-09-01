@@ -7,7 +7,7 @@ external utility calls.
 
 ### Functions List:
 
-- [ARG_SAVE()](https://github.com/mscalindt/shell-glossary/blob/main/src/arg_save): Append with single-quote escape an argument to a single-quote-escaped array
+- [ARG_SAVE()](https://github.com/mscalindt/shell-glossary/blob/main/src/arg_save): Save with single-quote escape an argument into a variable
 - [CCOUNT()](https://github.com/mscalindt/shell-glossary/blob/main/src/ccount): Count the times a character appears in a string
 - [CONFIRM_CONT()](https://github.com/mscalindt/shell-glossary/blob/main/src/confirm_cont): Ask for confirmation to continue
 - [COUNT_DIR()](https://github.com/mscalindt/shell-glossary/blob/main/src/count_dir): Count visible directories in a directory
