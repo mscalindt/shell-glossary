@@ -1,7 +1,7 @@
 #! .desc:
 # Save with single-quote escape an argument into a variable
 #! .params:
-# <$1> - argument
+# <"$1"> - argument
 # <$2> - variable name
 #! .uses.var.replchar:
 # [POSIX_COMPAT] $ - environment variable;
