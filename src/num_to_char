@@ -14,6 +14,7 @@
 # (0) <"$_chars"> - string
 #! .rc:
 # (0) success
+# (255) bad input
 #! .rc.fn:
 # (assert) (255) bad input
 #.
@@ -30,6 +31,7 @@ num_to_char() {
     # the function completes operation.
     case "$3" in
         '-wschars') set -- "$1" "$2 " "$3" ;;
+        *) [ ! "$3" ] || return 255 ;;
     esac
 
     # Repeat the character ($2) N times ($1) to create the desired string.
