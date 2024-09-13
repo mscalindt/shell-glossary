@@ -1,5 +1,5 @@
 #! .desc:
-# Print the type of an object on the filesystem;
+# Identify the type of an object on the filesystem;
 # `B` -- "block special file",
 # `C` -- "character special file",
 # `D` -- "directory",
@@ -11,7 +11,7 @@
 # `>` -- "does not exist"
 #! .params:
 # <"$1"> - absolute path
-# <$2> - fd(
+# [$2] - fd(
 #     '-err' - print to stderr; &2
 #     '-info' - print to stdout; &1
 #     .
@@ -27,6 +27,8 @@
 #              Print formatted text to stderr
 # (-info) <info> ('-w' '--' "text");
 #                Print formatted text
+#! .sets:
+# (0) <_type> $ - 'B' | 'C' | 'D' | 'F' | 'L' | 'P' | 'S' | '?' | '>';
 #! .rc:
 # (0) success
 # (255) bad input
@@ -38,29 +40,29 @@ ftype() {
     case "$2" in
         '-err') set -- "$1" 'err' '-r' '--' ;;
         '-info') set -- "$1" 'info' '-w' '--' ;;
-        *) return 255 ;;
+        *) [ ! "$2" ] || return 255; set -- "$1" ':' ;;
     esac
 
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
     #   test".
     if [ -b "$1" ]; then
-        shift; "$@" 'B'  # block special file
+        shift; _type='B'; "$@" 'B'  # block special file
     elif [ -c "$1" ]; then
-        shift; "$@" 'C'  # character special file
+        shift; _type='C'; "$@" 'C'  # character special file
     elif [ -d "$1" ]; then
-        shift; "$@" 'D'  # directory
+        shift; _type='D'; "$@" 'D'  # directory
     elif [ -f "$1" ]; then
-        shift; "$@" 'F'  # regular file
+        shift; _type='F'; "$@" 'F'  # regular file
     elif [ -h "${1%/}" ]; then
-        shift; "$@" 'L'  # symbolic link
+        shift; _type='L'; "$@" 'L'  # symbolic link
     elif [ -p "$1" ]; then
-        shift; "$@" 'P'  # FIFO / named pipe
+        shift; _type='P'; "$@" 'P'  # FIFO / named pipe
     elif [ -S "$1" ]; then
-        shift; "$@" 'S'  # socket
+        shift; _type='S'; "$@" 'S'  # socket
     elif [ -e "$1" ]; then
-        shift; "$@" '?'  # unrecognized file type
+        shift; _type='?'; "$@" '?'  # unrecognized file type
     else
-        shift; "$@" '>'  # does not exist
+        shift; _type='>'; "$@" '>'  # does not exist
     fi
 }

@@ -21,7 +21,7 @@ external utility calls.
 - [ESC_SED()](https://github.com/mscalindt/shell-glossary/blob/main/src/esc_sed): Escape a string to be used literally as a POSIX `sed` string
 - [FILE_PRELOAD()](https://github.com/mscalindt/shell-glossary/blob/main/src/file_preload): Read a file raw
 - [FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline): Get a specific line in a file
-- [FTYPE()](https://github.com/mscalindt/shell-glossary/blob/main/src/ftype): Print the type of an object on the filesystem
+- [FTYPE()](https://github.com/mscalindt/shell-glossary/blob/main/src/ftype): Identify the type of an object on the filesystem
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info): Print formatted text
 - [MAP_FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_fline): Process each line of a file with a function
 - [MAP_PSEG()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pseg): Process all segments of a path with a function
