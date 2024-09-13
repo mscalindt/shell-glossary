@@ -56,6 +56,9 @@ replchar() {
 
             return 0
         ;;
+        *)
+            [ ! "$4" ] || return 255
+        ;;
     esac
 
     # Save $IFS.
