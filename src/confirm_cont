@@ -15,6 +15,7 @@
 #! .rc:
 # (0) permitted
 # (1) forbidden
+# (255) bad input
 #.
 confirm_cont() {
     _prompt=; _def_action=
@@ -27,6 +28,9 @@ confirm_cont() {
     elif [ "$1" = '-y' ]; then
         _prompt='Continue? [Y/n] '
         _def_action='Y'
+    else
+        # $1 (action) is specified, but not recognized.
+        return 255
     fi
 
     # Apply color to the prompt unless $NO_COLOR is set.
