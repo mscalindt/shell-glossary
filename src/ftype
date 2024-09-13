@@ -43,7 +43,13 @@ ftype() {
         *) [ ! "$2" ] || return 255; set -- "$1" ':' ;;
     esac
 
+    # A trailing slash, if present, will be removed for operator `-h` of
+    # `test`, because otherwise it will cause the link to be followed and thus
+    # the assert `-h` would always fail.
+    #
     # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+    #   Subsection: Pathname Resolution".
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
     #   test".
     if [ -b "$1" ]; then
