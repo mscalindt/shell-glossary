@@ -18,6 +18,8 @@
 #          Assert a string
 #! .rc:
 # (255) bad input
+#! .rc.fn:
+# (assert) (255) bad input
 #! .ec:
 # ($1) *
 #.
