@@ -53,22 +53,22 @@ ftype() {
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
     #   test".
     if [ -b "$1" ]; then
-        shift; _type='B'; "$@" 'B'  # block special file
+        { shift; _type='B'; "$@" 'B' || return "$?"; }
     elif [ -c "$1" ]; then
-        shift; _type='C'; "$@" 'C'  # character special file
+        { shift; _type='C'; "$@" 'C' || return "$?"; }
     elif [ -d "$1" ]; then
-        shift; _type='D'; "$@" 'D'  # directory
+        { shift; _type='D'; "$@" 'D' || return "$?"; }
     elif [ -f "$1" ]; then
-        shift; _type='F'; "$@" 'F'  # regular file
+        { shift; _type='F'; "$@" 'F' || return "$?"; }
     elif [ -h "${1%/}" ]; then
-        shift; _type='L'; "$@" 'L'  # symbolic link
+        { shift; _type='L'; "$@" 'L' || return "$?"; }
     elif [ -p "$1" ]; then
-        shift; _type='P'; "$@" 'P'  # FIFO / named pipe
+        { shift; _type='P'; "$@" 'P' || return "$?"; }
     elif [ -S "$1" ]; then
-        shift; _type='S'; "$@" 'S'  # socket
+        { shift; _type='S'; "$@" 'S' || return "$?"; }
     elif [ -e "$1" ]; then
-        shift; _type='?'; "$@" '?'  # unrecognized file type
+        { shift; _type='?'; "$@" '?' || return "$?"; }
     else
-        shift; _type='>'; "$@" '>'  # does not exist
+        { shift; _type='>'; "$@" '>' || return "$?"; }
     fi
 }
