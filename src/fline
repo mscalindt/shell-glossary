@@ -23,7 +23,7 @@ fline() {
     assert -natural-n "$1" || return 255
 
     # Assert $2 exists and is a file.
-    [ -f "$2" ] || return 1
+    [ -f "$2" ] || return 255
 
     # Open the file specified by $2 and assign it to file descriptor `9`. The
     # usage of a file descriptor simplifies the error handling. Additionally,
