@@ -44,5 +44,5 @@ map_pseg() {
 
     # The receiver function may have to account for any empty positional
     # parameters.
-    "$@"
+    "$@" || return "$?"
 }
