@@ -32,8 +32,10 @@ fline() {
 
     # Read the file, counting the lines; if we land on the specified one,
     # release file descriptor `9` and signal it.
-    _i=0; while IFS= read -r _line <&9 || [ "$_line" ]; do
-        _i=$((_i + 1)); [ "$_i" -ne "$1" ] || { exec 9<&-; return 0; }
+    _i=1; while IFS= read -r _line <&9 || [ "$_line" ]; do
+        [ "$_i" -ne "$1" ] || { exec 9<&-; return 0; }
+
+        _i=$((_i + 1))
     done
 
     # Release file descriptor `9` to close the associated file and signal the
