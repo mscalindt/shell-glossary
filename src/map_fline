@@ -8,6 +8,8 @@
 #! .rc:
 # (0) success
 # (255) bad input/usage
+#! .rc.fn:
+# ($2) (*) error
 #.
 map_fline() {
     # Assert $1 is a file.
