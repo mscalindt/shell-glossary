@@ -17,6 +17,7 @@
 #! .rc:
 # (0) true
 # (1) false
+# (2) false; bad operand
 #! .ec:
 # (255) bad input
 #.
@@ -85,6 +86,8 @@ assert() {
             done
         ;;
         '-bit')
+            assert -natural-n "$2" || return 2
+
             # Assert $2 is a number in base 2 that represents a valid bit. A
             # valid bit is a natural number that represents a specific bit
             # position in a bitmask and is always a power of 2 (`1`, `2`, `4`,
@@ -94,7 +97,6 @@ assert() {
             # expression `N & (N - 1)` results in zero (the binary
             # representation turns to all zeroes due to the single 1-bit being
             # flipped off, given N was an actual power of 2 in base 2).
-            assert -natural-n "$2" || return 1
             [ "$(($2 & ($2 - 1)))" -eq 0 ] || return 1
         ;;
         '-n')
