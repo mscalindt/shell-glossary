@@ -23,22 +23,22 @@
 #.
 assert() {
     case "$1" in
+        # Assert $2 is a valid single-quote-escaped argument. A valid
+        # single-quote-escaped argument is a shell-parseable string enclosed in
+        # single quotes. A single-quote inside a single-quote-escaped argument
+        # is escaped with the syntactical expression `'\''`. This string is
+        # semantically safe for `eval`.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+        #   Language, Subsection: Quoting".
+        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+        #   Language, Subsection: Escape Character (Backslash)".
+        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+        #   Language, Subsection: Single-Quotes".
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+        #   Subsection: Argument".
         '-single-quote-escaped-argument')
-            # Assert $2 is a valid single-quote-escaped argument. A valid
-            # single-quote-escaped argument is a shell-parseable string
-            # enclosed in single quotes. A single-quote inside a
-            # single-quote-escaped argument is escaped with the syntactical
-            # expression `'\''`. This string is semantically safe for `eval`.
-            #
-            # For more information, refer to:
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Quoting".
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Escape Character (Backslash)".
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Single-Quotes".
-            # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-            #   Subsection: Argument".
             set -- "$2"; while [ "$1" ] || return 1; do
                 [ "${1#\'}" != "$1" ] && set -- "${1#\'}" || return 1
 
@@ -52,23 +52,23 @@ assert() {
                 done
             done
         ;;
+        # Assert $2 is a valid single-quotes array of arguments. A valid
+        # single-quotes array is a shell-parseable string consisting of at
+        # least one argument, each enclosed in single quotes and delimited
+        # by <whitespace>. A single-quote inside a single-quote-escaped
+        # argument is escaped with the syntactical expression `'\''`. This
+        # string is semantically safe for `eval`.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+        #   Language, Subsection: Quoting".
+        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+        #   Language, Subsection: Escape Character (Backslash)".
+        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+        #   Language, Subsection: Single-Quotes".
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+        #   Subsection: Argument".
         '-single-quotes-array')
-            # Assert $2 is a valid single-quotes array of arguments. A valid
-            # single-quotes array is a shell-parseable string consisting of at
-            # least one argument, each enclosed in single quotes and delimited
-            # by <whitespace>. A single-quote inside a single-quote-escaped
-            # argument is escaped with the syntactical expression `'\''`. This
-            # string is semantically safe for `eval`.
-            #
-            # For more information, refer to:
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Quoting".
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Escape Character (Backslash)".
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Single-Quotes".
-            # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-            #   Subsection: Argument".
             set -- "${2%"${2##*[! ]}"}"; while [ "$1" ] || return 1; do
                 set -- "${1#"${1%%[! ]*}"}"
 
@@ -85,45 +85,44 @@ assert() {
                 done
             done
         ;;
+        # Assert $2 is a number in base 2 that represents a valid bit. A valid
+        # bit is a natural number that represents a specific bit position in a
+        # bitmask and is always a power of 2 (`1`, `2`, `4`, `8`, ...). This is
+        # also known as "valid bit position".
+        #
+        # A number is a power of 2 if performing bitwise AND in the expression
+        # `N & (N - 1)` results in zero (the binary representation turns to all
+        # zeroes due to the single 1-bit being flipped off, given N was an
+        # actual power of 2 in base 2).
         '-bit')
             assert -natural-n "$2" || return 2
 
-            # Assert $2 is a number in base 2 that represents a valid bit. A
-            # valid bit is a natural number that represents a specific bit
-            # position in a bitmask and is always a power of 2 (`1`, `2`, `4`,
-            # `8`, ...). This is also known as "valid bit position".
-            #
-            # A number is a power of 2 if performing bitwise AND in the
-            # expression `N & (N - 1)` results in zero (the binary
-            # representation turns to all zeroes due to the single 1-bit being
-            # flipped off, given N was an actual power of 2 in base 2).
             [ "$(($2 & ($2 - 1)))" -eq 0 ] || return 1
         ;;
+        # Assert $2 is a number (`0`, `1`, `00`, `01`, ...). A number is any
+        # string consisting only of digits. This is also well known as
+        # "integer".
         '-n')
-            # Assert $2 is a number (`0`, `1`, `00`, `01`, ...). A number is
-            # any string consisting only of digits. This is also well known as
-            # "integer".
             case :"$2${2#*[!0123456789]}" in
                 :) return 1 ;;
                 :"$2$2") : ;;
                 *) return 1 ;;
             esac
         ;;
+        # Assert $2 is a natural number (`1`, `2`, ...). A natural number is
+        # any string consisting only of digits, of which the first is not `0`.
+        # Also known as "positive integer" in the POSIX standard.
         '-natural-n')
-            # Assert $2 is a natural number (`1`, `2`, ...). A natural number
-            # is any string consisting only of digits, of which the first is
-            # not `0`. Also known as "positive integer" in the POSIX standard.
             case :"$2${2#*[!0123456789]}" in
                 : | :0*) return 1 ;;
                 :"$2$2") : ;;
                 *) return 1 ;;
             esac
         ;;
+        # Assert $2 is a whole number (`0`, `1`, `2`, ...). A whole number is
+        # `0` and any string consisting only of digits, of which the first is
+        # not `0`. Also known as "non-negative integer" in the POSIX standard.
         '-whole-n')
-            # Assert $2 is a whole number (`0`, `1`, `2`, ...). A whole number
-            # is `0` and any string consisting only of digits, of which the
-            # first is not `0`. Also known as "non-negative integer" in the
-            # POSIX standard.
             case :"$2${2#*[!0123456789]}" in
                 :) return 1 ;;
                 :00) : ;;
@@ -132,39 +131,39 @@ assert() {
                 *) return 1 ;;
             esac
         ;;
+        # Assert $2 is an absolute (/*) path. An absolute path is any string of
+        # which the first character is `/`.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+        #   Subsection: Absolute Pathname".
         '-absolute-path')
-            # Assert $2 is an absolute (/*) path. An absolute path is any
-            # string of which the first character is `/`.
-            #
-            # For more information, refer to:
-            # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-            #   Subsection: Absolute Pathname".
             case "$2" in
                 '/'*) : ;;
                 *) return 1 ;;
             esac
         ;;
+        # Assert $2 is a relative (partial) path. A relative path is any string
+        # of which the first character is not `/`.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+        #   Subsection: Relative Pathname".
         '-relative-path')
-            # Assert $2 is a relative (partial) path. A relative path is any
-            # string of which the first character is not `/`.
-            #
-            # For more information, refer to:
-            # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-            #   Subsection: Relative Pathname".
             case "$2" in
                 '/'*) return 1 ;;
                 *) [ "$2" ] || return 1 ;;
             esac
         ;;
+        # Assert $2 is a shell name. The character classes have been
+        # intentionally expanded to be locale-independent.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+        #   Subsection: Name".
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Regular
+        #   Expressions, Subsection: RE Bracket Expression".
         '-shell-name')
-            # Assert $2 is a shell name. The character classes have been
-            # intentionally expanded to be locale-independent.
-            #
-            # For more information, refer to:
-            # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-            #   Subsection: Name".
-            # > "POSIX.1-2024, Volume: Base Definitions, Section: Regular
-            #   Expressions, Subsection: RE Bracket Expression".
             case "$2" in
                 [0123456789]*)
                     return 1
