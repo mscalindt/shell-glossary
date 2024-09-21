@@ -29,7 +29,7 @@
 replchar() {
     # Assert $1 is a single character; multiple characters are currently not
     # supported.
-    [ "${#1}" -eq 1 ] || return 255
+    [ "${#1}" = 1 ] || return 255
 
     # Use an alternative backend if specified.
     case "$4" in
@@ -110,7 +110,7 @@ replchar() {
 
                 # ${#_d}: `2`
                 # $_chars: `AA`
-                _chars=; _i=0; until [ "$_i" -eq "${#_d}" ]; do
+                _chars=; _i=0; until [ "$_i" = "${#_d}" ]; do
                     _chars="$_chars$2"; _i=$((_i + 1))
                 done
 
@@ -142,7 +142,7 @@ replchar() {
 
                         # ${#_d}: `2`
                         # $_chars: `AA`
-                        _chars=; _i=0; until [ "$_i" -eq "${#_d}" ]; do
+                        _chars=; _i=0; until [ "$_i" = "${#_d}" ]; do
                             _chars="$_chars$2"; _i=$((_i + 1))
                         done
 
