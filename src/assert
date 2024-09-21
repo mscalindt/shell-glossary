@@ -7,6 +7,7 @@
 #     '-bit' - N in base 2 that represents a valid bit (valid bit position)
 #     '-n' - N [0,1,00,01...] (integer)
 #     '-greater-n' - N [0,1,00,01...] (integer) greater than another N
+#     '-lower-n' - N [0,1,00,01...] (integer) lower than another N
 #     '-natural-n' - natural N [1...] (positive integer)
 #     '-whole-n' - whole N [0,1...] (non-negative integer)
 #     '-absolute-path' - absolute path (/*)
@@ -140,6 +141,41 @@ assert() {
                 esac
 
                 if [ "${1%"${1#?}"}" -gt "${2%"${2#?}"}" ]; then
+                    return 0
+                fi
+
+                return 1
+            done
+        ;;
+        # Assert $2 is a number lower than $3. To determine which number is
+        # lower, leading zeroes are removed, and the numbers are first compared
+        # by length, followed by digit comparison if the lengths are the same.
+        # This comparison essentually emulates the behavior of operator `-lt`
+        # of `test` in POSIX shells, just with support for extremely large
+        # numbers. This comparison is also known as
+        # "lexicographical numeric comparison".
+        '-lower-n')
+            assert -n "$2" || return 2
+            assert -n "$3" || return 2
+
+            set -- "${2#"${2%%[!0]*}"}" "${3#"${3%%[!0]*}"}"
+
+            case "$1" in
+                "$2") return 1 ;;
+            esac
+
+            if [ "${#1}" -lt "${#2}" ]; then
+                return 0
+            elif [ "${#1}" -gt "${#2}" ]; then
+                return 1
+            fi
+
+            while [ "$1" ]; do
+                case "$1" in
+                    "${2%"${2#?}"}"*) set -- "${1#?}" "${2#?}"; continue ;;
+                esac
+
+                if [ "${1%"${1#?}"}" -lt "${2%"${2#?}"}" ]; then
                     return 0
                 fi
 
