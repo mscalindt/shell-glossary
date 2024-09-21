@@ -38,7 +38,7 @@ num_to_char() {
     # When N is `0`, no characters are created, and $_chars is set to an empty
     # string. This helps in seamlessly integrating the function in cases where
     # character generation is not needed.
-    _chars=; _i=0; until [ "$_i" -eq "$1" ]; do
+    _chars=; _i=0; until [ "$_i" = "$1" ]; do
         _chars="$_chars$2"; _i=$((_i + 1))
     done
 
