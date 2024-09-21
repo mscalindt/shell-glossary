@@ -16,7 +16,7 @@
 ccount() {
     # Assert $1 is a single character; multiple characters are currently not
     # supported.
-    [ "${#1}" -eq 1 ] || return 255
+    [ "${#1}" = 1 ] || return 255
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
