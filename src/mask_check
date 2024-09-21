@@ -30,7 +30,7 @@ mask_check() {
             assert -whole-n "$2" || return 255
 
             # Assert whether $2 (bitmask) is `0`, i.e. no bits are set.
-            [ "$2" -eq 0 ] && return 0 || return 1
+            [ "$2" = 0 ] && return 0 || return 1
         ;;
     esac
 
