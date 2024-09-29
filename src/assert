@@ -100,7 +100,7 @@ assert() {
         '-bit')
             assert -natural-n "$2" || return 2
 
-            [ "$(($2 & ($2 - 1)))" -eq 0 ] || return 1
+            [ "$(($2 & ($2 - 1)))" = 0 ] || return 1
         ;;
         # Assert $2 is a number (`0`, `1`, `00`, `01`, ...). A number is any
         # string consisting only of digits. This is also well known as
