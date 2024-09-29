@@ -12,6 +12,7 @@
 #! .rc:
 # (0) true
 # (1) false
+# (*) error
 #! .rc.fn:
 # (assert) (255) bad input/usage
 #.
