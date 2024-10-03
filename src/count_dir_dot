@@ -35,7 +35,7 @@ count_dir_dot() {
     # (2024-08-15) Note:
     # According to POSIX.1-2024, a future version of the standard may require
     # that `.` and `..` are ignored by the glob (if they exist).
-    set -- "${1%/}"/.*"$2"/
+    set -- "$1"/.*"$2"/
 
     # Shift `.` and `..` to simplify glob assert.
     while [ "$1" ]; do case "$1" in
