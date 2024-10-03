@@ -27,7 +27,7 @@ count_dir() {
 
     # Use a glob pattern to match the visible directories in $1 (the directory)
     # with an optional $2 (suffix).
-    set -- "${1%/}"/*"$2"/
+    set -- "$1"/*"$2"/
 
     # Assert the glob expanded.
     if [ -e "$1" ]; then
