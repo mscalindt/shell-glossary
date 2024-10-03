@@ -11,6 +11,7 @@
 #     '-natural-n' - natural N [1...] (positive integer)
 #     '-whole-n' - whole N [0,1...] (non-negative integer)
 #     '-absolute-path' - absolute path (/*)
+#     '-canonical-path' - lexically canonical (assertable) path
 #     '-relative-path' - relative path
 #     '-shell-name' - shell name
 #     .
@@ -215,6 +216,46 @@ assert() {
                 '/'*) : ;;
                 *) return 1 ;;
             esac
+        ;;
+        # Assert $2 is a lexically canonical (assertable) path. A canonical
+        # path is largely implementation-defined string that refers to the
+        # normalized absolute path. Therefore, a lexical canonical path is:
+        #
+        # - Assertive: Multiple consecutive slashes (`//`) are removed, `.`
+        #   and `..` are resolved. The only exception is two consecutive
+        #   slashes (`//`) at the beginning of the string, which is specified
+        #   by the POSIX standard as an "implementation-defined" exception.
+        # - Absolute: The path is always rooted from `/`.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+        #   Subsection: Pathname Resolution".
+        '-canonical-path')
+            set -- "$2"
+
+            case "$1" in
+                '//'*) set -- "${1#/}" ;;
+            esac
+
+            case "$1" in
+                *'//'*) return 1 ;;
+                '/'*) : ;;
+                *) return 1 ;;
+            esac
+
+            while [ "$1" ] || return 1; do
+                case "${1%/}" in
+                    *'/'*)
+                        case "${1%/}" in
+                            *'/.' | *'/..') return 1 ;;
+                        esac
+
+                        set -- "${1%/*/}/"; continue
+                    ;;
+                esac
+
+                return 0
+            done
         ;;
         # Assert $2 is a relative (partial) path. A relative path is any string
         # of which the first character is not `/`.
