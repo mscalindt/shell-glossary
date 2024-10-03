@@ -266,8 +266,8 @@ assert() {
         #   and `..` are resolved. The only exception is two consecutive
         #   slashes (`//`) at the beginning of the string, which is specified
         #   by the POSIX standard as an "implementation-defined" exception.
-        # - Semantic: All segments of the path are true on filesystem level;
-        #   none of the segments are a symbolic link.
+        # - Semantic: None of the path segments are a symbolic link on
+        #   filesystem level.
         # - Absolute: The path is always rooted from `/`.
         #
         # For more information, refer to:
