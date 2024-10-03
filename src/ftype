@@ -43,9 +43,9 @@ ftype() {
         *) [ ! "$2" ] || return 255; set -- "$1" ':' ;;
     esac
 
-    # A trailing slash, if present, will be removed for operator `-h` of
-    # `test`, because otherwise it will cause the link to be followed and thus
-    # the assert `-h` would always fail.
+    # Any trailing slashes will be removed for operator `-h` of `test`, because
+    # otherwise they will cause an actual symbolic link to be followed and thus
+    # deteriorate the reliability of `-h`.
     #
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
