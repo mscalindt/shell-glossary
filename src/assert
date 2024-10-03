@@ -232,10 +232,9 @@ assert() {
         # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
         #   Subsection: Pathname Resolution".
         '-canonical-path')
-            set -- "$2"
-
-            case "$1" in
-                '//'*) set -- "${1#/}" ;;
+            case "$2" in
+                '//'*) set -- "${2#/}" ;;
+                *) set -- "$2" ;;
             esac
 
             case "$1" in
@@ -244,19 +243,11 @@ assert() {
                 *) return 1 ;;
             esac
 
-            while [ "$1" ] || return 1; do
-                case "${1%/}" in
-                    *'/'*)
-                        case "${1%/}" in
-                            *'/.' | *'/..') return 1 ;;
-                        esac
+            case "$1/" in
+                *'/./'* | *'/../'*) return 1 ;;
+            esac
 
-                        set -- "${1%/*/}/"; continue
-                    ;;
-                esac
-
-                return 0
-            done
+            return 0
         ;;
         # Assert $2 is a semantically canonical (assertable) path. A canonical
         # path is largely implementation-defined string that refers to the
