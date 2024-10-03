@@ -12,6 +12,7 @@
 #     '-whole-n' - whole N [0,1...] (non-negative integer)
 #     '-absolute-path' - absolute path (/*)
 #     '-canonical-path' - lexically canonical (assertable) path
+#     '-fs-canonical-path' - semantically canonical (assertable) path
 #     '-relative-path' - relative path
 #     '-shell-name' - shell name
 #     .
@@ -244,6 +245,50 @@ assert() {
             esac
 
             while [ "$1" ] || return 1; do
+                case "${1%/}" in
+                    *'/'*)
+                        case "${1%/}" in
+                            *'/.' | *'/..') return 1 ;;
+                        esac
+
+                        set -- "${1%/*/}/"; continue
+                    ;;
+                esac
+
+                return 0
+            done
+        ;;
+        # Assert $2 is a semantically canonical (assertable) path. A canonical
+        # path is largely implementation-defined string that refers to the
+        # normalized absolute path. Therefore, a semantic canonical path is:
+        #
+        # - Assertive: Multiple consecutive slashes (`//`) are removed, `.`
+        #   and `..` are resolved. The only exception is two consecutive
+        #   slashes (`//`) at the beginning of the string, which is specified
+        #   by the POSIX standard as an "implementation-defined" exception.
+        # - Semantic: All segments of the path are true on filesystem level;
+        #   none of the segments are a symbolic link.
+        # - Absolute: The path is always rooted from `/`.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+        #   Subsection: Pathname Resolution".
+        '-fs-canonical-path')
+            set -- "$2"
+
+            case "$1" in
+                '//'*) set -- "${1#/}" ;;
+            esac
+
+            case "$1" in
+                *'//'*) return 1 ;;
+                '/'*) : ;;
+                *) return 1 ;;
+            esac
+
+            while [ "$1" ] || return 1; do
+                [ ! -h "${1%/}" ] || return 1
+
                 case "${1%/}" in
                     *'/'*)
                         case "${1%/}" in
