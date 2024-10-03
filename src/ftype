@@ -60,7 +60,7 @@ ftype() {
         { shift; _type='D'; "$@" 'D' || return "$?"; }
     elif [ -f "$1" ]; then
         { shift; _type='F'; "$@" 'F' || return "$?"; }
-    elif [ -h "${1%/}" ]; then
+    elif [ -h "${1%"${1##*[!/]}"}" ]; then
         { shift; _type='L'; "$@" 'L' || return "$?"; }
     elif [ -p "$1" ]; then
         { shift; _type='P'; "$@" 'P' || return "$?"; }
