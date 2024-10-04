@@ -1,5 +1,5 @@
 #! .desc:
-# Normalize a path into an assertable canonical path specification
+# Lexically normalize a path into an assertable canonical path
 #! .params:
 # <"$1"> - absolute path
 # ["$2"] - join path
