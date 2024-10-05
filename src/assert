@@ -254,9 +254,7 @@ assert() {
         # normalized absolute path. Therefore, a semantic canonical path is:
         #
         # - Assertive: Multiple consecutive slashes (`//`) are removed, `.`
-        #   and `..` are resolved. The only exception is two consecutive
-        #   slashes (`//`) at the beginning of the string, which is specified
-        #   by the POSIX standard as an "implementation-defined" exception.
+        #   and `..` are resolved.
         # - Semantic: None of the path segments are a symbolic link on
         #   filesystem level.
         # - Absolute: The path is always rooted from `/`.
@@ -266,13 +264,8 @@ assert() {
         #   Subsection: Pathname Resolution".
         '-fs-canonical-path')
             case "$2" in
-                '//'*) set -- "${2#/}" ;;
-                *) set -- "$2" ;;
-            esac
-
-            case "$1" in
                 *'//'*) return 1 ;;
-                '/'*) : ;;
+                '/'*) set -- "$2" ;;
                 *) return 1 ;;
             esac
 
