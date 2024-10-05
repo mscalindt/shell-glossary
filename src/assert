@@ -255,8 +255,8 @@ assert() {
         #
         # - Assertive: Multiple consecutive slashes (`//`) are removed, `.`
         #   and `..` are resolved.
-        # - Semantic: None of the path segments are a symbolic link on
-        #   filesystem level. The actual existence of a path or its segments is
+        # - Semantic: Neither the path nor its segments are a symbolic link on
+        #   the filesystem. The actual existence of the path or its segments is
         #   ignored.
         # - Absolute: The path is always rooted from `/`.
         #
