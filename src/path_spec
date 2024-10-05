@@ -20,7 +20,7 @@ path_spec() {
     # Avoid normalizing already-canonical paths when $2 (join path) is not
     # specified.
     if [ ! "$2" ]; then
-        { ! assert -canonical-path "$1"; } || return 0
+        { ! assert -canonical-path "$1"; } || { _path="$1"; return 0; }
     fi
 
     # Save $IFS.
