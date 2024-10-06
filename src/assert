@@ -265,17 +265,18 @@ assert() {
         #   Subsection: Pathname Resolution".
         '-fs-canonical-path')
             case "$2" in
+                '/') return 0 ;;
                 *'//'*) return 1 ;;
-                '/'*) set -- "$2" ;;
+                '/'*) set -- "${2%/}/" ;;
                 *) return 1 ;;
             esac
 
-            case "$1/" in
+            case "$1" in
                 *'/./'* | *'/../'*) return 1 ;;
             esac
 
             while [ ! -h "${1%/}" ] || return 1; do
-                [ "${1%/}" ] && set -- "${1%/*/}/" || return 0
+                [ "${1%/*/}" ] && set -- "${1%/*/}" || return 0
             done
         ;;
         # Assert $2 is a relative (partial) path. A relative path is any string
