@@ -77,8 +77,7 @@ path_spec() {
                 continue
             ;;
             '..')
-                _path="${_path%/}"
-                _path="${_path%/*}"
+                _path="${_path%/*/}"
                 _path="${_path%/}/"
             ;;
             *)
