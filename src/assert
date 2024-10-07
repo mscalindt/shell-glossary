@@ -276,7 +276,7 @@ assert() {
             esac
 
             while [ ! -h "${1%/}" ] || return 1; do
-                [ "${1%/*/}" ] && set -- "${1%/*/}" || return 0
+                [ "${1%/*/}" ] && set -- "${1%/*/}/" || return 0
             done
         ;;
         # Assert $2 is a relative (partial) path. A relative path is any string
