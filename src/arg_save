@@ -14,7 +14,7 @@
 #            Replace a specific character with character(s) in a string
 #! .rc:
 # (0) success
-# (255) bad usage
+# (*) error
 #! .rc.fn:
 # (assert) (255) bad input
 # (replchar) (*) error
@@ -46,5 +46,5 @@ arg_save() {
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Quoting".
-    { eval "$2=\"\$$2 '\$1'\""; } 2> /dev/null || return 255
+    eval "$2=\"\$$2 '\$1'\""
 }
