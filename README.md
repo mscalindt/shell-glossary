@@ -31,6 +31,7 @@ external utility calls.
 - [MASK_UNSET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_unset): Unset a bit, the power of 2, in a pseudo-bitmask shell variable
 - [NUM_TO_CHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/num_to_char): Convert N to that amount of a character
 - [PATH_SPEC()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec): Lexically normalize a path into an assertable canonical path
+- [PATH_SPEC_FS()](https://github.com/mscalindt/shell-glossary/blob/main/src/path_spec_fs): Semantically normalize a path into an assertable canonical path
 - [REPLCHAR()](https://github.com/mscalindt/shell-glossary/blob/main/src/replchar): Replace a specific character with character(s) in a string
 - [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg): Get N evaluated argument in a single-quotes array of arguments
 - [SQ_ARG_EXTRACT()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg_extract): Extract an evaluated argument in a single-quotes array of arguments

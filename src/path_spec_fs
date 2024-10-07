@@ -1,0 +1,123 @@
+#! .desc:
+# Semantically normalize a path into an assertable canonical path
+#! .params:
+# <"$1"> - absolute/relative path
+#! .uses.var:
+# [PWD] $ - environment variable;
+#           absolute pathname of the current working directory
+#! .uses.fn:
+# <assert> ("type" '$1');
+#          Assert a string
+#! .uses.util:
+# [realpath];
+# resolve a pathname
+#! .gives:
+# (0) <"$_path"> - string;
+#                  [modified <$1>]
+#! .rc:
+# (0) success
+#! .rc.util:
+# (realpath) (*) error
+#.
+path_spec_fs() {
+    # Avoid normalizing already-canonical paths.
+    { ! assert -fs-canonical-path "$1"; } || {
+        _path="$1"
+
+        case "$_path" in
+            '/') return 0 ;;
+            *) [ -d "$_path" ] && _path="${_path%/}/" || _path="${_path%/}" ;;
+        esac
+
+        return 0
+    }
+
+    # If the passed path operand is relative, prefix $PWD.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
+    #   Variables, Subsection: Environment Variable Definition".
+    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
+    #   Variables, Subsection: Other Environment Variables".
+    { assert -absolute-path "$1"; } || set -- "$PWD/$1"
+
+    # Save $IFS.
+    _old_IFS="$IFS" 2> /dev/null
+    ${IFS+':'} unset _old_IFS 2> /dev/null
+
+    # Save the state of the pathname expansion flag and disable it if active;
+    # disabled to disable the expansion of `*`.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+    #   Language, Subsection: Pathname Expansion".
+    case "$-" in
+        *'f'*) _pn=0 ;;
+        *) _pn=1; set -f ;;
+    esac
+
+    # Field split $1 (path) based on `/`.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+    #   Language, Subsection: Field Splitting".
+    IFS='/'; set -- $1
+
+    # Restore the active state of the pathname expansion flag if appropriate.
+    if [ "$_pn" = 1 ]; then
+        set +f
+    fi
+
+    # Restore $IFS.
+    IFS="$_old_IFS" 2> /dev/null
+    ${_old_IFS+':'} unset IFS 2> /dev/null
+
+    # Define initial $_path with a slash (`/`); necessary to establish a
+    # standard resolving behavior independent of how the field splitting
+    # handled the `/` delimiter.
+    _path=/; for _segment in "$@"; do
+        # Skip empty arguments; field splitting may have produced empty
+        # arguments on consecutive delimiter appearances.
+        [ "$_segment" ] || continue
+
+        # Resolve the path to its semantical canonical representation.
+        # `.`: special directory name denoting the current directory.
+        # `..`: special directory name denoting the parent directory.
+        #
+        # As specified by the standard, when `..` is encountered at the root
+        # (`/`), the path remains unchanged.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+        #   Subsection: Pathname Resolution".
+        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
+        #   Subsection: realpath".
+        case "$_segment" in
+            '.')
+                continue
+            ;;
+            '..')
+                _path="${_path%/*/}"
+                _path="${_path%/}/"
+            ;;
+            *)
+                if [ -h "$_path$_segment" ]; then
+                    _path=$(realpath "$_path$_segment") || return "$?"
+                    _path="$_path/"
+                else
+                    _path="$_path$_segment/"
+                fi
+            ;;
+        esac
+    done
+
+    # If $_path is a directory and not lit. root (`/`), add a trailing slash to
+    # align it with the specification of a directory. Otherwise, make sure
+    # $_path doesn't end with a trailing slash. Note that these practices are
+    # more about convention and consistency rather than strict requirements of
+    # the POSIX standard.
+    case "$_path" in
+        '/') return 0 ;;
+        *) [ -d "$_path" ] && _path="${_path%/}/" || _path="${_path%/}" ;;
+    esac
+}
