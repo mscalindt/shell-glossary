@@ -54,7 +54,7 @@ replchar() {
             _str=$(
                 printf "%s" "$3" | sed "s/$1/$2/g" || return "$?"
                 printf "%s" 'x'
-            ) 2> /dev/null || return "$?"
+            ) || return "$?"
             _str="${_str%?}"
 
             return 0
