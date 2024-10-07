@@ -11,7 +11,7 @@
 #          Assert a string
 #! .rc:
 # (0) success
-# (255) bad usage
+# (*) error
 #! .rc.fn:
 # (assert) (255) bad input
 #.
@@ -33,5 +33,5 @@ mask_unset() {
     assert -shell-name "$2" || return 255
 
     # Unset $1 (bit) in $2 (bitmask).
-    { eval "$2=\$(($2 & ~$1))"; } 2> /dev/null || return 255
+    eval "$2=\$(($2 & ~$1))"
 }
