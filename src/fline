@@ -13,6 +13,7 @@
 #! .rc:
 # (0) success
 # (1) line does not exist
+# (*) error
 # (255) bad usage
 #! .rc.fn:
 # (assert) (255) bad input
@@ -28,17 +29,19 @@ fline() {
     # Open the file specified by $2 and assign it to file descriptor `9`. The
     # usage of a file descriptor simplifies the error handling. Additionally,
     # TOCTOU flaws are completely avoided this way.
-    { exec 9< "$2"; } || return 255
+    { exec 9< "$2"; } || return "$?"
 
     # Read the file, counting the lines; if we land on the specified one,
     # release file descriptor `9` and signal it.
     _i=1; while IFS= read -r _line <&9 || [ "$_line" ]; do
-        [ "$_i" -ne "$1" ] || { exec 9<&-; return 0; }
+        case "$_i" in
+            "$1") exec 9<&-; return "$?" ;;
+        esac
 
         _i=$((_i + 1))
     done
 
     # Release file descriptor `9` to close the associated file and signal the
     # specified line doesn't exist.
-    exec 9<&-; return 1
+    exec 9<&- && return 1
 }
