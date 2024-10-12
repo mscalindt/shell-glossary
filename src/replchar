@@ -28,6 +28,10 @@
 # (esc_sed) (*) error
 #! .rc.util:
 # (sed) (*) error
+#! .caveats:
+# > `ARG_MAX`.
+# > `INT_MAX`. Even the string length expression `${#parameter}` is subject to
+#   the system's native integer limits, as it returns an integer.
 #.
 replchar() {
     # Assert $1 is a single character; multiple characters are currently not
