@@ -28,6 +28,10 @@
 # (2) false; bad operand
 #! .ec:
 # (255) bad input
+#! .caveats (-bit):
+# > `INT_MAX`. The operands and result of a bitwise operation are integers, so
+#   bitwise operations (and shell arithmetic in general) are subject to the
+#   system's native integer limits.
 #.
 assert() {
     case "$1" in
