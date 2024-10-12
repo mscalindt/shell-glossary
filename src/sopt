@@ -22,6 +22,8 @@
 # (1) no match
 #! .ec:
 # (255) bad input
+#! .caveats:
+# > `INT_MAX`.
 #.
 sopt() {
     # Assert the usage of the function is appropriate (else `return 1`) or
