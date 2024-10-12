@@ -7,6 +7,7 @@
 # <&9>
 #! .rc:
 # (0) success
+# (*) error
 # (255) bad input/usage
 #! .rc.fn:
 # ($2) (*) error
@@ -18,7 +19,7 @@ map_fline() {
     # Open the file specified by $1 and assign it to file descriptor `9`. The
     # usage of a file descriptor simplifies the error handling. Additionally,
     # TOCTOU flaws are completely avoided this way.
-    { exec 9< "$1"; } || return 255
+    { exec 9< "$1"; } || return "$?"
 
     # Pass each line individually to $1 (the function). If an error is
     # received, file descriptor `9` will be released and the error signaled.
