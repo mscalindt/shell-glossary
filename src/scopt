@@ -22,6 +22,7 @@
 #! .ec:
 # (2) bad argument specification
 #! .caveats:
+# > `ARG_MAX`.
 # > `INT_MAX`.
 #.
 scopt() {
