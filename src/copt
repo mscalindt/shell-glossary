@@ -23,6 +23,8 @@
 #! .ec:
 # (2) bad argument specification
 # (255) bad input
+#! .caveats:
+# > `INT_MAX`.
 #.
 copt() {
     # Assert the usage of the function is appropriate (else `return 1`) or
