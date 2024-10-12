@@ -17,6 +17,7 @@
 # (count_obj) (*) error
 #! .caveats:
 # > `ARG_MAX`.
+# > `INT_MAX`.
 #.
 count_file() {
     count_obj "$1" "$2" || return "$?"  # -> $_count
