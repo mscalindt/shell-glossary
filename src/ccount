@@ -13,6 +13,7 @@
 # (0) success
 # (255) bad input
 #! .caveats:
+# > `ARG_MAX`.
 # > `INT_MAX`. Even the string length expression `${#parameter}` is subject to
 #   the system's native integer limits, as it returns an integer.
 #.
