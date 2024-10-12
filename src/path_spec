@@ -13,6 +13,9 @@
 # (0) success
 #! .rc.fn:
 # (assert) (255) bad input
+#! .caveats:
+# > `ARG_MAX`.
+# > `INT_MAX`.
 #.
 path_spec() {
     assert -absolute-path "$1" || return 255
