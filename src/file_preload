@@ -13,6 +13,7 @@
 # (0) <"$_file"> - raw content of the file
 #! .rc:
 # (0) success
+# (*) error
 # (255) bad input/usage
 #.
 file_preload() {
@@ -23,7 +24,7 @@ file_preload() {
     # usage of a file descriptor simplifies the error handling and allows for a
     # more uniform parsing. Additionally, TOCTOU flaws are completely avoided
     # this way.
-    { exec 9< "$1"; } || return 255
+    { exec 9< "$1"; } || return "$?"
 
     # Read the file with the specified method.
     # `-subshell` performs better on big files.
@@ -54,7 +55,7 @@ file_preload() {
             done; _file="$_file$_line"
         ;;
         *)
-            exec 9<&-; return 255
+            exec 9<&- && return 255 || return "$?"
         ;;
     esac
 
