@@ -7,6 +7,9 @@
 # (0) success
 #! .rc.fn:
 # ($2) (*) error
+#! .caveats:
+# > `ARG_MAX`.
+# > `INT_MAX`.
 #.
 map_pseg() {
     # Save $IFS.
