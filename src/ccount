@@ -12,6 +12,9 @@
 #! .rc:
 # (0) success
 # (255) bad input
+#! .caveats:
+# > `INT_MAX`. Even the expression `[ "${#1}" = 1 ]` is subject to the system's
+#   native integer limits.
 #.
 ccount() {
     # Assert $1 is a single character; multiple characters are currently not
