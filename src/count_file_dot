@@ -17,6 +17,7 @@
 # (count_obj_dot) (*) error
 #! .caveats:
 # > `ARG_MAX`.
+# > `INT_MAX`.
 #.
 count_file_dot() {
     count_obj_dot "$1" "$2" || return "$?"  # -> $_count
