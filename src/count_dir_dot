@@ -15,6 +15,7 @@
 # (assert) (255) bad input
 #! .caveats:
 # > `ARG_MAX`.
+# > `INT_MAX`.
 #.
 count_dir_dot() {
     assert -absolute-path "$1" || return 255
