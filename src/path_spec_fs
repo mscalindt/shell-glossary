@@ -114,13 +114,17 @@ path_spec_fs() {
         esac
     done
 
-    # If $_path is a directory and not lit. root (`/`), add a trailing slash to
-    # align it with the specification of a directory. Otherwise, make sure
-    # $_path doesn't end with a trailing slash. Note that these practices are
-    # more about convention and consistency rather than strict requirements of
-    # the POSIX standard.
+    # Early exit for the root directory (`/`), all is done.
     case "$_path" in
         '/') return 0 ;;
-        *) [ -d "$_path" ] && _path="${_path%/}/" || _path="${_path%/}" ;;
     esac
+
+    # If $_path is a directory, add a trailing slash to align it with the
+    # specification of a directory. Otherwise, make sure $_path doesn't end
+    # with a trailing slash. Note that these practices are more about
+    # convention and consistency rather than strict requirements of the POSIX
+    # standard.
+    [ -d "$_path" ] && _path="${_path%/}/" || _path="${_path%/}"
+
+    return 0
 }
