@@ -191,4 +191,6 @@ replchar() {
     # Restore $IFS.
     IFS="$_old_IFS" 2> /dev/null
     ${_old_IFS+':'} unset IFS 2> /dev/null
+
+    return 0
 }
