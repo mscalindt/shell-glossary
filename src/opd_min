@@ -19,4 +19,6 @@ opd_min() {
 
     printf "%s: Try '%s --help' for more information.\n" \
         "${0##*/}" "${0##*/}" >&2
+
+    return 0
 }
