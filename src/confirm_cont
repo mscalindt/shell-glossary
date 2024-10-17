@@ -44,9 +44,10 @@ confirm_cont() {
     # instead.
     read -r _action; [ "$_action" ] || _action="$_def_action"
 
+    # Return "permitted" if the first character the user entered is `Y` or `y`.
     case "$_action" in
         [Yy]*) return 0 ;;
-        [Nn]*) return 1 ;;
-        *) return 1 ;;  # Return forbidden for any unexpected input.
     esac
+
+    return 1
 }
