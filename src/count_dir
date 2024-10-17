@@ -34,4 +34,6 @@ count_dir() {
     if [ -e "$1" ]; then
         _count=$#
     fi
+
+    return 0
 }
