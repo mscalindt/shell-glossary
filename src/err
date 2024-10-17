@@ -74,4 +74,6 @@ err() {
             return 255
         ;;
     esac
+
+    return 0
 }
