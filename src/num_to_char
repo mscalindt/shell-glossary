@@ -50,4 +50,6 @@ num_to_char() {
     case "$3" in
         '-wschars') _chars="${_chars% }" ;;
     esac
+
+    return 0
 }
