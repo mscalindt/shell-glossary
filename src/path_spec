@@ -103,11 +103,16 @@ path_spec() {
         esac
     done
 
-    # If $_path is a true directory and not lit. root (`/`), add a trailing
-    # slash to align it with the specification of a directory. Otherwise, make
-    # sure $_path doesn't end with a trailing slash. Note that these practices
-    # are more about convention and consistency rather than strict requirements
-    # of the POSIX standard.
+    # Early exit for the root directory (`/`), all is done.
+    case "$_path" in
+        '/') return 0 ;;
+    esac
+
+    # If $_path is a true directory, add a trailing slash to align it with the
+    # specification of a directory. Otherwise, make sure $_path doesn't end
+    # with a trailing slash. Note that these practices are more about
+    # convention and consistency rather than strict requirements of the POSIX
+    # standard.
     #
     # A trailing slash, if present, will be removed for operator `-h` of
     # `test`, because otherwise it will cause the link to be followed and thus
@@ -116,12 +121,11 @@ path_spec() {
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
     #   Subsection: Pathname Resolution".
-    case "$_path" in
-        '/') return 0 ;;
-    esac
     if [ -d "$_path" ] && [ ! -h "${_path%/}" ]; then
         _path="${_path%/}/"
     else
         _path="${_path%/}"
     fi
+
+    return 0
 }
