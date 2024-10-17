@@ -34,4 +34,6 @@ count_obj() {
     if [ -e "$1" ]; then
         _count=$#
     fi
+
+    return 0
 }
