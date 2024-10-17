@@ -71,4 +71,6 @@ ftype() {
     else
         { shift; _type='>'; "$@" '>' || return "$?"; }
     fi
+
+    return 0
 }
