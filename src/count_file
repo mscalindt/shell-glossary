@@ -25,4 +25,6 @@ count_file() {
 
     count_dir "$1" "$2" || return "$?"  # -> $_count
     _count=$(($3 - _count))
+
+    return 0
 }
