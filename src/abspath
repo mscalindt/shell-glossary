@@ -32,4 +32,6 @@ abspath() {
         '/'*) _path="$1" ;;
         *) _path="$PWD/$1" ;;
     esac
+
+    return 0
 }
