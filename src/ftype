@@ -31,7 +31,7 @@
 # (0) <_type> $ - 'B' | 'C' | 'D' | 'F' | 'L' | 'P' | 'S' | '?' | '>';
 #! .rc:
 # (0) success
-# (255) bad input
+# (255) bad input / error
 #! .rc.fn:
 # (err) (*) error
 # (info) (*) error
