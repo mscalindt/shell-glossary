@@ -3,9 +3,8 @@
 #! .params:
 # <"$1"> - string
 # <$2> - function name
-#! .rc:
-# (0) success
 #! .rc.fn:
+# ($2) (0) success
 # ($2) (*) error
 #! .caveats:
 # > `ARG_MAX`.
@@ -55,5 +54,5 @@ map_vline() {
 
     # The receiver function doesn't have to account for empty positional
     # parameters.
-    "$@" || return "$?"
+    "$@"
 }
