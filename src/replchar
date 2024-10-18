@@ -23,7 +23,8 @@
 #                 [modified <$3>]
 #! .rc:
 # (0) success
-# (255) bad input
+# (*) error
+# (255) bad input / error
 #! .rc.fn:
 # (esc_sed) (*) error
 #! .rc.util:
