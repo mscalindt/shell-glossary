@@ -16,6 +16,7 @@
 #                  [modified <$1>]
 #! .rc:
 # (0) success
+# (*) error
 #! .rc.util:
 # (realpath) (*) error
 #! .caveats:
