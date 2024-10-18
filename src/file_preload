@@ -17,7 +17,7 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input / bad usage
+# (255) bad input / bad usage / error
 #! .rc.util
 # (cat) (*) error
 #.
