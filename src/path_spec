@@ -4,7 +4,7 @@
 # <"$1"> - absolute path
 # ["$2"] - join path
 #! .uses.fn:
-# <assert> ("type" '$1');
+# <assert> ('-absolute-path' '$1');
 #          Assert a string
 #! .gives:
 # (0) <"$_path"> - string;
@@ -19,12 +19,6 @@
 #.
 path_spec() {
     assert -absolute-path "$1" || return 255
-
-    # Avoid normalizing already-canonical paths when $2 (join path) is not
-    # specified.
-    if [ ! "$2" ]; then
-        { ! assert -canonical-path "$1"; } || return 0
-    fi
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
