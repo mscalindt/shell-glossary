@@ -6,7 +6,7 @@
 # [PWD] $ - environment variable;
 #           absolute pathname of the current working directory
 #! .uses.fn:
-# <assert> ("type" '$1');
+# <assert> ('-absolute-path' '$1');
 #          Assert a string
 #! .uses.util:
 # [realpath];
@@ -24,18 +24,6 @@
 # > `INT_MAX`.
 #.
 path_spec_fs() {
-    # Avoid normalizing already-canonical paths.
-    { ! assert -fs-canonical-path "$1"; } || {
-        _path="$1"
-
-        case "$_path" in
-            '/') return 0 ;;
-            *) [ -d "$_path" ] && _path="${_path%/}/" || _path="${_path%/}" ;;
-        esac
-
-        return 0
-    }
-
     # If the passed path operand is relative, prefix $PWD.
     #
     # For more information, refer to:
