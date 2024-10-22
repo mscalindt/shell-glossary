@@ -3,6 +3,7 @@
 #! .params:
 # <"$1"> - absolute file path
 # <$2> - function name
+# <"$3"+> - function arguments
 #! .uses:
 # [&9]
 #! .uses.util:
@@ -51,8 +52,8 @@ map_fline() {
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Here-Document".
-            while IFS= read -r _line; do
-                "$2" "$_line" || return "$?"
+            shift; while IFS= read -r _line; do
+                "$@" "$_line" || return "$?"
             done \
 <<_FILE
 $_file
@@ -67,8 +68,8 @@ _FILE
 
     # Pass each line individually to $1 (the function). If an error is
     # received, file descriptor `9` will be released and the error signaled.
-    while IFS= read -r _line <&9 || [ "$_line" ]; do
-        "$2" "$_line" || { set -- "$?"; exec 9<&-; return "$1"; }
+    shift; while IFS= read -r _line <&9 || [ "$_line" ]; do
+        "$@" "$_line" || { set -- "$?"; exec 9<&-; return "$1"; }
     done
 
     # Release file descriptor `9` to close the associated file.
