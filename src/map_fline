@@ -21,7 +21,7 @@ map_fline() {
     # Assert $1 is a file.
     [ -f "$1" ] || return 255
 
-    # Use `cat` to read the file into $_line if $1 is a potential specification
+    # Use `cat` to read the file into $_file if $1 is a potential specification
     # of a file in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
     #
     # `cat` will read the file in one `read` syscall. This is important because
@@ -35,7 +35,7 @@ map_fline() {
     # kernel files.
     case "/$1" in
         *'/dev/'* | *'/proc/'* | *'/sys/'*)
-            # Store the output of `cat` in $_line using command substitution.
+            # Store the output of `cat` in $_file using command substitution.
             # The custom `x` character at the end and its subsequent removal
             # outside the command substitution preserves any trailing <newline>
             # characters stripped by command substitution.
@@ -43,10 +43,10 @@ map_fline() {
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Command Substitution".
-            _line=$(cat "$1" && printf "%s" 'x') || return "$?"
-            _line="${_line%?}"
+            _file=$(cat "$1" && printf "%s" 'x') || return "$?"
+            _file="${_file%?}"
 
-            # Iterate over the lines of $_line using heredoc.
+            # Iterate over the lines of $_file using heredoc.
             #
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
@@ -54,9 +54,9 @@ map_fline() {
             while IFS= read -r _line; do
                 "$2" "$_line" || return "$?"
             done \
-<<_LINE
-$_line
-_LINE
+<<_FILE
+$_file
+_FILE
         ;;
     esac
 
