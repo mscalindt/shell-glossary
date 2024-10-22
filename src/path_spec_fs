@@ -2,6 +2,7 @@
 # Semantically normalize a path into an assertable canonical path
 #! .params:
 # <"$1"> - absolute/relative path
+# ["$2"] - join path
 #! .uses.var:
 # [PWD] $ - environment variable;
 #           absolute pathname of the current working directory
@@ -48,12 +49,12 @@ path_spec_fs() {
         *) _pn=1; set -f ;;
     esac
 
-    # Field split $1 (path) based on `/`.
+    # Field split $1 (path) and $2 (join path) based on `/`.
     #
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Field Splitting".
-    IFS='/'; set -- $1
+    IFS='/'; set -- "$1" "/$2"; set -- $1$2
 
     # Restore the active state of the pathname expansion flag if appropriate.
     if [ "$_pn" = 1 ]; then
