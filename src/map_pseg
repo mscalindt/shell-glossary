@@ -4,6 +4,8 @@
 # <"$1"> - absolute/relative path
 # <$2> - function name
 # <"$3"+> - function arguments
+#! .rc:
+# (0) success
 #! .rc.fn:
 # ($2) (0) success
 # ($2) (*) error
@@ -12,6 +14,10 @@
 # > `INT_MAX`.
 #.
 map_pseg() {
+    # Assert a path segment to process exists.
+    _path="${1#"${1%%[!/]*}"}"; shift
+    set -- "${_path%"${_path##*[!/]}"}" "$@" && [ "$1" ] || return 0
+
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
     ${IFS+':'} unset _old_IFS 2> /dev/null
