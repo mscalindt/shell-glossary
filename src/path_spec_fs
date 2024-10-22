@@ -113,7 +113,7 @@ path_spec_fs() {
     # with a trailing slash. Note that these practices are more about
     # convention and consistency rather than strict requirements of the POSIX
     # standard.
-    [ -d "$_path" ] && _path="${_path%/}/" || _path="${_path%/}"
+    _path="${_path%/}/" && [ -d "$_path" ] || _path="${_path%/}"
 
     return 0
 }
