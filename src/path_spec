@@ -1,8 +1,11 @@
 #! .desc:
 # Lexically normalize a path into an assertable canonical path
 #! .params:
-# <"$1"> - absolute path
+# <"$1"> - absolute/relative path
 # ["$2"] - join path
+#! .uses.var:
+# [PWD] $ - environment variable;
+#           absolute pathname of the current working directory
 #! .uses.fn:
 # <assert> ('-absolute-path' '$1');
 #          Assert a string
@@ -18,7 +21,14 @@
 # > `INT_MAX`.
 #.
 path_spec() {
-    assert -absolute-path "$1" || return 255
+    # If the passed path operand is relative, prefix $PWD.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
+    #   Variables, Subsection: Environment Variable Definition".
+    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
+    #   Variables, Subsection: Other Environment Variables".
+    { assert -absolute-path "$1"; } || set -- "$PWD/$1"
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
