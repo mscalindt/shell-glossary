@@ -26,6 +26,7 @@
 # > `INT_MAX`.
 #.
 sq_arg_extract() {
+    [ "$1" ] || return 255
     assert -single-quotes-array "$2" || return 255
 
     # Extract the specified evaluated argument. The usage of `eval` here is
