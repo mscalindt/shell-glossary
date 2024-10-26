@@ -11,7 +11,7 @@
 # <assert> ('-whole-n' '$1');
 #          Assert a string
 #! .gives:
-# (0) <"$_chars"> - string
+# (0) <"$_chars"> - [string]
 #! .rc:
 # (0) success
 # (255) bad input
