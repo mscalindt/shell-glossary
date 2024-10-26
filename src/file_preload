@@ -13,7 +13,8 @@
 # [cat];
 # concatenate and print files
 #! .gives:
-# (0) <"$_file"> - raw content of the file
+# (0) <"$_file"> - [string];
+#                  raw content of $1
 #! .rc:
 # (0) success
 # (*) error
