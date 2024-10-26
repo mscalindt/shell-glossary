@@ -10,7 +10,7 @@
 # <assert> ("type" "string");
 #          Assert a string
 #! .gives:
-# (0) <"$_arg"> - string;
+# (0) <"$_arg"> - [string];
 #                 evaluated argument
 #! .rc:
 # (0) success
