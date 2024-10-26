@@ -30,7 +30,7 @@ abspath() {
     #   Variables, Subsection: Other Environment Variables".
     case "$1" in
         '/'*) _path="$1" ;;
-        *) _path="$PWD/$1" ;;
+        *) _path="${PWD%/}/$1" ;;
     esac
 
     return 0
