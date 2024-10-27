@@ -86,11 +86,12 @@ path_spec() {
             '..')
                 _path="${_path%/*/}"
                 _path="${_path%/}/"
-            ;;
-            *)
-                _path="$_path$_segment/"
+
+                continue
             ;;
         esac
+
+        _path="$_path$_segment/"
     done
 
     # Early exit for the root directory (`/`), all is done.
