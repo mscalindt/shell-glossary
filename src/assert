@@ -57,7 +57,7 @@ assert() {
                 while [ "$1" ]; do
                     case "${1#*\'}" in
                         \\\'\'*) set -- "${1#*\'\\\'\'}"; continue ;;
-                        '') break 2 ;;
+                        '') return 0 ;;
                     esac
 
                     return 1
@@ -90,7 +90,7 @@ assert() {
                     case "${1#*\'}" in
                         \\\'\'*) set -- "${1#*\'\\\'\'}"; continue ;;
                         \ *) set -- "${1#*\'}"; continue 2 ;;
-                        '') break 2 ;;
+                        '') return 0 ;;
                     esac
 
                     return 1
@@ -130,8 +130,7 @@ assert() {
         # support for extremely large numbers. This comparison is also known as
         # "lexicographical numeric comparison".
         '-max')
-            { assert -lower-n "$2" "$3" || assert -eq "$2" "$3"; } || \
-                return "$?"
+            assert -lower-n "$2" "$3" || assert -eq "$2" "$3" || return "$?"
         ;;
         # Assert $2 is a number minimum of $3. Leading zeroes are ignored,
         # except `[0] -eq [0]` is true. This comparison essentually emulates
@@ -139,18 +138,17 @@ assert() {
         # support for extremely large numbers. This comparison is also known as
         # "lexicographical numeric comparison".
         '-min')
-            { assert -greater-n "$2" "$3" || assert -eq "$2" "$3"; } || \
-                return "$?"
+            assert -greater-n "$2" "$3" || assert -eq "$2" "$3" || return "$?"
         ;;
         # Assert $2 is a number (`0`, `1`, `00`, `01`, ...). A number is any
         # string consisting only of digits. This is also well known as
         # "integer".
         '-n')
-            case :"$2${2#*[!0123456789]}" in
-                :) return 1 ;;
-                :"$2$2") : ;;
-                *) return 1 ;;
+            case "${2:-0}${2#*[!0123456789]}" in
+                "$2$2") return 0 ;;
             esac
+
+            return 1
         ;;
         # Assert $2 is a number greater than $3. To determine which number is
         # greater, leading zeroes are removed, and the numbers are first
@@ -160,20 +158,12 @@ assert() {
         # extremely large numbers. This comparison is also known as
         # "lexicographical numeric comparison".
         '-greater-n')
-            assert -n "$2" || return 2
-            assert -n "$3" || return 2
+            assert -n "$2" && assert -n "$3" || return 2
 
             set -- "${2#"${2%%[!0]*}"}" "${3#"${3%%[!0]*}"}"
 
-            case "$1" in
-                "$2") return 1 ;;
-            esac
-
-            if [ "${#1}" -gt "${#2}" ]; then
-                return 0
-            elif [ "${#1}" -lt "${#2}" ]; then
-                return 1
-            fi
+            [ ! "$1" = "$2" ] && [ ! "${#1}" -lt "${#2}" ] || return 1
+            [ ! "${#1}" -gt "${#2}" ] || return 0
 
             while [ "$1" ]; do
                 case "$1" in
@@ -195,20 +185,12 @@ assert() {
         # numbers. This comparison is also known as
         # "lexicographical numeric comparison".
         '-lower-n')
-            assert -n "$2" || return 2
-            assert -n "$3" || return 2
+            assert -n "$2" && assert -n "$3" || return 2
 
             set -- "${2#"${2%%[!0]*}"}" "${3#"${3%%[!0]*}"}"
 
-            case "$1" in
-                "$2") return 1 ;;
-            esac
-
-            if [ "${#1}" -lt "${#2}" ]; then
-                return 0
-            elif [ "${#1}" -gt "${#2}" ]; then
-                return 1
-            fi
+            [ ! "$1" = "$2" ] && [ ! "${#1}" -gt "${#2}" ] || return 1
+            [ ! "${#1}" -lt "${#2}" ] || return 0
 
             while [ "$1" ]; do
                 case "$1" in
@@ -226,23 +208,18 @@ assert() {
         # any string consisting only of digits, of which the first is not `0`.
         # Also known as "positive integer" in the POSIX standard.
         '-natural-n')
-            case :"$2${2#*[!0123456789]}" in
-                : | :0*) return 1 ;;
-                :"$2$2") : ;;
-                *) return 1 ;;
+            case "${2:-0}${2#*[!0123456789]}" in
+                0*) return 1 ;;
+                "$2$2") return 0 ;;
             esac
+
+            return 1
         ;;
         # Assert $2 is a whole number (`0`, `1`, `2`, ...). A whole number is
         # `0` and any string consisting only of digits, of which the first is
         # not `0`. Also known as "non-negative integer" in the POSIX standard.
         '-whole-n')
-            case :"$2${2#*[!0123456789]}" in
-                :) return 1 ;;
-                :00) : ;;
-                :0*) return 1 ;;
-                :"$2$2") : ;;
-                *) return 1 ;;
-            esac
+            assert -natural-n "$2" || assert -eq "$2" 0 || return "$?"
         ;;
         # Assert $2 is an absolute (/*) path. An absolute path is any string of
         # which the first character is `/`.
@@ -252,9 +229,10 @@ assert() {
         #   Subsection: Absolute Pathname".
         '-absolute-path')
             case "$2" in
-                '/'*) : ;;
-                *) return 1 ;;
+                '/'*) return 0 ;;
             esac
+
+            return 1
         ;;
         # Assert $2 is a lexically canonical (assertable) path. A canonical
         # path is largely implementation-defined string that refers to the
@@ -326,8 +304,9 @@ assert() {
         '-relative-path')
             case "$2" in
                 '/'*) return 1 ;;
-                *) [ "$2" ] || return 1 ;;
             esac
+
+            [ "$2" ] || return 1
         ;;
         # Assert $2 is a shell name. The character classes have been
         # intentionally expanded to be locale-independent.
@@ -345,10 +324,9 @@ assert() {
                 *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_]*)
                     return 1
                 ;;
-                *)
-                    [ "$2" ] || return 1
-                ;;
             esac
+
+            [ "$2" ] || return 1
         ;;
         *)
             exit 255
