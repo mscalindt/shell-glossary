@@ -37,24 +37,27 @@ sq_arg_extract() {
             _pattern="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
                     "$_pattern") _arg="$1"; return 0 ;;
-                    *) shift && continue ;;
                 esac
+
+                shift && continue
             done
         ;;
         '-prefix')
             _pattern="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
                     "$_pattern"*) _arg="$1"; return 0 ;;
-                    *) shift && continue ;;
                 esac
+
+                shift && continue
             done
         ;;
         '-suffix')
             _pattern="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
                     *"$_pattern") _arg="$1"; return 0 ;;
-                    *) shift && continue ;;
                 esac
+
+                shift && continue
             done
         ;;
         *)
@@ -63,8 +66,9 @@ sq_arg_extract() {
             _pattern="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
                     *"$_pattern"*) _arg="$1"; return 0 ;;
-                    *) shift && continue ;;
                 esac
+
+                shift && continue
             done
         ;;
     esac
