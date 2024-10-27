@@ -64,10 +64,9 @@ replchar() {
 
             return 0
         ;;
-        *)
-            [ ! "$4" ] || return 255
-        ;;
     esac
+
+    [ ! "$4" ] || return 255
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
