@@ -92,16 +92,17 @@ path_spec_fs() {
             '..')
                 _path="${_path%/*/}"
                 _path="${_path%/}/"
-            ;;
-            *)
-                if [ -h "$_path$_segment" ]; then
-                    _path=$(realpath "$_path$_segment") || return "$?"
-                    _path="$_path/"
-                else
-                    _path="$_path$_segment/"
-                fi
+
+                continue
             ;;
         esac
+
+        if [ -h "$_path$_segment" ]; then
+            _path=$(realpath "$_path$_segment") || return "$?"
+            _path="$_path/"
+        else
+            _path="$_path$_segment/"
+        fi
     done
 
     # Early exit for the root directory (`/`), all is done.
