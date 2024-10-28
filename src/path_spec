@@ -28,7 +28,7 @@ path_spec() {
     #   Variables, Subsection: Environment Variable Definition".
     # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
     #   Variables, Subsection: Other Environment Variables".
-    { assert -absolute-path "$1"; } || set -- "${PWD%/}/$1"
+    assert -absolute-path "$1" || set -- "${PWD%/}/$1"
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
