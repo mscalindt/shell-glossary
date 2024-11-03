@@ -40,10 +40,11 @@
 # (255) bad input
 #.
 path_spec_static() {
+    [ "${1#\-}" ] || return 255
+
     # Assert the option block contains only expected options (characters).
     case "${1#\-}" in
         *[!abcefgjnopqrstuvwxyz]*) return 255 ;;
-        *) [ "${1#\-}" ] || return 255 ;;
     esac
 
     # Fuse $2 (path) and $3 (join path), if any.
@@ -84,8 +85,7 @@ path_spec_static() {
     case "$1" in
         *v*)
             case "$3" in
-                */) : ;;
-                *) [ ! -d "$3" ] || set -- "$1" "$2" "$3/" ;;
+                *[!/]) [ ! -d "$3" ] || set -- "$1" "$2" "$3/" ;;
             esac
         ;;
     esac
@@ -203,8 +203,7 @@ path_spec_static() {
     case "$1" in
         *w*)
             case "$3" in
-                */) : ;;
-                *) [ ! -d "$3" ] || set -- "$1" "$2" "$3/" ;;
+                *[!/]) [ ! -d "$3" ] || set -- "$1" "$2" "$3/" ;;
             esac
         ;;
     esac
