@@ -9,6 +9,8 @@
 #     'f' - prepend slash
 #     'g' - prepend slash on modified path
 #     'j' - append join path without usage of slash
+#     'k' - strip all trailing slashes if modified path not true directory
+#     'l' - append slash (if not present) if modified path true directory
 #     'n' - never return lexically root modified path
 #     'o' - never return absolute modified path
 #     'p' - never return relative modified path
@@ -44,7 +46,7 @@ path_spec_static() {
 
     # Assert the option block contains only expected options (characters).
     case "${1#\-}" in
-        *[!abcefgjnopqrstuvwxyz]*) return 255 ;;
+        *[!abcefgjklnopqrstuvwxyz]*) return 255 ;;
     esac
 
     # Fuse $2 (path) and $3 (join path), if any.
@@ -208,6 +210,44 @@ path_spec_static() {
         *w*)
             case "$3" in
                 *[!/]) [ ! -d "$3" ] || set -- "$1" "$2" "$3/" ;;
+            esac
+        ;;
+    esac
+
+    # Strip all trailing slashes if the modified path is not a true directory.
+    # A true directory is a directory that is not a symbolic link.
+    # (-k)
+    #
+    # Any trailing slashes will be removed for operator `-h` of `test`, because
+    # otherwise they will cause an actual symbolic link to be followed and thus
+    # deteriorate the reliability of `-h`.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+    #   Subsection: Pathname Resolution".
+    case "$1" in
+        *k*)
+            # If $3 is a directory and a symbolic link, it is "not a true
+            # directory".
+            [ ! -d "$3" ] || \
+            [ ! -h "${3%"${3##*[!/]}"}" ] || \
+            set -- "$1" "$2" "${3%"${3##*[!/]}"}"
+        ;;
+    esac
+
+    # Append a slash (if not present) if the modified path is a true directory.
+    # A true directory is a directory that is not a symbolic link.
+    # (-l)
+    case "$1" in
+        *l*)
+            case "$3" in
+                *[!/])
+                    # If $3 is a directory and is not a symbolic link, it is "a
+                    # true directory".
+                    [ ! -d "$3" ] || \
+                    [ -h "$3" ] || \
+                    set -- "$1" "$2" "$3/"
+                ;;
             esac
         ;;
     esac
