@@ -21,7 +21,7 @@
 map_pseg() {
     # Assert a path segment to process exists and remove consecutive slashes in
     # $1 to prevent empty segments from being produced by the field splitting.
-    path_spec_static -cxy "$1" || return "$?"
+    path_spec_static -cxy "$1" || return "$?"  # -> $_path
     [ "$_path" ] || return 0
     shift && set -- "$_path" "$@"
 
