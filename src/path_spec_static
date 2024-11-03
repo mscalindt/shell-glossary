@@ -112,6 +112,10 @@ path_spec_static() {
     # last segment processed, root (`/`) will be the default location
     # resolved/discarded to. This behavior aligns with the POSIX specification,
     # but can be mitigated with option `-n`.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+    #   Subsection: Pathname Resolution".
     set -- "$1" "$3" ""; while [ "$2" ]; do
         # Example path:
         # `//abc///foo`
