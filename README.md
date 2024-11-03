@@ -25,6 +25,7 @@ external utility calls.
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info): Print formatted text
 - [MAP_FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_fline): Process each line of a file with a function
 - [MAP_PSEG()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pseg): Process all segments of a path with a function
+- [MAP_PSEG_REV()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pseg_rev): Process all segments of a path in reverse with a function
 - [MAP_VLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_vline): Process all populated lines of a variable (string) with a function
 - [MASK_CHECK()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_check): Check a bit, the power of 2, in a pseudo-bitmask shell variable
 - [MASK_SET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_set): Set a bit, the power of 2, in a pseudo-bitmask shell variable

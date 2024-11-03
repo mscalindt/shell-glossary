@@ -1,0 +1,26 @@
+#! .desc:
+# Process all segments of a path in reverse with a function
+#! .params:
+# <"$1"> - absolute/relative path
+# <$2> - function name
+# <"$3"+> - function arguments
+#! .uses.fn:
+# <map_pseg> ('$@');
+#            Process all segments of a path with a function
+# <path_spec_static> ('-z' '$1');
+#                    Modify a path
+#! .rc:
+# (0) success
+# (*) error
+#! .rc.fn:
+# (map_pseg) (0) success
+# (map_pseg) (*) error
+# (path_spec_static) (*) error
+#.
+map_pseg_rev() {
+    # Invert the path.
+    path_spec_static -z "$1" || return "$?"  # -> $_path
+
+    # Map the path segments.
+    shift && map_pseg "$_path" "$@"
+}
