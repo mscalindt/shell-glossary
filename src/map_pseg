@@ -4,19 +4,26 @@
 # <"$1"> - absolute/relative path
 # <$2> - function name
 # <"$3"+> - function arguments
+#! .uses.fn:
+# <path_spec_static> ('-cxy' '$1');
+#                    Modify a path
 #! .rc:
 # (0) success
+# (*) error
 #! .rc.fn:
 # ($2) (0) success
 # ($2) (*) error
+# (path_spec_static) (*) error
 #! .caveats:
 # > `ARG_MAX`.
 # > `INT_MAX`.
 #.
 map_pseg() {
-    # Assert a path segment to process exists.
-    _path="${1#"${1%%[!/]*}"}"; shift
-    set -- "${_path%"${_path##*[!/]}"}" "$@" && [ "$1" ] || return 0
+    # Assert a path segment to process exists and remove consecutive slashes in
+    # $1 to prevent empty segments from being produced by the field splitting.
+    path_spec_static -cxy "$1" || return "$?"
+    [ "$_path" ] || return 0
+    shift && set -- "$_path" "$@"
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
@@ -51,7 +58,7 @@ map_pseg() {
     IFS="$_old_IFS" 2> /dev/null
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
-    # The receiver function may have to account for any empty positional
+    # The receiver function doesn't have to account for empty positional
     # parameters.
     "$@"
 }
