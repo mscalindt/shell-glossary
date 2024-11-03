@@ -176,7 +176,7 @@ path_spec_static() {
                     # As stated, when both $2 (segments) and $3 (modified path)
                     # are empty, the default discarding behavior is "discard to
                     # root".
-                    if [ ! -h "$3$_pfx$_segment" ]; then
+                    if [ -h "$3$_pfx$_segment" ]; then
                         _segment=
                         { [ "$2" ] || [ "$3" ]; } && continue || _pfx=/
                     fi
