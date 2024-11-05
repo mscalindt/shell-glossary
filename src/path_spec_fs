@@ -3,119 +3,22 @@
 #! .params:
 # <"$1"> - absolute/relative path
 # ["$2"] - join path
-#! .uses.var:
+#! .uses.var.path.spec.static:
 # [PWD] $ - environment variable;
 #           absolute pathname of the current working directory
 #! .uses.fn:
-# <assert> ('-absolute-path' '$1');
-#          Assert a string
-#! .uses.util:
+# <path_spec_static> ('-abchklmr' '$@');
+#                    Modify a path
+#! .uses.util.path.spec.static:
 # [realpath];
 # resolve a pathname
 #! .gives:
 # (0) <"$_path"> - string;
 #                  [modified <$1>]
-#! .rc:
-# (0) success
-# (*) error
-#! .rc.util:
-# (realpath) (*) error
-#! .caveats:
-# > `ARG_MAX`.
-# > `INT_MAX`.
+#! .rc.fn:
+# (path_spec_static) (0) success
+# (path_spec_static) (*) error
 #.
 path_spec_fs() {
-    # If the passed path operand is relative, prepend $PWD.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
-    #   Variables, Subsection: Environment Variable Definition".
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
-    #   Variables, Subsection: Other Environment Variables".
-    assert -absolute-path "$1" || set -- "${PWD%/}/$1"
-
-    # Save $IFS.
-    _old_IFS="$IFS" 2> /dev/null
-    ${IFS+':'} unset _old_IFS 2> /dev/null
-
-    # Save the state of the pathname expansion flag and disable it if active;
-    # disabled to disable the expansion of `*`.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Pathname Expansion".
-    case "$-" in
-        *'f'*) _pn=0 ;;
-        *) _pn=1; set -f ;;
-    esac
-
-    # Field split $1 (path) and $2 (join path) based on `/`.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Field Splitting".
-    IFS='/'; set -- "$1" "/$2"; set -- $1$2
-
-    # Restore the active state of the pathname expansion flag if appropriate.
-    if [ "$_pn" = 1 ]; then
-        set +f
-    fi
-
-    # Restore $IFS.
-    IFS="$_old_IFS" 2> /dev/null
-    ${_old_IFS+':'} unset IFS 2> /dev/null
-
-    # Define initial $_path with a slash (`/`); necessary to establish a
-    # standard resolving behavior independent of how the field splitting
-    # handled the `/` delimiter.
-    _path=/; for _segment in "$@"; do
-        # Skip empty arguments; field splitting may have produced empty
-        # arguments on consecutive delimiter appearances.
-        [ "$_segment" ] || continue
-
-        # Resolve the path to its semantical canonical representation.
-        # `.`: special directory name denoting the current directory.
-        # `..`: special directory name denoting the parent directory.
-        #
-        # As specified by the standard, when `..` is encountered at the root
-        # (`/`), the path remains unchanged.
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
-        #   Subsection: Pathname Resolution".
-        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
-        #   Subsection: realpath".
-        case "$_segment" in
-            '.')
-                continue
-            ;;
-            '..')
-                _path="${_path%/*/}"
-                _path="${_path%/}/"
-
-                continue
-            ;;
-        esac
-
-        if [ -h "$_path$_segment" ]; then
-            _path=$(realpath "$_path$_segment") || return "$?"
-            _path="$_path/"
-        else
-            _path="$_path$_segment/"
-        fi
-    done
-
-    # Early exit for the root directory (`/`), all is done.
-    case "$_path" in
-        '/') return 0 ;;
-    esac
-
-    # If $_path is a directory, add a trailing slash to align it with the
-    # specification of a directory. Otherwise, make sure $_path doesn't end
-    # with a trailing slash. Note that these practices are more about
-    # convention and consistency rather than strict requirements of the POSIX
-    # standard.
-    _path="${_path%/}/" && [ -d "$_path" ] || _path="${_path%/}"
-
-    return 0
+    path_spec_static -abchklmr "$@"  # -> $_path
 }
