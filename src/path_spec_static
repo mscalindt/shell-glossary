@@ -85,7 +85,7 @@ path_spec_static() {
     esac
 
     # Strip all trailing slashes if the path is not a directory. (-t)
-    if [ ! -d "$3" ]; then case "$1" in
+    if [ "$3" ] && [ ! -d "$3" ]; then case "$1" in
         *t*) set -- "$1" "$2" "${3%"${3##*[!/]}"}" ;;
     esac; fi
 
@@ -101,9 +101,9 @@ path_spec_static() {
     #   Variables, Subsection: Environment Variable Definition".
     # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
     #   Variables, Subsection: Other Environment Variables".
-    case "$1" in
+    if [ "$3" ]; then case "$1" in
         *r*) assert -absolute-path "$3" || set -- "$1" "$2" "${PWD%/}/$3" ;;
-    esac
+    esac; fi
 
     # Prepend a slash. (-f)
     case "$1" in
@@ -200,7 +200,7 @@ path_spec_static() {
     done
 
     # Strip all trailing slashes if the modified path is not a directory. (-u)
-    if [ ! -d "$3" ]; then case "$1" in
+    if [ "$3" ] && [ ! -d "$3" ]; then case "$1" in
         *u*) set -- "$1" "$2" "${3%"${3##*[!/]}"}" ;;
     esac; fi
 
@@ -251,17 +251,17 @@ path_spec_static() {
     esac; fi
 
     # Never return absolute modified path. (-o)
-    case "$1" in
+    if [ "$3" ]; then case "$1" in
         *o*) assert -relative-path "$3" || { _path=; return 0; } ;;
-    esac
+    esac; fi
 
     # Never return relative modified path. (-p)
-    case "$1" in
+    if [ "$3" ]; then case "$1" in
         *p*) assert -absolute-path "$3" || { _path=; return 0; } ;;
-    esac
+    esac; fi
 
     # Never return inexistent modified path. (-q)
-    if [ ! -e "$3" ]; then case "$1" in
+    if [ "$3" ] && [ ! -e "$3" ]; then case "$1" in
         *q*) _path=; return 0 ;;
     esac; fi
 
