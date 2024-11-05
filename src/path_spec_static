@@ -12,6 +12,7 @@
 #     'j' - append join path without usage of slash
 #     'k' - strip all trailing slashes if modified path not true directory
 #     'l' - append slash (if not present) if modified path true directory
+#     'm' - return `/` if modified path empty
 #     'n' - never return lexically root modified path
 #     'o' - never return absolute modified path
 #     'p' - never return relative modified path
@@ -52,7 +53,7 @@ path_spec_static() {
 
     # Assert the option block contains only expected options (characters).
     case "${1#\-}" in
-        *[!abcefghjklnopqrstuvwxyz]*) return 255 ;;
+        *[!abcefghjklmnopqrstuvwxyz]*) return 255 ;;
     esac
 
     # Fuse $2 (path) and $3 (join path), if any.
@@ -263,6 +264,11 @@ path_spec_static() {
     # Never return inexistent modified path. (-q)
     if [ "$3" ] && [ ! -e "$3" ]; then case "$1" in
         *q*) _path=; return 0 ;;
+    esac; fi
+
+    # Return `/` if the modified path is empty. (-m)
+    if [ ! "$3" ]; then case "$1" in
+        *m*) _path=/; return 0 ;;
     esac; fi
 
     _path="$3"; return 0
