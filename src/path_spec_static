@@ -133,6 +133,20 @@ path_spec_static() {
         # Strip $_pfx (prefix) and $_segment (path segment) from $2.
         set -- "$1" "${2#"$_pfx$_segment"}" "$3"
 
+        # Resolve symbolic segments semantically. (-h)
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
+        #   Subsection: realpath".
+        if [ "$_segment" ] && [ -h "$3$_pfx$_segment" ]; then case "$1" in
+            *h*)
+                {
+                    set -- "$1" "$2" "$(realpath "$3$_pfx$_segment")" && \
+                    continue
+                } || return "$?"
+            ;;
+        esac; fi
+
         # Resolve `.` lexically. (-a)
         #
         # As `.` is ambiguous and as stated, when both $2 (segments) and $3
@@ -170,20 +184,6 @@ path_spec_static() {
         # the default discarding behavior is "discard to root".
         if [ "$_segment" ] && [ -h "$3$_pfx$_segment" ]; then case "$1" in
             *s*) [ "$2$3" ] && continue || { _pfx=/; _segment=; } ;;
-        esac; fi
-
-        # Resolve symbolic segments semantically. (-h)
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
-        #   Subsection: realpath".
-        if [ "$_segment" ] && [ -h "$3$_pfx$_segment" ]; then case "$1" in
-            *h*)
-                {
-                    set -- "$1" "$2" "$(realpath "$3$_pfx$_segment")" && \
-                    continue
-                } || return "$?"
-            ;;
         esac; fi
 
         # Strip consecutive slashes. (-c)
