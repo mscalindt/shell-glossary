@@ -12,12 +12,12 @@
 # [POSIX_COMPAT] $ - environment variable;
 #                    forces the usage of parameter expansion; necessary for
 #                    POSIX.1-2024 compliance, even if backend `sed`
-#! .uses.fn:
-# (-sed) <esc_sed> ("sed_string_type" '/' "string");
-#                  Escape a string to be used literally as a POSIX `sed` string
-#! .uses.util:
-# (-sed) <sed>;
-#        stream editor
+#! .uses.fn (-sed):
+# <esc_sed> ("sed_string_type" '/' "string");
+#           Escape a string to be used literally as a POSIX `sed` string
+#! .uses.util (-sed):
+# <sed>;
+# stream editor
 #! .gives:
 # (0) <"$_str"> - [string];
 #                 [modified <$3>]
