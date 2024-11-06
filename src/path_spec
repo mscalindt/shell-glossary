@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - absolute/relative path
 # ["$2"] - join path
-#! .uses.var.path.spec.static:
+#! .uses.var.path_spec_static:
 # [PWD] $ - environment variable;
 #           absolute pathname of the current working directory
 #! .uses.fn:
