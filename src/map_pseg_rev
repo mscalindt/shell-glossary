@@ -1,5 +1,5 @@
 #! .desc:
-# Process all segments of a path in reverse with a function
+# Process all path segments in reverse with a function
 #! .params:
 # <"$1"> - absolute/relative path
 # <$2> - function name
