@@ -31,6 +31,9 @@ map_vline() {
     # reassigned such that $2 (function name) and any function arguments become
     # $1, while the produced arguments are the remaining positional parameters.
     #
+    # Since <newline> is part of "IFS white space", any appearances (of empty
+    # lines) in $1 will not be enumerated at all.
+    #
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Field Splitting".
@@ -47,13 +50,8 @@ map_vline() {
     IFS="$_old_IFS" 2> /dev/null
     ${_old_IFS+':'} unset IFS 2> /dev/null
 
-    # Due to <space>, <tab>, and <newline> ("IFS white space") possessing a
-    # special behavior in $IFS (field splitting), $2 is populated only if the
-    # string contains characters other than <newline>. Assert the string is not
-    # empty.
-    [ "$2" ] || return 0
-
     # The receiver function doesn't have to account for empty positional
-    # parameters.
+    # parameters between iterations, but might have to be prepared to handle
+    # zero parameters (empty string).
     "$@"
 }
