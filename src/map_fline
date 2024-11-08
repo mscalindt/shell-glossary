@@ -1,5 +1,5 @@
 #! .desc:
-# Process each line of a file with a function
+# Process each file line with a function
 #! .params:
 # <"$1"> - absolute file path
 # <$2> - function name
