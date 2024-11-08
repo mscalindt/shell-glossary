@@ -1,5 +1,5 @@
 #! .desc:
-# Process all populated lines of a variable (string) with a function
+# Process all populated string lines with a function
 #! .params:
 # <"$1"> - string
 # <$2> - function name
