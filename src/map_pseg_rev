@@ -8,7 +8,7 @@
 # <map_pseg> ('$@');
 #            Process all path segments with a function
 # <path_spec_static> ('-z' '$1');
-#                    Modify a path
+#                    Modify a path string
 #! .rc:
 # (0) success
 # (*) error

@@ -1,5 +1,5 @@
 #! .desc:
-# Modify a path
+# Modify a path string
 #! .params:
 # <$1> - option_block(
 #     'a' - resolve `.` lexically
