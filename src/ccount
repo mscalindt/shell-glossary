@@ -43,7 +43,7 @@ ccount() {
     # integrity.
     #
     # For more information, refer to:
-    # > "POSIX.1-2017, Volume: Shell & Utilities, Section: Shell Command
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Field Splitting".
     #
     # (2024-08-15) Note:
