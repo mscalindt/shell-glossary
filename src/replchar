@@ -91,6 +91,8 @@ replchar() {
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Field Splitting".
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+    #   Language, Subsection: Parameter Expansion".
     #
     # (2024-08-16) Note:
     # According to POSIX.1-2024, stable usage of field splitting is not POSIX
