@@ -31,6 +31,10 @@ map_pchunk() {
     # Process the path using parameter expansion. $1 is the original path
     # processed until nothing is left, while $2 will be the built cumulative
     # path segments.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+    #   Language, Subsection: Parameter Expansion".
     while [ "${1%/}" ]; do
         _i="$1"; _j="$2"; _k="${_i%/}"; shift 2; case "${_k#/}" in
             *'/'*)  # Multiple path segments present.
