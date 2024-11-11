@@ -1,0 +1,45 @@
+#! .desc:
+# Process each cumulative path segment in reverse with a function;
+# `/foo/bar/baz`: `/foo/bar/baz`, `/foo/bar`, `/foo`
+# `/foo/bar/baz/`: `/foo/bar/baz/`, `/foo/bar`, `/foo`
+# `foo/bar/baz`: `foo/bar/baz`, `foo/bar`, `foo`
+# `foo/bar/baz/`: `foo/bar/baz/`, `foo/bar`, `foo`
+#! .params:
+# <"$1"> - absolute/relative path
+# <$2> - function name
+# ["$3"+] - function arguments
+#! .uses.fn:
+# <path_spec_static> ('-c' '$1');
+#                    Modify a path string
+#! .sets:
+# <map_pchunk_rev_> ();
+#! .rc:
+# (0) success
+# (*) error
+#! .rc.fn:
+# ($2) (0) success
+# ($2) (*) error
+# (path_spec_static) (*) error
+#.
+map_pchunk_rev() {
+    map_pchunk_rev_() { _i="$1" && shift && "$@" "$_i"; }
+
+    # Remove consecutive slashes in $1 (path).
+    path_spec_static -c "$1" || return "$?"  # -> $_path
+    shift && set -- "$_path" "$@"
+
+    # Process the path using parameter expansion.
+    while [ "${1%/}" ]; do
+        # Pass $1 (cumulative path segment) to $2 (function) as the last
+        # positional parameter along any function arguments.
+        map_pchunk_rev_ "$@" || return "$?"
+
+        _i="$1"; shift; case "$_i" in
+            */) set -- "${_i%/*/}" "$@" ;;
+            */*) set -- "${_i%/*}" "$@" ;;
+            *) set -- '' "$@" ;;
+        esac
+    done
+
+    return 0
+}
