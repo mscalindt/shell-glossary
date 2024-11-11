@@ -1,7 +1,5 @@
 ## Collection 1: General POSIX `sh` Functions
 
-### Overview
-
 A collection of reusable pure and very portable `sh` functions with optional
 external utility calls.
 
@@ -41,8 +39,6 @@ external utility calls.
 - [SQ_ARG_EXTRACT()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg_extract): Extract an evaluated argument in a single-quotes array of arguments
 
 ## Collection 2: POSIX `sh` Functions for Shell Option Parsing
-
-### Overview
 
 A collection of reusable pure and very portable `sh` functions to make shell
 option parsing a breeze.
