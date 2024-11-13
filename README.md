@@ -23,6 +23,7 @@ external utility calls.
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info): Print formatted text
 - [MAP_FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_fline): Process each populated file line with a function
 - [MAP_PCHUNK()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pchunk): Process each cumulative path segment with a function
+- [MAP_PCHUNK_FIND()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pchunk_find): Find success among cumulative path segments using a function
 - [MAP_PCHUNK_REV()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pchunk_rev): Process each cumulative path segment in reverse with a function
 - [MAP_PSEG()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pseg): Process each path segment with a function
 - [MAP_PSEG_REV()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pseg_rev): Process each path segment in reverse with a function

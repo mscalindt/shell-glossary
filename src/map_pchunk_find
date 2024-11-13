@@ -1,0 +1,59 @@
+#! .desc:
+# Find success among cumulative path segments using a function;
+# `/foo/bar/baz`: `/foo`, `/foo/bar`, `/foo/bar/baz`
+# `/foo/bar/baz/`: `/foo`, `/foo/bar`, `/foo/bar/baz/`
+# `foo/bar/baz`: `foo`, `foo/bar`, `foo/bar/baz`
+# `foo/bar/baz/`: `foo`, `foo/bar`, `foo/bar/baz/`
+#! .params:
+# <"$1"> - path
+# <$2> - function name
+# ["$3"+] - function arguments
+#! .uses.fn:
+# <path_spec_static> ('-c' '$1');
+#                    Modify a path string
+#! .gives:
+# (0) <"$_segment"> - string;
+#! .sets:
+# <map_pchunk_find_> ();
+#! .rc:
+# (0) success
+# (*) false / error
+#! .rc.fn:
+# ($2) (0) success
+# ($2) (*) false / error
+# (path_spec_static) (*) error
+#.
+map_pchunk_find() {
+    map_pchunk_find_() { _i="$2" && shift 2 && "$@" "$_i"; }
+
+    # Remove consecutive slashes in $1 (path).
+    path_spec_static -c "$1" || return "$?"  # -> $_path
+    shift && set -- "$_path" '' "$@"
+
+    # Process the path using parameter expansion. $1 is the original path
+    # processed until nothing is left, while $2 will be the built cumulative
+    # path segments.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
+    #   Language, Subsection: Parameter Expansion".
+    while [ "${1%/}" ]; do
+        _i="$1"; _j="$2"; _k="${_i%/}"; shift 2; case "${_k#/}" in
+            *'/'*)  # Multiple path segments present.
+                case "$_k" in
+                    /*) set -- "/${_i#/*/}" "$_j${_i%/"${_i#/*/}"}" "$@" ;;
+                    *) set -- "/${_i#*/}" "$_j${_i%/"${_i#*/}"}" "$@" ;;
+                esac
+            ;;
+            *)  # One path segment remaining.
+                set -- '' "$_j$_i" "$@"
+            ;;
+        esac
+
+        # Pass $2 (cumulative path segment) to $3 (function) as the last
+        # positional parameter along any function arguments.
+        map_pchunk_find_ "$@" && { _segment="$2"; return 0; } || continue
+    done
+
+    return 1
+}
