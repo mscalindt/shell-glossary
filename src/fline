@@ -71,6 +71,8 @@ fline() {
 <<_LINE
 $_line
 _LINE
+
+            return 0
         ;;
     esac
 
