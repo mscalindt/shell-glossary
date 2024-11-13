@@ -7,7 +7,7 @@
 #     .
 # )
 # <$2> - line number
-# <"$3"> - absolute file path
+# <"$3"> - file path
 #! .uses:
 # [&9]
 #! .uses.fn:
