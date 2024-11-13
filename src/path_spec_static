@@ -28,7 +28,7 @@
 #     'z' - invert path
 #     .
 # )
-# ["$2"] - absolute/relative path
+# ["$2"] - path
 # ["$3"] - join path
 #! .uses.var:
 # [PWD] $ - environment variable;
