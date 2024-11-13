@@ -6,7 +6,7 @@
 #     '-shell' - use shell input redirection
 #     .
 # )
-# <"$2"> - absolute file path
+# <"$2"> - file path
 # <$3> - function name
 # ["$4"+] - function arguments
 #! .uses:
