@@ -58,6 +58,8 @@ map_fline() {
 <<_FILE
 $_file
 _FILE
+
+            return 0
         ;;
     esac
 
