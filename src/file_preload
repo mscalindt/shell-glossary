@@ -3,8 +3,9 @@
 #! .params:
 # <"$1"> - absolute file path
 # <$2> - method(
-#     '-subshell' - use command substitution
-#     '-var' - use string concatenation
+#     '-cat' - use `cat`
+#     '-subshell' - use command substitution with shell input redirection
+#     '-var' - use string concatenation with shell input redirection
 #     .
 # )
 #! .uses:
@@ -26,8 +27,10 @@ file_preload() {
     # For flexibility and modularity, missing files will not be signaled.
     [ -f "$1" ] || { _file=; return 0; }
 
-    # Use `cat` to read the file into $_file if $1 is a potential specification
-    # of a file in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
+    # Read the file with the specified method.
+    #
+    # Use `cat` to read the file if it is a potential specification of a file
+    # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
     #
     # `cat` will read the file in one `read` syscall. This is important because
     # certain kernel files can only be read() once, returning EOF on subsequent
@@ -38,8 +41,12 @@ file_preload() {
     # single read(). This contrasts with a POSIX shell, which reads files one
     # byte at a time and may only return the first byte of data from certain
     # kernel files.
-    case "/$1" in
-        *'/dev/'* | *'/proc/'* | *'/sys/'*)
+    #
+    # Use the shell to read the file if it is a small (< ~10000XX lines),
+    # user-created file. `-subshell` performs better on big files (> ~50000
+    # lines), while `-var` performs better on small files.
+    case "$2" in
+        '-cat')
             # Store the output of `cat` in $_file using command substitution.
             # The custom `x` character at the end and its subsequent removal
             # outside the command substitution preserves any trailing <newline>
@@ -49,21 +56,14 @@ file_preload() {
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Command Substitution".
             _file=$(cat "$1" && printf "%s" 'x') || return "$?"
-            _file="${_file%?}" && return 0 || return "$?"
+            _file="${_file%?}"
         ;;
-    esac
-
-    # Open the file specified by $1 and assign it to file descriptor `9`. The
-    # usage of a file descriptor simplifies the error handling and allows for a
-    # more uniform parsing. Additionally, TOCTOU flaws are completely avoided
-    # this way.
-    { exec 9< "$1"; } || return "$?"
-
-    # Read the file with the specified method.
-    # `-subshell` performs better on big files.
-    # `-var` performs better on small files.
-    case "$2" in
         '-subshell')
+            # Open the file and assign it to file descriptor `9`. The usage of
+            # a file descriptor simplifies the error handling. Additionally,
+            # TOCTOU flaws are completely avoided this way.
+            { exec 9< "$1"; } || return "$?"
+
             # Store the output of each `printf` in $_file using command
             # substitution. The custom `x` character at the end and its
             # subsequent removal outside the command substitution preserves any
@@ -78,20 +78,30 @@ file_preload() {
                 done; printf "%s" "${_line}x"
             )
             _file="${_file%?}"
+
+            # Release file descriptor `9` to close the associated file.
+            exec 9<&-
         ;;
         '-var')
+            # Open the file and assign it to file descriptor `9`. The usage of
+            # a file descriptor simplifies the error handling. Additionally,
+            # TOCTOU flaws are completely avoided this way.
+            { exec 9< "$1"; } || return "$?"
+
             # Append with <newline> each $_line to an initially empty $_file to
             # build the raw content of the file.
             _file=; while IFS= read -r _line <&9; do
                 _file="$_file$_line
 "
             done; _file="$_file$_line"
+
+            # Release file descriptor `9` to close the associated file.
+            exec 9<&-
         ;;
         *)
-            exec 9<&- && return 255 || return "$?"
+            return 255
         ;;
     esac
 
-    # Release file descriptor `9` to close the associated file.
-    exec 9<&-
+    return 0
 }
