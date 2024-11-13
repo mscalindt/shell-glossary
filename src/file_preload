@@ -7,7 +7,7 @@
 #     '-var' - use string concatenation with shell input redirection
 #     .
 # )
-# <"$2"> - absolute file path
+# <"$2"> - file path
 #! .uses:
 # [&9]
 #! .uses.util:
