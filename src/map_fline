@@ -1,5 +1,5 @@
 #! .desc:
-# Process each file line with a function
+# Process each populated file line with a function
 #! .params:
 # <"$1"> - absolute file path
 # <$2> - function name
@@ -47,12 +47,13 @@ map_fline() {
             _file=$(cat "$1" && printf "%s" 'x') || return "$?"
             _file="${_file%?}"
 
-            # Iterate over the lines of $_file using heredoc.
+            # Iterate over the populated lines of $_file using heredoc.
             #
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Here-Document".
-            shift; while IFS= read -r _line; do
+            shift; while IFS= read -r _line || [ "$_line" ]; do
+                [ "$_line" ] || continue
                 "$@" "$_line" || return "$?"
             done \
 <<_FILE
@@ -68,9 +69,10 @@ _FILE
     # TOCTOU flaws are completely avoided this way.
     { exec 9< "$1"; } || return "$?"
 
-    # Pass each line individually to $1 (the function). If an error is
-    # received, file descriptor `9` will be released and the error signaled.
+    # Pass each populated line individually to $1 (the function). If an error
+    # is received, file descriptor `9` will be released and the error signaled.
     shift; while IFS= read -r _line <&9 || [ "$_line" ]; do
+        [ "$_line" ] || continue
         "$@" "$_line" || { set -- "$?"; exec 9<&-; return "$1"; }
     done
 

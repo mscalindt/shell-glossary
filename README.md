@@ -21,7 +21,7 @@ external utility calls.
 - [FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/fline): Get a specific line in a file
 - [FTYPE()](https://github.com/mscalindt/shell-glossary/blob/main/src/ftype): Identify the type of an object on the filesystem
 - [INFO()](https://github.com/mscalindt/shell-glossary/blob/main/src/info): Print formatted text
-- [MAP_FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_fline): Process each file line with a function
+- [MAP_FLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_fline): Process each populated file line with a function
 - [MAP_PCHUNK()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pchunk): Process each cumulative path segment with a function
 - [MAP_PCHUNK_REV()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pchunk_rev): Process each cumulative path segment in reverse with a function
 - [MAP_PSEG()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pseg): Process all path segments with a function
