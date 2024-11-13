@@ -10,7 +10,7 @@
 # `?` -- "unrecognized file type",
 # `>` -- "does not exist"
 #! .params:
-# <"$1"> - absolute path
+# <"$1"> - path
 # [$2] - fd(
 #     '-err' - print to stderr; &2
 #     '-info' - print to stdout; &1
