@@ -102,7 +102,10 @@ replchar() {
     # behavior applies. Field splitting is preferred and remains the default
     # due to its generally superior performance, which scales better with
     # larger input sizes compared to parameter expansion.
-    if [ "$POSIX_COMPAT" ]; then
+    if [ "$POSIX_COMPAT" ] || { case "$1" in ' ' | '	' | '
+') : ;; *) ! : ;; esac; }; then
+        # Parameter expansion (slower) method.
+        #
         # Traverse $3 (string), replacing the occurences of $1 with $2.
         _str=; _a="$3"; while :; do case "$_a" in
             *"$1"*)
@@ -132,57 +135,22 @@ replchar() {
             ;;
         esac done
     else
-        case "$1" in
-            ' ' | '	' | '
-')  # Parameter expansion (slower) method.
-                # Traverse $3 (string), replacing the occurences of $1 with $2.
-                _str=; _a="$3"; while :; do case "$_a" in
-                    *"$1"*)
-                        # Example character, replacement character, and string:
-                        # `a` `A` `ddaabcd`
-                        # $_b: `dd`
-                        # $_c: `aabcd`
-                        # $_d: `aa`
-                        # $_a: `bcd`
-                        _b="${_a%%"$1"*}"
-                        _c="${_a#"$_b"}"
-                        _d="${_c%%[!"$1"]*}"
-                        _a="${_a#"$_b$_d"}"
-
-                        # ${#_d}: `2`
-                        # $_chars: `AA`
-                        _chars=; _i=0; until [ "$_i" = "${#_d}" ]; do
-                            _chars="$_chars$2"; _i=$((_i + 1))
-                        done
-
-                        # $_str: `ddAA`
-                        _str="$_str$_b$_chars"
-                    ;;
-                    *)
-                        # $_str: `ddAAbcd`
-                        _str="$_str$_a"; break
-                    ;;
-                esac done
-;;
-*)  # Default field split (faster) method.
-                # Field split $3 (string) based on $1 (character); the number
-                # of fields produced (minus one, to account for the field split
-                # itself) corresponds to the number of times the character has
-                # appeared. To enforce stable field splitting behavior, $1 is
-                # placed at the end of the string, ensuring the function's
-                # integrity.
-                #
-                # Finally, $2 is placed at the end of each field (minus the
-                # last one as aforementioned; they will be stripped for the
-                # final field), effectively replacing any occurences of $1 with
-                # $2.
-                IFS="$1"; _chars="$2"; set -- $3"$IFS"
-                _str=; while [ "$#" -ge 1 ]; do
-                    _str="$_str$1$_chars"; shift
-                done
-                _str="${_str%"$IFS$_chars"}"
-;;
-        esac
+        # Default field split (faster) method.
+        #
+        # Field split $3 (string) based on $1 (character); the number of fields
+        # produced (minus one, to account for the field split itself)
+        # corresponds to the number of times the character has appeared. To
+        # enforce stable field splitting behavior, $1 is placed at the end of
+        # the string, ensuring the function's integrity.
+        #
+        # Finally, $2 is placed at the end of each field (minus the last one as
+        # aforementioned; they will be stripped for the final field),
+        # effectively replacing any occurences of $1 with $2.
+        IFS="$1"; _chars="$2"; set -- $3"$IFS"
+        _str=; while [ "$#" -ge 1 ]; do
+            _str="$_str$1$_chars"; shift
+        done
+        _str="${_str%"$IFS$_chars"}"
     fi
 
     # Restore the active state of the pathname expansion flag if appropriate.
