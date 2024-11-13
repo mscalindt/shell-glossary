@@ -1,5 +1,5 @@
 #! .desc:
-# Process all path segments with a function
+# Process each path segment with a function
 #! .params:
 # <"$1"> - absolute/relative path
 # <$2> - function name
@@ -7,6 +7,8 @@
 #! .uses.fn:
 # <path_spec_static> ('-cxy' '$1');
 #                    Modify a path string
+#! .sets:
+# <map_pseg_> ();
 #! .rc:
 # (0) success
 # (*) error
@@ -14,52 +16,30 @@
 # ($2) (0) success
 # ($2) (*) error
 # (path_spec_static) (*) error
-#! .caveats:
-# > `ARG_MAX`.
-# > `INT_MAX`.
 #.
 map_pseg() {
-    # Assert a path segment to process exists and remove consecutive slashes in
-    # $1 to prevent empty positional parameters from being produced by the
-    # field splitting.
+    map_pseg_() { _i="$2" && shift 2 && "$@" "$_i"; }
+
+    # Remove consecutive and all trailing/leading slashes in $1 (path).
     path_spec_static -cxy "$1" || return "$?"  # -> $_path
-    [ "$_path" ] || return 0
-    shift && set -- "$_path" "$@"
+    shift && set -- "$_path" '' "$@"
 
-    # Save $IFS.
-    _old_IFS="$IFS" 2> /dev/null
-    ${IFS+':'} unset _old_IFS 2> /dev/null
-
-    # Save the state of the pathname expansion flag and disable it if active;
-    # disabled to disable the expansion of `*`.
+    # Process the path using parameter expansion. $1 is the original path
+    # processed until nothing is left, while $2 will be the path segment(s).
     #
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Pathname Expansion".
-    case "$-" in
-        *'f'*) _pn=0 ;;
-        *) _pn=1; set -f ;;
-    esac
+    #   Language, Subsection: Parameter Expansion".
+    while [ "$1" ]; do
+        _i="$1"; shift 2; case "$_i" in
+            *'/'*) set -- "${_i#*/}" "${_i%/"${_i#*/}"}" "$@" ;;
+            *) set -- '' "$_i" "$@" ;;
+        esac
 
-    # Field split $1 (path) based on `/`. The positional parameters are
-    # reassigned such that $2 (function name) and any function arguments become
-    # $1, while the produced arguments are the remaining positional parameters.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Field Splitting".
-    IFS='/'; _path="$1"; shift; set -- "$@" $_path
+        # Pass $2 (path segment) to $3 (function) as the last positional
+        # parameter along any function arguments.
+        map_pseg_ "$@" || return "$?"
+    done
 
-    # Restore the active state of the pathname expansion flag if appropriate.
-    if [ "$_pn" = 1 ]; then
-        set +f
-    fi
-
-    # Restore $IFS.
-    IFS="$_old_IFS" 2> /dev/null
-    ${_old_IFS+':'} unset IFS 2> /dev/null
-
-    # The receiver function doesn't have to account for empty positional
-    # parameters.
-    "$@"
+    return 0
 }
