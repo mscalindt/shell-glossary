@@ -62,7 +62,7 @@ map_fline() {
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Here-Document".
-            shift 2; while IFS= read -r _line || [ "$_line" ]; do
+            shift 2; while IFS= read -r _line; do
                 [ "$_line" ] || continue
                 "$@" "$_line" || return "$?"
             done \
