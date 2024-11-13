@@ -26,7 +26,7 @@ external utility calls.
 - [MAP_PCHUNK_REV()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pchunk_rev): Process each cumulative path segment in reverse with a function
 - [MAP_PSEG()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pseg): Process each path segment with a function
 - [MAP_PSEG_REV()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_pseg_rev): Process each path segment in reverse with a function
-- [MAP_VLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_vline): Process all populated string lines with a function
+- [MAP_VLINE()](https://github.com/mscalindt/shell-glossary/blob/main/src/map_vline): Process each populated string line with a function
 - [MASK_CHECK()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_check): Check a bit, the power of 2, in a pseudo-bitmask shell variable
 - [MASK_SET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_set): Set a bit, the power of 2, in a pseudo-bitmask shell variable
 - [MASK_UNSET()](https://github.com/mscalindt/shell-glossary/blob/main/src/mask_unset): Unset a bit, the power of 2, in a pseudo-bitmask shell variable

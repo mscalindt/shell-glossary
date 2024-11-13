@@ -1,57 +1,29 @@
 #! .desc:
-# Process all populated string lines with a function
+# Process each populated string line with a function
 #! .params:
 # <"$1"> - string
 # <$2> - function name
 # ["$3"+] - function arguments
+#! .rc:
+# (0) success
+# (*) error
 #! .rc.fn:
 # ($2) (0) success
 # ($2) (*) error
-#! .caveats:
-# > `ARG_MAX`.
-# > `INT_MAX`.
 #.
 map_vline() {
-    # Save $IFS.
-    _old_IFS="$IFS" 2> /dev/null
-    ${IFS+':'} unset _old_IFS 2> /dev/null
-
-    # Save the state of the pathname expansion flag and disable it if active;
-    # disabled to disable the expansion of `*`.
+    # Iterate over each populated line using heredoc.
     #
     # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Pathname Expansion".
-    case "$-" in
-        *'f'*) _pn=0 ;;
-        *) _pn=1; set -f ;;
-    esac
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
+    #   Command Language, Subsection: Here-Document".
+    _str="$1"; shift; while IFS= read -r _line; do
+        [ "$_line" ] || continue
+        "$@" "$_line" || return "$?"
+    done \
+<<_FILE
+$_str
+_FILE
 
-    # Field split $1 (string) based on <newline>. The positional parameters are
-    # reassigned such that $2 (function name) and any function arguments become
-    # $1, while the produced arguments are the remaining positional parameters.
-    #
-    # Since <newline> is part of "IFS white space", any appearances (of empty
-    # lines) in $1 will not be enumerated at all.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Field Splitting".
-    IFS='
-'
-    _str="$1"; shift; set -- "$@" $_str
-
-    # Restore the active state of the pathname expansion flag if appropriate.
-    if [ "$_pn" = 1 ]; then
-        set +f
-    fi
-
-    # Restore $IFS.
-    IFS="$_old_IFS" 2> /dev/null
-    ${_old_IFS+':'} unset IFS 2> /dev/null
-
-    # The receiver function doesn't have to account for empty positional
-    # parameters between iterations, but might have to be prepared to handle
-    # zero parameters (empty string).
-    "$@"
+    return 0
 }
