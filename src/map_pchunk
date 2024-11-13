@@ -5,7 +5,7 @@
 # `foo/bar/baz`: `foo`, `foo/bar`, `foo/bar/baz`
 # `foo/bar/baz/`: `foo`, `foo/bar`, `foo/bar/baz/`
 #! .params:
-# <"$1"> - absolute/relative path
+# <"$1"> - path
 # <$2> - function name
 # ["$3"+] - function arguments
 #! .uses.fn:
