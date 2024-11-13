@@ -1,9 +1,14 @@
 #! .desc:
 # Process each populated file line with a function
 #! .params:
-# <"$1"> - absolute file path
-# <$2> - function name
-# ["$3"+] - function arguments
+# <$1> - read_method(
+#     '-cat' - use `cat`
+#     '-shell' - use shell input redirection
+#     .
+# )
+# <"$2"> - absolute file path
+# <$3> - function name
+# ["$4"+] - function arguments
 #! .uses:
 # [&9]
 #! .uses.util:
@@ -19,11 +24,13 @@
 # (cat) (*) error
 #.
 map_fline() {
-    # Assert $1 is a file.
-    [ -f "$1" ] || return 255
+    # Assert $2 is a file.
+    [ -f "$2" ] || return 255
 
-    # Use `cat` to read the file into $_file if $1 is a potential specification
-    # of a file in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
+    # Read the file with the specified method.
+    #
+    # Use `cat` to read the file if it is a potential specification of a file
+    # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
     #
     # `cat` will read the file in one `read` syscall. This is important because
     # certain kernel files can only be read() once, returning EOF on subsequent
@@ -34,8 +41,11 @@ map_fline() {
     # single read(). This contrasts with a POSIX shell, which reads files one
     # byte at a time and may only return the first byte of data from certain
     # kernel files.
-    case "/$1" in
-        *'/dev/'* | *'/proc/'* | *'/sys/'*)
+    #
+    # Use the shell to read the file if it is a small (< ~10000XX lines),
+    # user-created file.
+    case "$1" in
+        '-cat')
             # Store the output of `cat` in $_file using command substitution.
             # The custom `x` character at the end and its subsequent removal
             # outside the command substitution preserves any trailing <newline>
@@ -44,38 +54,43 @@ map_fline() {
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Command Substitution".
-            _file=$(cat "$1" && printf "%s" 'x') || return "$?"
+            _file=$(cat "$2" && printf "%s" 'x') || return "$?"
             _file="${_file%?}"
 
-            # Iterate over the populated lines of $_file using heredoc.
+            # Iterate over each populated line of $_file using heredoc.
             #
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Here-Document".
-            shift; while IFS= read -r _line || [ "$_line" ]; do
+            shift 2; while IFS= read -r _line || [ "$_line" ]; do
                 [ "$_line" ] || continue
                 "$@" "$_line" || return "$?"
             done \
 <<_FILE
 $_file
 _FILE
+        ;;
+        '-shell')
+            # Open the file and assign it to file descriptor `9`. The usage of
+            # a file descriptor simplifies the error handling. Additionally,
+            # TOCTOU flaws are completely avoided this way.
+            { exec 9< "$2"; } || return "$?"
 
-            return 0
+            # Pass each populated line to $3 (the function). If an error is
+            # received, file descriptor `9` will be released and the error
+            # signaled.
+            shift 2; while IFS= read -r _line <&9 || [ "$_line" ]; do
+                [ "$_line" ] || continue
+                "$@" "$_line" || { set -- "$?"; exec 9<&-; return "$1"; }
+            done
+
+            # Release file descriptor `9` to close the associated file.
+            exec 9<&-
+        ;;
+        *)
+            return 255
         ;;
     esac
 
-    # Open the file specified by $1 and assign it to file descriptor `9`. The
-    # usage of a file descriptor simplifies the error handling. Additionally,
-    # TOCTOU flaws are completely avoided this way.
-    { exec 9< "$1"; } || return "$?"
-
-    # Pass each populated line individually to $1 (the function). If an error
-    # is received, file descriptor `9` will be released and the error signaled.
-    shift; while IFS= read -r _line <&9 || [ "$_line" ]; do
-        [ "$_line" ] || continue
-        "$@" "$_line" || { set -- "$?"; exec 9<&-; return "$1"; }
-    done
-
-    # Release file descriptor `9` to close the associated file.
-    exec 9<&-
+    return 0
 }
