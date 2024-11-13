@@ -1,13 +1,13 @@
 #! .desc:
 # Read a file raw
 #! .params:
-# <"$1"> - absolute file path
-# <$2> - method(
+# <$1> - method(
 #     '-cat' - use `cat`
 #     '-subshell' - use command substitution with shell input redirection
 #     '-var' - use string concatenation with shell input redirection
 #     .
 # )
+# <"$2"> - absolute file path
 #! .uses:
 # [&9]
 #! .uses.util:
@@ -15,7 +15,7 @@
 # concatenate and print files
 #! .gives:
 # (0) <"$_file"> - [string];
-#                  raw content of $1
+#                  raw content of $2
 #! .rc:
 # (0) success
 # (*) error
@@ -25,7 +25,7 @@
 #.
 file_preload() {
     # For flexibility and modularity, missing files will not be signaled.
-    [ -f "$1" ] || { _file=; return 0; }
+    [ -f "$2" ] || { _file=; return 0; }
 
     # Read the file with the specified method.
     #
@@ -45,7 +45,7 @@ file_preload() {
     # Use the shell to read the file if it is a small (< ~10000XX lines),
     # user-created file. `-subshell` performs better on big files (> ~50000
     # lines), while `-var` performs better on small files.
-    case "$2" in
+    case "$1" in
         '-cat')
             # Store the output of `cat` in $_file using command substitution.
             # The custom `x` character at the end and its subsequent removal
@@ -55,14 +55,14 @@ file_preload() {
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Command Substitution".
-            _file=$(cat "$1" && printf "%s" 'x') || return "$?"
+            _file=$(cat "$2" && printf "%s" 'x') || return "$?"
             _file="${_file%?}"
         ;;
         '-subshell')
             # Open the file and assign it to file descriptor `9`. The usage of
             # a file descriptor simplifies the error handling. Additionally,
             # TOCTOU flaws are completely avoided this way.
-            { exec 9< "$1"; } || return "$?"
+            { exec 9< "$2"; } || return "$?"
 
             # Store the output of each `printf` in $_file using command
             # substitution. The custom `x` character at the end and its
@@ -86,7 +86,7 @@ file_preload() {
             # Open the file and assign it to file descriptor `9`. The usage of
             # a file descriptor simplifies the error handling. Additionally,
             # TOCTOU flaws are completely avoided this way.
-            { exec 9< "$1"; } || return "$?"
+            { exec 9< "$2"; } || return "$?"
 
             # Append with <newline> each $_line to an initially empty $_file to
             # build the raw content of the file.
