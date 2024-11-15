@@ -1,0 +1,23 @@
+#! .desc:
+# Process each argument with a function
+#! .params:
+# <"$1"> - function
+# <"$2"+> - argument(s)
+#! .rc:
+# (0) success
+# (*) error
+#! .rc.fn:
+# ($2) (0) success
+# ($2) (*) error
+#! .caveats:
+# > `INT_MAX`.
+#.
+map() {
+    while [ "$#" -ge 2 ]; do
+        "$1" "$2" || return "$?"
+
+        _i="$1"; shift 2; [ "$#" = 0 ] || set -- "$_i" "$@"
+    done
+
+    return 0
+}
