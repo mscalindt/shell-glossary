@@ -1,0 +1,25 @@
+#! .desc:
+# Find success among arguments using a function
+#! .params:
+# <"$1"> - function
+# <"$2"+> - argument(s)
+#! .gives:
+# (0) <"$_segment"> - string;
+#! .rc:
+# (0) success
+# (*) false / error
+#! .rc.fn:
+# ($2) (0) success
+# ($2) (*) false / error
+#! .caveats:
+# > `INT_MAX`.
+#.
+map_find() {
+    while [ "$#" -ge 2 ]; do
+        "$1" "$2" && { _segment="$2"; return 0; } || :
+
+        _i="$1"; shift 2; [ "$#" = 0 ] || set -- "$_i" "$@"
+    done
+
+    return 1
+}
