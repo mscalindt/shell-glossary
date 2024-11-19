@@ -7,10 +7,10 @@
 # (0) <"$_segment"> - string
 #! .rc:
 # (0) success
-# (*) false / error
+# (1) false / error
 #! .rc.fn:
 # ($2) (0) success
-# ($2) (*) false / error
+# ($2) (1) false / error
 #! .caveats:
 # > `INT_MAX`.
 #.
