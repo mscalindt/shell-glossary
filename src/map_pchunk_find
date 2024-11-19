@@ -20,7 +20,7 @@
 # (*) false / error
 #! .rc.fn:
 # ($2) (0) success
-# ($2) (*) false / error
+# ($2) (1) false / error
 # (path_spec_static) (*) error
 #.
 map_pchunk_find() {
