@@ -12,7 +12,7 @@
 # <path_spec_static> ('-c' '$1');
 #                    Modify a path string
 #! .gives:
-# (0) <"$_segment"> - string;
+# (0) <"$_segment"> - string
 #! .sets:
 # <map_pchunk_find_> ();
 #! .rc:
