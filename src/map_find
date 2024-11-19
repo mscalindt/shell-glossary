@@ -4,7 +4,7 @@
 # <"$1"> - function
 # <"$2"+> - argument(s)
 #! .gives:
-# (0) <"$_segment"> - string;
+# (0) <"$_segment"> - string
 #! .rc:
 # (0) success
 # (*) false / error
