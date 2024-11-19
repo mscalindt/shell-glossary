@@ -8,7 +8,7 @@
 # <path_spec_static> ('-cxy' '$1');
 #                    Modify a path string
 #! .gives:
-# (0) <"$_segment"> - string;
+# (0) <"$_segment"> - string
 #! .sets:
 # <map_pseg_find_> ();
 #! .rc:
