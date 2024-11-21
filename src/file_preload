@@ -24,9 +24,6 @@
 # (cat) (*) error
 #.
 file_preload() {
-    # For flexibility and modularity, missing files will not be signaled.
-    [ -f "$2" ] || { _file=; return 0; }
-
     # Read the file with the specified method.
     #
     # Use `cat` to read the file if it is a potential specification of a file
