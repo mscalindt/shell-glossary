@@ -63,7 +63,7 @@ fline() {
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Command Substitution".
-            _file=$(cat "$3" && printf "%s" 'x') || return "$?"
+            _file=$(cat -- "$3" && printf "%s" 'x') || return "$?"
             _file="${_file%?}"
 
             # Iterate over each line of $_file using heredoc.
