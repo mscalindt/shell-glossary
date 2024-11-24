@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - path
 # <$2> - function name
-# ["$3"+] - function arguments
+# ["$3"]+ - function arguments
 #! .uses.fn:
 # <path_spec_static> ('-cxy' '$1');
 #                    Modify a path string
