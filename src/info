@@ -20,7 +20,7 @@
 #     '-date-' - `date` %H%M%S; no <newline>
 #     .
 # )
-# <"$3"+> - text
+# <"$3">+ - text
 #! .uses.var:
 # [NO_COLOR] $ - environment variable;
 #                disables colored output
