@@ -1,7 +1,7 @@
 #! .desc:
 # Match specific option(s) with a mandatory option argument
 #! .params:
-# <"$1"+> - option(s)
+# <"$1">+ - option(s)
 #! .uses.var:
 # <opt> $ - string;
 #           first positional parameter
