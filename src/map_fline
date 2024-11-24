@@ -8,7 +8,7 @@
 # )
 # <"$2"> - file path
 # <$3> - function name
-# ["$4"+] - function arguments
+# ["$4"]+ - function arguments
 #! .uses:
 # [&9]
 #! .uses.util:
