@@ -2,7 +2,7 @@
 # Process each argument with a function
 #! .params:
 # <"$1"> - function
-# <"$2"+> - argument(s)
+# <"$2">+ - argument(s)
 #! .rc:
 # (0) success
 # (*) error
