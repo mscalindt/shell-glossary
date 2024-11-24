@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - path
 # <$2> - function name
-# ["$3"+] - function arguments
+# ["$3"]+ - function arguments
 #! .uses.fn:
 # <map_pseg> ('$@');
 #            Process each path segment with a function
