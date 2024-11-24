@@ -52,7 +52,7 @@ file_preload() {
             # For more information, refer to:
             # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
             #   Command Language, Subsection: Command Substitution".
-            _file=$(cat "$2" && printf "%s" 'x') || return "$?"
+            _file=$(cat -- "$2" && printf "%s" 'x') || return "$?"
             _file="${_file%?}"
         ;;
         '-subshell')
