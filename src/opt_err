@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - option
 # ["$2"] - argument
-# ["$3"+] - valid argument(s)
+# ["$3"]+ - valid argument(s)
 #! .rc:
 # (0) success
 #! .ec:
