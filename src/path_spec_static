@@ -5,6 +5,7 @@
 #     'a' - resolve `.` lexically
 #     'b' - resolve `..` lexically
 #     'c' - strip consecutive slashes
+#     'd' - prepend `./` if $_path is relative
 #     'e' - discard inexistent segments
 #     'f' - prepend `/`
 #     'g' - prepend `/` on $_path
@@ -53,7 +54,7 @@ path_spec_static() {
 
     # Assert the option block contains only expected options (characters).
     case "${1#\-}" in
-        *[!abcefghjklmnopqrstuvwxyz]*) return 255 ;;
+        *[!abcdefghjklmnopqrstuvwxyz]*) return 255 ;;
     esac
 
     # Fuse $2 (path) and $3 (join path), if any.
@@ -245,6 +246,11 @@ path_spec_static() {
     case "$1" in
         *g*) set -- "$1" "$2" "/$3" ;;
     esac
+
+    # Prepend a dot and slash if the modified path is relative. (-d)
+    if [ "$3" ]; then case "$1" in
+        *d*) assert -absolute-path "$3" || set -- "$1" "$2" "./$3" ;;
+    esac; fi
 
     # Never return lexically root modified path. (-n)
     if [ "$3" ] && [ "${3#"${3%%[!/]*}"}" = '' ]; then case "$1" in
