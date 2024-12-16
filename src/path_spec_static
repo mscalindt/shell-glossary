@@ -6,23 +6,23 @@
 #     'b' - resolve `..` lexically
 #     'c' - strip consecutive slashes
 #     'e' - discard inexistent segments
-#     'f' - prepend slash
-#     'g' - prepend slash on modified path
+#     'f' - prepend `/`
+#     'g' - prepend `/` on $_path
 #     'h' - resolve symbolic segments semantically
-#     'j' - append join path without usage of slash
-#     'k' - strip all trailing slashes if modified path not true directory
-#     'l' - append slash (if not present) if modified path true directory
-#     'm' - return `/` if modified path empty
-#     'n' - never return lexically root modified path
-#     'o' - never return absolute modified path
-#     'p' - never return relative modified path
-#     'q' - never return inexistent modified path
+#     'j' - append $3 without `/`
+#     'k' - strip all trailing slashes if $_path not true directory
+#     'l' - append `/` (if not present) if $_path true directory
+#     'm' - set $_path to `/` if $_path empty
+#     'n' - unset $_path if $_path is lexical root
+#     'o' - unset $_path if $_path is absolute
+#     'p' - unset $_path if $_path is relative
+#     'q' - unset $_path if $_path is inexistent
 #     'r' - prepend $PWD if relative
 #     's' - discard symbolic segments
 #     't' - strip all trailing slashes if not directory
-#     'u' - strip all trailing slashes if modified path not directory
-#     'v' - append slash (if not present) if directory
-#     'w' - append slash (if not present) if modified path directory
+#     'u' - strip all trailing slashes if $_path not directory
+#     'v' - append `/` (if not present) if directory
+#     'w' - append `/` (if not present) if $_path directory
 #     'x' - strip all leading slashes
 #     'y' - strip all trailing slashes
 #     'z' - invert path
