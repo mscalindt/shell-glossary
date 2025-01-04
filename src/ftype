@@ -1,14 +1,5 @@
 #! .desc:
-# Identify the type of an object on the filesystem;
-# `B` -- "block special file",
-# `C` -- "character special file",
-# `D` -- "directory",
-# `F` -- "regular file",
-# `L` -- "symbolic link",
-# `P` -- "FIFO / named pipe",
-# `S` -- "socket",
-# `?` -- "unrecognized file type",
-# `>` -- "does not exist"
+# Identify the type of an object on the filesystem
 #! .params:
 # <"$1"> - path
 # [$2] - fd(
@@ -35,6 +26,16 @@
 #! .rc.fn:
 # (err) (*) error
 # (info) (*) error
+#! .desc.ext:
+# `B` -- "block special file",
+# `C` -- "character special file",
+# `D` -- "directory",
+# `F` -- "regular file",
+# `L` -- "symbolic link",
+# `P` -- "FIFO / named pipe",
+# `S` -- "socket",
+# `?` -- "unrecognized file type",
+# `>` -- "does not exist"
 #.
 ftype() {
     case "$2" in
