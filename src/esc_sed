@@ -1,6 +1,5 @@
 #! .desc:
-# Escape a string to be used literally as a POSIX `sed` string;
-# <newline> cannot be used in RE.
+# Escape a string to be used literally as a POSIX `sed` string
 #! .params:
 # <$1> - sed_string_type(
 #     '-RE'
@@ -24,6 +23,8 @@
 # (255) bad input
 #! .rc.fn:
 # (replchar) (*) error
+#! .desc.ext:
+# <newline> cannot be used in RE.
 #.
 esc_sed() {
     # Escape all special characters for `sed` in the given string type
