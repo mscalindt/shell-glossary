@@ -27,15 +27,20 @@
 # (err) (*) error
 # (info) (*) error
 #! .desc.ext:
-# `B` -- "block special file",
-# `C` -- "character special file",
-# `D` -- "directory",
-# `F` -- "regular file",
-# `L` -- "symbolic link",
-# `P` -- "FIFO / named pipe",
-# `S` -- "socket",
-# `?` -- "unrecognized file type",
-# `>` -- "does not exist"
+# The function denotes the type of the specified object using a letter.
+#
+# `B` means "block special file";
+# `C` means "character special file";
+# `D` means "directory";
+# `F` means "regular file";
+# `L` means "symbolic link";
+# `P` means "FIFO / named pipe";
+# `S` means "socket";
+# `?` means "unrecognized file type";
+# `>` means "does not exist".
+#
+# Practically, on POSIX shells and systems, `?` (unrecognized file type) should
+# never be returned.
 #.
 ftype() {
     case "$2" in
