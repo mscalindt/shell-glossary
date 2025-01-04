@@ -23,8 +23,6 @@
 # (255) bad input
 #! .rc.fn:
 # (replchar) (*) error
-#! .desc.ext:
-# <newline> cannot be used in RE.
 #.
 esc_sed() {
     # Escape all special characters for `sed` in the given string type
@@ -37,16 +35,6 @@ esc_sed() {
     #   sed".
     case "$1" in
         '-RE')
-            # Newlines cannot be directly matched in RE according to
-            # POSIX.1-2024. The handling of <newline> in RE is out of the
-            # function's scope.
-            case "$3" in
-                *'
-'*)
-                    return 255
-;;
-            esac
-
             # Escape RE special characters. The <backslash> is used to escape
             # other characters, therefore it must be escaped first.
             replchar '\' '\\' "$3" || return "$?"
@@ -63,6 +51,8 @@ esc_sed() {
             replchar '|' '\|' "$_str" || return "$?"
             replchar '+' '\+' "$_str" || return "$?"
             replchar '?' '\?' "$_str" || return "$?"
+            replchar '
+' '\n' "$_str" || return "$?"
 
             # Escape `sed` specified delimiter character.
             replchar "$2" '\'"$2" "$_str" || return "$?"
