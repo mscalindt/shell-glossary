@@ -20,11 +20,31 @@
 #                 [modified <$3>]
 #! .rc:
 # (0) success
+# (2) bad $2
 # (255) bad input
 #! .rc.fn:
 # (replchar) (*) error
+#! .desc.ext:
+# The delimiter character cannot be a <backslash> or a <newline> character.
+#
+# POSIX.1-2024 states:
+# "Any character other than <backslash> or <newline> can be used instead of a
+#  <slash> to delimit the RE and the replacement".
 #.
 esc_sed() {
+    # According to POSIX.1-2024, the delimiter cannot be a <backslash> or a
+    # <newline> character.
+    #
+    # For more information, refer to:
+    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
+    #   sed".
+    case "$2" in
+        '\' | '
+')
+            return 2
+;;
+    esac
+
     # Escape all special characters for `sed` in the given string type
     # according to POSIX.1-2024. Since POSIX.1-2024, `sed -E` is specified,
     # therefore all ERE special characters will also be escaped.
