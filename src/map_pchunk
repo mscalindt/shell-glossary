@@ -2,55 +2,153 @@
 # Process each cumulative path segment with a function
 #! .params:
 # <"$1"> - path
-# <$2> - function name
-# ["$3"]+ - function arguments
-#! .uses.fn:
-# <path_spec_static> ('-c' '$1');
-#                    Modify a path string
+# <["$2"]> - LTR mask
+# <["$3"]> - RTL mask
+# <$4> - function name
+# ["$5"]+ - function arguments
 #! .sets:
 # <map_pchunk_> ();
 #! .rc:
 # (0) success
 # (*) error
+# (255) bad input / error
 #! .rc.fn:
-# ($2) (0) success
-# ($2) (*) error
-# (path_spec_static) (*) error
+# ($4) (0) success
+# ($4) (*) error
+#! .caveats:
+# > `INT_MAX`.
 #! .desc.ext:
-# `/foo/bar/baz`: `/foo`, `/foo/bar`, `/foo/bar/baz`
-# `/foo/bar/baz/`: `/foo`, `/foo/bar`, `/foo/bar/baz/`
-# `foo/bar/baz`: `foo`, `foo/bar`, `foo/bar/baz`
-# `foo/bar/baz/`: `foo`, `foo/bar`, `foo/bar/baz/`
+# The path mask(s), a mandatory argument that can be empty, specifies the
+# exclusion of cumulative path segments that match exactly against the given
+# direction of a mask. It is possible for a mask to match the entire path,
+# hence resulting in a NOP.
+#
+# For a mask to apply, each segment it contains must sequentially match exactly
+# against the path in the given direction of a mask. Consequently, the entire
+# mask is discarded if its last segment, like any preceding ones, matches only
+# partially. Multiple consecutive slashes between the segments are significant,
+# while the matching logic remains unaffected by any leading/trailing path or
+# mask slashes.
+#
+# For example, with a path `/foo/bar/baz` and an LTR mask `foo`, the function
+# will receive only the cumulative path segments `/foo/bar` and `/foo/bar/baz`,
+# respectively. With an RTL mask `bar/baz`, the function will receive only
+# `/foo`. Note: Multiple consecutive slashes between the segments remain
+# significant.
+#
+# If root (`/`) is solely given as the path, nothing will be processed and
+# success will be returned, as there are no segments to process. Note that a
+# semantically different specification of root, such as `/.`, will be
+# processed.
 #.
 map_pchunk() {
-    map_pchunk_() { _i="$2" && shift 2 && "$@" "$_i"; }
+    map_pchunk_() { _pchunk="$2" && shift 2 && "$@" "$_pchunk"; }
 
-    # Remove consecutive slashes in $1 (path).
-    path_spec_static -c "$1" || return "$?"  # -> $_path
-    shift && set -- "$_path" '' "$@"
+    [ "$#" -ge 4 ] || return 255
 
-    # Process the path using parameter expansion. $1 is the original path
-    # processed until nothing is left, while $2 will be the built cumulative
-    # path segments.
+    # Determine whether an existing LTR path mask applies. A valid LTR path
+    # mask shall not end with trailing slashes.
+    #
+    # If no valid LTR path mask is present, the mask is removed (emptied).
+    {
+        # Strip any trailing slashes in the path and save the result into $_a.
+        _a="$1"
+        _a="${_a%"${_a##*[!/]}"}"
+
+        # Strip any trailing slashes in the LTR mask, swap any leading slashes
+        # with the path's, and save the result into $_b. The order of operation
+        # matters.
+        _b="$2"
+        _b="${_b%"${_b##*[!/]}"}"
+        _b="${1%%[!/]*}${_b#"${_b%%[!/]*}"}"
+
+        # Assert whether $_b (the mask) sequentially matches exactly against
+        # $_a (the path) left-to-right (LTR).
+        case "$_a/" in
+            "$_b/"*)  # The mask matches.
+                # Set the valid asserted LTR mask.
+                _path="$1"; _ltr_mask="$_b"; shift 2
+                set -- "$_path" "$_ltr_mask" "$@"
+            ;;
+            *)  # The mask does not match.
+                # Remove (empty) the mask.
+                _path="$1"; _ltr_mask=; shift 2
+                set -- "$_path" "$_ltr_mask" "$@"
+            ;;
+        esac
+    }
+
+    # Determine whether an existing RTL path mask applies. A valid RTL path
+    # mask shall begin with leading slashes. A valid RTL path mask strips the
+    # path RTL and discards the mask.
+    #
+    # If no valid RTL path mask is present, the mask is simply discarded.
+    {
+        # Strip any leading slashes in the path and save the result into $_a.
+        _a="$1"
+        _a="${_a#"${_a%%[!/]*}"}"
+
+        # Strip any leading slashes in the RTL mask, swap any trailing slashes
+        # with the path's, and save the result into $_b. The order of operation
+        # matters.
+        _b="$3"
+        _b="${_b#"${_b%%[!/]*}"}"
+        _b="${_b%"${_b##*[!/]}"}${1##*[!/]}"
+
+        # Assert whether $_b (the mask) sequentially matches exactly against
+        # $_a (the path) right-to-left (RTL).
+        case "/$_a" in
+            *"/$_b")  # The mask matches.
+                # Extract any leading slashes of the first path mask segment
+                # into $_a.
+                _a="$1"
+                _a="${_a%"$_b"}"
+                _a="${_a##*[!/]}"
+
+                # Strip the path RTL and discard the mask.
+                _path="$1"; _ltr_mask="$2"; shift 3
+                set -- "${_path%"$_a$_b"}" "$_ltr_mask" "$@"
+            ;;
+            *)  # The mask does not match.
+                # Discard the mask.
+                _path="$1"; _ltr_mask="$2"; shift 3
+                set -- "$_path" "$_ltr_mask" "$@"
+            ;;
+        esac
+    }
+
+    # Process the path using parameter expansion and the custom concept of an
+    # LTR path mask.
     #
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
     #   Language, Subsection: Parameter Expansion".
-    while [ "${1%/}" ]; do
-        _i="$1"; _j="$2"; _k="${_i%/}"; shift 2; case "${_k#/}" in
-            *'/'*)  # Multiple path segments present.
-                case "$_k" in
-                    /*) set -- "/${_i#/*/}" "$_j${_i%/"${_i#/*/}"}" "$@" ;;
-                    *) set -- "/${_i#*/}" "$_j${_i%/"${_i#*/}"}" "$@" ;;
-                esac
-            ;;
-            *)  # One path segment remaining.
-                set -- '' "$_j$_i" "$@"
-            ;;
-        esac
+    while :; do
+        # Strip the path LTR using the path mask and save the result into $_a.
+        _a="${1#"$2"}"
 
-        # Pass $2 (cumulative path segment) to $3 (function) as the last
-        # positional parameter along any function arguments.
+        # Extract the leading slash(es) into $_b.
+        _b="${_a%%[!/]*}"
+
+        # Extract the first LTR path segment into $_c.
+        _c="${_a#"$_b"}"
+        _c="${_c%%/*}"
+
+        # Break successfully if no path segment is present.
+        [ "$_c" ] || break
+
+        # To properly handle the last path segment, set the whole path as the
+        # path mask.
+        if [ "$2$_b$_c" = "${1%"${1##*[!/]}"}" ]; then
+            _path="$1"; _ltr_mask="$1"; _b=; _c=; shift 2
+            set -- "$_path" "$_ltr_mask" "$@"
+        fi
+
+        # Append the extracted slash(es) and the path segment to the path mask.
+        _path="$1"; _ltr_mask="$2$_b$_c"; shift 2
+        set -- "$_path" "$_ltr_mask" "$@"
+
+        # Process the path chunk (path mask).
         map_pchunk_ "$@" || return "$?"
     done
 
