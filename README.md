@@ -1,3 +1,38 @@
+## Introduction
+
+`shell-glossary` is a glossary of reusable POSIX `sh` functions. It features
+collections of optimized POSIX `sh ` functions for general use.
+
+Currently, the state of the functions is considered unstable until certain
+criteria in [Roadmap](#roadmap) are met.
+
+## Roadmap
+
+* Unit tests (`wunit`).
+  * `stable` tag.
+* Shell code style guide.
+* Assertable function documentation header syntax.
+
+## Contributing
+
+Contribution guidelines will be published in the future. At this time, external
+contributions are not accepted.
+
+## License
+
+[BSD 2-Clause "Simplified" License](LICENSE)
+
+## Notice
+
+This is free software: you are free to change and redistribute it. There is NO
+WARRANTY, to the extent permitted by law.
+
+## Author
+
+Dimitar Yurukov (mscalindt@protonmail.com)
+
+---
+
 ## Collection 1: General POSIX `sh` Functions
 
 A collection of reusable pure and very portable `sh` functions with optional
