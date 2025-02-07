@@ -1,7 +1,7 @@
 ## Introduction
 
 `shell-glossary` is a glossary of reusable POSIX `sh` functions. It features
-collections of optimized POSIX `sh ` functions for general use.
+collections of optimized POSIX `sh` functions for general use.
 
 Currently, the state of the functions is considered unstable until certain
 criteria in [Roadmap](#roadmap) are met.
