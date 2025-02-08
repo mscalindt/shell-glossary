@@ -1,12 +1,12 @@
 # History of the shell-glossary Repository
 
+This document outlines the major changes and milestones in the evolution of the
+`shell-glossary` repository.
+
 ## Table of Contents
 
 1. [Reconstruction of Repository Structure - 2023-08-15](#1-reconstruction-of-repository-structure---2023-08-15)
 2. [Merge of main-functions Repository - 2024-07-14](#2-merge-of-main-functions-repository---2024-07-14)
-
-This document outlines the major changes and milestones in the evolution of the
-`shell-glossary` repository.
 
 ## 1. Reconstruction of Repository Structure - 2023-08-15
 
