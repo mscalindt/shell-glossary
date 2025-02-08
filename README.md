@@ -20,7 +20,7 @@ criteria in [Roadmap](#2-roadmap) are met.
 ## 2. Roadmap
 
 * Unit tests (`wunit`).
-  * `stable` tag.
+  * Transition to versioned release tags.
 * Shell code style guide.
 * Assertable function documentation header syntax.
 
