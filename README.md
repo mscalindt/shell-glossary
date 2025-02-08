@@ -6,13 +6,13 @@
 4. [License](#4-license)
 5. [Notice](#5-notice)
 6. [Author](#6-author)
-7. [Collection 1: General POSIX `sh` Functions](#collection-1-general-posix-sh-functions)
-8. [Collection 2: POSIX `sh` Functions for Shell Option Parsing](#collection-2-posix-sh-functions-for-shell-option-parsing)
+7. [Collection 1: General POSIX Shell Functions](#collection-1-general-posix-shell-functions)
+8. [Collection 2: POSIX Shell Functions for Shell Option Parsing](#collection-2-posix-shell-functions-for-shell-option-parsing)
 
 ## 1. Introduction
 
-`shell-glossary` is a glossary of reusable POSIX `sh` functions. It features
-collections of optimized POSIX `sh` functions for general use.
+`shell-glossary` is a glossary of reusable POSIX shell functions. It features
+collections of optimized functions for general use.
 
 Currently, the state of the functions is considered unstable until certain
 criteria in [Roadmap](#2-roadmap) are met.
@@ -44,9 +44,9 @@ Dimitar Yurukov (mscalindt@protonmail.com)
 
 ---
 
-## Collection 1: General POSIX `sh` Functions
+## Collection 1: General POSIX Shell Functions
 
-A collection of reusable pure and very portable `sh` functions with optional
+A collection of reusable pure and very portable shell functions with optional
 external utility calls.
 
 ### Functions List:
@@ -90,9 +90,9 @@ external utility calls.
 - [SQ_ARG()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg): Get N evaluated argument in a single-quotes array of arguments
 - [SQ_ARG_EXTRACT()](https://github.com/mscalindt/shell-glossary/blob/main/src/sq_arg_extract): Extract an evaluated argument in a single-quotes array of arguments
 
-## Collection 2: POSIX `sh` Functions for Shell Option Parsing
+## Collection 2: POSIX Shell Functions for Shell Option Parsing
 
-A collection of reusable pure and very portable `sh` functions to make shell
+A collection of reusable pure and very portable shell functions to make shell
 option parsing a breeze.
 
 ### Functions List:
