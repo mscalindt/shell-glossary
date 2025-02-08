@@ -3,28 +3,6 @@
 This document outlines the major changes and milestones in the evolution of the
 `shell-glossary` repository.
 
-## Merge of main-functions Repository - 2024-07-14
-
-### Background:
-
-The repository [`main-functions`](https://github.com/mscalindt/main-functions)
-has been merged into `shell-glossary`.
-
-### Changes Made:
-
-1. **Extended Function Collection**: `main-functions` added specialized
-functions for shell option parsing to `shell-glossary`, extending its value as
-a glossary of functions.
-
-2. **Updated README**: To ease referencing, `README.md` was revamped to
-separate the functions of `shell-glossary` and `main-functions` into respective
-collections.
-
-3. **Git Tagging**: To help users and contributors reference the previous
-structure, a Git tag named [`pre-merge`](https://github.com/mscalindt/shell-glossary/releases/tag/pre-merge)
-was created. This tag points to the last commit before the merge of
-`main-functions`.
-
 ## Reconstruction of Repository Structure - 2023-08-15
 
 ### Background:
@@ -75,3 +53,25 @@ history more logical and meaningful.
 2. **Improve Repository Organization**: Shifting to a more conventional
 directory structure makes the repository more self-contained and aligns it
 closer to standard coding practices.
+
+## Merge of main-functions Repository - 2024-07-14
+
+### Background:
+
+The repository [`main-functions`](https://github.com/mscalindt/main-functions)
+has been merged into `shell-glossary`.
+
+### Changes Made:
+
+1. **Extended Function Collection**: `main-functions` added specialized
+functions for shell option parsing to `shell-glossary`, extending its value as
+a glossary of functions.
+
+2. **Updated README**: To ease referencing, `README.md` was revamped to
+separate the functions of `shell-glossary` and `main-functions` into respective
+collections.
+
+3. **Git Tagging**: To help users and contributors reference the previous
+structure, a Git tag named [`pre-merge`](https://github.com/mscalindt/shell-glossary/releases/tag/pre-merge)
+was created. This tag points to the last commit before the merge of
+`main-functions`.
