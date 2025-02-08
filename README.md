@@ -21,8 +21,13 @@ criteria in [Roadmap](#2-roadmap) are met.
 
 * Unit tests (`wunit`).
   * Transition to versioned release tags.
+  * Makefile to run the unit tests.
 * Shell code style guide.
 * Assertable function documentation header syntax.
+  * Assertable function documentation header.
+* Manpage of `shell-glossary`.
+  * Provide manpage equivalents of the function documentation headers.
+* Makefile to build src/ into a `shell-glossary` file.
 
 ## 3. Contributing
 
