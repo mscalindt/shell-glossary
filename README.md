@@ -11,8 +11,9 @@
 
 ## 1. Introduction
 
-`shell-glossary` is a glossary of reusable POSIX shell functions. It features
-collections of optimized functions for general use.
+[`shell-glossary`](https://github.com/mscalindt/shell-glossary) is a glossary
+of reusable POSIX shell functions. It features collections of optimized
+functions for general use.
 
 Currently, the state of the functions is considered unstable until certain
 criteria in [Roadmap](#2-roadmap) are met.
