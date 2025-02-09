@@ -1,0 +1,13 @@
+  This file lists external dependencies used in shell-glossary. Formatted by
+  fields for easier automated parsing. New dependency entries are added at the
+  end. The fields are to appear respectively:
+  - web address (W)
+  - name (N)
+  - description (D)
+  - version (V)
+  - license name (L)
+  - SPDX license identifier (S)
+  - author name (A)
+  - maintainer email (E)
+
+---
