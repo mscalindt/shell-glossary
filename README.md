@@ -35,6 +35,9 @@ criteria in [Roadmap](#2-roadmap) are met.
 Contribution guidelines will be published in the future. At this time, external
 contributions are not accepted.
 
+For a list of people who have contributed to `shell-glossary`, see the
+[CREDITS](CREDITS) file.
+
 ## 4. License
 
 [BSD 2-Clause "Simplified" License](LICENSE)
