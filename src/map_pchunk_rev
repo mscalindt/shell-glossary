@@ -131,7 +131,7 @@ map_pchunk_rev() {
         # result into $_a. The order of operation matters.
         _a="$1"
         _a="${_a%"${_a##*[!/]}"}"
-        _a="${_a%/*}"
+        _a="${_a%"${_a##*/}"}"
         _a="${_a%"${_a##*[!/]}"}"
 
         # Set the stripped path ($_a).
