@@ -126,8 +126,8 @@ map_pchunk_rev() {
         # Process the path.
         map_pchunk_rev_ "$@" || return "$?"
 
-        # Strip any trailing slashes in the path, strip the last path argument,
-        # strip the last path argument's leading slashes if any, and save the
+        # Strip any trailing slashes in the path, strip the last path segment,
+        # strip the last path segment's leading slashes if any, and save the
         # result into $_a. The order of operation matters.
         _a="$1"
         _a="${_a%"${_a##*[!/]}"}"
