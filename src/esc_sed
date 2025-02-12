@@ -42,7 +42,7 @@ esc_sed() {
         '\' | '
 ')
             return 2
-;;
+        ;;
     esac
 
     # Escape all special characters for `sed` in the given string type
