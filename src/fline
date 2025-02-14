@@ -14,8 +14,8 @@
 # <assert> ('-natural-n' '$2');
 #          Assert a string
 #! .uses.util:
-# [cat];
-# concatenate and print files
+# [cat] ('--' '$3');
+#       concatenate and print files
 #! .gives:
 # (0) <"$_line"> - [string]
 #! .rc:
