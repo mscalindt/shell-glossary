@@ -38,8 +38,8 @@
 # [assert] ("type" "string");
 #          Assert a string
 #! .uses.util (-h):
-# [realpath];
-# resolve a pathname
+# [realpath] ('--' '$3$_pfx$_segment');
+#            resolve a pathname
 #! .gives:
 # (0) <"$_path"> - [string];
 #                  [modified <$2>]
