@@ -12,8 +12,8 @@
 #! .uses:
 # [&9]
 #! .uses.util:
-# [cat];
-# concatenate and print files
+# [cat] ('--' '$2');
+#       concatenate and print files
 #! .rc:
 # (0) success
 # (*) error
