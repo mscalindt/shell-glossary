@@ -9,9 +9,6 @@
 #! .uses.fn:
 # <path_spec_static> ('-abchklmr' '$@');
 #                    Modify a path string
-#! .uses.util.path_spec_static:
-# [realpath];
-# resolve a pathname
 #! .gives:
 # (0) <"$_path"> - string;
 #                  [modified <$1>]
