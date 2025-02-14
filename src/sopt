@@ -14,7 +14,7 @@
 # (0) ["$sopt_index"] - string;
 #                       [modified <$sopt_index>]
 #! .sets:
-# (0) <opt> $ - "-${opt#??}" | '';
+# (0) <opt> $ - '-'"${opt#??}" | '';
 # (0) <opt_arg> $ - '';
 # (0) <opt_shift> $ - '1';
 #! .rc:
