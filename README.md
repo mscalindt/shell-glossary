@@ -24,6 +24,7 @@ criteria in [Roadmap](#2-roadmap) are met.
   * Transition to versioned release tags.
   * Makefile to run the unit tests.
 * Shell code style guide.
+  * Assert code for style.
 * Assertable function documentation header syntax.
   * Assertable function documentation header.
 * Manpage of `shell-glossary`.
