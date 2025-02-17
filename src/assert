@@ -13,6 +13,7 @@
 #     '-lower-n' - N [0,1,00,01...] (integer) lower than another N
 #     '-natural-n' - natural N [1...] (positive integer)
 #     '-whole-n' - whole N [0,1...] (non-negative integer)
+#     '-portable-name' - portable ("Portable Filename") name
 #     '-absolute-path' - absolute path (/*)
 #     '-canonical-path' - lexically canonical (assertable) path
 #     '-fs-canonical-path' - semantically canonical (assertable) path
@@ -220,6 +221,34 @@ assert() {
         # not `0`. Also known as "non-negative integer" in the POSIX standard.
         '-whole-n')
             assert -natural-n "$2" || assert -eq "$2" 0 || return "$?"
+        ;;
+        # Assert $2 is a portable ("Portable Filename") name. A portable name
+        # is a string composed of the characters in the portable filename
+        # character set, with the following exceptions:
+        #
+        # - Should not begin with a <hyphen-minus> character. This exception is
+        #   currently not being asserted.
+        #
+        # The character classes have been intentionally expanded to be
+        # locale-independent.
+        #
+        # For more information, refer to:
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+        #   Subsection: Portable Filename".
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+        #   Subsection: Portable Filename Character Set".
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+        #   Subsection: User Name".
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Regular
+        #   Expressions, Subsection: RE Bracket Expression".
+        '-portable-name')
+            case "$2" in
+                *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_\.\-]*)
+                    return 1
+                ;;
+            esac
+
+            [ "$2" ] || return 1
         ;;
         # Assert $2 is an absolute (/*) path. An absolute path is any string of
         # which the first character is `/`.
