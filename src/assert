@@ -17,7 +17,7 @@
 #     '-canonical-path' - lexically canonical (assertable) path
 #     '-fs-canonical-path' - semantically canonical (assertable) path
 #     '-relative-path' - relative path
-#     '-shell-name' - shell name
+#     '-shell-name' - portable shell-parseable name
 #     .
 # )
 # <"$2"> - string
@@ -308,12 +308,22 @@ assert() {
 
             [ "$2" ] || return 1
         ;;
-        # Assert $2 is a shell name. The character classes have been
-        # intentionally expanded to be locale-independent.
+        # Assert $2 is a portable shell-parseable name. A portable
+        # shell-parseable name is a string composed of the characters in
+        # the portable filename character set, with the following exceptions:
+        #
+        # - Cannot begin with a digit.
+        # - Cannot contain a <hyphen-minus> character.
+        # - Cannot contain a <period> character.
+        #
+        # The character classes have been intentionally expanded to be
+        # locale-independent.
         #
         # For more information, refer to:
         # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
         #   Subsection: Name".
+        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+        #   Subsection: Portable Filename Character Set".
         # > "POSIX.1-2024, Volume: Base Definitions, Section: Regular
         #   Expressions, Subsection: RE Bracket Expression".
         '-shell-name')
