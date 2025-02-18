@@ -131,7 +131,9 @@ assert() {
         # support for extremely large numbers. This comparison is also known as
         # "lexicographical numeric comparison".
         '-max')
-            assert -lower-n "$2" "$3" || assert -eq "$2" "$3" || return "$?"
+            assert -lower-n "$2" "$3" || \
+            assert -eq "$2" "$3" || \
+            return "$?"
         ;;
         # Assert $2 is a number minimum of $3. Leading zeroes are ignored,
         # except `[0] -eq [0]` is true. This comparison essentually emulates
@@ -139,7 +141,9 @@ assert() {
         # support for extremely large numbers. This comparison is also known as
         # "lexicographical numeric comparison".
         '-min')
-            assert -greater-n "$2" "$3" || assert -eq "$2" "$3" || return "$?"
+            assert -greater-n "$2" "$3" || \
+            assert -eq "$2" "$3" || \
+            return "$?"
         ;;
         # Assert $2 is a number (`0`, `1`, `00`, `01`, ...). A number is any
         # string consisting only of digits. This is also well known as
@@ -220,7 +224,9 @@ assert() {
         # `0` and any string consisting only of digits, of which the first is
         # not `0`. Also known as "non-negative integer" in the POSIX standard.
         '-whole-n')
-            assert -natural-n "$2" || assert -eq "$2" 0 || return "$?"
+            assert -natural-n "$2" || \
+            assert -eq "$2" 0 || \
+            return "$?"
         ;;
         # Assert $2 is a portable ("Portable Filename") name. A portable name
         # is a string composed of the characters in the portable filename
