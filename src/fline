@@ -8,8 +8,9 @@
 # )
 # <$2> - line number
 # <"$3"> - file path
-#! .uses:
+#! .uses (<1+>):
 # [&9]
+# [()]
 #! .uses.fn:
 # <assert> ('-natural-n' '$2');
 #          Assert a string
