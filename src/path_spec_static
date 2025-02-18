@@ -31,6 +31,8 @@
 # )
 # ["$2"] - path
 # ["$3"] - join path
+#! .uses:
+# [()]
 #! .uses.var:
 # [PWD] $ - environment variable;
 #           absolute pathname of the current working directory
