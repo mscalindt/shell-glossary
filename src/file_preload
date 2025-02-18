@@ -8,8 +8,9 @@
 #     .
 # )
 # <"$2"> - file path
-#! .uses:
+#! .uses (<1+>):
 # [&9]
+# [()]
 #! .uses.util:
 # [cat] ('--' '$2');
 #       concatenate and print files
