@@ -8,6 +8,8 @@
 #     '-sed' - use the host version of `sed`; $1 cannot be <newline>
 #     .
 # )
+#! .uses:
+# [()]
 #! .uses.var:
 # [POSIX_COMPAT] $ - environment variable;
 #                    forces the usage of parameter expansion; necessary for
