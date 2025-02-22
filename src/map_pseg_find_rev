@@ -11,9 +11,6 @@
 #                    Modify a path string
 #! .gives:
 # (0) <"$_segment"> - string
-#! .rc:
-# (0) success
-# (*) false / error
 #! .rc.fn:
 # (map_pseg_find) (0) success
 # (map_pseg_find) (*) false / error
@@ -24,5 +21,5 @@ map_pseg_find_rev() {
     path_spec_static -z "$1" || return "$?"  # -> $_path
 
     # Map the path segments.
-    shift && map_pseg_find "$_path" "$@"
+    shift; map_pseg_find "$_path" "$@"
 }
