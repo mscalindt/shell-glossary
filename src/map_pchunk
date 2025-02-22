@@ -10,10 +10,8 @@
 # <map_pchunk_> ();
 #! .rc:
 # (0) success
-# (*) error
 # (255) bad input / error
 #! .rc.fn:
-# ($4) (0) success
 # ($4) (*) error
 #! .caveats:
 # > `INT_MAX`.
