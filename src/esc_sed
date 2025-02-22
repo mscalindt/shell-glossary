@@ -20,8 +20,8 @@
 #                 [modified <$3>]
 #! .rc:
 # (0) success
-# (2) bad $2
-# (255) bad input
+# (2) bad $2 / error
+# (255) bad input / error
 #! .rc.fn:
 # (replchar) (*) error
 #! .desc.ext:
