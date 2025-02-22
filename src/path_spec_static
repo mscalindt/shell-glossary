@@ -47,7 +47,8 @@
 #                  [modified <$2>]
 #! .rc:
 # (0) success
-# (255) bad input
+# (*) error
+# (255) bad input / error
 #! .rc.util:
 # (realpath) (*) error
 #.
