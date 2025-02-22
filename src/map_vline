@@ -6,9 +6,6 @@
 # ["$3"]+ - function arguments
 #! .uses:
 # <<<>
-#! .rc:
-# (0) success
-# (*) error
 #! .rc.fn:
 # ($2) (0) success
 # ($2) (*) error
