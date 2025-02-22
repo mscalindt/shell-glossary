@@ -25,7 +25,7 @@
 # (0) success
 # (1) line does not exist / error
 # (*) error
-# (255) bad usage / error
+# (255) bad input / bad usage / error
 #! .rc.fn:
 # (assert) (255) bad input
 #! .rc.util
