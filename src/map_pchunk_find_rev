@@ -11,9 +11,6 @@
 # (0) <"$_segment"> - string
 #! .sets:
 # <map_pchunk_find_rev_> ();
-#! .rc:
-# (0) success
-# (*) false / error
 #! .rc.fn:
 # ($2) (0) success
 # ($2) (1) false / error
