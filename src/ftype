@@ -19,9 +19,11 @@
 # (-info) <info> ('-w' '--' "text");
 #                Print formatted text
 #! .sets:
-# (0) <_type> $ - 'B' | 'C' | 'D' | 'F' | 'L' | 'P' | 'S' | '?' | '>';
+# (0) <_type> $ - 'B' | 'C' | 'D' | 'F' | 'L' | 'P' | 'S' | '?';
+# (1) <_type> $ - '>';
 #! .rc:
 # (0) success
+# (1) does not exist / error
 # (255) bad input / error
 #! .rc.fn:
 # (err) (*) error
@@ -75,7 +77,7 @@ ftype() {
     elif [ -e "$1" ]; then
         { shift; _type='?'; "$@" '?' || return "$?"; }
     else
-        { shift; _type='>'; "$@" '>' || return "$?"; }
+        { shift; _type='>'; "$@" '>' || return "$?"; return 1; }
     fi
 
     return 0
