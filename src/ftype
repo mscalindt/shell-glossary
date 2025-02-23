@@ -61,23 +61,23 @@ ftype() {
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
     #   test".
     if [ -b "$1" ]; then
-        { shift; _type='B'; "$@" 'B' || return "$?"; }
+        shift; _type='B'; "$@" 'B' || return "$?"
     elif [ -c "$1" ]; then
-        { shift; _type='C'; "$@" 'C' || return "$?"; }
+        shift; _type='C'; "$@" 'C' || return "$?"
     elif [ -d "$1" ]; then
-        { shift; _type='D'; "$@" 'D' || return "$?"; }
+        shift; _type='D'; "$@" 'D' || return "$?"
     elif [ -f "$1" ]; then
-        { shift; _type='F'; "$@" 'F' || return "$?"; }
+        shift; _type='F'; "$@" 'F' || return "$?"
     elif [ -h "${1%"${1##*[!/]}"}" ]; then
-        { shift; _type='L'; "$@" 'L' || return "$?"; }
+        shift; _type='L'; "$@" 'L' || return "$?"
     elif [ -p "$1" ]; then
-        { shift; _type='P'; "$@" 'P' || return "$?"; }
+        shift; _type='P'; "$@" 'P' || return "$?"
     elif [ -S "$1" ]; then
-        { shift; _type='S'; "$@" 'S' || return "$?"; }
+        shift; _type='S'; "$@" 'S' || return "$?"
     elif [ -e "$1" ]; then
-        { shift; _type='?'; "$@" '?' || return "$?"; }
+        shift; _type='?'; "$@" '?' || return "$?"
     else
-        { shift; _type='>'; "$@" '>' || return "$?"; return 1; }
+        shift; _type='>'; "$@" '>' || return "$?"; return 1
     fi
 
     return 0
