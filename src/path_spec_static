@@ -11,8 +11,8 @@
 #     'g' - prepend `/` on $_path
 #     'h' - resolve symbolic segments semantically
 #     'j' - append $3 without `/`
-#     'k' - strip all trailing slashes if $_path not true directory
-#     'l' - append `/` (if not present) if $_path true directory
+#     'k' - strip all trailing slashes if $_path not physical directory
+#     'l' - append `/` (if not present) if $_path physical directory
 #     'm' - set $_path to `/` if $_path empty
 #     'n' - unset $_path if $_path is lexical root
 #     'o' - unset $_path if $_path is absolute
@@ -214,9 +214,9 @@ path_spec_static() {
         *w*[!/]) set -- "$1" "$2" "$3/" ;;
     esac; fi
 
-    # Strip all trailing slashes if the modified path is not a true directory.
-    # A true directory is a directory that is not a symbolic link.
-    # (-k)
+    # Strip all trailing slashes if the modified path is NOT a physical
+    # directory. (-k)
+    # A directory is NOT physical if it is a symbolic link.
     #
     # Any trailing slashes will be removed for operator `-h` of `test`, because
     # otherwise they will cause an actual symbolic link to be followed and thus
@@ -229,9 +229,9 @@ path_spec_static() {
         *k*) set -- "$1" "$2" "${3%"${3##*[!/]}"}" ;;
     esac; fi
 
-    # Append a slash (if not present) if the modified path is a true directory.
-    # A true directory is a directory that is not a symbolic link.
-    # (-l)
+    # Append a slash (if not present) if the modified path is a physical
+    # directory. (-l)
+    # A physical directory is a directory that is not a symbolic link.
     #
     # Any trailing slashes will be removed for operator `-h` of `test`, because
     # otherwise they will cause an actual symbolic link to be followed and thus
