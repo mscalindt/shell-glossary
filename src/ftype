@@ -29,7 +29,10 @@
 # (err) (*) error
 # (info) (*) error
 #! .desc.ext:
-# The function denotes the type of the specified object using a letter.
+# The function denotes the type of the specified object using a letter. File
+# categorization will take precedence over directory categorization. Special
+# file categorization will take precedence over regular file categorization
+# according to implicit POSIX behavior.
 #
 # `B` means "block special file";
 # `C` means "character special file";
@@ -60,20 +63,20 @@ ftype() {
     #   Subsection: Pathname Resolution".
     # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
     #   test".
-    if [ -b "$1" ]; then
+    if [ -h "${1%"${1##*[!/]}"}" ]; then
+        shift; _type='L'; "$@" 'L' || return "$?"
+    elif [ -b "$1" ]; then
         shift; _type='B'; "$@" 'B' || return "$?"
     elif [ -c "$1" ]; then
         shift; _type='C'; "$@" 'C' || return "$?"
-    elif [ -d "$1" ]; then
-        shift; _type='D'; "$@" 'D' || return "$?"
-    elif [ -f "$1" ]; then
-        shift; _type='F'; "$@" 'F' || return "$?"
-    elif [ -h "${1%"${1##*[!/]}"}" ]; then
-        shift; _type='L'; "$@" 'L' || return "$?"
-    elif [ -p "$1" ]; then
-        shift; _type='P'; "$@" 'P' || return "$?"
     elif [ -S "$1" ]; then
         shift; _type='S'; "$@" 'S' || return "$?"
+    elif [ -p "$1" ]; then
+        shift; _type='P'; "$@" 'P' || return "$?"
+    elif [ -f "$1" ]; then
+        shift; _type='F'; "$@" 'F' || return "$?"
+    elif [ -d "$1" ]; then
+        shift; _type='D'; "$@" 'D' || return "$?"
     elif [ -e "$1" ]; then
         shift; _type='?'; "$@" '?' || return "$?"
     else
