@@ -1,5 +1,5 @@
 #! .desc:
-# Identify the type of an object on the filesystem
+# Identify the type of an object on the filesystem semantically
 #! .params:
 # <"$1"> - path
 # [$2] - fd(
@@ -46,24 +46,31 @@
 #
 # Practically, on POSIX shells and systems, `?` (unrecognized file type) should
 # never be returned.
+#
+# In a semantical manner, the given path will have its trailing slash(es)
+# stripped to mean the intended semantical (filesystem-related) assert,
+# ensuring reliable object type identification irrespective of the lexical
+# string and its POSIX-specified implications.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+#   Subsection: Pathname Resolution".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
+#   test".
 #.
 ftype() {
+    # Strip any trailing slashes in the path if possible.
+    case "$1" in
+        *[!/]*) set -- "${1%"${1##*[!/]}"}" "$2" ;;
+    esac
+
     case "$2" in
         '-err') set -- "$1" 'err' '-r' '--' ;;
         '-info') set -- "$1" 'info' '-w' '--' ;;
         *) [ ! "$2" ] || return 255; set -- "$1" ':' ;;
     esac
 
-    # Any trailing slashes will be removed for operator `-h` of `test`, because
-    # otherwise they will cause an actual symbolic link to be followed and thus
-    # deteriorate the reliability of `-h`.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
-    #   Subsection: Pathname Resolution".
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
-    #   test".
-    if [ -h "${1%"${1##*[!/]}"}" ]; then
+    if [ -h "$1" ]; then
         shift; _type='L'; "$@" 'L' || return "$?"
     elif [ -b "$1" ]; then
         shift; _type='B'; "$@" 'B' || return "$?"

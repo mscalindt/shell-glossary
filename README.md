@@ -81,7 +81,7 @@ external utility calls.
 - [ESC_SED()](src/esc_sed): Escape a string to be used literally as a POSIX `sed` string
 - [FILE_PRELOAD()](src/file_preload): Read a file raw
 - [FLINE()](src/fline): Get a specific line in a file
-- [FTYPE()](src/ftype): Identify the type of an object on the filesystem
+- [FTYPE()](src/ftype): Identify the type of an object on the filesystem semantically
 - [INFO()](src/info): Print formatted text
 - [MAP()](src/map): Process each argument with a function
 - [MAP_FIND()](src/map_find): Find success among arguments using a function
