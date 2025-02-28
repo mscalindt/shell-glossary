@@ -5,7 +5,7 @@
 #     'a' - resolve `.` lexically
 #     'b' - resolve `..` lexically
 #     'c' - strip consecutive slashes
-#     'd' - prepend `./` if $_path is relative
+#     'd' - discard symbolic segments
 #     'e' - discard inexistent segments
 #     'f' - prepend `/`
 #     'g' - prepend `/` on $_path
@@ -19,7 +19,7 @@
 #     'p' - unset $_path if $_path is relative
 #     'q' - unset $_path if $_path is inexistent
 #     'r' - prepend $PWD if relative
-#     's' - discard symbolic segments
+#     's' - prepend `./` if $_path is relative
 #     't' - strip all trailing slashes if not directory
 #     'u' - strip all trailing slashes if $_path not directory
 #     'v' - append `/` (if not present) if directory
@@ -182,12 +182,12 @@ path_spec_static() {
             *e*) [ "$2$3" ] && continue || { _pfx=/; _segment=; } ;;
         esac; fi
 
-        # Discard symbolic segments. (-s)
+        # Discard symbolic segments. (-d)
         #
         # As stated, when both $2 (segments) and $3 (modified path) are empty,
         # the default discarding behavior is "discard to root".
         if [ "$_segment" ] && [ -h "$3$_pfx$_segment" ]; then case "$1" in
-            *s*) [ "$2$3" ] && continue || { _pfx=/; _segment=; } ;;
+            *d*) [ "$2$3" ] && continue || { _pfx=/; _segment=; } ;;
         esac; fi
 
         # Strip consecutive slashes. (-c)
@@ -250,9 +250,9 @@ path_spec_static() {
         *g*) set -- "$1" "$2" "/$3" ;;
     esac
 
-    # Prepend a dot and slash if the modified path is relative. (-d)
+    # Prepend a dot and slash if the modified path is relative. (-s)
     if [ "$3" ]; then case "$1" in
-        *d*) assert -absolute-path "$3" || set -- "$1" "$2" "./$3" ;;
+        *s*) assert -absolute-path "$3" || set -- "$1" "$2" "./$3" ;;
     esac; fi
 
     # Never return lexically root modified path. (-n)
