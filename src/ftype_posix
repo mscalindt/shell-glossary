@@ -1,0 +1,87 @@
+#! .desc:
+# Identify the type of an object on the filesystem lexically
+#! .params:
+# <"$1"> - path
+# [$2] - fd(
+#     '-err' - print to stderr; &2
+#     '-info' - print to stdout; &1
+#     .
+# )
+#! .uses.var.err:
+# [NO_COLOR] $ - environment variable;
+#                disables colored output
+#! .uses.var.info:
+# [NO_COLOR] $ - environment variable;
+#                disables colored output
+#! .uses.fn:
+# (-err) <err> ('-r' '--' "text");
+#              Print formatted text to stderr
+# (-info) <info> ('-w' '--' "text");
+#                Print formatted text
+#! .sets:
+# (0) <_type> $ - 'B' | 'C' | 'D' | 'F' | 'L' | 'P' | 'S' | '?';
+# (1) <_type> $ - '>';
+#! .rc:
+# (0) success
+# (1) does not exist / error
+# (255) bad input / error
+#! .rc.fn:
+# (err) (*) error
+# (info) (*) error
+#! .desc.ext:
+# The function denotes the type of the specified object using a letter. File
+# categorization will take precedence over directory categorization. Special
+# file categorization will take precedence over regular file categorization
+# according to implicit POSIX behavior.
+#
+# `B` means "block special file";
+# `C` means "character special file";
+# `D` means "directory";
+# `F` means "regular file";
+# `L` means "symbolic link";
+# `P` means "FIFO / named pipe";
+# `S` means "socket";
+# `?` means "unrecognized file type";
+# `>` means "does not exist".
+#
+# Practically, on POSIX shells and systems, `?` (unrecognized file type) should
+# never be returned.
+#
+# In a lexical manner, according to POSIX, a trailing slash in the path string
+# can affect the assert.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+#   Subsection: Pathname Resolution".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
+#   test".
+#.
+ftype_posix() {
+    case "$2" in
+        '-err') set -- "$1" 'err' '-r' '--' ;;
+        '-info') set -- "$1" 'info' '-w' '--' ;;
+        *) [ ! "$2" ] || return 255; set -- "$1" ':' ;;
+    esac
+
+    if [ -h "$1" ]; then
+        shift; _type='L'; "$@" 'L' || return "$?"
+    elif [ -b "$1" ]; then
+        shift; _type='B'; "$@" 'B' || return "$?"
+    elif [ -c "$1" ]; then
+        shift; _type='C'; "$@" 'C' || return "$?"
+    elif [ -S "$1" ]; then
+        shift; _type='S'; "$@" 'S' || return "$?"
+    elif [ -p "$1" ]; then
+        shift; _type='P'; "$@" 'P' || return "$?"
+    elif [ -f "$1" ]; then
+        shift; _type='F'; "$@" 'F' || return "$?"
+    elif [ -d "$1" ]; then
+        shift; _type='D'; "$@" 'D' || return "$?"
+    elif [ -e "$1" ]; then
+        shift; _type='?'; "$@" '?' || return "$?"
+    else
+        shift; _type='>'; "$@" '>' || return "$?"; return 1
+    fi
+
+    return 0
+}
