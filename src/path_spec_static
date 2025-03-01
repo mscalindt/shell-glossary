@@ -51,6 +51,10 @@
 # (255) bad input / error
 #! .rc.util:
 # (realpath) (*) error
+#! .desc.ext:
+# When discard and resolve operations take place and no path segments remain,
+# the default behavior is "discard/resolve to root" (`/`). This behavior
+# generally aligns with POSIX, and can be influenced with option `-n`.
 #.
 path_spec_static() {
     [ "${1#\-}" ] || return 255
@@ -117,11 +121,6 @@ path_spec_static() {
 
     # Move $3 to $2 and rebuild $3 (modified path) from $2.
     #
-    # When discard or resolve operations take place, if $3 ends up empty on the
-    # last segment processed, root (`/`) will be the default location
-    # resolved/discarded to. This behavior aligns with the POSIX specification,
-    # but can be mitigated with option `-n`.
-    #
     # For more information, refer to:
     # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
     #   Subsection: Pathname Resolution".
@@ -152,19 +151,11 @@ path_spec_static() {
         esac; fi
 
         # Resolve `.` lexically. (-a)
-        #
-        # As `.` is ambiguous and as stated, when both $2 (segments) and $3
-        # (modified path) are empty, the default standard resolving behavior is
-        # "resolve to root".
         if [ "$_segment" = '.' ]; then case "$1" in
             *a*) [ "$2$3" ] && continue || { _pfx=/; _segment=; } ;;
         esac; fi
 
         # Resolve `..` lexically. (-b)
-        #
-        # As `..` is ambiguous and as stated, when both $2 (segments) and $3
-        # (modified path) are empty, the default standard resolving behavior is
-        # "resolve to root".
         if [ "$_segment" = '..' ]; then case "$1" in
             *b*)
                 set -- "$1" "$2" "${3%/*}"
@@ -175,17 +166,11 @@ path_spec_static() {
         esac; fi
 
         # Discard inexistent segments. (-e)
-        #
-        # As stated, when both $2 (segments) and $3 (modified path) are empty,
-        # the default discarding behavior is "discard to root".
         if [ "$_segment" ] && [ ! -e "$3$_pfx$_segment" ]; then case "$1" in
             *e*) [ "$2$3" ] && continue || { _pfx=/; _segment=; } ;;
         esac; fi
 
         # Discard symbolic segments. (-d)
-        #
-        # As stated, when both $2 (segments) and $3 (modified path) are empty,
-        # the default discarding behavior is "discard to root".
         if [ "$_segment" ] && [ -h "$3$_pfx$_segment" ]; then case "$1" in
             *d*) [ "$2$3" ] && continue || { _pfx=/; _segment=; } ;;
         esac; fi
