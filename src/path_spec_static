@@ -216,7 +216,7 @@ path_spec_static() {
 
     # Strip all trailing slashes if the modified path is a logical
     # directory. (-k)
-    # A logical directory is a directory that is a symbolic link.
+    # A logical directory is a symbolic link.
     #
     # Any trailing slashes will be removed for operator `-h` of `test`, because
     # otherwise they will cause an actual symbolic link to be followed and thus
@@ -231,7 +231,7 @@ path_spec_static() {
 
     # Append a slash (if not present) if the modified path is a physical
     # directory. (-l)
-    # A physical directory is a directory that is not a symbolic link.
+    # A physical directory is not a symbolic link.
     #
     # Any trailing slashes will be removed for operator `-h` of `test`, because
     # otherwise they will cause an actual symbolic link to be followed and thus
