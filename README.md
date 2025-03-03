@@ -20,6 +20,7 @@ criteria in [Roadmap](#2-roadmap) are met.
 
 ## 2. Roadmap
 
+* Portable C89 in-house program to follow/resolve symbolic links.
 * Unit tests (`wunit`).
   * Transition to versioned release tags.
   * Makefile to run the unit tests.
