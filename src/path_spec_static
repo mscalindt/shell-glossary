@@ -55,6 +55,9 @@
 # When discard and resolve operations take place and no path segments remain,
 # the default behavior is "discard/resolve to root" (`/`). This behavior
 # generally aligns with POSIX, and can be influenced with option `-n`.
+#
+# When option `-h` is used, the presence of a broken symbolic segment results
+# in undefined behavior.
 #.
 path_spec_static() {
     [ "${1#\-}" ] || return 255
