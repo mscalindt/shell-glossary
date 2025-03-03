@@ -58,6 +58,16 @@
 #
 # When option `-h` is used, the presence of a broken symbolic segment results
 # in undefined behavior.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Environment Variables,
+#   Subsection: Environment Variable Definition".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Environment Variables,
+#   Subsection: Other Environment Variables".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+#   Subsection: Pathname Resolution".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
+#   Subsection: realpath".
 #.
 path_spec_static() {
     [ "${1#\-}" ] || return 255
@@ -107,12 +117,6 @@ path_spec_static() {
     esac; fi
 
     # If the passed path operand is relative, prepend $PWD. (-r)
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
-    #   Variables, Subsection: Environment Variable Definition".
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
-    #   Variables, Subsection: Other Environment Variables".
     if [ "$3" ]; then case "$1" in
         *r*) assert -absolute-path "$3" || set -- "$1" "$2" "${PWD%/}/$3" ;;
     esac; fi
@@ -123,10 +127,6 @@ path_spec_static() {
     esac
 
     # Move $3 to $2 and rebuild $3 (modified path) from $2.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
-    #   Subsection: Pathname Resolution".
     set -- "$1" "$3" ""; while [ "$2" ]; do
         # Example path:
         # `//abc///foo`
@@ -140,10 +140,6 @@ path_spec_static() {
         set -- "$1" "${2#"$_pfx$_segment"}" "$3"
 
         # Resolve symbolic segments semantically. (-h)
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
-        #   Subsection: realpath".
         if [ "$_segment" ] && [ -h "$3$_pfx$_segment" ]; then case "$1" in
             *h*)
                 {
@@ -209,10 +205,6 @@ path_spec_static() {
     # Any trailing slashes will be removed for operator `-h` of `test`, because
     # otherwise they will cause an actual symbolic link to be followed and thus
     # deteriorate the reliability of `-h`.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
-    #   Subsection: Pathname Resolution".
     if [ -d "$3" ] && [ -h "${3%"${3##*[!/]}"}" ]; then case "$1" in
         *k*) set -- "$1" "$2" "${3%"${3##*[!/]}"}" ;;
     esac; fi
@@ -224,10 +216,6 @@ path_spec_static() {
     # Any trailing slashes will be removed for operator `-h` of `test`, because
     # otherwise they will cause an actual symbolic link to be followed and thus
     # deteriorate the reliability of `-h`.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
-    #   Subsection: Pathname Resolution".
     if [ -d "$3" ] && [ ! -h "${3%"${3##*[!/]}"}" ]; then \
     case "$1${3#"${3%?}"}" in
         *l*[!/]) set -- "$1" "$2" "$3/" ;;
