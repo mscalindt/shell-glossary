@@ -36,6 +36,10 @@
 # success will be returned, as there are no segments to process. Note that a
 # semantically different specification of root, such as `/.`, will be
 # processed.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Parameter Expansion".
 #.
 map_pchunk() {
     map_pchunk_() { _pchunk="$2" && shift 2 && "$@" "$_pchunk"; }
@@ -115,10 +119,6 @@ map_pchunk() {
 
     # Process the path using parameter expansion and the custom concept of an
     # LTR path mask.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Parameter Expansion".
     while :; do
         # Strip the path LTR using the path mask and save the result into $_a.
         _a="${1#"$2"}"
