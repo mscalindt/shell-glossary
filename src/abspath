@@ -12,22 +12,22 @@
 # (0) success
 #! .ec:
 # (255) bad input
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Absolute Pathname".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Relative Pathname".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Environment Variables,
+#   Subsection: Environment Variable Definition".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Environment Variables,
+#   Subsection: Other Environment Variables".
 #.
 abspath() {
     [ "$1" ] || exit 255
 
     # Use $PWD (absolute pathname of the current working directory) to convert
     # a relative path into an absolute one if it's not already.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-    #   Subsection: Absolute Pathname".
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-    #   Subsection: Relative Pathname".
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
-    #   Variables, Subsection: Environment Variable Definition".
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment
-    #   Variables, Subsection: Other Environment Variables".
     case "$1" in
         '/'*) _path="$1" ;;
         *) _path="${PWD%/}/$1" ;;
