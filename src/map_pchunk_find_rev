@@ -20,6 +20,10 @@
 # `/foo/bar/baz/`: `/foo/bar/baz/`, `/foo/bar`, `/foo`
 # `foo/bar/baz`: `foo/bar/baz`, `foo/bar`, `foo`
 # `foo/bar/baz/`: `foo/bar/baz/`, `foo/bar`, `foo`
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Parameter Expansion".
 #.
 map_pchunk_find_rev() {
     map_pchunk_find_rev_() { _i="$1" && shift && "$@" "$_i"; }
@@ -29,10 +33,6 @@ map_pchunk_find_rev() {
     shift && set -- "$_path" "$@"
 
     # Process the path using parameter expansion.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Parameter Expansion".
     while [ "${1%/}" ]; do
         # Pass $1 (cumulative path segment) to $2 (function) as the last
         # positional parameter along any function arguments.
