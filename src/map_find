@@ -11,8 +11,6 @@
 #! .rc.fn:
 # ($2) (0) success
 # ($2) (1) false / error
-#! .caveats:
-# > `INT_MAX`.
 #.
 map_find() {
     while [ "$#" -ge 2 ]; do
