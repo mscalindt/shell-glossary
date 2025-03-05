@@ -15,8 +15,6 @@
 # (255) bad usage / error
 #! .ec.fn:
 # (opt_err) (*) error
-#! .caveats:
-# > `ARG_MAX`.
 #.
 opt_fail() {
     [ "$opt_match" ] || exit 255
