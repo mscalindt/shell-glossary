@@ -1,0 +1,41 @@
+#! .desc:
+# Count the times a character appears in a string using PE
+#! .params:
+# <"$1"> - character
+# <"$2"> - string
+#! .gives:
+# (0) <$_count> - integer
+#! .rc:
+# (0) success
+# (255) bad input
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Parameter Expansion".
+#.
+ccount_posix() {
+    # Assert $1 is a single character; multiple characters are currently not
+    # supported.
+    [ "${#1}" = 1 ] || return 255
+
+    # Traverse $2 (string), counting the occurences of $1 (character).
+    _count=0; _a="$2"; while :; do case "$_a" in
+        *"$1"*)
+            # Example character and string: `a` `ddaabcd`
+            # $_a: `aabcd`
+            # $_b: `aa`
+            # $_a: `bcd`
+            # $_c: `2`
+            _a="${_a#"${_a%%["$1"]*}"}"
+            _b="${_a%%[!"$1"]*}"
+            _a="${_a#"$_b"}"
+            _c=${#_b}
+            _count=$((_count + _c))
+        ;;
+        *)
+            break
+        ;;
+    esac done
+
+    return 0
+}
