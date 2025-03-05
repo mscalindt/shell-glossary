@@ -53,8 +53,8 @@
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
 #   Subsection: Pathname Resolution".
-# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
-#   test".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
+#   Utility: test".
 #.
 ftype_posix() {
     case "$2" in
