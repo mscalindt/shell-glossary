@@ -25,6 +25,10 @@
 # (255) bad input / bad usage / error
 #! .rc.util
 # (cat) (*) error
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Command Substitution".
 #.
 file_preload() {
     # Read the file with the specified method.
@@ -59,10 +63,6 @@ file_preload() {
             # The custom `x` character at the end and its subsequent removal
             # outside the command substitution preserves any trailing <newline>
             # characters stripped by command substitution.
-            #
-            # For more information, refer to:
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Command Substitution".
             _file=$(cat -- "$2" && printf "%s" 'x') || return "$?"
             _file="${_file%?}"
         ;;
@@ -76,10 +76,6 @@ file_preload() {
             # substitution. The custom `x` character at the end and its
             # subsequent removal outside the command substitution preserves any
             # trailing <newline> characters stripped by command substitution.
-            #
-            # For more information, refer to:
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Command Substitution".
             _file=$(
                 while IFS= read -r _line <&9; do
                     printf "%s\n" "$_line"
