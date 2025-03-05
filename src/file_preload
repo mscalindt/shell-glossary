@@ -2,13 +2,14 @@
 # Read a file raw
 #! .params:
 # <$1> - method(
+#     '-' - read heredoc (stdin) with string concatenation
 #     '-cat' - use `cat`
 #     '-subshell' - use command substitution with shell input redirection
 #     '-var' - use string concatenation with shell input redirection
 #     .
 # )
-# <"$2"> - file path
-#! .uses (<2+>):
+# ["$2"] - file path
+#! .uses:
 # [&9]
 # [()]
 # [<]
@@ -17,7 +18,7 @@
 #       concatenate and print files
 #! .gives:
 # (0) <"$_file"> - [string];
-#                  raw content of $2
+#                  raw content of $2/stdin
 #! .rc:
 # (0) success
 # (*) error
@@ -45,6 +46,14 @@ file_preload() {
     # user-created file. `-subshell` performs better on big files (> ~50000
     # lines), while `-var` performs better on small files.
     case "$1" in
+        '-')
+            # Append with <newline> each $_line to an initially empty $_file to
+            # build the raw content of stdin.
+            _file=; while IFS= read -r _line; do
+                _file="$_file$_line
+"
+            done; _file="$_file$_line"
+        ;;
         '-cat')
             # Store the output of `cat` in $_file using command substitution.
             # The custom `x` character at the end and its subsequent removal
