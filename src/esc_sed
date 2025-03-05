@@ -9,9 +9,9 @@
 # <"$2"> - delimiter character
 # <"$3"> - string
 #! .uses.fn:
-# <replchar> ("specific character" "character(s)" "string");
-#            Replace a specific character with character(s) in a string using
-#            IFS
+# <replchar_posix> ("specific character" "character(s)" "string");
+#                  Replace a specific character with character(s) in a string
+#                  using PE
 #! .gives:
 # (0) <"$_str"> - [string];
 #                 [modified <$3>]
@@ -20,7 +20,7 @@
 # (2) bad $2 / error
 # (255) bad input / error
 #! .rc.fn:
-# (replchar) (*) error
+# (replchar_posix) (*) error
 #! .desc.ext:
 # The delimiter character cannot be a <backslash> or a <newline> character.
 #
@@ -50,38 +50,38 @@ esc_sed() {
         '-RE')
             # Escape RE special characters. The <backslash> is used to escape
             # other characters, therefore it must be escaped first.
-            replchar '\' '\\' "$3" || return "$?"
-            replchar '.' '\.' "$_str" || return "$?"
-            replchar '*' '\*' "$_str" || return "$?"
-            replchar '[' '\[' "$_str" || return "$?"
-            replchar ']' '\]' "$_str" || return "$?"
-            replchar '^' '\^' "$_str" || return "$?"
-            replchar '$' '\$' "$_str" || return "$?"
-            replchar '(' '\(' "$_str" || return "$?"
-            replchar ')' '\)' "$_str" || return "$?"
-            replchar '{' '\{' "$_str" || return "$?"
-            replchar '}' '\}' "$_str" || return "$?"
-            replchar '|' '\|' "$_str" || return "$?"
-            replchar '+' '\+' "$_str" || return "$?"
-            replchar '?' '\?' "$_str" || return "$?"
-            replchar '
+            replchar_posix '\' '\\' "$3" || return "$?"
+            replchar_posix '.' '\.' "$_str" || return "$?"
+            replchar_posix '*' '\*' "$_str" || return "$?"
+            replchar_posix '[' '\[' "$_str" || return "$?"
+            replchar_posix ']' '\]' "$_str" || return "$?"
+            replchar_posix '^' '\^' "$_str" || return "$?"
+            replchar_posix '$' '\$' "$_str" || return "$?"
+            replchar_posix '(' '\(' "$_str" || return "$?"
+            replchar_posix ')' '\)' "$_str" || return "$?"
+            replchar_posix '{' '\{' "$_str" || return "$?"
+            replchar_posix '}' '\}' "$_str" || return "$?"
+            replchar_posix '|' '\|' "$_str" || return "$?"
+            replchar_posix '+' '\+' "$_str" || return "$?"
+            replchar_posix '?' '\?' "$_str" || return "$?"
+            replchar_posix '
 ' '\n' "$_str" || return "$?"
 
             # Escape `sed` specified delimiter character.
-            replchar "$2" '\'"$2" "$_str" || return "$?"
+            replchar_posix "$2" '\'"$2" "$_str" || return "$?"
         ;;
         '-replacement')
             # Escape RE special characters. The <backslash> is used to escape
             # other characters, therefore it must be escaped first.
-            replchar '\' '\\' "$3" || return "$?"
+            replchar_posix '\' '\\' "$3" || return "$?"
 
             # Escape replacement string special characters.
-            replchar '&' '\&' "$_str" || return "$?"
-            replchar '
+            replchar_posix '&' '\&' "$_str" || return "$?"
+            replchar_posix '
 ' '\n' "$_str" || return "$?"
 
             # Escape `sed` specified delimiter character.
-            replchar "$2" '\'"$2" "$_str" || return "$?"
+            replchar_posix "$2" '\'"$2" "$_str" || return "$?"
         ;;
         *)
             return 255
