@@ -32,8 +32,6 @@
 # (assert) (255) bad input
 #! .rc.util
 # (cat) (*) error
-#! .caveats:
-# > `INT_MAX`.
 #.
 fline() {
     assert -natural-n "$2" || return 255
