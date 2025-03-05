@@ -15,10 +15,6 @@
 # (*) error
 #! .rc.fn:
 # (assert) (255) bad input / bad usage
-#! .caveats:
-# > `INT_MAX`. The operands and result of a bitwise operation are integers, so
-#   bitwise operations (and shell arithmetic in general) are subject to the
-#   system's native integer limits.
 #.
 mask_check() {
     # Remove `0x` from $1 (bit) if present.
