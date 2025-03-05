@@ -12,6 +12,14 @@
 #! .rc:
 # (0) success
 # (255) bad input
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Field Splitting".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Parameter Expansion".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Pathname Expansion".
 #.
 ccount() {
     # Assert $1 is a single character; multiple characters are currently not
@@ -24,10 +32,6 @@ ccount() {
 
     # Save the state of the pathname expansion flag and disable it if active;
     # disabled to disable the expansion of `*`.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Pathname Expansion".
     case "$-" in
         *'f'*) _pn=0 ;;
         *) _pn=1; set -f ;;
@@ -37,12 +41,6 @@ ccount() {
     # special disruptive behavior in $IFS (field splitting), parameter
     # expansion must be used for those characters to ensure the function's
     # integrity.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Field Splitting".
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Parameter Expansion".
     #
     # (2024-08-15) Note:
     # According to POSIX.1-2024, stable usage of field splitting is not POSIX
