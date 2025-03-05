@@ -1,23 +1,24 @@
 #! .desc:
-# Count the times a character appears in a string
+# Count the times a character appears in a string using IFS
 #! .params:
 # <"$1"> - character
 # <"$2"> - string
-#! .uses.var:
-# [POSIX_COMPAT] $ - environment variable;
-#                    forces the usage of parameter expansion; necessary for
-#                    POSIX.1-2024 compliance
 #! .gives:
 # (0) <$_count> - integer
 #! .rc:
 # (0) success
 # (255) bad input
 #! .desc.ext:
+# Note that, according to POSIX.1-2024, the stable usage of field splitting
+# (IFS) is not POSIX anymore due to "IFS white space" being
+# implementation-defined.
+#
+# In reference to the aforementioned, the handling of <space>, <tab>, and
+# <newline> ("IFS white space") characters is undefined behavior.
+#
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Field Splitting".
-# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
-#   Subsection: Parameter Expansion".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Pathname Expansion".
 #.
@@ -37,51 +38,12 @@ ccount() {
         *) _pn=1; set -f ;;
     esac
 
-    # Due to <space>, <tab>, and <newline> ("IFS white space") possessing a
-    # special disruptive behavior in $IFS (field splitting), parameter
-    # expansion must be used for those characters to ensure the function's
-    # integrity.
-    #
-    # (2024-08-15) Note:
-    # According to POSIX.1-2024, stable usage of field splitting is not POSIX
-    # anymore due to "IFS white space" being implementation-defined. To address
-    # the issues brought upon, the environment variable `POSIX_COMPAT`, if set,
-    # forces the function to always use parameter expansion; otherwise default
-    # behavior applies. Field splitting is preferred and remains the default
-    # due to its generally superior performance, which scales better with
-    # larger input sizes compared to parameter expansion.
-    if [ "$POSIX_COMPAT" ] || { case "$1" in ' ' | '   ' | '
-') : ;; *) ! : ;; esac; }; then
-        # Parameter expansion (slower) method.
-        #
-        # Traverse $2 (string), counting the occurences of $1 (character).
-        _count=0; _a="$2"; while :; do case "$_a" in
-            *"$1"*)
-                # Example character and string: `a` `ddaabcd`
-                # $_a: `aabcd`
-                # $_b: `aa`
-                # $_a: `bcd`
-                # $_c: `2`
-                _a="${_a#"${_a%%["$1"]*}"}"
-                _b="${_a%%[!"$1"]*}"
-                _a="${_a#"$_b"}"
-                _c=${#_b}
-                _count=$((_count + _c))
-            ;;
-            *)
-                break
-            ;;
-        esac done
-    else
-        # Default field split (faster) method.
-        #
-        # Field split $2 (string) based on $1 (character); the number of fields
-        # produced (minus one, to account for the field split itself)
-        # corresponds to the number of times the character has appeared. To
-        # enforce stable field splitting behavior, $1 is placed at the end of
-        # the string, ensuring the function's integrity.
-        IFS="$1"; set -- $2"$IFS"; _count=$(($# - 1))
-    fi
+    # Field split $2 (string) based on $1 (character); the number of fields
+    # produced (minus one, to account for the field split itself) corresponds
+    # to the number of times the character has appeared. To enforce stable
+    # field splitting behavior, $1 is placed at the end of the string,
+    # ensuring the function's integrity.
+    IFS="$1"; set -- $2"$IFS"; _count=$(($# - 1))
 
     # Restore the active state of the pathname expansion flag if appropriate.
     if [ "$_pn" = 1 ]; then
