@@ -18,6 +18,10 @@
 #! .rc.fn:
 # (assert) (255) bad input
 # (replchar) (*) error
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Quoting".
 #.
 arg_save() {
     # Escape any single quotes in the argument ($1).
@@ -42,9 +46,5 @@ arg_save() {
     # Key points:
     # - Due to the sophisticated escaping, single quotes from the first
     #   expansion carry their significance to the second expansion.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Quoting".
     eval "$2=\"\$$2 '\$1'\""
 }
