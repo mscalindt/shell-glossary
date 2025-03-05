@@ -19,6 +19,10 @@
 # (255) bad input
 #! .rc.fn:
 # (assert) (255) bad input
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+#   Subsection: Pathname Resolution".
 #.
 path_strip() {
     assert -whole-n "$2" || return 255
@@ -43,10 +47,6 @@ path_strip() {
     # If N ($2) has exceeded the path segments, handle the last path segment
     # here. If `-posix` is specified but the path is naturally empty, it would
     # still resolve to root.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
-    #   Subsection: Pathname Resolution".
     while [ "$2" -ge 1 ]; do
         case "$3" in
             '-floor')
