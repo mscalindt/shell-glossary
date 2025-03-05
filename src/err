@@ -27,9 +27,6 @@
 #! .rc:
 # (0) success
 # (255) bad input
-#! .caveats:
-# > `ARG_MAX`.
-# > `INT_MAX`.
 #.
 err() {
     # Check if color codes should be used.
