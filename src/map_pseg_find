@@ -15,6 +15,10 @@
 # ($2) (0) success
 # ($2) (1) false / error
 # (path_spec_static) (*) error
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Parameter Expansion".
 #.
 map_pseg_find() {
     map_pseg_find_() { _i="$2" && shift 2 && "$@" "$_i"; }
@@ -25,10 +29,6 @@ map_pseg_find() {
 
     # Process the path using parameter expansion. $1 is the original path
     # processed until nothing is left, while $2 will be the path segment(s).
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Parameter Expansion".
     while [ "$1" ]; do
         _i="$1"; shift 2; case "$_i" in
             *'/'*) set -- "${_i#*/}" "${_i%/"${_i#*/}"}" "$@" ;;
