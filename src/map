@@ -6,8 +6,6 @@
 #! .rc.fn:
 # ($2) (0) success
 # ($2) (*) error
-#! .caveats:
-# > `INT_MAX`.
 #.
 map() {
     while [ "$#" -ge 2 ]; do
