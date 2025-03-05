@@ -13,8 +13,6 @@
 # (255) bad input / error
 #! .rc.fn:
 # ($4) (*) error
-#! .caveats:
-# > `INT_MAX`.
 #! .desc.ext:
 # The path mask(s), a mandatory argument that can be empty, specifies the
 # exclusion of cumulative path segments that match exactly against the given
