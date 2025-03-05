@@ -6,15 +6,15 @@
 #! .uses.fn:
 # <assert> ('-shell-name' '$2');
 #          Assert a string
-# <replchar> ('\'' '\'\\\'\'' '$1');
-#            Replace a specific character with character(s) in a string using
-#            IFS
+# <replchar_posix> ('\'' '\'\\\'\'' '$1');
+#                  Replace a specific character with character(s) in a string
+#                  using PE
 #! .rc:
 # (0) success
 # (*) error
 #! .rc.fn:
 # (assert) (255) bad input
-# (replchar) (*) error
+# (replchar_posix) (*) error
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
@@ -24,7 +24,7 @@ arg_save() {
     # Escape any single quotes in the argument ($1).
     case "$1" in
         *\'*)
-            replchar \' \'\\\'\' "$1" || return "$?"  # -> $_str
+            replchar_posix \' \'\\\'\' "$1" || return "$?"  # -> $_str
             set -- "$_str" "$2"
         ;;
     esac
