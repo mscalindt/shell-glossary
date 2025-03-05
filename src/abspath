@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - path
 #! .uses.var:
-# <PWD> $ - environment variable;
+# [PWD] $ - environment variable;
 #           absolute pathname of the current working directory
 #! .gives:
 # <"$_path"> - string;
