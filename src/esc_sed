@@ -30,14 +30,15 @@
 # POSIX.1-2024 states:
 # "Any character other than <backslash> or <newline> can be used instead of a
 #  <slash> to delimit the RE and the replacement".
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Regular Expressions".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
+#   Utility: sed".
 #.
 esc_sed() {
     # According to POSIX.1-2024, the delimiter cannot be a <backslash> or a
     # <newline> character.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
-    #   sed".
     case "$2" in
         '\' | '
 ')
@@ -48,11 +49,6 @@ esc_sed() {
     # Escape all special characters for `sed` in the given string type
     # according to POSIX.1-2024. Since POSIX.1-2024, `sed -E` is specified,
     # therefore all ERE special characters will also be escaped.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Base Definitions, Section: Regular Expressions".
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
-    #   sed".
     case "$1" in
         '-RE')
             # Escape RE special characters. The <backslash> is used to escape
