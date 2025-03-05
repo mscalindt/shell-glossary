@@ -2,13 +2,14 @@
 # Get a specific line in a file
 #! .params:
 # <$1> - read_method(
+#     '-' - read heredoc (stdin)
 #     '-cat' - use `cat`
 #     '-shell' - use shell input redirection
 #     .
 # )
 # <$2> - line number
-# <"$3"> - file path
-#! .uses (<2+>):
+# ["$3"] - file path
+#! .uses:
 # [&9]
 # [()]
 # [<<]
@@ -20,7 +21,8 @@
 # [cat] ('--' '$3');
 #       concatenate and print files
 #! .gives:
-# (0) <"$_line"> - [string]
+# (0) <"$_line"> - [string];
+#                  specified line of $3/stdin
 #! .rc:
 # (0) success
 # (1) line does not exist / error
@@ -35,9 +37,6 @@
 #.
 fline() {
     assert -natural-n "$2" || return 255
-
-    # Assert $3 exists and is a file.
-    [ -f "$3" ] || return 255
 
     # Read the file with the specified method.
     #
@@ -57,7 +56,17 @@ fline() {
     # Use the shell to read the file if it is a small (< ~10000XX lines),
     # user-created file.
     case "$1" in
+        '-')
+            # Read stdin, counting the lines; if we land on the specified one,
+            # signal it.
+            _i=1; while IFS= read -r _line; do
+                case "$_i" in "$2") return 0 ;; esac
+                _i=$((_i + 1))
+            done; case "$_i" in "$2") return 0 ;; esac
+        ;;
         '-cat')
+            [ -f "$3" ] || return 255
+
             # Store the output of `cat` in $_file using command substitution.
             # The custom `x` character at the end and its subsequent removal
             # outside the command substitution preserves any trailing <newline>
@@ -83,6 +92,8 @@ $_file
 _LINE
         ;;
         '-shell')
+            [ -f "$3" ] || return 255
+
             # Open the file and assign it to file descriptor `9`. The usage of
             # a file descriptor simplifies the error handling. Additionally,
             # TOCTOU flaws are completely avoided this way.
