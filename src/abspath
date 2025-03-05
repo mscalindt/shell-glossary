@@ -7,7 +7,7 @@
 #           absolute pathname of the current working directory
 #! .gives:
 # <"$_path"> - string;
-#              [absolute <$1>]
+#              absolute $1
 #! .rc:
 # (0) success
 # (*) error
