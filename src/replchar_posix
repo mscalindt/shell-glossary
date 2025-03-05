@@ -1,0 +1,97 @@
+#! .desc:
+# Replace a specific character with character(s) in a string using PE
+#! .params:
+# <"$1"> - specific character
+# <"$2"> - character(s)
+# <"$3"> - string
+# [$4] - backend(
+#     '-sed' - use the host version of `sed`; $1 cannot be <newline>
+#     .
+# )
+#! .uses:
+# [()]
+#! .uses.fn (-sed):
+# <esc_sed> ("sed_string_type" '/' "string");
+#           Escape a string to be used literally as a POSIX `sed` string
+#! .uses.util (-sed):
+# <sed> ('s/$1/$2/g');
+#       stream editor
+#! .gives:
+# (0) <"$_str"> - [string];
+#                 [modified <$3>]
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input / error
+#! .rc.fn:
+# (esc_sed) (*) error
+#! .rc.util:
+# (sed) (*) error
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Command Substitution".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Parameter Expansion".
+#.
+replchar_posix() {
+    # Assert $1 is a single character; multiple characters are currently not
+    # supported.
+    [ "${#1}" = 1 ] || return 255
+
+    # Use an alternative backend if specified.
+    case "$4" in
+        '-sed')
+            esc_sed -RE / "$1" || return "$?"
+            set -- "$_str" "$2" "$3"
+
+            esc_sed -replacement / "$2" || return "$?"
+            set -- "$1" "$_str" "$3"
+
+            # Store the output of `sed` in $_str using command substitution.
+            # The custom `x` character at the end and its subsequent removal
+            # outside the command substitution preserves any trailing <newline>
+            # characters stripped by command substitution.
+            _str=$(
+                printf "%s" "$3" | sed "s/$1/$2/g" || return "$?"
+                printf "%s" 'x'
+            ) || return "$?"
+            _str="${_str%?}"
+
+            return 0
+        ;;
+    esac
+
+    [ ! "$4" ] || return 255
+
+    # Traverse $3 (string), replacing the occurences of $1 with $2.
+    _str=; _a="$3"; while :; do case "$_a" in
+        *"$1"*)
+            # Example character, replacement character, and string:
+            # `a` `A` `ddaabcd`
+            # $_b: `dd`
+            # $_c: `aabcd`
+            # $_d: `aa`
+            # $_a: `bcd`
+            _b="${_a%%"$1"*}"
+            _c="${_a#"$_b"}"
+            _d="${_c%%[!"$1"]*}"
+            _a="${_a#"$_b$_d"}"
+
+            # ${#_d}: `2`
+            # $_chars: `AA`
+            _chars=; _i=0; until [ "$_i" = "${#_d}" ]; do
+                _chars="$_chars$2"; _i=$((_i + 1))
+            done
+
+            # $_str: `ddAA`
+            _str="$_str$_b$_chars"
+        ;;
+        *)
+            # $_str: `ddAAbcd`
+            _str="$_str$_a"; break
+        ;;
+    esac done
+
+    return 0
+}
