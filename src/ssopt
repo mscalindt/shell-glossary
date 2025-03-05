@@ -15,9 +15,6 @@
 #! .rc:
 # (0) success
 # (1) no match
-#! .caveats:
-# > `ARG_MAX`.
-# > `INT_MAX`.
 #.
 ssopt() {
     while [ "$1" ]; do
