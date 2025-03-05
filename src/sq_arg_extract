@@ -21,9 +21,6 @@
 # (255) bad input
 #! .rc.fn:
 # (assert) (255) bad input
-#! .caveats:
-# > `ARG_MAX`.
-# > `INT_MAX`.
 #.
 sq_arg_extract() {
     [ "$1" ] || return 255
