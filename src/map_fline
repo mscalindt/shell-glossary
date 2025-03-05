@@ -26,6 +26,12 @@
 # ($2) (*) error
 #! .rc.util
 # (cat) (*) error
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Command Substitution".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Here-Document".
 #.
 map_fline() {
     # Read the file with the specified method.
@@ -60,18 +66,10 @@ map_fline() {
             # The custom `x` character at the end and its subsequent removal
             # outside the command substitution preserves any trailing <newline>
             # characters stripped by command substitution.
-            #
-            # For more information, refer to:
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Command Substitution".
             _file=$(cat -- "$2" && printf "%s" 'x') || return "$?"
             _file="${_file%?}"
 
             # Iterate over each populated line of $_file using heredoc.
-            #
-            # For more information, refer to:
-            # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell
-            #   Command Language, Subsection: Here-Document".
             shift 2; while IFS= read -r _line; do
                 [ "$_line" ] || continue
                 "$@" "$_line" || return "$?"
