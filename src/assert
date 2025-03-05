@@ -29,6 +29,32 @@
 # (2) false; bad operand
 #! .ec:
 # (255) bad input
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Absolute Pathname".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Argument".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Name".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Portable Filename".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Portable Filename Character Set".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Relative Pathname".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: User Name".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
+#   Subsection: Pathname Resolution".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Regular Expressions,
+#   Subsection: RE Bracket Expression".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Escape Character (Backslash)".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Quoting".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Single-Quotes".
 #.
 assert() {
     case "$1" in
@@ -37,16 +63,6 @@ assert() {
         # single quotes. A single-quote inside a single-quote-escaped argument
         # is escaped with the syntactical expression `'\''`. This string is
         # semantically safe for `eval`.
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-        #   Language, Subsection: Quoting".
-        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-        #   Language, Subsection: Escape Character (Backslash)".
-        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-        #   Language, Subsection: Single-Quotes".
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-        #   Subsection: Argument".
         '-single-quote-escaped-argument')
             set -- "$2"; while [ "$1" ] || return 1; do
                 [ "${1#\'}" != "$1" ] && set -- "${1#\'}" || return 1
@@ -67,16 +83,6 @@ assert() {
         # by <whitespace>. A single-quote inside a single-quote-escaped
         # argument is escaped with the syntactical expression `'\''`. This
         # string is semantically safe for `eval`.
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-        #   Language, Subsection: Quoting".
-        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-        #   Language, Subsection: Escape Character (Backslash)".
-        # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-        #   Language, Subsection: Single-Quotes".
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-        #   Subsection: Argument".
         '-single-quotes-array')
             set -- "${2%"${2##*[! ]}"}"; while [ "$1" ] || return 1; do
                 set -- "${1#"${1%%[! ]*}"}"
@@ -233,16 +239,6 @@ assert() {
         #
         # The character classes have been intentionally expanded to be
         # locale-independent.
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-        #   Subsection: Portable Filename".
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-        #   Subsection: Portable Filename Character Set".
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-        #   Subsection: User Name".
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Regular
-        #   Expressions, Subsection: RE Bracket Expression".
         '-portable-name')
             case "$2" in
                 *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_\.\-]*)
@@ -254,10 +250,6 @@ assert() {
         ;;
         # Assert $2 is an absolute (/*) path. An absolute path is any string of
         # which the first character is `/`.
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-        #   Subsection: Absolute Pathname".
         '-absolute-path')
             case "$2" in
                 '/'*) return 0 ;;
@@ -274,10 +266,6 @@ assert() {
         #   slashes (`//`) at the beginning of the string, which is specified
         #   by the POSIX standard as an "implementation-defined" exception.
         # - Absolute: The path is always rooted from `/`.
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
-        #   Subsection: Pathname Resolution".
         '-canonical-path')
             case "$2" in
                 '//'*) set -- "${2#/}" ;;
@@ -306,10 +294,6 @@ assert() {
         #   the filesystem. The actual existence of the path or its segments is
         #   ignored.
         # - Absolute: The path is always rooted from `/`.
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
-        #   Subsection: Pathname Resolution".
         '-fs-canonical-path')
             case "$2" in
                 '/') return 0 ;;
@@ -328,10 +312,6 @@ assert() {
         ;;
         # Assert $2 is a relative (partial) path. A relative path is any string
         # of which the first character is not `/`.
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-        #   Subsection: Relative Pathname".
         '-relative-path')
             case "$2" in
                 '/'*) return 1 ;;
@@ -349,14 +329,6 @@ assert() {
         #
         # The character classes have been intentionally expanded to be
         # locale-independent.
-        #
-        # For more information, refer to:
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-        #   Subsection: Name".
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
-        #   Subsection: Portable Filename Character Set".
-        # > "POSIX.1-2024, Volume: Base Definitions, Section: Regular
-        #   Expressions, Subsection: RE Bracket Expression".
         '-shell-name')
             case "$2" in
                 [0123456789]*)
