@@ -2,14 +2,15 @@
 # Process each populated file line with a function
 #! .params:
 # <$1> - read_method(
+#     '-' - read heredoc (stdin)
 #     '-cat' - use `cat`
 #     '-shell' - use shell input redirection
 #     .
 # )
-# <"$2"> - file path
+# ["$2"] - file path
 # <$3> - function name
 # ["$4"]+ - function arguments
-#! .uses (<2+>):
+#! .uses:
 # [&9]
 # [()]
 # [<<]
@@ -27,9 +28,6 @@
 # (cat) (*) error
 #.
 map_fline() {
-    # Assert $2 is a file.
-    [ -f "$2" ] || return 255
-
     # Read the file with the specified method.
     #
     # Use `cat` to read the file if it is a potential specification of a file
@@ -48,7 +46,16 @@ map_fline() {
     # Use the shell to read the file if it is a small (< ~10000XX lines),
     # user-created file.
     case "$1" in
+        '-')
+            # Pass each populated line to $2 (the function).
+            shift; while IFS= read -r _line || [ "$_line" ]; do
+                [ "$_line" ] || continue
+                "$@" "$_line" || return "$?"
+            done
+        ;;
         '-cat')
+            [ -f "$2" ] || return 255
+
             # Store the output of `cat` in $_file using command substitution.
             # The custom `x` character at the end and its subsequent removal
             # outside the command substitution preserves any trailing <newline>
@@ -74,6 +81,8 @@ $_file
 _FILE
         ;;
         '-shell')
+            [ -f "$2" ] || return 255
+
             # Open the file and assign it to file descriptor `9`. The usage of
             # a file descriptor simplifies the error handling. Additionally,
             # TOCTOU flaws are completely avoided this way.
