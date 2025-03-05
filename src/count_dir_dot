@@ -13,6 +13,10 @@
 # (255) bad usage
 #! .rc.fn:
 # (assert) (255) bad input
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Patterns Used for Filename Expansion".
 #.
 count_dir_dot() {
     assert -absolute-path "$1" || return 255
@@ -25,10 +29,6 @@ count_dir_dot() {
 
     # Use a glob pattern to match dot/hidden directories in $1 (the directory)
     # with an optional $2 (suffix). `.` and `..` can be matched.
-    #
-    # For more information, refer to:
-    # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command
-    #   Language, Subsection: Patterns Used for Filename Expansion".
     #
     # (2024-08-15) Note:
     # According to POSIX.1-2024, a future version of the standard may require
