@@ -55,8 +55,8 @@
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
 #   Subsection: Pathname Resolution".
-# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities, Utility:
-#   test".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
+#   Utility: test".
 #.
 ftype() {
     # Strip any trailing slashes in the path if possible.
