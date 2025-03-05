@@ -8,8 +8,6 @@
 # (0) success
 #! .ec:
 # (255) bad input
-#! .caveats:
-# > `ARG_MAX`.
 #.
 opt_err() {
     [ "$1" ] || exit 255
