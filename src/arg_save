@@ -3,15 +3,12 @@
 #! .params:
 # <"$1"> - argument
 # <$2> - variable name
-#! .uses.var.replchar:
-# [POSIX_COMPAT] $ - environment variable;
-#                    forces the usage of parameter expansion; necessary for
-#                    POSIX.1-2024 compliance
 #! .uses.fn:
 # <assert> ('-shell-name' '$2');
 #          Assert a string
 # <replchar> ('\'' '\'\\\'\'' '$1');
-#            Replace a specific character with character(s) in a string
+#            Replace a specific character with character(s) in a string using
+#            IFS
 #! .rc:
 # (0) success
 # (*) error

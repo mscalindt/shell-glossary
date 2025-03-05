@@ -1,5 +1,5 @@
 #! .desc:
-# Replace a specific character with character(s) in a string
+# Replace a specific character with character(s) in a string using IFS
 #! .params:
 # <"$1"> - specific character
 # <"$2"> - character(s)
@@ -10,10 +10,6 @@
 # )
 #! .uses:
 # [()]
-#! .uses.var:
-# [POSIX_COMPAT] $ - environment variable;
-#                    forces the usage of parameter expansion; necessary for
-#                    POSIX.1-2024 compliance, even if backend `sed`
 #! .uses.fn (-sed):
 # <esc_sed> ("sed_string_type" '/' "string");
 #           Escape a string to be used literally as a POSIX `sed` string
@@ -32,13 +28,18 @@
 #! .rc.util:
 # (sed) (*) error
 #! .desc.ext:
+# Note that, according to POSIX.1-2024, the stable usage of field splitting
+# (IFS) is not POSIX anymore due to "IFS white space" being
+# implementation-defined.
+#
+# In reference to the aforementioned, the handling of <space>, <tab>, and
+# <newline> ("IFS white space") characters is undefined behavior.
+#
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Command Substitution".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Field Splitting".
-# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
-#   Subsection: Parameter Expansion".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Pathname Expansion".
 #.
@@ -83,69 +84,20 @@ replchar() {
         *) _pn=1; set -f ;;
     esac
 
-    # Due to <space>, <tab>, and <newline> ("IFS white space") possessing a
-    # special disruptive behavior in $IFS (field splitting), parameter
-    # expansion must be used for those characters to ensure the function's
-    # integrity.
+    # Field split $3 (string) based on $1 (character); the number of fields
+    # produced (minus one, to account for the field split itself) corresponds
+    # to the number of times the character has appeared. To enforce stable
+    # field splitting behavior, $1 is placed at the end of the string,
+    # ensuring the function's integrity.
     #
-    # (2024-08-16) Note:
-    # According to POSIX.1-2024, stable usage of field splitting is not POSIX
-    # anymore due to "IFS white space" being implementation-defined. To address
-    # the issues brought upon, the environment variable `POSIX_COMPAT`, if set,
-    # forces the function to always use parameter expansion; otherwise default
-    # behavior applies. Field splitting is preferred and remains the default
-    # due to its generally superior performance, which scales better with
-    # larger input sizes compared to parameter expansion.
-    if [ "$POSIX_COMPAT" ] || { case "$1" in ' ' | '	' | '
-') : ;; *) ! : ;; esac; }; then
-        # Parameter expansion (slower) method.
-        #
-        # Traverse $3 (string), replacing the occurences of $1 with $2.
-        _str=; _a="$3"; while :; do case "$_a" in
-            *"$1"*)
-                # Example character, replacement character, and string:
-                # `a` `A` `ddaabcd`
-                # $_b: `dd`
-                # $_c: `aabcd`
-                # $_d: `aa`
-                # $_a: `bcd`
-                _b="${_a%%"$1"*}"
-                _c="${_a#"$_b"}"
-                _d="${_c%%[!"$1"]*}"
-                _a="${_a#"$_b$_d"}"
-
-                # ${#_d}: `2`
-                # $_chars: `AA`
-                _chars=; _i=0; until [ "$_i" = "${#_d}" ]; do
-                    _chars="$_chars$2"; _i=$((_i + 1))
-                done
-
-                # $_str: `ddAA`
-                _str="$_str$_b$_chars"
-            ;;
-            *)
-                # $_str: `ddAAbcd`
-                _str="$_str$_a"; break
-            ;;
-        esac done
-    else
-        # Default field split (faster) method.
-        #
-        # Field split $3 (string) based on $1 (character); the number of fields
-        # produced (minus one, to account for the field split itself)
-        # corresponds to the number of times the character has appeared. To
-        # enforce stable field splitting behavior, $1 is placed at the end of
-        # the string, ensuring the function's integrity.
-        #
-        # Finally, $2 is placed at the end of each field (minus the last one as
-        # aforementioned; they will be stripped for the final field),
-        # effectively replacing any occurences of $1 with $2.
-        IFS="$1"; _chars="$2"; set -- $3"$IFS"
-        _str=; while [ "$#" -ge 1 ]; do
-            _str="$_str$1$_chars"; shift
-        done
-        _str="${_str%"$IFS$_chars"}"
-    fi
+    # Finally, $2 is placed at the end of each field (minus the last one,
+    # as aforementioned; they will be stripped for the final field),
+    # effectively replacing any occurences of $1 with $2.
+    IFS="$1"; _chars="$2"; set -- $3"$IFS"
+    _str=; while [ "$#" -ge 1 ]; do
+        _str="$_str$1$_chars"; shift
+    done
+    _str="${_str%"$IFS$_chars"}"
 
     # Restore the active state of the pathname expansion flag if appropriate.
     if [ "$_pn" = 1 ]; then

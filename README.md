@@ -106,7 +106,7 @@ external utility calls.
 - [PATH_SPEC_FS()](src/path_spec_fs): Semantically normalize a path into an assertable canonical path
 - [PATH_SPEC_STATIC()](src/path_spec_static): Modify a path string
 - [PATH_STRIP()](src/path_strip): Strip a path N segments RTL
-- [REPLCHAR()](src/replchar): Replace a specific character with character(s) in a string
+- [REPLCHAR()](src/replchar): Replace a specific character with character(s) in a string using IFS
 - [SQ_ARG()](src/sq_arg): Get N evaluated argument in a single-quotes array of arguments
 - [SQ_ARG_EXTRACT()](src/sq_arg_extract): Extract an evaluated argument in a single-quotes array of arguments
 
