@@ -17,8 +17,6 @@
 # (255) bad input
 #! .rc.fn:
 # (assert) (255) bad input
-#! .caveats:
-# > `INT_MAX`.
 #.
 num_to_char() {
     # Handle negative N ($1) gracefully: $_chars is set to an empty string and
