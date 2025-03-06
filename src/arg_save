@@ -21,27 +21,24 @@
 #   Subsection: Quoting".
 #.
 arg_save() {
-    # Escape any single quotes in the argument ($1).
-    case "$1" in
-        *\'*)
-            replchar_posix \' \'\\\'\' "$1" || return "$?"  # -> $_str
-            set -- "$_str" "$2"
-        ;;
-    esac
-
     assert -shell-name "$2" || return 255
 
-    # The usage of `eval` here is safe. Assuming $1 is `"'\''abc` (we escape
+    # Escape any single quotes in the argument ($1).
+    _str="$1"; case "$_str" in
+        *\'*) replchar_posix \' \'\\\'\' "$_str" || return "$?" ;;
+    esac  # -> $_str
+
+    # The usage of `eval` here is safe. Assuming $_str is `"'\''abc` (we escape
     # single quotes in $1 before they're passed to `eval`) and $2 is `a`:
     #
     # First expansion (current shell):
-    # `eval "$2=\"\$$2 '\$1'\""` -> `eval a="$a '$1'"` (lit.)
+    # `eval "$2=\"\$$2 '\$_str'\""` -> `eval a="$a '$_str'"` (lit.)
     #
     # Second expansion (`eval`); assuming the content of $a is `'b'`:
-    # `eval a="$a '$1'"` -> `a = 'b' '"'\''abc'` (illust. of meta expansion)
+    # `eval a="$a '$_str'"` -> `a = 'b' '"'\''abc'` (illust. of meta expansion)
     #
     # Key points:
     # - Due to the sophisticated escaping, single quotes from the first
     #   expansion carry their significance to the second expansion.
-    eval "$2=\"\$$2 '\$1'\""
+    eval "$2=\"\$$2 '\$_str'\""
 }
