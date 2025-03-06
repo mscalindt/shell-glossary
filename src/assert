@@ -26,7 +26,7 @@
 #! .rc:
 # (0) true
 # (1) false
-# (2) false; bad operand
+# (2) false due to bad operand(s)
 #! .ec:
 # (255) bad input
 #! .desc.ext:
