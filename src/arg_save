@@ -9,6 +9,8 @@
 # [replchar_posix] ('\'' '\'\\\'\'' '$1');
 #                  Replace a specific character with character(s) in a string
 #                  using PE
+#! .sets:
+# (0) <$2> $ - "$2 $1";
 #! .rc:
 # (0) success
 # (*) error
