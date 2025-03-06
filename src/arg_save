@@ -6,7 +6,7 @@
 #! .uses.fn:
 # <assert> ('-shell-name' '$2');
 #          Assert a string
-# <replchar_posix> ('\'' '\'\\\'\'' '$1');
+# [replchar_posix] ('\'' '\'\\\'\'' '$1');
 #                  Replace a specific character with character(s) in a string
 #                  using PE
 #! .rc:
