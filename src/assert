@@ -4,7 +4,7 @@
 # <$1> - type(
 #     '-single-quote-escaped-argument' - argument escaped with single quotes
 #     '-single-quotes-array' - pseudo array of single-quote-escaped arguments
-#     '-bit' - N in base 2 that represents a valid bit (valid bit position)
+#     '-bit' - N that represents a valid bit (valid bit position)
 #     '-eq' - N [0,1,00,01...] (integer) equal to another N
 #     '-max' - N [0,1,00,01...] (integer) maximum of another N
 #     '-min' - N [0,1,00,01...] (integer) minimum of another N
@@ -100,15 +100,15 @@ assert() {
                 done
             done
         ;;
-        # Assert $2 is a number in base 2 that represents a valid bit. A valid
-        # bit is a natural number that represents a specific bit position in a
-        # bitmask and is always a power of 2 (`1`, `2`, `4`, `8`, ...). This is
-        # also known as "valid bit position".
+        # Assert $2 is a number that represents a valid bit. A valid bit is
+        # a natural number that represents a specific bit position in a bitmask
+        # and is always a power of 2 (`1`, `2`, `4`, `8`, ...). This is also
+        # known as "valid bit position".
         #
         # A number is a power of 2 if performing bitwise AND in the expression
         # `N & (N - 1)` results in zero (the binary representation turns to all
-        # zeroes due to the single 1-bit being flipped off, given N was an
-        # actual power of 2 in base 2).
+        # zeroes due to the single 1-bit being flipped off, given N is
+        # a positive integer that is a power of 2).
         '-bit')
             assert -natural-n "$2" || return 2
 
