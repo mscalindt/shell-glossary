@@ -31,6 +31,9 @@
 #! .ec:
 # (255) bad input
 #! .desc.ext:
+# Empty input will assert false (return code `1`) by default; on string types
+# with multiple input, `2` might be returned instead.
+#
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Absolute Pathname".
