@@ -84,7 +84,7 @@ assert() {
         #
         # A valid single-quotes array is a shell-parseable string consisting
         # of at least one argument, each enclosed in single quotes
-        # and delimited by <whitespace>. A single-quote inside
+        # and delimited by <space>. A single-quote inside
         # a single-quote-escaped argument is escaped
         # with the syntactical expression `'\''`.
         #
