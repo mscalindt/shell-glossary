@@ -10,8 +10,10 @@
 # )
 #! .uses:
 # [()]
-#! .uses.fn (-sed):
-# <esc_sed> ("sed_string_type" '/' "string");
+#! .uses.fn:
+# <assert> ('-shell-whitespace' '$1');
+#          Assert a string
+# [esc_sed] ("sed_string_type" '/' "string");
 #           Escape a string to be used literally as a POSIX `sed` string
 #! .uses.util (-sed):
 # <sed> ('s/$1/$2/g');
@@ -24,16 +26,18 @@
 # (*) error
 # (255) bad input / error
 #! .rc.fn:
+# (assert) (255) bad usage
 # (esc_sed) (*) error
 #! .rc.util:
 # (sed) (*) error
 #! .desc.ext:
-# Note that, according to POSIX.1-2024, the stable usage of field splitting
-# (IFS) is not POSIX anymore due to "IFS white space" being
-# implementation-defined.
+# $1 cannot be <space>, <tab>, or <newline> (part of "IFS white space"). If
+# a character part of "IFS white space" is given as $1, error code `255`
+# (bad usage) will be returned.
 #
-# In reference to the aforementioned, the handling of <space>, <tab>, and
-# <newline> ("IFS white space") characters is undefined behavior.
+# Note that, according to POSIX.1-2024, it is implementation-defined whether
+# any other, in addition to the specified characters, consist part of
+# "IFS white space".
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
@@ -44,6 +48,8 @@
 #   Subsection: Pathname Expansion".
 #.
 replchar() {
+    { ! assert -shell-whitespace "$1"; } || return 255
+
     # Assert $1 is a single character; multiple characters are currently not
     # supported.
     [ "${#1}" = 1 ] || return 255
