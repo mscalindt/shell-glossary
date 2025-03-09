@@ -34,6 +34,10 @@
 # Empty input will assert false (return code `1`) by default; on string types
 # with multiple input, `2` might be returned instead.
 #
+# For `-shell-whitespace`, it is implementation-defined whether any other,
+# in addition to the specified characters, consist part of "IFS white space";
+# the result of the assert is therefore made according to the locale in effect.
+#
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Absolute Pathname".
