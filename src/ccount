@@ -3,18 +3,24 @@
 #! .params:
 # <"$1"> - character
 # <"$2"> - string
+#! .uses.fn:
+# <assert> ('-shell-whitespace' '$1');
+#          Assert a string
 #! .gives:
 # (0) <$_count> - integer
 #! .rc:
 # (0) success
 # (255) bad input
+#! .rc.fn:
+# (assert) (255) bad usage
 #! .desc.ext:
-# Note that, according to POSIX.1-2024, the stable usage of field splitting
-# (IFS) is not POSIX anymore due to "IFS white space" being
-# implementation-defined.
+# $1 cannot be <space>, <tab>, or <newline> (part of "IFS white space"). If
+# a character part of "IFS white space" is given as $1, error code `255`
+# (bad usage) will be returned.
 #
-# In reference to the aforementioned, the handling of <space>, <tab>, and
-# <newline> ("IFS white space") characters is undefined behavior.
+# Note that, according to POSIX.1-2024, it is implementation-defined whether
+# any other, in addition to the specified characters, consist part of
+# "IFS white space".
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
@@ -23,6 +29,8 @@
 #   Subsection: Pathname Expansion".
 #.
 ccount() {
+    { ! assert -shell-whitespace "$1"; } || return 255
+
     # Assert $1 is a single character; multiple characters are currently not
     # supported.
     [ "${#1}" = 1 ] || return 255
