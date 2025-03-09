@@ -18,12 +18,15 @@
 #     '-canonical-path' - lexically canonical (assertable) path
 #     '-fs-canonical-path' - semantically canonical (assertable) path
 #     '-relative-path' - relative path
+#     '-shell-array' - shell-parseable evaluable array of arguments
 #     '-shell-name' - portable shell-parseable name
 #     '-shell-whitespace' - "IFS white space" (<space>, <tab>, <newline>)
 #     .
 # )
 # <"$2"> - string
 # ["$3"] - string
+#! .uses:
+# [()]
 #! .rc:
 # (0) true
 # (1) false
@@ -33,6 +36,10 @@
 #! .desc.ext:
 # Empty input will assert false (return code `1`) by default; on string types
 # with multiple input, `2` might be returned instead.
+#
+# For `-shell-array`, it is implementation-defined whether the array
+# is evaluable, in part with what consists part of "IFS white space";
+# the result of the assert is therefore made according to the locale in effect.
 #
 # For `-shell-whitespace`, it is implementation-defined whether any other,
 # in addition to the specified characters, consist part of "IFS white space";
@@ -60,9 +67,13 @@
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Escape Character (Backslash)".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: eval".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Field Splitting".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Quoting".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: set".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Single-Quotes".
 #.
@@ -363,6 +374,16 @@ assert() {
             esac
 
             [ "$2" ] || return 1
+        ;;
+        # Assert $2 is a shell-parseable evaluable array of arguments.
+        #
+        # A valid shell-parseable evaluable array is a parseable,
+        # according to the shell grammar, whole string consisting of
+        # at least one argument.
+        #
+        # This string is semantically safe for `eval`.
+        '-shell-array')
+            [ "$2" ] && ( eval set -- "$2"; ) && [ "$#" -ge 1 ] || return 1
         ;;
         # Assert $2 is a portable shell-parseable name.
         #
