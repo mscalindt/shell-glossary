@@ -383,7 +383,7 @@ assert() {
         #
         # This string is semantically safe for `eval`.
         '-shell-array')
-            [ "$2" ] && ( eval set -- "$2"; ) && [ "$#" -ge 1 ] || return 1
+            [ "$2" ] && ( eval set -- "$2" && [ "$#" -ge 1 ]; ) || return 1
         ;;
         # Assert $2 is a portable shell-parseable name.
         #
