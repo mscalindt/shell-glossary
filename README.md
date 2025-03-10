@@ -24,6 +24,7 @@ criteria in [Roadmap](#2-roadmap) are met.
 * Unit tests (`wunit`).
   * Transition to versioned release tags.
   * Makefile to run the unit tests.
+* Benchmarks in `bash`, `dash`, `ksh`.
 * Shell code style guide.
   * Assert code for style.
 * Assertable function documentation header syntax.
