@@ -13,7 +13,7 @@
 #! .rc.fn:
 # (assert) (255) bad usage
 #! .desc.ext:
-# The specification of multibyte characters or multiple characters is allowed,
+# The specification of multi-byte characters or multiple characters is allowed,
 # but the former results in undefined behavior, and the latter might be
 # unstable, in respect to the locale and platform (shell interpreter);
 # the result might therefore be incorrect.
