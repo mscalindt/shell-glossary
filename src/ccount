@@ -1,7 +1,7 @@
 #! .desc:
-# Count the times a character appears in a string using IFS
+# Count the times character(s) appear in a string using IFS
 #! .params:
-# <"$1"> - character
+# <"$1"> - character(s)
 # <"$2"> - string
 #! .uses.fn:
 # <assert> ('-shell-whitespace' '$1');
@@ -10,13 +10,17 @@
 # (0) <$_count> - integer
 #! .rc:
 # (0) success
-# (255) bad input
 #! .rc.fn:
 # (assert) (255) bad usage
 #! .desc.ext:
-# $1 cannot be <space>, <tab>, or <newline> (part of "IFS white space"). If
-# a character part of "IFS white space" is given as $1, error code `255`
-# (bad usage) will be returned.
+# The specification of multibyte characters or multiple characters is allowed,
+# but the former results in undefined behavior, and the latter might be
+# unstable, in respect to the locale and platform (shell interpreter);
+# the result might therefore be incorrect.
+#
+# $1 cannot be <space>, <tab>, or <newline> (part of "IFS white space").
+# If a character part of "IFS white space" is solely given as $1,
+# error code `255` (bad usage) will be returned.
 #
 # Note that, according to POSIX.1-2024, it is implementation-defined whether
 # any other, in addition to the specified characters, consist part of
@@ -30,10 +34,6 @@
 #.
 ccount() {
     { ! assert -shell-whitespace "$1"; } || return 255
-
-    # Assert $1 is a single character; multiple characters are currently not
-    # supported.
-    [ "${#1}" = 1 ] || return 255
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null

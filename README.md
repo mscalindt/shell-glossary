@@ -70,7 +70,7 @@ external utility calls.
 ### Functions List:
 
 - [ARG_SAVE()](src/arg_save): Save with single-quote escape an argument into a variable
-- [CCOUNT()](src/ccount): Count the times a character appears in a string using IFS
+- [CCOUNT()](src/ccount): Count the times character(s) appear in a string using IFS
 - [CCOUNT_POSIX()](src/ccount_posix): Count the times a character appears in a string using PE
 - [CONFIRM_CONT()](src/confirm_cont): Ask for confirmation to continue
 - [COUNT_DIR()](src/count_dir): Count visible directories in a directory
