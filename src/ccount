@@ -27,6 +27,9 @@
 # "IFS white space".
 #
 # For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions,
+#   Section: Directory Structure and Devices,
+#   Subsection: Directory Structure and Files".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Field Splitting".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
