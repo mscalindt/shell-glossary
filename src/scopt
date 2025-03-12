@@ -20,7 +20,7 @@
 # (0) success
 # (1) no match
 #! .ec:
-# (2) bad argument specification
+# (2) bad option argument specification
 #.
 scopt() {
     while [ "$1" ]; do
@@ -34,6 +34,7 @@ scopt() {
                         "${0##*/}" "$1" >&2
                     printf "%s: Try '%s --help' for more information.\n" \
                         "${0##*/}" "${0##*/}" >&2
+
                     exit 2
                 fi
 
@@ -45,21 +46,22 @@ scopt() {
             ;;
         esac
 
-        # Assert any potential argument specification is valid. An option
-        # cannot end with `=` after being matched, otherwise it's invalid;
-        # example: `foo=`.
+        # Assert any potential option argument specification is valid.
+        # An option cannot end with `=` after being matched,
+        # otherwise it's invalid; example: `foo=`.
         case "$opt" in
             "$1"'=')
                 printf "%s: Invalid argument specification for: '%s'\n" \
                     "${0##*/}" "$1" >&2
                 printf "%s: Try '%s --help' for more information.\n" \
                     "${0##*/}" "${0##*/}" >&2
+
                 exit 2
             ;;
         esac
 
-        # Try to match an option with an argument separated by `=` on the same
-        # positional parameter; example: `foo=bar`.
+        # Try to match an option with an argument separated by `=`
+        # on the same positional parameter; example: `foo=bar`.
         case "$opt" in
             "$1"'='*)
                 opt_arg="${opt#"$1"=}"
