@@ -3,20 +3,22 @@
 #! .params:
 # <"$1"> - character
 # <"$2"> - string
+#! .uses.fn:
+# <assert> ('-eq' '${#1}' '1');
+#          Assert a string
 #! .gives:
 # (0) <$_count> - integer
 #! .rc:
 # (0) success
-# (255) bad input
+#! .rc.fn:
+# (assert) (255) bad input
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Parameter Expansion".
 #.
 ccount_posix() {
-    # Assert $1 is a single character; multiple characters are currently not
-    # supported.
-    [ "${#1}" = 1 ] || return 255
+    assert -eq "${#1}" 1 || return 255
 
     # Traverse $2 (string), counting the occurences of $1 (character).
     _count=0; _a="$2"; while :; do case "$_a" in
