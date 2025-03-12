@@ -15,8 +15,8 @@
 # (0) <opt_shift> $ - '1';
 # (0) [sopt_index] $ - "$sopt_index${1#?}";
 #! .rc:
-# (0) success
-# (1) no match
+# (0) true
+# (1) false
 #! .ec:
 # (255) bad input
 #.
