@@ -21,7 +21,7 @@
 ccount_posix() {
     assert -eq "${#1}" 1 || return 255
 
-    # Traverse $2 (string), counting the occurences of $1 (character).
+    # Traverse $2 (string), counting the occurrences of $1 (character).
     _count=0; _a="$2"; while :; do case "$_a" in
         *"$1"*)
             # Example character and string: `a` `ddaabcd`
