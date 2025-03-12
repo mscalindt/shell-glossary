@@ -18,13 +18,13 @@
 # (0) success
 # (1) no match
 #! .ec:
-# (2) bad argument specification
+# (2) bad option argument specification
 # (255) bad input
 #.
 copt_optional() {
-    # Assert the usage of the function is appropriate (else `return 1`) or
-    # correct (else `exit 255`) and set the appropriate short/long option
-    # variant as $1 to simplify further operations.
+    # Assert the usage of the function is appropriate or correct, else
+    # `return 1` or `exit 255`, respectively, and set the appropriate
+    # short/long option variant as $1 to simplify further operations.
     case "$opt" in
         '--'*)
             [ "${#opt}" -gt 2 ] || return 1
@@ -84,24 +84,25 @@ copt_optional() {
         ;;
     esac
 
-    # Try to match a long option with an argument.
+    # Try to match a long/short option with an argument, respectively.
     case "$1" in
         '--'*)
-            # Assert any potential argument specification is valid. A long
-            # option cannot end with `=` after being matched, otherwise it's
-            # invalid; example: `--foo=`.
+            # Assert any potential option argument specification is valid.
+            # A long option cannot end with `=` after being matched,
+            # otherwise it's invalid; example: `--foo=`.
             case "$opt" in
                 "$1"'=')
                     printf "%s: Invalid argument specification for: '%s'\n" \
                         "${0##*/}" "$1" >&2
                     printf "%s: Try '%s --help' for more information.\n" \
                         "${0##*/}" "${0##*/}" >&2
+
                     exit 2
                 ;;
             esac
 
-            # Try to match a long option with an argument separated by `=` on
-            # the same positional parameter; example: `--foo=bar`.
+            # Try to match a long option with an argument separated by `=`
+            # on the same positional parameter; example: `--foo=bar`.
             case "$opt" in
                 "$1"'='*)
                     opt_arg="${opt#"$1"=}"
@@ -115,13 +116,9 @@ copt_optional() {
 
             return 1
         ;;
-    esac
-
-    # Try to match a short option with an argument.
-    case "$1" in
         '-'*)
             # Try to match a short option together with its argument; example
-            # with short option `-a` and argument `foo`: `-afoo`.
+            # with short option `-a` and option argument `foo`: `-afoo`.
             case "$opt" in
                 "$1"*)
                     opt_arg="${opt#"$1"}"
