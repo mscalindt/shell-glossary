@@ -6,17 +6,14 @@
 #! .uses.var:
 # <opt> $ - string;
 #           first positional parameter
-# [sopt_index] $ - string;
-#                  index with encountered short options
 #! .gives:
 # (0) <"$opt_match"> - string;
 #                      literal option matched
-# (0) ["$sopt_index"] - string;
-#                       [modified <$sopt_index>]
 #! .sets:
 # (0) <opt> $ - '-'"${opt#??}" | '';
 # (0) <opt_arg> $ - '';
 # (0) <opt_shift> $ - '1';
+# (0) [sopt_index] $ - "$sopt_index${1#?}";
 #! .rc:
 # (0) success
 # (1) no match
@@ -24,9 +21,9 @@
 # (255) bad input
 #.
 sopt() {
-    # Assert the usage of the function is appropriate (else `return 1`) or
-    # correct (else `exit 255`) and set the appropriate short/long option
-    # variant as $1 to simplify further operations.
+    # Assert the usage of the function is appropriate or correct, else
+    # `return 1` or `exit 255`, respectively, and set the appropriate
+    # short/long option variant as $1 to simplify further operations.
     case "$opt" in
         '--'*)
             [ "${#opt}" -gt 2 ] || return 1
@@ -74,7 +71,7 @@ sopt() {
         ;;
     esac
 
-    # Try to match a long option without an argument.
+    # Try to match a long/short option without an argument, respectively.
     case "$1" in
         '--'*)
             case "$opt" in
@@ -87,26 +84,15 @@ sopt() {
                     return 0
                 ;;
             esac
-
-            return 1
         ;;
-    esac
-
-    # Try to match a short option without an argument.
-    case "$1" in
         '-'*)
             case "$opt" in
                 "$1"*)
-                    if [ "$sopt_index" ]; then
-                        sopt_index="$sopt_index${1#?}"
-                    else
-                        sopt_index="${1#?}"
-                    fi
-
                     opt_arg=
                     opt_match="$1"
                     opt_shift=1
                     opt="-${opt#??}"
+                    sopt_index="$sopt_index${1#?}"
 
                     return 0
                 ;;
