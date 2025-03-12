@@ -2,7 +2,7 @@
 # Count the times a character appears in a string using PE
 #! .params:
 # <"$1"> - character
-# <"$2"> - string
+# ["$2"] - string
 #! .uses.fn:
 # <assert> ('-eq' '${#1}' '1');
 #          Assert a string
