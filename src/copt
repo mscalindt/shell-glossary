@@ -18,8 +18,8 @@
 #! .sets:
 # (0) <opt> $ - '';
 #! .rc:
-# (0) success
-# (1) no match
+# (0) true
+# (1) false
 #! .ec:
 # (2) bad option argument specification
 # (255) bad input
