@@ -7,7 +7,7 @@
 # <opt> $ - string;
 #           first positional parameter
 #! .gives:
-# (0) <"$opt_arg"> - string;
+# (0) <"$opt_arg"> - [string];
 #                    option argument
 # (0) <"$opt_match"> - string;
 #                      literal option matched
