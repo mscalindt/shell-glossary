@@ -13,8 +13,8 @@
 # (0) <opt_arg> $ - '';
 # (0) <opt_shift> $ - '1';
 #! .rc:
-# (0) success
-# (1) no match
+# (0) true
+# (1) false
 #.
 ssopt() {
     while [ "$1" ]; do
