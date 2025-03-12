@@ -113,8 +113,6 @@ copt_optional() {
                     return 0
                 ;;
             esac
-
-            return 1
         ;;
         '-'*)
             # Try to match a short option together with its argument; example
