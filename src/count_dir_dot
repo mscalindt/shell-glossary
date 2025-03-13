@@ -10,11 +10,16 @@
 # (*) error
 # (255) bad usage
 #! .desc.ext:
+# The presence of characters outside the "Portable Filename Character Set"
+# in $2 results in undefined behavior.
+#
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Dot".
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Dot-Dot".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Portable Filename Character Set".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Pathname Expansion".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
