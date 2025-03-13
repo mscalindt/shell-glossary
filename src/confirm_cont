@@ -8,7 +8,7 @@
 # )
 #! .uses.var:
 # [NO_COLOR] $ - environment variable;
-#                disables colored output
+#                disable color
 #! .sets:
 # <_action> $ - "read -r" | "$_def_action";
 # <_def_action> $ - 'N' | 'Y';
