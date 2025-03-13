@@ -10,7 +10,7 @@
 # [NO_COLOR] $ - environment variable;
 #                disable color
 #! .sets:
-# <_action> $ - "read -r" | "$_def_action";
+# <_action> $ - "read -r" | 'N' | 'Y';
 # <_def_action> $ - 'N' | 'Y';
 #! .rc:
 # (0) permitted
