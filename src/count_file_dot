@@ -15,12 +15,17 @@
 #! .rc.fn:
 # (count_dir_dot) (*) error
 # (count_obj_dot) (*) error
+# The presence of characters outside the "Portable Filename Character Set"
+# in $2 results in undefined behavior.
+#
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Dot".
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Dot-Dot".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Portable Filename Character Set".
 #.
 count_file_dot() {
     count_obj_dot "$1" "$2" || return "$?"  # -> $_count
