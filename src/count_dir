@@ -13,7 +13,6 @@
 count_dir() {
     # Assert $1 is a valid directory.
     [ -d "$1" ] || return 255
-    [ -r "$1" ] || return 255
 
     _count=0
 
