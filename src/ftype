@@ -9,10 +9,10 @@
 # )
 #! .uses.var.err:
 # [NO_COLOR] $ - environment variable;
-#                disables colored output
+#                disables color
 #! .uses.var.info:
 # [NO_COLOR] $ - environment variable;
-#                disables colored output
+#                disables color
 #! .uses.fn:
 # (-err) <err> ('-r' '--' "text");
 #              Print formatted text to stderr
