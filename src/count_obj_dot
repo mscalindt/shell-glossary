@@ -17,29 +17,17 @@
 #   Subsection: Patterns Used for Filename Expansion".
 #.
 count_obj_dot() {
-    # Assert $1 is a valid directory.
     [ -d "$1" ] || return 255
 
-    _count=0
-
-    # Use a glob pattern to match dot/hidden files and directories in $1 (the
-    # directory) with an optional $2 (suffix). `.` and `..` can be matched.
-    #
-    # (2024-08-15) Note:
-    # According to POSIX.1-2024, a future version of the standard may require
-    # that `.` and `..` are ignored by the glob (if they exist).
+    # Use pathname expansion with a glob pattern to match `.*` (dot/hidden)
+    # files and directories in $1 (directory), optionally with a suffix ($2).
     set -- "$1"/.*"$2" || return "$?"
 
-    # Shift `.` and `..` to simplify glob assert.
+    # Ignore `.` and `..`.
     while [ "$1" ]; do case "$1" in
         */'.' | */'..') shift ;;
         *) break ;;
     esac done
 
-    # Assert the glob expanded.
-    if [ -e "$1" ]; then
-        _count=$#
-    fi
-
-    return 0
+    _count=$# && [ -e "$1" ] || _count=0
 }
