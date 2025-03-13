@@ -1,22 +1,15 @@
 #! .desc:
 # Count visible directories in a directory
 #! .params:
-# <"$1"> - absolute directory path
+# <"$1"> - directory path
 # ["$2"] - suffix
-#! .uses.fn:
-# <assert> ('-absolute-path' '$1');
-#          Assert a string
 #! .gives:
 # (0) <$_count> - integer
 #! .rc:
 # (0) success
 # (255) bad usage
-#! .rc.fn:
-# (assert) (255) bad input
 #.
 count_dir() {
-    assert -absolute-path "$1" || return 255
-
     # Assert $1 is a valid directory.
     [ -d "$1" ] || return 255
     [ -r "$1" ] || return 255
