@@ -15,6 +15,12 @@
 #! .rc.fn:
 # (count_dir_dot) (*) error
 # (count_obj_dot) (*) error
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Dot".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Dot-Dot".
 #.
 count_file_dot() {
     count_obj_dot "$1" "$2" || return "$?"  # -> $_count
