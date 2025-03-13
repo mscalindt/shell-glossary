@@ -1,5 +1,5 @@
 #! .desc:
-# Ask for confirmation to continue
+# Assert confirmation to continue
 #! .params:
 # [$1] - default_action(
 #     '-n' - forbidden
@@ -13,8 +13,8 @@
 # <_action> $ - "read -r" | 'N' | 'Y';
 # <_def_action> $ - 'N' | 'Y';
 #! .rc:
-# (0) permitted
-# (1) forbidden
+# (0) true
+# (1) false
 # (255) bad input
 #! .desc.ext:
 # $1 specifies the default action to be used in case of empty input.
