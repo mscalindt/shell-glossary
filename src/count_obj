@@ -9,6 +9,12 @@
 # (0) success
 # (*) error
 # (255) bad usage
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Pathname Expansion".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Patterns Used for Filename Expansion".
 #.
 count_obj() {
     # Assert $1 is a valid directory.
