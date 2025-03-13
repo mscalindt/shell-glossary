@@ -23,7 +23,7 @@
 # <"$3">+ - text
 #! .uses.var:
 # [NO_COLOR] $ - environment variable;
-#                disables colored output
+#                disable color
 #! .rc:
 # (0) success
 # (255) bad input
