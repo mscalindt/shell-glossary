@@ -12,7 +12,7 @@
 # <"$3">+ - text
 #! .uses.var:
 # [NO_COLOR] $ - environment variable;
-#                disables colored output
+#                disable color
 #! .uses.fn:
 # <assert> ('-whole-n' '$1');
 #          Assert a string
