@@ -1,9 +1,9 @@
 #! .desc:
 # Ask for confirmation to continue
 #! .params:
-# [$1] - action(
-#     '-n' - default action: no
-#     '-y' - default action: yes
+# [$1] - default_action(
+#     '-n' - forbidden
+#     '-y' - permitted
 #     .
 # )
 #! .uses.var:
@@ -16,6 +16,9 @@
 # (0) permitted
 # (1) forbidden
 # (255) bad input
+#! .desc.ext:
+# $1 specifies the default action to be used in case of empty input.
+# If omitted, the default action is set to 'forbidden'.
 #.
 confirm_cont() {
     _prompt=; _def_action=
