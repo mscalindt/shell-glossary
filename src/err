@@ -26,6 +26,12 @@
 # (0) success
 # (*) error
 # (255) bad input
+#! .desc.ext:
+# The colors are bold, foreground text, escape sequences of ANSI.
+#
+# The usage of color results in undefined behavior. For strict POSIX
+# compatibility, specify `-` for $1 or set variable `NO_COLOR`
+# to a non-empty value.
 #.
 err() {
     _reset='\033[0m'; case $1 in
