@@ -24,43 +24,30 @@
 #                disable color
 #! .rc:
 # (0) success
+# (*) error
 # (255) bad input
 #.
 err() {
-    # Check if color codes should be used.
-    if [ "$NO_COLOR" ]; then
-        _reset=
-        _color=
-    else
-        _reset='\033[0m'
-
-        case $1 in
-            '-') _color=; _reset= ;;
-            '-bk') _color='\033[1;30m' ;;
-            '-r') _color='\033[1;31m' ;;
-            '-g') _color='\033[1;32m' ;;
-            '-y') _color='\033[1;33m' ;;
-            '-be') _color='\033[1;34m' ;;
-            '-m') _color='\033[1;35m' ;;
-            '-c') _color='\033[1;36m' ;;
-            '-w') _color='\033[1;37m' ;;
-            *) return 255 ;;
-        esac
-    fi
-
-    _format="$2"; shift 2
-
-    case "$_format" in
-        '-')
-            printf "%b%s%b\n" "$_color" "$*" "$_reset" >&2
-        ;;
-        '--')
-            printf "%b%s%b" "$_color" "$*" "$_reset" >&2
-        ;;
-        *)
-            return 255
-        ;;
+    _reset='\033[0m'; case $1 in
+        '-') _color=; _reset= ;;
+        '-bk') _color='\033[1;30m' ;;
+        '-r') _color='\033[1;31m' ;;
+        '-g') _color='\033[1;32m' ;;
+        '-y') _color='\033[1;33m' ;;
+        '-be') _color='\033[1;34m' ;;
+        '-m') _color='\033[1;35m' ;;
+        '-c') _color='\033[1;36m' ;;
+        '-w') _color='\033[1;37m' ;;
+        *) return 255 ;;
     esac
 
-    return 0
+    _format="$2"
+
+    [ ! "$NO_COLOR" ] || { _color=; _reset=; }
+
+    shift 2; case "$_format" in
+        '-') printf "%b%s%b\n" "$_color" "$*" "$_reset" >&2 ;;
+        '--') printf "%b%s%b" "$_color" "$*" "$_reset" >&2 ;;
+        *) return 255 ;;
+    esac
 }
