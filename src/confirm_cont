@@ -19,6 +19,12 @@
 #! .desc.ext:
 # $1 specifies the default action to be used in case of empty input.
 # If omitted, the default action is set to 'forbidden'.
+#
+# By default, bold (`1;`) foreground (`3X`) white (`1`) color
+# escape sequence of ANSI is used in the prompt.
+#
+# The usage of color results in undefined behavior. For strict POSIX
+# compatibility, set variable `NO_COLOR` to a non-empty value.
 #.
 confirm_cont() {
     # Set default action; defaults to `-n` if not specified.
