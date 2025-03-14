@@ -1,7 +1,7 @@
 #! .desc:
 # Print red-colored formatted text to stderr and exit
 #! .params:
-# <$1> - exit code
+# <$1> - exit value
 # <$2> - format(
 #     '-' - raw
 #     '--' - raw; no <newline>
