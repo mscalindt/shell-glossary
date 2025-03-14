@@ -21,8 +21,6 @@
 # If omitted, the default action is set to 'forbidden'.
 #.
 confirm_cont() {
-    _prompt=; _def_action=
-
     # Set default action; defaults to `-n` if not specified.
     case "${1:--n}" in
         '-n')
