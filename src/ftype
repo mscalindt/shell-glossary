@@ -52,6 +52,9 @@
 # ensuring reliable object type identification irrespective of the lexical
 # string and its POSIX-specified implications.
 #
+# The usage of color results in undefined behavior. For strict POSIX
+# compatibility, set variable `NO_COLOR` to a non-empty value.
+#
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
 #   Subsection: Pathname Resolution".
