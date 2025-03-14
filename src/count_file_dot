@@ -16,10 +16,10 @@
 #! .rc.fn:
 # (count_dir_dot) (*) error
 # (count_obj_dot) (*) error
+#! .desc.ext:
 # The presence of characters outside the "Portable Filename Character Set"
 # in $2/$3 results in undefined behavior.
 #
-#! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Dot".
