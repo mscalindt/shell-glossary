@@ -2,11 +2,12 @@
 # Count `.*` (dot/hidden) file objects in a directory
 #! .params:
 # <"$1"> - directory path
-# ["$2"] - suffix
+# ["$2"] - prefix
+# ["$3"] - suffix
 #! .uses.fn:
-# <count_dir_dot> ('$1' '$2');
+# <count_dir_dot> ('$1' '$2' '$3');
 #                 Count `.*` (dot/hidden) directories in a directory
-# <count_obj_dot> ('$1' '$2');
+# <count_obj_dot> ('$1' '$2' '$3');
 #                 Count all `.*` (dot/hidden) objects in a directory
 #! .gives:
 # (0) <$_count> - integer
@@ -16,7 +17,7 @@
 # (count_dir_dot) (*) error
 # (count_obj_dot) (*) error
 # The presence of characters outside the "Portable Filename Character Set"
-# in $2 results in undefined behavior.
+# in $2/$3 results in undefined behavior.
 #
 #! .desc.ext:
 # For more information, refer to:
@@ -28,11 +29,11 @@
 #   Subsection: Portable Filename Character Set".
 #.
 count_file_dot() {
-    count_obj_dot "$1" "$2" || return "$?"  # -> $_count
-    set -- "$1" "$2" "$_count"
+    count_obj_dot "$1" "$2" "$3" || return "$?"  # -> $_count
+    set -- "$1" "$2" "$3" "$_count"
 
-    count_dir_dot "$1" "$2" || return "$?"  # -> $_count
-    _count=$(($3 - _count))
+    count_dir_dot "$1" "$2" "$3" || return "$?"  # -> $_count
+    _count=$(($4 - _count))
 
     return 0
 }
