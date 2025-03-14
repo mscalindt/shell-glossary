@@ -23,29 +23,20 @@
 #.
 errF() {
     # Assert $1 is a number in the range 0-255.
-    assert -whole-n "$1" || return 255
-    [ "$1" -le 255 ] || return 255
+    { assert -whole-n "$1" && [ "$1" -le 255 ]; } || return 255
 
-    # Check if color codes should be used.
-    if [ "$NO_COLOR" ]; then
-        _color=; _reset=
-    else
-        _color='\033[1;31m'; _reset='\033[0m'
-    fi
+    _color='\033[1;31m'
+    _reset='\033[0m'
+    _val="$1"
+    _format="$2"
 
-    _code="$1"; _format="$2"; shift 2
+    [ ! "$NO_COLOR" ] || { _color=; _reset=; }
 
-    case "$_format" in
-        '-')
-            printf "%b%s%b\n" "$_color" "$*" "$_reset" >&2
-        ;;
-        '--')
-            printf "%b%s%b" "$_color" "$*" "$_reset" >&2
-        ;;
-        *)
-            return 255
-        ;;
+    shift 2; case "$_format" in
+        '-') printf "%b%s%b\n" "$_color" "$*" "$_reset" >&2 ;;
+        '--') printf "%b%s%b" "$_color" "$*" "$_reset" >&2 ;;
+        *) return 255 ;;
     esac
 
-    exit "$_code"
+    exit "$_val"
 }
