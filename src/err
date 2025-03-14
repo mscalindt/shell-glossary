@@ -16,8 +16,6 @@
 # <$2> - format(
 #     '-' - raw
 #     '--' - raw; no <newline>
-#     '-date' - `date` %H%M%S
-#     '-date-' - `date` %H%M%S; no <newline>
 #     .
 # )
 # <"$3">+ - text
@@ -58,14 +56,6 @@ err() {
         ;;
         '--')
             printf "%b%s%b" "$_color" "$*" "$_reset" >&2
-        ;;
-        '-date')
-            printf "%b[%s] =>>: %s%b\n" "$_color" "$(date '+%H:%M:%S')" "$*" \
-                "$_reset" >&2
-        ;;
-        '-date-')
-            printf "%b[%s] =>>: %s%b" "$_color" "$(date '+%H:%M:%S')" "$*" \
-                "$_reset" >&2
         ;;
         *)
             return 255
