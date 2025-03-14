@@ -2,7 +2,8 @@
 # Count `.*` (dot/hidden) directories in a directory
 #! .params:
 # <"$1"> - directory path
-# ["$2"] - suffix
+# ["$2"] - prefix
+# ["$3"] - suffix
 #! .gives:
 # (0) <$_count> - integer
 #! .rc:
@@ -11,7 +12,7 @@
 # (255) bad usage
 #! .desc.ext:
 # The presence of characters outside the "Portable Filename Character Set"
-# in $2 results in undefined behavior.
+# in $2/$3 results in undefined behavior.
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
@@ -29,8 +30,9 @@ count_dir_dot() {
     [ -d "$1" ] || return 255
 
     # Use pathname expansion with a glob pattern to match `.*` (dot/hidden)
-    # directories in $1 (directory), optionally with a suffix ($2).
-    set -- "$1"/.*"$2"/ || return "$?"
+    # directories in $1 (directory), optionally with a prefix ($2) and/or
+    # suffix ($3).
+    set -- "$1"/."$2"*"$3"/ || return "$?"
 
     # Ignore `.` and `..`.
     while [ "$1" ]; do case "$1" in
