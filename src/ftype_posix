@@ -14,9 +14,9 @@
 # [NO_COLOR] $ - environment variable;
 #                disable color
 #! .uses.fn:
-# (-err) <err> ('-r' '--' "text");
+# (-err) <err> ('-red' '--' "text");
 #              Print formatted text to stderr
-# (-info) <info> ('-w' '--' "text");
+# (-info) <info> ('-white' '--' "text");
 #                Print formatted text
 #! .sets:
 # (0) <_type> $ - 'B' | 'C' | 'D' | 'F' | 'L' | 'P' | 'S' | '?';
@@ -61,8 +61,8 @@
 #.
 ftype_posix() {
     case "$2" in
-        '-err') set -- "$1" 'err' '-r' '--' ;;
-        '-info') set -- "$1" 'info' '-w' '--' ;;
+        '-err') set -- "$1" 'err' '-red' '--' ;;
+        '-info') set -- "$1" 'info' '-white' '--' ;;
         *) [ ! "$2" ] || return 255; set -- "$1" ':' ;;
     esac
 
