@@ -412,7 +412,7 @@ assert() {
         # Assert $2 consists of "IFS white space" (<space>, <tab>, <newline>)
         # characters.
         '-shell-whitespace')
-            [ "$2" ] && set -- $2 && [ ! "$1" ] || return 1
+            [ "$2" ] && set -- $2 && [ "$#" -eq 0 ] || return 1
         ;;
         *)
             exit 255
