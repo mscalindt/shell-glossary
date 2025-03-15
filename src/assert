@@ -20,7 +20,7 @@
 #     '-relative-path' - relative path
 #     '-shell-array' - shell-parseable evaluable array of arguments
 #     '-shell-name' - portable shell-parseable name
-#     '-shell-whitespace' - "IFS white space" (<space>, <tab>, <newline>)
+#     '-shell-whitespace' - is "IFS white space" (<space>, <tab>, <newline>)
 #     .
 # )
 # <"$2"> - string
