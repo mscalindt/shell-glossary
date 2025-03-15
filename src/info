@@ -3,14 +3,14 @@
 #! .params:
 # <$1> - color(
 #     '-'  - none
-#     '-bk' - black
-#     '-r' - red
-#     '-g' - green
-#     '-y' - yellow
-#     '-be' - blue
-#     '-m' - magenta
-#     '-c' - cyan
-#     '-w' - white
+#     '-black' - bold (`1;`) foreground (`3X`) black (`0`)
+#     '-red' - bold (`1;`) foreground (`3X`) red (`1`)
+#     '-green' - bold (`1;`) foreground (`3X`) green (`2`)
+#     '-yellow' - bold (`1;`) foreground (`3X`) yellow (`3`)
+#     '-blue' - bold (`1;`) foreground (`3X`) blue (`4`)
+#     '-magenta' - bold (`1;`) foreground (`3X`) magenta (`5`)
+#     '-cyan' - bold (`1;`) foreground (`3X`) cyan (`6`)
+#     '-white' - bold (`1;`) foreground (`3X`) white (`7`)
 #     .
 # )
 # <$2> - format(
@@ -36,14 +36,14 @@
 info() {
     _reset='\033[0m'; case $1 in
         '-') _color=; _reset= ;;
-        '-bk') _color='\033[1;30m' ;;
-        '-r') _color='\033[1;31m' ;;
-        '-g') _color='\033[1;32m' ;;
-        '-y') _color='\033[1;33m' ;;
-        '-be') _color='\033[1;34m' ;;
-        '-m') _color='\033[1;35m' ;;
-        '-c') _color='\033[1;36m' ;;
-        '-w') _color='\033[1;37m' ;;
+        '-black') _color='\033[1;30m' ;;
+        '-red') _color='\033[1;31m' ;;
+        '-green') _color='\033[1;32m' ;;
+        '-yellow') _color='\033[1;33m' ;;
+        '-blue') _color='\033[1;34m' ;;
+        '-magenta') _color='\033[1;35m' ;;
+        '-cyan') _color='\033[1;36m' ;;
+        '-white') _color='\033[1;37m' ;;
         *) return 255 ;;
     esac
 
