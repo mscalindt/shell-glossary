@@ -109,6 +109,7 @@ external utility calls.
 - [PATH_STRIP()](src/path_strip): Strip a path N segments RTL
 - [REPLCHAR()](src/replchar): Replace a specific character with character(s) in a string using IFS
 - [REPLCHAR_POSIX()](src/replchar_posix): Replace a specific character with character(s) in a string using PE
+- [REPLSTR_SED_POSIX()](src/replstr_sed_posix): Replace a substring with character(s) in a string using `sed`
 - [SQ_ARG()](src/sq_arg): Get N evaluated argument in a single-quotes array of arguments
 - [SQ_ARG_EXTRACT()](src/sq_arg_extract): Extract an evaluated argument in a single-quotes array of arguments
 
