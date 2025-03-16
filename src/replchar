@@ -12,7 +12,6 @@
 #                 [modified <$3>]
 #! .rc:
 # (0) success
-# (*) error
 #! .rc.fn:
 # (assert) (255) bad usage
 #! .desc.ext:
