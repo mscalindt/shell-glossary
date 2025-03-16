@@ -51,6 +51,4 @@ replchar_posix() {
             _str="$_str$_a"; break
         ;;
     esac done
-
-    return 0
 }
