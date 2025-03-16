@@ -4,7 +4,7 @@
 # ["$1"] - character(s)
 # ["$2"] - string
 #! .uses.fn:
-# <assert> ('-shell-whitespace' '$1');
+# <assert> ('-has-shell-whitespace' '$1');
 #          Assert a string
 #! .gives:
 # (0) <$_count> - integer
@@ -18,8 +18,8 @@
 # unstable, in respect to the locale and platform (shell interpreter);
 # the result might therefore be incorrect.
 #
-# $1 cannot be <space>, <tab>, or <newline> (part of "IFS white space").
-# If a character part of "IFS white space" is solely given as $1,
+# $1 cannot contain <space>, <tab>, or <newline> (part of "IFS white space").
+# If a character part of "IFS white space" is specified in $1,
 # error code `255` (bad usage) will be returned.
 #
 # Note that, according to POSIX.1-2024, it is implementation-defined whether
@@ -40,7 +40,7 @@
 #   Subsection: Pathname Expansion".
 #.
 ccount() {
-    { ! assert -shell-whitespace "$1"; } || return 255
+    { ! assert -has-shell-whitespace "$1"; } || return 255
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
