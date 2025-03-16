@@ -53,11 +53,11 @@ ccount() {
         *) _pn=1; set -f ;;
     esac
 
-    # Field split $2 (string) based on $1 (character); the number of fields
+    # Field split $2 (string) based on $1 (character(s)); the number of fields
     # produced (minus one, to account for the field split itself) corresponds
-    # to the number of times the character has appeared. To enforce stable
-    # field splitting behavior, $1 is placed at the end of the string,
-    # ensuring the function's integrity.
+    # to the number of times characters in $1 have appeared, collectively.
+    # To enforce stable field splitting behavior, $1 is placed at
+    # the end of the string, ensuring the function's integrity.
     IFS="$1"; set -- $2"$IFS"; _count=$(($# - 1))
 
     # Restore the active state of the pathname expansion flag if appropriate.
