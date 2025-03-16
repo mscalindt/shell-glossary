@@ -23,7 +23,7 @@
 replchar_posix() {
     assert -eq "${#1}" 1 || return 255
 
-    # Traverse $3 (string), replacing the occurences of $1 with $2.
+    # Traverse $3 (string), replacing the occurrences of $1 with $2.
     _str=; _a="$3"; while :; do case "$_a" in
         *"$1"*)
             # Example character, replacement character, and string:
