@@ -21,6 +21,7 @@
 #     '-shell-array' - shell-parseable evaluable array of arguments
 #     '-shell-name' - portable shell-parseable name
 #     '-shell-whitespace' - is "IFS white space" (<space>, <tab>, <newline>)
+#     '-has-shell-whitespace' - contains "IFS white space" characters
 #     .
 # )
 # <"$2"> - string
@@ -41,8 +42,9 @@
 # is evaluable, in part with what consists part of "IFS white space";
 # the result of the assert is therefore made according to the locale in effect.
 #
-# For `-shell-whitespace`, it is implementation-defined whether any other,
-# in addition to the specified characters, consist part of "IFS white space";
+# For `-shell-whitespace` and `-has-shell-whitespace`, it is
+# implementation-defined whether any other, in addition to
+# the specified characters, consist part of "IFS white space";
 # the result of the assert is therefore made according to the locale in effect.
 #
 # For more information, refer to:
@@ -413,6 +415,11 @@ assert() {
         # characters.
         '-shell-whitespace')
             [ "$2" ] && set -- $2 && [ "$#" -eq 0 ] || return 1
+        ;;
+        # Assert $2 contains "IFS white space" (<space>, <tab>, <newline>)
+        # characters.
+        '-has-shell-whitespace')
+            [ "$2" ] && set -- .$2. && [ "$#" -ne 1 ] || return 1
         ;;
         *)
             exit 255
