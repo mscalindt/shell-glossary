@@ -1,11 +1,11 @@
 #! .desc:
-# Replace a specific character with character(s) in a string using IFS
+# Replace specific character(s) with character(s) in a string using IFS
 #! .params:
-# <"$1"> - specific character
+# <"$1"> - specific character(s)
 # <"$2"> - character(s)
 # <"$3"> - string
 #! .uses.fn:
-# <assert> ('-shell-whitespace' '$1');
+# <assert> ('-has-shell-whitespace' '$1');
 #          Assert a string
 #! .gives:
 # (0) <"$_str"> - [string];
@@ -13,30 +13,34 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input
 #! .rc.fn:
 # (assert) (255) bad usage
 #! .desc.ext:
-# $1 cannot be <space>, <tab>, or <newline> (part of "IFS white space"). If
-# a character part of "IFS white space" is given as $1, error code `255`
-# (bad usage) will be returned.
+# The specification of multi-byte characters or multiple characters is allowed,
+# but the former results in undefined behavior, and the latter might be
+# unstable, in respect to the locale and platform (shell interpreter);
+# the result might therefore be incorrect.
+#
+# $1 cannot contain <space>, <tab>, or <newline> (part of "IFS white space").
+# If a character part of "IFS white space" is specified in $1,
+# error code `255` (bad usage) will be returned.
 #
 # Note that, according to POSIX.1-2024, it is implementation-defined whether
 # any other, in addition to the specified characters, consist part of
 # "IFS white space".
 #
 # For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Character Set,
+#   Subsection: Character Encoding".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Locale,
+#   Subsection: LC_CTYPE".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Field Splitting".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Pathname Expansion".
 #.
 replchar() {
-    { ! assert -shell-whitespace "$1"; } || return 255
-
-    # Assert $1 is a single character; multiple characters are currently not
-    # supported.
-    [ "${#1}" = 1 ] || return 255
+    { ! assert -has-shell-whitespace "$1"; } || return 255
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
@@ -49,11 +53,11 @@ replchar() {
         *) _pn=1; set -f ;;
     esac
 
-    # Field split $3 (string) based on $1 (character); the number of fields
+    # Field split $3 (string) based on $1 (character(s)); the number of fields
     # produced (minus one, to account for the field split itself) corresponds
-    # to the number of times the character has appeared. To enforce stable
-    # field splitting behavior, $1 is placed at the end of the string,
-    # ensuring the function's integrity.
+    # to the number of times characters in $1 have appeared, collectively.
+    # To enforce stable field splitting behavior, $1 is placed at
+    # the end of the string, ensuring the function's integrity.
     #
     # Finally, $2 is placed at the end of each field (minus the last one,
     # as aforementioned; they will be stripped for the final field),
