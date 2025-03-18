@@ -23,7 +23,7 @@
 # (*) error
 # (255) bad input / bad usage / error
 #! .rc.fn:
-# ($2) (*) error
+# ($3) (*) error
 #! .rc.util
 # (cat) (*) error
 #! .desc.ext:
