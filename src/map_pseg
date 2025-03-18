@@ -9,8 +9,10 @@
 #                    Modify a path string
 #! .sets:
 # <map_pseg_> ();
+#! .rc:
+# (0) success
+# (*) error
 #! .rc.fn:
-# ($2) (0) success
 # ($2) (*) error
 # (path_spec_static) (*) error
 #! .desc.ext:
