@@ -6,8 +6,9 @@
 # ["$3"]+ - function arguments
 #! .uses:
 # <<<>
+#! .rc:
+# (0) success
 #! .rc.fn:
-# ($2) (0) success
 # ($2) (*) error
 #! .desc.ext:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
