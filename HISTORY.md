@@ -1,7 +1,8 @@
 # History of the shell-glossary Repository
 
 This document outlines the major changes and milestones in the evolution of the
-`shell-glossary` repository.
+`shell-glossary` repository. In this document, AI has been (consciously) used
+to summarize the changes.
 
 ## Table of Contents
 
