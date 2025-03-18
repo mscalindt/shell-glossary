@@ -23,8 +23,8 @@
 # (1) <_type> $ - '>';
 #! .rc:
 # (0) success
-# (1) does not exist / error
-# (255) bad input / error
+# (1) does not exist
+# (255) bad input
 #! .rc.fn:
 # (err) (*) error
 # (info) (*) error
