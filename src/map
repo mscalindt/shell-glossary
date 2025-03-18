@@ -3,8 +3,9 @@
 #! .params:
 # <"$1"> - function
 # <"$2">+ - argument(s)
+#! .rc:
+# (0) success
 #! .rc.fn:
-# ($2) (0) success
 # ($2) (*) error
 #.
 map() {
