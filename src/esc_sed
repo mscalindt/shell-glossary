@@ -17,8 +17,8 @@
 #                 [modified <$3>]
 #! .rc:
 # (0) success
-# (2) bad $2 / error
-# (255) bad input / error
+# (2) bad $2
+# (255) bad input
 #! .rc.fn:
 # (replchar_posix) (*) error
 #! .desc.ext:
