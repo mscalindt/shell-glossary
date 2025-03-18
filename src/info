@@ -25,7 +25,7 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input
+# (255) bad input / error
 #! .desc.ext:
 # The colors are bold, foreground text, escape sequences of ANSI.
 #
