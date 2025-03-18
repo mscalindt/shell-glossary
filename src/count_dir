@@ -9,7 +9,7 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad usage
+# (255) bad usage / error
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
