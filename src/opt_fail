@@ -11,8 +11,8 @@
 # <opt_err> ('$opt_match' '$opt_arg' '$@');
 #           Signify option failure
 #! .ec:
-# (2) option failure / error
-# (255) bad usage / error
+# (2) option failure
+# (255) bad usage
 #! .ec.fn:
 # (opt_err) (*) error
 #.
