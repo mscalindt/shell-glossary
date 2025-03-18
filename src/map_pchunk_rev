@@ -10,6 +10,7 @@
 # <map_pchunk_rev_> ();
 #! .rc:
 # (0) success
+# (*) error
 # (255) bad input / error
 #! .rc.fn:
 # ($4) (*) error
