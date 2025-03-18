@@ -13,6 +13,7 @@
 # (0) <$_count> - integer
 #! .rc:
 # (0) success
+# (*) error
 #! .rc.fn:
 # (count_dir_dot) (*) error
 # (count_obj_dot) (*) error
@@ -29,11 +30,6 @@
 #   Subsection: Portable Filename Character Set".
 #.
 count_file_dot() {
-    count_obj_dot "$1" "$2" "$3" || return "$?"  # -> $_count
-    set -- "$1" "$2" "$3" "$_count"
-
-    count_dir_dot "$1" "$2" "$3" || return "$?"  # -> $_count
-    _count=$(($4 - _count))
-
-    return 0
+    count_obj_dot "$1" "$2" "$3" && set -- "$1" "$2" "$3" "$_count" && \
+    count_dir_dot "$1" "$2" "$3" && _count=$(($4 - _count))
 }
