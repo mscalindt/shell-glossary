@@ -1,11 +1,11 @@
 #! .desc:
 # Replace a specific character with character(s) in a string using PE
 #! .params:
-# <"$1"> - specific character
+# ["$1"] - specific character
 # ["$2"] - character(s)
 # ["$3"] - string
 #! .uses.fn:
-# <assert> ('-eq' '${#1}' '1');
+# <assert> ('-max' '${#1}' '1');
 #          Assert a string
 #! .gives:
 # (0) <"$_str"> - [string];
@@ -24,10 +24,10 @@
 #   Subsection: Parameter Expansion".
 #.
 replchar_posix() {
-    assert -eq "${#1}" 1 || return 255
+    assert -max "${#1}" 1 || return 255
 
     # Traverse $3 (string), replacing the occurrences of $1 with $2.
-    _str=; _a="$3"; while :; do case "$_a" in
+    _str=; _a="$3"; while [ "$1" ]; do case "$_a" in
         *"$1"*)
             # Example character, replacement character, and string:
             # `a` `A` `ddaabcd`
