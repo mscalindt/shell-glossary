@@ -1,24 +1,24 @@
 ## Table of Contents
 
-1. [Introduction](#1-introduction)
-2. [Roadmap](#2-roadmap)
-3. [Contributing](#3-contributing)
-4. [License](#4-license)
-5. [Notice](#5-notice)
-6. [Author](#6-author)
+1. [Introduction](#introduction)
+2. [Roadmap](#roadmap)
+3. [Contributing](#contributing)
+4. [License](#license)
+5. [Notice](#notice)
+6. [Author](#author)
 7. [Collection 1: General POSIX Shell Functions](#collection-1-general-posix-shell-functions)
 8. [Collection 2: POSIX Shell Functions for Shell Option Parsing](#collection-2-posix-shell-functions-for-shell-option-parsing)
 
-## 1. Introduction
+## Introduction
 
 [`shell-glossary`](https://github.com/mscalindt/shell-glossary) is a glossary
 of reusable POSIX shell functions. It features collections of optimized
 functions for general use.
 
 Currently, the state of the functions is considered unstable until certain
-criteria in [Roadmap](#2-roadmap) are met.
+criteria in [Roadmap](#roadmap) are met.
 
-## 2. Roadmap
+## Roadmap
 
 * Portable C89 in-house program to follow/resolve symbolic links.
 * Unit tests (`wunit`).
@@ -33,7 +33,7 @@ criteria in [Roadmap](#2-roadmap) are met.
   * Provide manpage equivalents of the function documentation headers.
 * Makefile to build src/ into a `shell-glossary` file.
 
-## 3. Contributing
+## Contributing
 
 Contribution guidelines will be published in the future. At this time,
 external contributions are not accepted.
@@ -41,14 +41,14 @@ external contributions are not accepted.
 For a list of people who have contributed to `shell-glossary`,
 see the [CREDITS](CREDITS) file.
 
-## 4. License
+## License
 
 [BSD 2-Clause "Simplified" License](LICENSE)
 
 For a list of external dependencies and their licenses,
 refer to the [DEPENDENCIES](DEPENDENCIES) file.
 
-## 5. Notice
+## Notice
 
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
@@ -56,7 +56,7 @@ There is NO WARRANTY, to the extent permitted by law.
 For detailed information on external dependencies,
 see the [DEPENDENCIES](DEPENDENCIES) file.
 
-## 6. Author
+## Author
 
 Dimitar Yurukov (mscalindt@protonmail.com)
 
