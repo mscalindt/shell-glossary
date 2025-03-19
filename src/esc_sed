@@ -7,7 +7,7 @@
 #     .
 # )
 # <"$2"> - delimiter character
-# <"$3"> - string
+# ["$3"] - string
 #! .uses.fn:
 # <replchar_posix> ("specific character" "character(s)" "string");
 #                  Replace a specific character with character(s) in a string
