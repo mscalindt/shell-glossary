@@ -1,10 +1,10 @@
 #! .desc:
 # Count the times a character appears in a string using PE
 #! .params:
-# <"$1"> - character
+# ["$1"] - character
 # ["$2"] - string
 #! .uses.fn:
-# <assert> ('-eq' '${#1}' '1');
+# <assert> ('-max' '${#1}' '1');
 #          Assert a string
 #! .gives:
 # (0) <$_count> - integer
@@ -22,10 +22,10 @@
 #   Subsection: Parameter Expansion".
 #.
 ccount_posix() {
-    assert -eq "${#1}" 1 || return 255
+    assert -max "${#1}" 1 || return 255
 
     # Traverse $2 (string), counting the occurrences of $1 (character).
-    _count=0; _a="$2"; while :; do case "$_a" in
+    _count=0; _a="$2"; while [ "$1" ]; do case "$_a" in
         *"$1"*)
             # Example character and string: `a` `ddaabcd`
             # $_a: `aabcd`
