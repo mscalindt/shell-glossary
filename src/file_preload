@@ -45,10 +45,6 @@ file_preload() {
     # single read(). This contrasts with a POSIX shell, which reads files one
     # byte at a time and may only return the first byte of data from certain
     # kernel files.
-    #
-    # Use the shell to read the file if it is a small (< ~10000XX lines),
-    # user-created file. `-subshell` performs better on big files (> ~50000
-    # lines), while `-var` performs better on small files.
     case "$1" in
         '-')
             # Append with <newline> each $_line to an initially empty $_file to
