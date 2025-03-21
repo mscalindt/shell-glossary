@@ -32,7 +32,11 @@
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: exec".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Here-Document".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
+#   Utility: read".
 #.
 fline() {
     assert -natural-n "$2" || return 255
