@@ -89,6 +89,4 @@ _FILE
             return 255
         ;;
     esac
-
-    return 0
 }
