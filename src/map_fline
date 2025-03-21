@@ -37,10 +37,8 @@ map_fline() {
     # Read the file with the specified method.
     #
     # Use `cat` to read the file if it is a potential specification of a file
-    # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
-    #
-    # Use the shell to read the file if it is a small (< ~10000XX lines),
-    # user-created file.
+    # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
+    # use the shell.
     case "$1" in
         '-')
             # Pass each populated line to $2 (the function).
