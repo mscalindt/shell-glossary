@@ -21,7 +21,7 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input / bad usage / error
+# (255) bad input / error
 #! .rc.fn:
 # ($3) (*) error
 #! .rc.util
@@ -48,8 +48,6 @@ map_fline() {
             done
         ;;
         '-cat')
-            [ -f "$2" ] || return 255
-
             # Store the output of `cat` in $_file using command substitution.
             # The custom `x` character at the end and its subsequent removal
             # outside the command substitution preserves any trailing <newline>
@@ -67,8 +65,6 @@ $_file
 _FILE
         ;;
         '-shell')
-            [ -f "$2" ] || return 255
-
             # Open the file and assign it to file descriptor `9`. The usage of
             # a file descriptor simplifies the error handling. Additionally,
             # TOCTOU flaws are completely avoided this way.
