@@ -27,7 +27,7 @@
 # (0) success
 # (1) line does not exist / error
 # (*) error
-# (255) bad input / bad usage / error
+# (255) bad input / error
 #! .rc.fn:
 # (assert) (255) bad input
 #! .rc.util
@@ -57,8 +57,6 @@ fline() {
             done; case "$_i" in "$2") return 0 ;; esac
         ;;
         '-cat')
-            [ -f "$3" ] || return 255
-
             # Store the output of `cat` in $_file using command substitution.
             # The custom `x` character at the end and its subsequent removal
             # outside the command substitution preserves any trailing <newline>
@@ -76,8 +74,6 @@ $_file
 _LINE
         ;;
         '-shell')
-            [ -f "$3" ] || return 255
-
             # Open the file and assign it to file descriptor `9`. The usage of
             # a file descriptor simplifies the error handling. Additionally,
             # TOCTOU flaws are completely avoided this way.
