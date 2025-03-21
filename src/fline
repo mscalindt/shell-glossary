@@ -47,16 +47,6 @@ fline() {
     # Use `cat` to read the file if it is a potential specification of a file
     # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
     #
-    # `cat` will read the file in one `read` syscall. This is important because
-    # certain kernel files can only be read() once, returning EOF on subsequent
-    # read() syscalls. This behavior is prevalent for certain files in `/proc`
-    # which do not support seeking.
-    #
-    # `cat` reads a file in large chunks, accommodating the requirement for a
-    # single read(). This contrasts with a POSIX shell, which reads files one
-    # byte at a time and may only return the first byte of data from certain
-    # kernel files.
-    #
     # Use the shell to read the file if it is a small (< ~10000XX lines),
     # user-created file.
     case "$1" in
