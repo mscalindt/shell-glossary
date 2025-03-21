@@ -98,6 +98,5 @@ _LINE
         ;;
     esac
 
-    # Signal the specified line doesn't exist.
     return 1
 }
