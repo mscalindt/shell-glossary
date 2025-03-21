@@ -12,28 +12,24 @@
 # ["$4"]+ - function arguments
 #! .uses:
 # [&9]
-# [()]
 # [<<]
 # [<]
-#! .uses.util:
-# [cat] ('--' '$2');
-#       concatenate and print files
+#! .uses.fn:
+# [file_preload] ('-cat' '$2');
+#                Read a file raw
 #! .rc:
 # (0) success
 # (*) error
 # (255) bad input / error
 #! .rc.fn:
 # ($3) (*) error
-#! .rc.util
-# (cat) (*) error
+# (file_preload) (*) error
 #! .desc.ext:
 # Use `cat` to read the file if it is a potential specification of a file
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
 # use the shell.
 #
 # For more information, refer to:
-# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
-#   Subsection: Command Substitution".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: exec".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
@@ -52,21 +48,14 @@ map_fline() {
             done
         ;;
         '-cat')
-            # Store the output of `cat` in $_file using command substitution.
-            # The custom `x` character at the end and its subsequent removal
-            # outside the command substitution preserves any trailing <newline>
-            # characters stripped by command substitution.
-            _file=$(cat -- "$2" && printf "%s" 'x') || return "$?"
-            _file="${_file%?}"
-
-            # Iterate over each populated line of $_file using heredoc.
-            shift 2; while IFS= read -r _line; do
-                [ "$_line" ] || continue
-                "$@" "$_line" || return "$?"
-            done \
-<<_FILE
+            {
+                file_preload -cat "$2" && \
+                shift 2 && \
+                map_fline - "$@" \
+<<_
 $_file
-_FILE
+_
+            } || return "$?"
         ;;
         '-shell')
             # Open the file and assign it to file descriptor `9`. The usage of
