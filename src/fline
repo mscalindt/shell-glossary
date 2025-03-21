@@ -57,7 +57,7 @@ fline() {
             _i=1; while IFS= read -r _line; do
                 case "$_i" in "$2") return 0 ;; esac
                 _i=$((_i + 1))
-            done; case "$_i" in "$2") return 0 ;; esac
+            done
         ;;
         '-cat')
             {
