@@ -76,7 +76,7 @@ _
 
             # Manually handle the last `read` call if the file
             # does not end with a <newline>.
-            case "$_i" in "$2") return 0 ;; esac
+            case "$_i" in "$2") return "$?" ;; esac
         ;;
         *)
             return 255
