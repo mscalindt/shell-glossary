@@ -52,8 +52,8 @@ fline() {
     # use the shell.
     case "$1" in
         '-')
-            # Read stdin, counting the lines; if we land on the specified one,
-            # signal it.
+            # Consume stdin using `read`, counting the lines;
+            # if we land on the specified one, signal it.
             _i=1; while IFS= read -r _line; do
                 case "$_i" in "$2") return 0 ;; esac
                 _i=$((_i + 1))
@@ -74,8 +74,9 @@ _
             # TOCTOU flaws are completely avoided this way.
             { exec 9< "$3"; } || return "$?"
 
-            # Read the file, counting the lines; if we land on the specified
-            # one, release file descriptor `9` and signal it.
+            # Read the file, counting the lines;
+            # if we land on the specified one,
+            # release file descriptor `9` and signal the line.
             _i=1; while IFS= read -r _line <&9; do
                 case "$_i" in "$2") exec 9<&-; return "$?" ;; esac
                 _i=$((_i + 1))
