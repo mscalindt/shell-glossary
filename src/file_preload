@@ -66,16 +66,7 @@ file_preload() {
             # TOCTOU flaws are completely avoided this way.
             { exec 9< "$2"; } || return "$?"
 
-            # Store the output of each `printf` in $_file using command
-            # substitution. The custom `x` character at the end and its
-            # subsequent removal outside the command substitution preserves any
-            # trailing <newline> characters stripped by command substitution.
-            _file=$(
-                while IFS= read -r _line <&9; do
-                    printf "%s\n" "$_line"
-                done; printf "%s" "${_line}x"
-            )
-            _file="${_file%?}"
+            file_preload - <&9 || { set -- "$?"; exec 9<&-; return "$1"; }
 
             # Release file descriptor `9` to close the associated file.
             exec 9<&-
