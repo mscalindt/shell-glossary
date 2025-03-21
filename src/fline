@@ -30,6 +30,10 @@
 # (assert) (255) bad input
 # (file_preload) (*) error
 #! .desc.ext:
+# Use `-cat` to read the file if it is a potential specification of a file
+# in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
+# use the shell.
+#
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: exec".
@@ -41,11 +45,6 @@
 fline() {
     assert -natural-n "$2" || return 255
 
-    # Read the file with the specified method.
-    #
-    # Use `cat` to read the file if it is a potential specification of a file
-    # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
-    # use the shell.
     case "$1" in
         '-')
             # Consume stdin using `read`, counting the lines;
