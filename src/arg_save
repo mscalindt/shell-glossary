@@ -1,16 +1,16 @@
 #! .desc:
 # Save with single-quote escape an argument into a variable
 #! .params:
-# <"$1"> - argument
-# <$2> - variable name
+# <$1> - variable name
+# <"$2"> - argument
 #! .uses.fn:
-# <assert> ('-shell-name' '$2');
+# <assert> ('-shell-name' '$1');
 #          Assert a string
-# [replchar_posix] ('\'' '\'\\\'\'' '$1');
+# [replchar_posix] ('\'' '\'\\\'\'' '$2');
 #                  Replace a specific character with character(s) in a string
 #                  using PE
 #! .sets:
-# (0) <$2> $ - "$2 '$1'";
+# (0) <$1> $ - "$1 '$2'";
 #! .rc:
 # (0) success
 # (*) error
@@ -23,18 +23,18 @@
 #   Subsection: Quoting".
 #.
 arg_save() {
-    assert -shell-name "$2" || return 255
+    assert -shell-name "$1" || return 255
 
-    # Escape any single quotes in the argument ($1).
-    _str="$1"; case "$_str" in
+    # Escape any single quotes in the argument ($2).
+    _str="$2"; case "$_str" in
         *\'*) replchar_posix \' \'\\\'\' "$_str" || return "$?" ;;
     esac  # -> $_str
 
     # The usage of `eval` here is safe. Assuming $_str is `"'\''abc` (we escape
-    # single quotes in $1 before they're passed to `eval`) and $2 is `a`:
+    # single quotes in $2 before they're passed to `eval`) and $1 is `a`:
     #
     # First expansion (current shell):
-    # `eval "$2=\"\$$2 '\$_str'\""` -> `eval a="$a '$_str'"` (lit.)
+    # `eval "$1=\"\$$1 '\$_str'\""` -> `eval a="$a '$_str'"` (lit.)
     #
     # Second expansion (`eval`); assuming the content of $a is `'b'`:
     # `eval a="$a '$_str'"` -> `a = 'b' '"'\''abc'` (illust. of meta expansion)
@@ -42,5 +42,5 @@ arg_save() {
     # Key points:
     # - Due to the sophisticated escaping, single quotes from the first
     #   expansion carry their significance to the second expansion.
-    eval "$2=\"\$$2 '\$_str'\""
+    eval "$1=\"\$$1 '\$_str'\""
 }
