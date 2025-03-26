@@ -17,6 +17,7 @@
 #     '-absolute-path' - absolute path (/*)
 #     '-canonical-path' - lexically canonical (assertable) path
 #     '-directory-path' - directory path
+#     '-file-path' - file path
 #     '-fs-canonical-path' - semantically canonical (assertable) path
 #     '-relative-path' - relative path
 #     '-shell-array' - shell-parseable evaluable array of arguments
@@ -345,6 +346,19 @@ assert() {
         '-directory-path')
             case "$2" in
                 *[!/]*/) return 0 ;;
+            esac
+
+            return 1
+        ;;
+        # Assert $2 is a file (file-resolving) path.
+        #
+        # A file path is any string containing at least one non-<slash>
+        # (`/`) character and that does not end with trailing <slash>
+        # characters.
+        '-file-path')
+            case "$2" in
+                *[!/]*/) return 1 ;;
+                *[!/]*) return 0 ;;
             esac
 
             return 1
