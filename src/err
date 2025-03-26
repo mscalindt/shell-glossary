@@ -19,13 +19,15 @@
 #     .
 # )
 # <"$3">+ - text
-#! .uses.var:
+#! .uses.var.info:
 # [NO_COLOR] $ - environment variable;
 #                disable color
-#! .rc:
-# (0) success
-# (*) error
-# (255) bad input / error
+#! .uses.fn:
+# <info> ('$@');
+#        Print formatted text
+#! .rc.fn:
+# (info) (0) success
+# (info) (0) error
 #! .desc.ext:
 # The colors are bold, foreground text, escape sequences of ANSI.
 #
@@ -34,26 +36,5 @@
 # to a non-empty value.
 #.
 err() {
-    _reset='\033[0m'; case $1 in
-        '-') _color=; _reset= ;;
-        '-black') _color='\033[1;30m' ;;
-        '-red') _color='\033[1;31m' ;;
-        '-green') _color='\033[1;32m' ;;
-        '-yellow') _color='\033[1;33m' ;;
-        '-blue') _color='\033[1;34m' ;;
-        '-magenta') _color='\033[1;35m' ;;
-        '-cyan') _color='\033[1;36m' ;;
-        '-white') _color='\033[1;37m' ;;
-        *) return 255 ;;
-    esac
-
-    _format="$2"
-
-    [ ! "$NO_COLOR" ] || { _color=; _reset=; }
-
-    shift 2; case "$_format" in
-        '-') printf "%b%s%b\n" "$_color" "$*" "$_reset" >&2 ;;
-        '--') printf "%b%s%b" "$_color" "$*" "$_reset" >&2 ;;
-        *) return 255 ;;
-    esac
+    info "$@" >&2
 }
