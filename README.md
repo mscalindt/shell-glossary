@@ -91,8 +91,6 @@ Count all visible objects in a directory
 Count all `.*` (dot/hidden) objects in a directory
 - [ERR()](src/err):
 Print formatted text to stderr
-- [ERRF()](src/errF):
-Print red-colored formatted text to stderr and exit
 - [ESC_SED()](src/esc_sed):
 Escape a string to be used literally as a POSIX `sed` string
 - [FILE_PRELOAD()](src/file_preload):
