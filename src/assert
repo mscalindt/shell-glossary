@@ -16,6 +16,7 @@
 #     '-portable-name' - portable ("Portable Filename") name
 #     '-absolute-path' - absolute path (/*)
 #     '-canonical-path' - lexically canonical (assertable) path
+#     '-directory-path' - directory path
 #     '-fs-canonical-path' - semantically canonical (assertable) path
 #     '-relative-path' - relative path
 #     '-shell-array' - shell-parseable evaluable array of arguments
@@ -335,6 +336,18 @@ assert() {
             esac
 
             return 0
+        ;;
+        # Assert $2 is a directory (directory-resolving) path.
+        #
+        # A directory path is any string containing at least one non-<slash>
+        # (`/`) character and that ends with one or more trailing <slash>
+        # characters.
+        '-directory-path')
+            case "$2" in
+                *[!/]*/) return 0 ;;
+            esac
+
+            return 1
         ;;
         # Assert $2 is a semantically canonical (assertable) path.
         #
