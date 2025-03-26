@@ -58,7 +58,7 @@
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
 #   Utility: test".
 #.
-ftype_posix() {
+ftype() {
     case "$2" in
         '-err') set -- "$1" 'err' '-red' '--' ;;
         '-info') set -- "$1" 'info' '-white' '--' ;;

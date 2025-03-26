@@ -97,7 +97,7 @@ Escape a string to be used literally as a POSIX `sed` string
 Read a file raw
 - [FLINE()](src/fline):
 Get a specific line in a file
-- [FTYPE_POSIX()](src/ftype_posix):
+- [FTYPE()](src/ftype):
 Identify the type of an object on the filesystem
 - [INFO()](src/info):
 Print formatted text
