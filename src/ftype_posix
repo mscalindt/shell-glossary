@@ -1,5 +1,5 @@
 #! .desc:
-# Identify the type of an object on the filesystem lexically
+# Identify the type of an object on the filesystem
 #! .params:
 # <"$1"> - path
 # [$2] - fd(
@@ -29,6 +29,8 @@
 # (err) (*) error
 # (info) (*) error
 #! .desc.ext:
+# A trailing slash in the path string can affect the assert.
+#
 # The function denotes the type of the specified object using a letter. File
 # categorization will take precedence over directory categorization. Special
 # file categorization will take precedence over regular file categorization
@@ -46,9 +48,6 @@
 #
 # Practically, on POSIX shells and systems, `?` (unrecognized file type) should
 # never be returned.
-#
-# In a lexical manner, according to POSIX, a trailing slash in the path string
-# can affect the assert.
 #
 # The usage of color results in undefined behavior. For strict POSIX
 # compatibility, set variable `NO_COLOR` to a non-empty value.

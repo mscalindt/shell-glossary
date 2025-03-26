@@ -98,7 +98,7 @@ Read a file raw
 - [FLINE()](src/fline):
 Get a specific line in a file
 - [FTYPE_POSIX()](src/ftype_posix):
-Identify the type of an object on the filesystem lexically
+Identify the type of an object on the filesystem
 - [INFO()](src/info):
 Print formatted text
 - [MAP()](src/map):
