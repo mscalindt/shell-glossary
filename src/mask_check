@@ -21,11 +21,9 @@ mask_check() {
     set -- "${1#0x}" "$2"
 
     { assert -eq "$1" 0 || assert -bit "$1"; } || return 255
-    assert -shell-name "$2" || return 255
 
-    # Safely evaluate $2 (variable name) into its literal content.
-    eval set -- "$1" "\$$2"
-
+    assert -shell-name "$2" && \
+    eval set -- "$1" "\$$2" && \
     assert -whole-n "$2" || return 255
 
     # Handle value `0` specially by asserting no bits are set.
