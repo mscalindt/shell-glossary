@@ -7,7 +7,7 @@
 # )
 # <$2> - variable name
 #! .uses.fn:
-# <assert> ("type" "string");
+# <assert> ("type" "string" "string");
 #          Assert a string
 #! .rc:
 # (0) success
@@ -19,19 +19,12 @@ mask_unset() {
     # Remove `0x` from $1 (bit) if present.
     set -- "${1#0x}" "$2"
 
-    # Handle value `0` for $1 (bit) specially: unset all bits.
-    case "$1" in
-        '0')
-            assert -shell-name "$2" || return 255
-
-            # Unset all bits in $2 (bitmask).
-            eval "$2=0"
-        ;;
-    esac
-
-    assert -bit "$1" || return 255
+    { assert -eq "$1" 0 || assert -bit "$1"; } || return 255
     assert -shell-name "$2" || return 255
 
-    # Unset $1 (bit) in $2 (bitmask).
-    eval "$2=\$(($2 & ~$1))"
+    # Handle value `0` specially by unsetting all bits.
+    case "$1" in
+        '0') eval "$2=0" ;;
+        *) eval "$2=\$(($2 & ~$1))" ;;
+    esac
 }
