@@ -7,7 +7,7 @@
 # )
 # <$2> - variable name
 #! .uses.fn:
-# <assert> ("type" "string");
+# <assert> ("type" "string" "string");
 #          Assert a string
 #! .rc:
 # (0) true
@@ -20,22 +20,7 @@ mask_check() {
     # Remove `0x` from $1 (bit) if present.
     set -- "${1#0x}" "$2"
 
-    # Handle value `0` for $1 (bit) specially: check if no bits are set.
-    case "$1" in
-        '0')
-            assert -shell-name "$2" || return 255
-
-            # Safely evaluate $2 (variable name) into its literal content.
-            eval set -- "$1" "\$$2"
-
-            assert -whole-n "$2" || return 255
-
-            # Assert whether $2 (bitmask) is `0`, i.e. no bits are set.
-            [ "$2" = 0 ] && return 0 || return 1
-        ;;
-    esac
-
-    assert -bit "$1" || return 255
+    { assert -eq "$1" 0 || assert -bit "$1"; } || return 255
     assert -shell-name "$2" || return 255
 
     # Safely evaluate $2 (variable name) into its literal content.
@@ -43,6 +28,9 @@ mask_check() {
 
     assert -whole-n "$2" || return 255
 
-    # Assert whether $1 (bit) is set in $2 (bitmask).
-    [ "$(($1 & $2))" = "$1" ]
+    # Handle value `0` specially by asserting no bits are set.
+    case "$1" in
+        '0') [ "$2" = 0 ] ;;
+        *) [ "$(($1 & $2))" = "$1" ] ;;
+    esac
 }
