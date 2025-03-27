@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - path
 # <$2> - function name
-# ["$3"]+ - function arguments
+# ["$3"]+ - function argument
 #! .uses.fn:
 # <map_pseg_find> ('$_path' '$@');
 #                 Find success among path segments using a function
