@@ -5,7 +5,7 @@
 # <["$2"]> - LTR mask
 # <["$3"]> - RTL mask
 # <$4> - function name
-# ["$5"]+ - function arguments
+# ["$5"]+ - function argument
 #! .sets:
 # <map_pchunk_> ();
 #! .rc:
