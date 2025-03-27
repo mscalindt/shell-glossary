@@ -29,12 +29,13 @@
 # (err) (*) error
 # (info) (*) error
 #! .desc.ext:
-# A trailing slash in the path string can affect the assert.
-#
 # The function denotes the type of the specified object using a letter. File
 # categorization will take precedence over directory categorization. Special
 # file categorization will take precedence over regular file categorization
 # according to implicit POSIX behavior, depicted below in absolute order.
+#
+# A trailing slash in the path string can affect the assert, effectively
+# forcing the type to resolve to a directory or otherwise inexistence.
 #
 # `L` means "symbolic link";
 # `B` means "block special file";
