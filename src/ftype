@@ -34,15 +34,15 @@
 # The function denotes the type of the specified object using a letter. File
 # categorization will take precedence over directory categorization. Special
 # file categorization will take precedence over regular file categorization
-# according to implicit POSIX behavior.
+# according to implicit POSIX behavior, depicted below in absolute order.
 #
+# `L` means "symbolic link";
 # `B` means "block special file";
 # `C` means "character special file";
-# `D` means "directory";
-# `F` means "regular file";
-# `L` means "symbolic link";
-# `P` means "FIFO / named pipe";
 # `S` means "socket";
+# `P` means "FIFO / named pipe";
+# `F` means "regular file";
+# `D` means "directory";
 # `?` means "unrecognized file type";
 # `>` means "does not exist".
 #
