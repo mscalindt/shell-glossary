@@ -29,13 +29,11 @@
 # (err) (*) error
 # (info) (*) error
 #! .desc.ext:
-# The function denotes the type of the specified object using a letter. File
-# categorization will take precedence over directory categorization. Special
-# file categorization will take precedence over regular file categorization
-# according to implicit POSIX behavior, depicted below in absolute order.
-#
-# A trailing slash in the path string can affect the assert, effectively
-# forcing the type to resolve to a directory or otherwise inexistence.
+# The function denotes the type of the specified object using a letter.
+# File categorization will take precedence over directory categorization,
+# but exceptions[1] apply. Special file categorization will take precedence
+# over regular file categorization according to implicit POSIX behavior,
+# depicted below in absolute order.
 #
 # `L` means "symbolic link";
 # `B` means "block special file";
@@ -44,11 +42,8 @@
 # `P` means "FIFO / named pipe";
 # `F` means "regular file";
 # `D` means "directory";
-# `?` means "unrecognized file type";
+# `?` means "unrecognized file type"[2];
 # `>` means "does not exist".
-#
-# Practically, on POSIX shells and systems, `?` (unrecognized file type) should
-# never be returned.
 #
 # The usage of color results in undefined behavior. For strict POSIX
 # compatibility, set variable `NO_COLOR` to a non-empty value.
@@ -58,6 +53,13 @@
 #   Subsection: Pathname Resolution".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
 #   Utility: test".
+#
+# [1] A trailing slash in the path string can affect the assert, effectively
+#     forcing the type to resolve to a directory or otherwise inexistence.
+#     See the "Pathname Resolution" POSIX reference for details.
+# [2] Practically, on POSIX shells and systems, `?` (unrecognized file type)
+#     should never be returned, but nonetheless exists as a catch-all
+#     on non-POSIX platforms.
 #.
 ftype() {
     case "$2" in
