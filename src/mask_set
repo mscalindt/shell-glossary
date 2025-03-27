@@ -19,6 +19,5 @@ mask_set() {
     assert -bit "$1" || return 255
     assert -shell-name "$2" || return 255
 
-    # Set $1 (bit) in $2 (bitmask).
     eval "$2=\$(($2 | $1))"
 }
