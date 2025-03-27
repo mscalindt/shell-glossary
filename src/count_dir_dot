@@ -20,6 +20,8 @@
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Dot-Dot".
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Pathname".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Portable Filename Character Set".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Pathname Expansion".
