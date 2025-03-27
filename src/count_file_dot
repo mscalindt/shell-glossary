@@ -18,7 +18,7 @@
 # (count_dir_dot) (*) error
 # (count_obj_dot) (*) error
 #! .desc.ext:
-# The presence of characters outside the "Portable Filename Character Set"
+# The presence of characters outside the "Portable Filename Character Set"[1]
 # in $2/$3 results in undefined behavior.
 #
 # For more information, refer to:
@@ -28,6 +28,12 @@
 #   Subsection: Dot-Dot".
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Portable Filename Character Set".
+#
+# [1] The portable filename character set is:
+#     A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+#     a b c d e f g h i j k l m n o p q r s t u v w x y z
+#     0 1 2 3 4 5 6 7 8 9 . _ -
+#     See the "Portable Filename Character Set" POSIX reference for details.
 #.
 count_file_dot() {
     count_obj_dot "$1" "$2" "$3" && set -- "$1" "$2" "$3" "$_count" && \
