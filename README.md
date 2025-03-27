@@ -126,7 +126,7 @@ Process each path segment in reverse with a function
 - [MAP_VLINE()](src/map_vline):
 Process each populated string line with a function
 - [MASK_CHECK()](src/mask_check):
-Check a bit, the power of 2, in a pseudo-bitmask shell variable
+Assert a bit, the power of 2, in a pseudo-bitmask shell variable
 - [MASK_SET()](src/mask_set):
 Set a bit, the power of 2, in a pseudo-bitmask shell variable
 - [MASK_UNSET()](src/mask_unset):
