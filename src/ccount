@@ -18,13 +18,8 @@
 # unstable, in respect to the locale and platform (shell interpreter);
 # the result might therefore be incorrect.
 #
-# $1 cannot contain <space>, <tab>, or <newline> (part of "IFS white space").
-# If a character part of "IFS white space" is specified in $1,
-# error code `255` (bad usage) will be returned.
-#
-# Note that, according to POSIX.1-2024, it is implementation-defined whether
-# any other, in addition to the specified characters, consist part of
-# "IFS white space".
+# $1 cannot contain characters part of "IFS white space"[1]. The specification
+# of IFS white space results in error code `255` (bad usage).
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Character Set,
@@ -38,6 +33,11 @@
 #   Subsection: Field Splitting".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Pathname Expansion".
+#
+# [1] "IFS white space" characters are: <space>, <tab>, <newline>.
+#     Note that according to POSIX.1-2024, it is implementation-defined
+#     whether any other characters consist part of "IFS white space".
+#     See the "Field Splitting" POSIX reference for details.
 #.
 ccount() {
     { ! assert -has-shell-whitespace "$1"; } || return 255
