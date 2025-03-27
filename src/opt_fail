@@ -1,7 +1,7 @@
 #! .desc:
 # Signify option failure and exit
 #! .params:
-# ["$1"]+ - valid argument(s)
+# ["$1"]+ - valid argument
 #! .uses.var:
 # <opt_match> $ - string;
 #                 option
