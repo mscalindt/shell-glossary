@@ -2,7 +2,7 @@
 # Find success among arguments using a function
 #! .params:
 # <"$1"> - function
-# <"$2">+ - argument(s)
+# <"$2">+ - argument
 #! .gives:
 # (0) <"$_segment"> - string
 #! .rc:
