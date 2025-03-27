@@ -3,7 +3,7 @@
 #! .params:
 # <"$1"> - string
 # <$2> - function name
-# ["$3"]+ - function arguments
+# ["$3"]+ - function argument
 #! .uses:
 # <<<>
 #! .rc:
