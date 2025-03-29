@@ -1,5 +1,5 @@
 #! .desc:
-# Convert N to that amount of character(s)
+# Create N amount of character(s) using PE
 #! .params:
 # [$1] - N
 # ["$2"] - character(s)
