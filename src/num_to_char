@@ -1,8 +1,8 @@
 #! .desc:
-# Convert N to that amount of a character
+# Convert N to that amount of character(s)
 #! .params:
 # <$1> - N
-# <"$2"> - character
+# <"$2"> - character(s)
 #! .uses.fn:
 # <assert> ('-whole-n' '$1');
 #          Assert a string
@@ -23,7 +23,7 @@ num_to_char() {
 
     assert -whole-n "$1" || return 255
 
-    # Repeat the character ($2) N times ($1) to create the desired string.
+    # Repeat the character(s) ($2) N times ($1) to create the desired string.
     # When N is `0`, no characters are created, and $_chars is set to an empty
     # string. This helps in seamlessly integrating the function in cases where
     # character generation is not needed.
