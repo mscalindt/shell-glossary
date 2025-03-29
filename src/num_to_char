@@ -13,6 +13,9 @@
 # (*) error
 #! .rc.fn:
 # (assert) (255) bad input
+#! .desc.ext:
+# If the first character of $1 is `-`, nothing will be processed and
+# success will be returned.
 #.
 num_to_char() {
     set -- "${1%%\-*}" "$2"
