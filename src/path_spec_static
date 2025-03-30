@@ -27,7 +27,6 @@
 #     .
 # )
 # ["$2"] - path
-# ["$3"] - join path
 #! .uses:
 # [()]
 #! .uses.var:
@@ -74,14 +73,7 @@ path_spec_static() {
         *[!abcdehklmnopqrstuvwxyz]*) return 255 ;;
     esac
 
-    # Fuse $2 (path) and $3 (join path), if any.
-    if [ "$2" ]; then
-        _path="$2/$3"
-
-        [ "$3" ] || _path="$2"
-    else
-        _path=; return 0
-    fi
+    _path="$2" && [ "$2" ] || return 0
 
     # Set $_path to $3. From this point on, the path should only be modified
     # solely as a positional parameter. This allows safe usage of functions
