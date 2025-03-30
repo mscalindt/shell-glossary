@@ -11,7 +11,7 @@
 #     'k' - strip all trailing slashes if $_path logical directory
 #     'l' - append `/` (if not present) if $_path physical directory
 #     'm' - set $_path to `/` if $_path empty
-#     'n' - unset $_path if $_path is lexical root
+#     'n' - unset $_path if $_path is `/`
 #     'o' - unset $_path if $_path is absolute
 #     'p' - unset $_path if $_path is relative
 #     'q' - unset $_path if $_path is inexistent
@@ -210,8 +210,8 @@ path_spec_static() {
         *m*) _path=/; return 0 ;;
     esac; fi
 
-    # Never return lexically root modified path. (-n)
-    if [ "$3" ] && [ "${3#"${3%%[!/]*}"}" = '' ]; then case "$1" in
+    # Never return `/` modified path. (-n)
+    if [ "$3" ] && [ "$3" = '/' ]; then case "$1" in
         *n*) _path=; return 0 ;;
     esac; fi
 
