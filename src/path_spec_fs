@@ -2,7 +2,6 @@
 # Semantically normalize a path into an assertable canonical path
 #! .params:
 # ["$1"] - path
-# ["$2"] - join path
 #! .uses.var.path_spec_static:
 # [PWD] $ - environment variable;
 #           absolute pathname of the current working directory
