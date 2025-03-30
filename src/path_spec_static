@@ -205,6 +205,11 @@ path_spec_static() {
         *s*) assert -absolute-path "$3" || set -- "$1" "$2" "./$3" ;;
     esac; fi
 
+    # Return `/` if the modified path is empty. (-m)
+    if [ ! "$3" ]; then case "$1" in
+        *m*) _path=/; return 0 ;;
+    esac; fi
+
     # Never return lexically root modified path. (-n)
     if [ "$3" ] && [ "${3#"${3%%[!/]*}"}" = '' ]; then case "$1" in
         *n*) _path=; return 0 ;;
@@ -223,11 +228,6 @@ path_spec_static() {
     # Never return inexistent modified path. (-q)
     if [ "$3" ] && [ ! -e "$3" ]; then case "$1" in
         *q*) _path=; return 0 ;;
-    esac; fi
-
-    # Return `/` if the modified path is empty. (-m)
-    if [ ! "$3" ]; then case "$1" in
-        *m*) _path=/; return 0 ;;
     esac; fi
 
     _path="$3"; return 0
