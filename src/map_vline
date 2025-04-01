@@ -15,7 +15,6 @@
 #   Subsection: Here-Document".
 #.
 map_vline() {
-    # Iterate over each populated line using heredoc.
     _str="$1"; shift; while IFS= read -r _line; do
         [ "$_line" ] || continue
         "$@" "$_line" || return "$?"
