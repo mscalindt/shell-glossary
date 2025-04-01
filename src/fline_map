@@ -37,7 +37,7 @@
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
 #   Utility: read".
 #.
-map_fline() {
+fline_map() {
     case "$1" in
         '-')
             # Consume stdin using `read`, passing each populated line
@@ -51,7 +51,7 @@ map_fline() {
             {
                 file_preload -cat "$2" && \
                 shift 2 && \
-                map_fline - "$@" \
+                fline_map - "$@" \
 <<_
 $_file
 _
@@ -64,7 +64,7 @@ _
             { exec 9< "$2"; } || return "$?"
 
             shift 2 && \
-            map_fline - "$@" <&9 || { set -- "$?"; exec 9<&-; return "$1"; }
+            fline_map - "$@" <&9 || { set -- "$?"; exec 9<&-; return "$1"; }
 
             # Release file descriptor `9` to close the associated file.
             exec 9<&-

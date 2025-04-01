@@ -97,6 +97,8 @@ Escape a string to be used literally as a POSIX `sed` string
 Read a file raw
 - [FLINE()](src/fline):
 Get a specific line in a file
+- [FLINE_MAP()](src/fline_map):
+Process each populated file line with a function
 - [FTYPE()](src/ftype):
 Identify the type of an object on the filesystem
 - [INFO()](src/info):
@@ -105,8 +107,6 @@ Print formatted text
 Process each argument with a function
 - [MAP_FIND()](src/map_find):
 Find success among arguments using a function
-- [MAP_FLINE()](src/map_fline):
-Process each populated file line with a function
 - [MAP_PCHUNK()](src/map_pchunk):
 Process each cumulative path segment with a function
 - [MAP_PCHUNK_FIND()](src/map_pchunk_find):
