@@ -1,0 +1,36 @@
+#! .desc:
+# Get a specific line in a string
+#! .params:
+# <"$1"> - string
+# <$2> - line number
+#! .uses:
+# <<<>
+#! .uses.fn:
+# <assert> ('-natural-n' '$2');
+#          Assert a string
+#! .gives:
+# (0) <"$_line"> - [string];
+#                  specified line
+#! .rc:
+# (0) success
+# (1) line does not exist
+#! .rc.fn:
+# (assert) (255) bad input
+#! .desc.ext:
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Here-Document".
+#.
+sline() {
+    assert -natural-n "$2" || return 255
+
+    _i=1; while IFS= read -r _line || [ "$_line" ]; do
+        case "$_i" in "$2") return 0 ;; esac
+        _i=$((_i + 1))
+    done \
+<<_FILE
+$1
+_FILE
+
+    return 1
+}

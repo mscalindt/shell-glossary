@@ -147,6 +147,8 @@ Replace specific character(s) with character(s) in a string using IFS
 Replace a specific character with character(s) in a string using PE
 - [REPLSTR_SED_POSIX()](src/replstr_sed_posix):
 Replace a substring with character(s) in a string using `sed`
+- [SLINE()](src/sline):
+Get a specific line in a string
 - [SQ_ARG()](src/sq_arg):
 Get N evaluated argument in a single-quotes array of arguments
 - [SQ_ARG_EXTRACT()](src/sq_arg_extract):
