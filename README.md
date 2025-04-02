@@ -123,8 +123,6 @@ Find success among path segments using a function
 Find success among path segments in reverse using a function
 - [MAP_PSEG_REV()](src/map_pseg_rev):
 Process each path segment in reverse with a function
-- [MAP_VLINE()](src/map_vline):
-Process each populated string line with a function
 - [MASK_CHECK()](src/mask_check):
 Assert a bit, the power of 2, in a pseudo-bitmask shell variable
 - [MASK_SET()](src/mask_set):
@@ -149,6 +147,8 @@ Replace a specific character with character(s) in a string using PE
 Replace a substring with character(s) in a string using `sed`
 - [SLINE()](src/sline):
 Get a specific line in a string
+- [SLINE_MAP()](src/sline_map):
+Process each populated string line with a function
 - [SQ_ARG()](src/sq_arg):
 Get N evaluated argument in a single-quotes array of arguments
 - [SQ_ARG_EXTRACT()](src/sq_arg_extract):
