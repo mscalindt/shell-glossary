@@ -15,7 +15,8 @@
 # (path_spec_static) (0) success
 # (path_spec_static) (*) error
 #! .desc.ext:
-# The presence of a broken symbolic path segment results in undefined behavior.
+# The presence of a broken symbolic segment prompts no action and is instead
+# treated as an inexistent segment.
 #.
 path_spec_fs() {
     path_spec_static -abchklmr "$@"  # -> $_path
