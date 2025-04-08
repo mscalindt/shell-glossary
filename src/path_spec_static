@@ -46,6 +46,9 @@
 #! .rc.util:
 # (realpath) (*) error
 #! .desc.ext:
+# 'Append/prepend' operations take place after 'strip' operations.
+# 'Unset' operations take place after 'set' operations.
+#
 # When resolve operations take place and no path segments remain,
 # the default behavior is "resolve to root" (`/`). This behavior
 # generally aligns with POSIX, and can be influenced with option `-n`.
@@ -163,6 +166,11 @@ path_spec_static() {
         esac
     done
 
+    # Prepend a dot and slash if the modified path is relative. (-s)
+    if [ "$3" ]; then case "$1" in
+        *s*) assert -absolute-path "$3" || set -- "$1" "$2" "./$3" ;;
+    esac; fi
+
     # Strip all trailing slashes if the modified path is not a directory. (-u)
     if [ "$3" ] && [ ! -d "$3" ]; then case "$1" in
         *u*) set -- "$1" "$2" "${3%"${3##*[!/]}"}" ;;
@@ -194,11 +202,6 @@ path_spec_static() {
     if [ -d "$3" ] && [ ! -h "${3%"${3##*[!/]}"}" ]; then \
     case "$1${3#"${3%?}"}" in
         *l*[!/]) set -- "$1" "$2" "$3/" ;;
-    esac; fi
-
-    # Prepend a dot and slash if the modified path is relative. (-s)
-    if [ "$3" ]; then case "$1" in
-        *s*) assert -absolute-path "$3" || set -- "$1" "$2" "./$3" ;;
     esac; fi
 
     # Return `/` if the modified path is empty. (-m)
