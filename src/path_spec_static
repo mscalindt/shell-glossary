@@ -50,8 +50,8 @@
 # the default behavior is "resolve to root" (`/`). This behavior
 # generally aligns with POSIX, and can be influenced with option `-n`.
 #
-# When option `-h` is used, the presence of a broken symbolic segment results
-# in undefined behavior.
+# When option `-h` is used, the presence of a broken symbolic segment prompts
+# no action and is instead treated as an inexistent segment.
 #
 # When options `-a` and `-b` are combined with option `-h`,
 # the resolving behavior explicitly becomes semantic.
@@ -124,7 +124,8 @@ path_spec_static() {
         set -- "$1" "${2#"$_pfx$_segment"}" "$3"
 
         # Resolve symbolic segments semantically. (-h)
-        if [ "$_segment" ] && [ -h "$3$_pfx$_segment" ]; then case "$1" in
+        if [ "$_segment" ] && [ -e "$3$_pfx$_segment" ] && \
+           [ -h "$3$_pfx$_segment" ]; then case "$1" in
             *h*)
                 {
                     set -- "$1" "$2" "$(realpath -- "$3$_pfx$_segment")" && \
