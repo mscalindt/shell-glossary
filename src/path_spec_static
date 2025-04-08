@@ -53,6 +53,9 @@
 # When option `-h` is used, the presence of a broken symbolic segment results
 # in undefined behavior.
 #
+# When options `-a` and `-b` are combined with option `-h`,
+# the resolving behavior explicitly becomes semantic.
+#
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: Dot".
