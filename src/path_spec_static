@@ -26,16 +26,16 @@
 # )
 # ["$2"] - path
 #! .uses:
-# [()]
+# (-h) [()]
 #! .uses.var:
-# [PWD] $ - environment variable;
-#           absolute pathname of the current working directory
+# (-r) [PWD] $ - environment variable;
+#                absolute pathname of the current working directory
 #! .uses.fn:
 # [assert] ("type" "string");
 #          Assert a string
 #! .uses.util:
-# [realpath] ('--' '$3$_pfx$_segment');
-#            resolve a pathname
+# (-h) [realpath] ('--' "file");
+#                 resolve a pathname
 #! .gives:
 # (0) <"$_path"> - [string];
 #                  [modified <$2>]
