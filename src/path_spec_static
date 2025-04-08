@@ -54,6 +54,10 @@
 # in undefined behavior.
 #
 # For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Dot".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Dot-Dot".
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment Variables,
 #   Subsection: Environment Variable Definition".
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Environment Variables,
