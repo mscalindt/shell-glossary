@@ -115,8 +115,6 @@ Find success among cumulative path segments using a function
 Find success among cumulative path segments in reverse using a function
 - [MAP_PCHUNK_REV()](src/map_pchunk_rev):
 Process each cumulative path segment in reverse with a function
-- [MAP_PSEG()](src/map_pseg):
-Process each path segment with a function
 - [MAP_PSEG_FIND()](src/map_pseg_find):
 Find success among path segments using a function
 - [MAP_PSEG_FIND_REV()](src/map_pseg_find_rev):
