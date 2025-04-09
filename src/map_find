@@ -8,12 +8,13 @@
 #                 successful argument
 #! .rc:
 # (1) false / error
+# (*) error
 #! .rc.fn:
 # ($2) (0) success
 #.
 map_find() {
     while [ "$#" -ge 2 ]; do
-        "$1" "$2" && { _arg="$2"; return 0; } || :
+        "$1" "$2" && { _arg="$2"; return "$?"; } || :
 
         _i="$1"; shift 2; [ "$#" = 0 ] || set -- "$_i" "$@"
     done
