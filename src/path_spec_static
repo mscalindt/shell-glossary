@@ -21,7 +21,6 @@
 #     'w' - append `/` (if not present) if $_path directory
 #     'x' - strip all leading slashes
 #     'y' - strip all trailing slashes
-#     'z' - invert path
 #     .
 # )
 # ["$2"] - path
@@ -78,7 +77,7 @@ path_spec_static() {
 
     # Assert the option block contains only expected options (characters).
     case "${1#\-}" in
-        *[!abchklmnopqrstuvwxyz]*) return 255 ;;
+        *[!abchklmnopqrstuvwxy]*) return 255 ;;
     esac
 
     _path="$2" && [ "$2" ] || return 0
@@ -157,13 +156,9 @@ path_spec_static() {
             *c*) _pfx=/ ;;
         esac; fi
 
-        # Unless option `-z` (invert path) is specified, append modified $_pfx
-        # (prefix) and $_segment (path segment) to $3 (modified path).
-        # Otherwise, prepend them. (-z)
-        case "$1" in
-            *z*) set -- "$1" "$2" "$_segment$_pfx$3" ;;
-            *) set -- "$1" "$2" "$3$_pfx$_segment" ;;
-        esac
+        # Append modified $_pfx (prefix) and $_segment (path segment)
+        # to $3 (modified path).
+        set -- "$1" "$2" "$3$_pfx$_segment"
     done
 
     # Prepend a dot and slash if the modified path is relative. (-s)
