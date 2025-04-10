@@ -2,7 +2,7 @@
 # Strip a path N segments RTL
 #! .params:
 # ["$1"] - path
-# <$2> - N
+# [$2] - N
 # [$3] - options(
 #     '-floor' - cannot strip the last path segment remaining
 #     '-posix' - cannot return an empty path (will return: `/`)
@@ -26,6 +26,8 @@
 #   Subsection: Pathname Resolution".
 #.
 path_strip() {
+    set -- "$1" "${2:-0}" "$3"
+
     assert -whole-n "$2" || return 255
 
     while [ "$2" -ge 1 ]; do
