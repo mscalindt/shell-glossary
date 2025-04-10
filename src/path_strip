@@ -5,7 +5,7 @@
 # <$2> - N
 # [$3] - options(
 #     '-floor' - cannot strip the last path segment remaining
-#     '-posix' - cannot return an empty path (will return/resolve: `/`)
+#     '-posix' - cannot return an empty path (will return: `/`)
 #     .
 # )
 #! .uses.fn:
@@ -16,7 +16,8 @@
 #                  [modified <$1>]
 #! .rc:
 # (0) success
-# (255) bad input
+# (*) error
+# (255) bad input / error
 #! .rc.fn:
 # (assert) (255) bad input
 #! .desc.ext:
@@ -27,7 +28,6 @@
 path_strip() {
     assert -whole-n "$2" || return 255
 
-    # Handle N ($2) here as long as it doesn't exceed the path segments.
     while [ "$2" -ge 1 ]; do
         # Strip any trailing slashes in the path, strip the last path segment,
         # strip the last path segment's leading slashes if any, and save the
@@ -37,37 +37,17 @@ path_strip() {
         _a="${_a%"${_a##*/}"}"
         _a="${_a%"${_a##*[!/]}"}"
 
-        # The last path segment remaining is handled specially outside.
+        # Handle the last path segment.
         [ "$_a" ] || break
 
-        # Set the stripped path ($_a) and decrement N ($2).
         set -- "$_a" "$(($2 - 1))" "$3"
     done
 
-    # If N ($2) has exceeded the path segments, handle the last path segment
-    # here. If `-posix` is specified but the path is naturally empty, it would
-    # still resolve to root.
-    while [ "$2" -ge 1 ]; do
-        case "$3" in
-            '-floor')
-                # Floor: The last path segment remains.
-                set -- "$1" "$(($2 - 1))" "$3"
-            ;;
-            '-posix')
-                # POSIX strip: Resolve to root. Note: This is a custom strip
-                # concept based on the pathname resolution of POSIX.
-                set -- / "$(($2 - 1))" "$3"
-            ;;
-            *)
-                [ ! "$3" ] || return 255
-
-                # Strip the last path segment.
-                set -- '' "$(($2 - 1))" "$3"
-            ;;
-        esac
-    done
-
-    _path="$1"
-
-    return 0
+    # `-floor`: Keep the path segment.
+    # `-posix`: Strip to root (`/`).
+    _path="$1"; case "$3" in
+        '-floor') : ;;
+        '-posix') [ "$2" = 0 ] || _path=/ ;;
+        *) [ ! "$3" ] || return 255; [ "$2" = 0 ] || _path= ;;
+    esac
 }
