@@ -38,11 +38,15 @@
 #! .gives:
 # (0) <"$_path"> - [string];
 #                  [modified <$2>]
+#! .sets:
+# <path_spec_static_> ();
 #! .rc:
 # (0) success
 # (*) error
+#! .ec:
+# (*) error
 # (255) bad input / error
-#! .rc.util:
+#! .ec.util:
 # (realpath) (*) error
 #! .desc.ext:
 # 'Append/prepend' operations take place after 'strip' operations.
@@ -73,156 +77,254 @@
 #   Subsection: realpath".
 #.
 path_spec_static() {
-    [ "${1#\-}" ] || return 255
+    path_spec_static_() {
+        set -- "${1#\-}" "${2#\-}" "$3"
 
-    # Assert the option block contains only expected options (characters).
-    case "${1#\-}" in
-        *[!abchklmnopqrstuvwxy]*) return 255 ;;
-    esac
+        [ "$1" ] && [ "$2" ] || exit 255
 
-    _path="$2" && [ "$2" ] || return 0
+        case "$1" in
+            *"$2"*) shift ;;
+            *) return 1 ;;
+        esac
 
-    # Set $_path to $3. From this point on, the path should only be modified
-    # solely as a positional parameter. This allows safe usage of functions
-    # that might inadvertently use or consume $_path.
-    set -- "$1" "$2" "$_path"
+        case "$1" in
+            # $2 is a `.` segment,
+            # (-a)
+            # Resolve lexically.
+            a)
+                _path="$2"
 
-    # Strip all leading slashes. (-x)
-    case "$1" in
-        *x*) set -- "$1" "$2" "${3#"${3%%[!/]*}"}" ;;
-    esac
+                case "$_path" in
+                    */) path_spec_static_ y y "$_path" ;;
+                esac
 
-    # Strip all trailing slashes. (-y)
-    case "$1" in
-        *y*) set -- "$1" "$2" "${3%"${3##*[!/]}"}" ;;
-    esac
+                case "$_path" in
+                    */'.') path_spec_static_ y y "${_path%'.'}" ;;
+                    *) return 1 ;;
+                esac
 
-    # Strip all trailing slashes if the path is not a directory. (-t)
-    if [ "$3" ] && [ ! -d "$3" ]; then case "$1" in
-        *t*) set -- "$1" "$2" "${3%"${3##*[!/]}"}" ;;
-    esac; fi
-
-    # Append a slash (if not present) if the path is a directory. (-v)
-    if [ -d "$3" ]; then case "$1${3#"${3%?}"}" in
-        *v*[!/]) set -- "$1" "$2" "$3/" ;;
-    esac; fi
-
-    # If the passed path operand is relative, prepend $PWD. (-r)
-    if [ "$3" ]; then case "$1" in
-        *r*) assert -absolute-path "$3" || set -- "$1" "$2" "${PWD%/}/$3" ;;
-    esac; fi
-
-    # Move $3 to $2 and rebuild $3 (modified path) from $2.
-    set -- "$1" "$3" ""; while [ "$2" ]; do
-        # Example path:
-        # `//abc///foo`
-        # $_pfx: `//`
-        # $_segment: `abc`
-        _pfx="${2%%[!/]*}"
-        _segment="${2#"$_pfx"}"
-        _segment="${_segment%%/*}"
-
-        # Strip $_pfx (prefix) and $_segment (path segment) from $2.
-        set -- "$1" "${2#"$_pfx$_segment"}" "$3"
-
-        # Resolve symbolic segments semantically. (-h)
-        if [ "$_segment" ] && [ -e "$3$_pfx$_segment" ] && \
-           [ -h "$3$_pfx$_segment" ]; then case "$1" in
-            *h*)
-                {
-                    set -- "$1" "$2" "$(realpath -- "$3$_pfx$_segment")" && \
-                    continue
-                } || return "$?"
+                # Default resolving behavior: "resolve to root" (`/`).
+                [ "$_path" ] || _path=/
             ;;
-        esac; fi
+            # $2 is a `..` segment,
+            # (-b)
+            # Resolve lexically.
+            b)
+                _path="$2"
 
-        # Resolve `.` lexically. (-a)
-        if [ "$_segment" = '.' ]; then case "$1" in
-            *a*) [ "$2$3" ] && continue || { _pfx=/; _segment=; } ;;
-        esac; fi
+                case "$_path" in
+                    */) path_spec_static_ y y "$_path" ;;
+                esac
 
-        # Resolve `..` lexically. (-b)
-        if [ "$_segment" = '..' ]; then case "$1" in
-            *b*)
-                set -- "$1" "$2" "${3%/*}"
-                set -- "$1" "$2" "${3%"${3##*[!/]}"}"
+                case "$_path" in
+                    */'..')
+                        path_spec_static_ y y "${_path%'..'}" && \
+                        path_spec_static_ y y "${_path%/*}/"
+                    ;;
+                    *)
+                        return 1
+                    ;;
+                esac
 
-                [ "$2$3" ] && continue || { _pfx=/; _segment=; }
+                # Default resolving behavior: "resolve to root" (`/`).
+                [ "$_path" ] || _path=/
             ;;
-        esac; fi
+            # (-c)
+            # Strip consecutive slashes.
+            c)
+                case "$2" in
+                    *//) _path="${2%"${2##*[!/]}"}/" ;;
+                    *//*) _path="${2%%//*}/${2##*//}" ;;
+                    *) return 1 ;;
+                esac
+            ;;
+            # $2 is an existing symbolic path segment,
+            # (-h)
+            # Resolve using `realpath`.
+            h)
+                [ -e "$2" ] && [ -h "${2%"${2##*[!/]}"}" ] || return 1
 
-        # Strip consecutive slashes. (-c)
-        if [ "$_pfx" ]; then case "$1" in
-            *c*) _pfx=/ ;;
-        esac; fi
+                 _path="$(realpath -- "$2")"
+            ;;
+            # $2 is a logical directory,
+            # (-k)
+            # Strip all trailing slashes.
+            k)
+                { case "$2" in
+                    */) [ -d "$2" ] && [ -h "${2%"${2##*[!/]}"}" ] ;;
+                    *) return 1 ;;
+                esac; } || return 1
 
-        # Append modified $_pfx (prefix) and $_segment (path segment)
-        # to $3 (modified path).
-        set -- "$1" "$2" "$3$_pfx$_segment"
+                path_spec_static_ y y "$2"
+            ;;
+            # $2 is a physical directory but not a directory path,
+            # (-l)
+            # Append `/`.
+            l)
+                { case "$2" in
+                    */) return 1 ;;
+                    *) [ -d "$2" ] && [ ! -h "${2%"${2##*[!/]}"}" ] ;;
+                esac; } || return 1
+
+                path_spec_static_ v v "$2"
+            ;;
+            # $2 is empty,
+            # (-m)
+            # Set `/`.
+            m)
+                case ":$2" in
+                    :) _path=/ ;;
+                    *) return 1 ;;
+                esac
+            ;;
+            # $2 is `/`,
+            # (-n)
+            # Unset.
+            n)
+                case "$2" in
+                    /) _path= ;;
+                    *) return 1 ;;
+                esac
+            ;;
+            # $2 is an absolute path,
+            # (-o)
+            # Unset.
+            o)
+                assert -absolute-path "$2" || return 1
+
+                _path=
+            ;;
+            # $2 is a relative path,
+            # (-p)
+            # Unset.
+            p)
+                assert -relative-path "$2" || return 1
+
+                _path=
+            ;;
+            # $2 does not exist on the filesystem,
+            # (-q)
+            # Unset.
+            q)
+                [ "$2" ] && [ ! -e "$2" ] || return 1
+
+                _path=
+            ;;
+            # $2 is a relative path,
+            # (-r)
+            # Prepend $PWD.
+            r)
+                assert -relative-path "$2" || return 1
+
+                _path="${PWD%/}/$2"
+            ;;
+            # $2 is a relative path,
+            # (-s)
+            # Prepend `./`.
+            s)
+                assert -relative-path "$2" || return 1
+
+                _path="./$2"
+            ;;
+            # $2 is not a directory,
+            # (-t) (-u)
+            # Strip all trailing slashes.
+            t | u)
+                { case "$2" in
+                    */) [ ! -d "$2" ] ;;
+                    *) return 1 ;;
+                esac; } || return 1
+
+                path_spec_static_ y y "$2"
+            ;;
+            # $2 is a directory but not a directory path,
+            # (-v) (-w)
+            # Append `/`.
+            v | w)
+                [ -d "$2" ] && { ! assert -directory-path "$2"; } || return 1
+
+                _path="$2/"
+            ;;
+            # (-x)
+            # Strip all leading slashes.
+            x)
+                case "$2" in
+                    /*) _path="${2#"${2%%[!/]*}"}" ;;
+                    *) return 1 ;;
+                esac
+            ;;
+            # (-y)
+            # Strip all trailing slashes.
+            y)
+                case "$2" in
+                    */) _path="${2%"${2##*[!/]}"}" ;;
+                    *) return 1 ;;
+                esac
+            ;;
+            *)
+                exit 255
+            ;;
+        esac
+
+        [ "$?" -eq 0 ] || exit "$?"
+    }
+
+    # Static leading/trailing slashes strip operations, respectively.
+    path_spec_static_ "$1" -x "$2" && set -- "$1" "$_path" || :
+    path_spec_static_ "$1" -y "$2" && set -- "$1" "$_path" || :
+
+    # Static directory-related strip/append operations, respectively.
+    path_spec_static_ "$1" -t "$2" && set -- "$1" "$_path" || :
+    path_spec_static_ "$1" -v "$2" && set -- "$1" "$_path" || :
+
+    # Convert a relative path to absolute with $PWD. This operation shall
+    # only be done after any initial static strip operations.
+    path_spec_static_ "$1" -r "$2" && set -- "$1" "$_path" || :
+
+    # Resolve the rightmost existing symbolic path segment. This operation
+    # shall take priority over the remaining path resolving logic.
+    map_pchunk_find_rev "$2" '' '' path_spec_static_ "$1" -h && {
+        set -- "$1" "$_path${2#"$_segment"}"
+    } || :
+
+    # Resolve `.`.
+    _path=
+    while map_pchunk_find "$2" "$_path" '' path_spec_static_ "$1" -a; do
+        set -- "$1" "$_path${2#"$_segment"}"
     done
 
-    # Prepend a dot and slash if the modified path is relative. (-s)
-    if [ "$3" ]; then case "$1" in
-        *s*) assert -absolute-path "$3" || set -- "$1" "$2" "./$3" ;;
-    esac; fi
+    # Resolve `..`.
+    _path=
+    while map_pchunk_find "$2" "$_path" '' path_spec_static_ "$1" -b; do
+        set -- "$1" "$_path${2#"$_segment"}"
+    done
 
-    # Strip all trailing slashes if the modified path is not a directory. (-u)
-    if [ "$3" ] && [ ! -d "$3" ]; then case "$1" in
-        *u*) set -- "$1" "$2" "${3%"${3##*[!/]}"}" ;;
-    esac; fi
+    # Strip consecutive slashes.
+    _path=
+    while map_pchunk_find "$2" "$_path" '' path_spec_static_ "$1" -c; do
+        set -- "$1" "$_path${2#"$_segment"}"
+    done
 
-    # Append a slash (if not present) if the modified path is a directory. (-w)
-    if [ -d "$3" ]; then case "$1${3#"${3%?}"}" in
-        *w*[!/]) set -- "$1" "$2" "$3/" ;;
-    esac; fi
+    # POSIX-compliant relative path `./` prepend. This operation shall
+    # only be done after path resolution (conflicts with `.` resolving).
+    path_spec_static_ "$1" -s "$2" && set -- "$1" "$_path" || :
 
-    # Strip all trailing slashes if the modified path is a logical
-    # directory. (-k)
-    # A logical directory is a symbolic link.
-    #
-    # Any trailing slashes will be removed for operator `-h` of `test`, because
-    # otherwise they will cause an actual symbolic link to be followed and thus
-    # deteriorate the reliability of `-h`.
-    if [ -d "$3" ] && [ -h "${3%"${3##*[!/]}"}" ]; then case "$1" in
-        *k*) set -- "$1" "$2" "${3%"${3##*[!/]}"}" ;;
-    esac; fi
+    # Static directory-related result strip/append operations, respectively.
+    path_spec_static_ "$1" -u "$2" && set -- "$1" "$_path" || :
+    path_spec_static_ "$1" -w "$2" && set -- "$1" "$_path" || :
 
-    # Append a slash (if not present) if the modified path is a physical
-    # directory. (-l)
-    # A physical directory is not a symbolic link.
-    #
-    # Any trailing slashes will be removed for operator `-h` of `test`, because
-    # otherwise they will cause an actual symbolic link to be followed and thus
-    # deteriorate the reliability of `-h`.
-    if [ -d "$3" ] && [ ! -h "${3%"${3##*[!/]}"}" ]; then \
-    case "$1${3#"${3%?}"}" in
-        *l*[!/]) set -- "$1" "$2" "$3/" ;;
-    esac; fi
+    # Logical/physical directory result strip/append operations, respectively.
+    # These operations shall be done after any static directory-related result
+    # strip/append operations.
+    path_spec_static_ "$1" -k "$2" && set -- "$1" "$_path" || :
+    path_spec_static_ "$1" -l "$2" && set -- "$1" "$_path" || :
 
-    # Return `/` if the modified path is empty. (-m)
-    if [ ! "$3" ]; then case "$1" in
-        *m*) _path=/; return 0 ;;
-    esac; fi
+    # Set/unset result operations, respectively.
+    path_spec_static_ "$1" -m "$2" && set -- "$1" "$_path" || :
+    path_spec_static_ "$1" -n "$2" && set -- "$1" "$_path" || :
+    path_spec_static_ "$1" -o "$2" && set -- "$1" "$_path" || :
+    path_spec_static_ "$1" -p "$2" && set -- "$1" "$_path" || :
+    path_spec_static_ "$1" -q "$2" && set -- "$1" "$_path" || :
 
-    # Never return `/` modified path. (-n)
-    if [ "$3" ] && [ "$3" = '/' ]; then case "$1" in
-        *n*) _path=; return 0 ;;
-    esac; fi
-
-    # Never return absolute modified path. (-o)
-    if [ "$3" ]; then case "$1" in
-        *o*) assert -relative-path "$3" || { _path=; return 0; } ;;
-    esac; fi
-
-    # Never return relative modified path. (-p)
-    if [ "$3" ]; then case "$1" in
-        *p*) assert -absolute-path "$3" || { _path=; return 0; } ;;
-    esac; fi
-
-    # Never return inexistent modified path. (-q)
-    if [ "$3" ] && [ ! -e "$3" ]; then case "$1" in
-        *q*) _path=; return 0 ;;
-    esac; fi
-
-    _path="$3"; return 0
+    _path="$2"
 }
