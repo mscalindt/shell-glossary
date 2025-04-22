@@ -23,8 +23,9 @@
 #                  specified line of $3/stdin
 #! .rc:
 # (0) success
-# (*) line does not exist / error
-# (255) bad input / line does not exist / error
+# (1) line does not exist / error
+# (*) error
+# (255) bad input / error
 #! .rc.fn:
 # (assert) (255) bad input
 # (file_preload) (*) error
@@ -60,7 +61,7 @@ fline() {
 <<_
 $_file
 _
-            } && return 0 || return "$?"
+            } && return 0
         ;;
         '-shell')
             # Open the file and assign it to file descriptor `9`. The usage of
@@ -68,14 +69,14 @@ _
             # TOCTOU flaws are completely avoided this way.
             { exec 9< "$3"; } || return "$?"
 
-            fline - "$2" <&9 && { exec 9<&-; return "$?"; }
+            fline - "$2" <&9 && { exec 9<&-; return 0; }
 
             # Release file descriptor `9` to close the associated file.
             exec 9<&-
 
             # Manually handle the last `read` call if the file
             # does not end with a <newline>.
-            case "$_i" in "$2") return "$?" ;; esac
+            case "$_i" in "$2") return 0 ;; esac
         ;;
         *)
             return 255
