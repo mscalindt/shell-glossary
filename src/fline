@@ -23,9 +23,8 @@
 #                  specified line of $3/stdin
 #! .rc:
 # (0) success
-# (1) line does not exist / error
-# (*) error
-# (255) bad input / error
+# (*) line does not exist / error
+# (255) bad input / line does not exist / error
 #! .rc.fn:
 # (assert) (255) bad input
 # (file_preload) (*) error
