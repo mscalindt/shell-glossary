@@ -19,9 +19,9 @@ sline_map() {
         [ "$_line" ] || continue
         "$@" "$_line" || return "$?"
     done \
-<<_FILE
+<<EOF
 $_str
-_FILE
+EOF
 
     return 0
 }
