@@ -1,0 +1,31 @@
+#! .desc:
+# Process each populated IFS field split with a function
+#! .params:
+# <"$1"> - string
+# <$2> - function name
+# ["$3"]+ - function argument
+#! .uses.var:
+# <IFS> $ - environment variable;
+#           list of characters that is used for field splitting
+#! .sets:
+# <set +f>;
+#! .rc:
+# (0) success
+# (*) error
+#! .rc.fn:
+# ($2) (*) error
+#! .desc.ext:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Field Splitting".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: set".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Shell Variables".
+#.
+ifs_map() {
+    set -f && _str="$1" && shift && for _field in $_str; do
+        [ "$_field" ] || continue
+
+        "$@" "$_field" || { set -- "$?"; set +f; return "$?"; }
+    done && set +f
+}

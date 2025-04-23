@@ -101,6 +101,8 @@ Get a specific line in a file
 Process each populated file line with a function
 - [FTYPE()](src/ftype):
 Identify the type of an object on the filesystem
+- [IFS_MAP()](src/ifs_map):
+Process each populated IFS field split with a function
 - [INFO()](src/info):
 Print formatted text
 - [MAP()](src/map):
