@@ -4,7 +4,7 @@
 # <"$1"> - incompatible option string
 #! .uses.var:
 # <opt_match> $ - string;
-#                 previous option
+#                 previous option string
 #! .ec:
 # (2) incompatible option
 # (255) bad input
