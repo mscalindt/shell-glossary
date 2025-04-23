@@ -4,7 +4,7 @@
 # ["$1"]+ - valid argument
 #! .uses.var:
 # <opt_match> $ - string;
-#                 option
+#                 option string
 # [opt_arg] $ - string;
 #               argument
 #! .uses.fn:
