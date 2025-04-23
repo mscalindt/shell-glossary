@@ -28,9 +28,9 @@ sline() {
         case "$_i" in "$2") return 0 ;; esac
         _i=$((_i + 1))
     done \
-<<_FILE
+<<EOF
 $1
-_FILE
+EOF
 
     return 1
 }
