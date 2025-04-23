@@ -5,7 +5,7 @@
 #! .uses.var:
 # <opt_match> $ - string;
 #                 option string
-# [opt_arg] $ - string;
+# <opt_arg> $ - [string];
 #               option argument
 #! .uses.fn:
 # <opt_err> ('$opt_match' '$opt_arg' '$@');
