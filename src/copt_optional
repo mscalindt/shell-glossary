@@ -10,7 +10,7 @@
 # (0) <"$opt_arg"> - [string];
 #                    option argument
 # (0) <"$opt_match"> - string;
-#                      literal option matched
+#                      option string
 #! .sets:
 # (0) <opt> $ - '';
 # (0) <opt_shift> $ - '1';
