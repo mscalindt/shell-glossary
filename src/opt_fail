@@ -6,7 +6,7 @@
 # <opt_match> $ - string;
 #                 option string
 # [opt_arg] $ - string;
-#               argument
+#               option argument
 #! .uses.fn:
 # <opt_err> ('$opt_match' '$opt_arg' '$@');
 #           Signify option failure
