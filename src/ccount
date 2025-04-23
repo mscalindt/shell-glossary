@@ -8,6 +8,8 @@
 #          Assert a string
 #! .gives:
 # (0) <$_count> - integer
+#! .sets:
+# (0) <set +f>;
 #! .rc:
 # (0) success
 #! .rc.fn:
@@ -46,12 +48,8 @@ ccount() {
     _old_IFS="$IFS" 2> /dev/null
     ${IFS+':'} unset _old_IFS 2> /dev/null
 
-    # Save the state of the pathname expansion flag and disable it if active;
-    # disabled to disable the expansion of `*`.
-    case "$-" in
-        *'f'*) _pn=0 ;;
-        *) _pn=1; set -f ;;
-    esac
+    # Disable the expansion of `*` (set `noglob`).
+    set -f
 
     # Field split $2 (string) based on $1 (character(s)); the number of fields
     # produced (minus one, to account for the field split itself) corresponds
@@ -60,10 +58,8 @@ ccount() {
     # the end of the string, ensuring the function's integrity.
     IFS="$1"; set -- $2"$IFS"; _count=$(($# - 1))
 
-    # Restore the active state of the pathname expansion flag if appropriate.
-    if [ "$_pn" = 1 ]; then
-        set +f
-    fi
+    # Enable the expansion of `*` (unset `noglob`).
+    set +f
 
     # Restore $IFS.
     IFS="$_old_IFS" 2> /dev/null
