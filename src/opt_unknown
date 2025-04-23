@@ -1,7 +1,7 @@
 #! .desc:
 # Signify unknown option
 #! .params:
-# <"$1"> - option
+# <"$1"> - option string
 #! .rc:
 # (0) success
 #! .ec:
