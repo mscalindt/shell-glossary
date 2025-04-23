@@ -5,7 +5,7 @@
 # <"$2">+ - argument
 #! .gives:
 # (0) <"$_arg"> - [string];
-#                 successful argument
+#                 successfully processed $2
 #! .rc:
 # (1) false / error
 # (*) error
