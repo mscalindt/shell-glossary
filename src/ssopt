@@ -15,6 +15,8 @@
 #! .rc:
 # (0) true
 # (1) false
+#! .ec:
+# (255) bad input
 #.
 ssopt() {
     while [ "$1" ]; do
@@ -32,6 +34,8 @@ ssopt() {
 
         shift
     done
+
+    [ "$#" -eq 0 ] || exit 255
 
     return 1
 }
