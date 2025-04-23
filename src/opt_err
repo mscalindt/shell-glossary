@@ -23,7 +23,7 @@ opt_err() {
     fi
 
     if [ "$1" ]; then
-        echo "Valid arguments are:"
+        echo "Valid option arguments are:"
 
         while [ "$1" ]; do
             printf " > '%s'\n" "$1" >&2; shift
