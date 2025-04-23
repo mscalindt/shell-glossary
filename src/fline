@@ -2,25 +2,25 @@
 # Get a specific line in a file
 #! .params:
 # <$1> - read_method(
-#     '-' - read heredoc (stdin)
 #     '-cat' - use `cat`
 #     '-shell' - use shell input redirection
 #     .
 # )
 # <$2> - line number
-# ["$3"] - file path
+# <"$3"> - file path
 #! .uses:
 # [&9]
-# [<<]
 # [<]
 #! .uses.fn:
 # <assert> ('-natural-n' '$2');
 #          Assert a string
 # [file_preload] ('-cat' '$3');
 #                Read a file raw
+# [sline] ('$_file' '$2');
+#         Get a specific line in a string
 #! .gives:
 # (0) <"$_line"> - [string];
-#                  specified line of $3/stdin
+#                  specified line of $3
 #! .rc:
 # (0) success
 # (1) line does not exist / error
@@ -29,6 +29,7 @@
 #! .rc.fn:
 # (assert) (255) bad input
 # (file_preload) (*) error
+# (sline) (*) error
 #! .desc.ext:
 # Use `-cat` to read the file if it is a potential specification of a file
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
@@ -37,8 +38,6 @@
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: exec".
-# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
-#   Subsection: Here-Document".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
 #   Utility: read".
 #.
@@ -46,22 +45,8 @@ fline() {
     assert -natural-n "$2" || return 255
 
     case "$1" in
-        '-')
-            # Consume stdin using `read`, counting the lines;
-            # if we land on the specified one, signal it.
-            _i=1; while IFS= read -r _line; do
-                case "$_i" in "$2") return 0 ;; esac
-                _i=$((_i + 1))
-            done
-        ;;
         '-cat')
-            {
-                file_preload -cat "$3" && \
-                fline - "$2" \
-<<_
-$_file
-_
-            } && return 0
+            file_preload -cat "$3" && sline "$_file" "$2" && return 0
         ;;
         '-shell')
             # Open the file and assign it to file descriptor `9`. The usage of
@@ -69,7 +54,10 @@ _
             # TOCTOU flaws are completely avoided this way.
             { exec 9< "$3"; } || return "$?"
 
-            fline - "$2" <&9 && { exec 9<&-; return 0; }
+            _i=1; while IFS= read -r _line; do
+                case "$_i" in "$2") exec 9<&-; return 0 ;; esac
+                _i=$((_i + 1))
+            done <&9
 
             # Release file descriptor `9` to close the associated file.
             exec 9<&-
