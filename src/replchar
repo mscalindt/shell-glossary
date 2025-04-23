@@ -10,6 +10,8 @@
 #! .gives:
 # (0) <"$_str"> - [string];
 #                 [modified <$3>]
+#! .sets:
+# (0) <set +f>;
 #! .rc:
 # (0) success
 #! .rc.fn:
@@ -48,12 +50,8 @@ replchar() {
     _old_IFS="$IFS" 2> /dev/null
     ${IFS+':'} unset _old_IFS 2> /dev/null
 
-    # Save the state of the pathname expansion flag and disable it if active;
-    # disabled to disable the expansion of `*`.
-    case "$-" in
-        *'f'*) _pn=0 ;;
-        *) _pn=1; set -f ;;
-    esac
+    # Disable the expansion of `*` (set `noglob`).
+    set -f
 
     # Field split $3 (string) based on $1 (character(s)); the number of fields
     # produced (minus one, to account for the field split itself) corresponds
@@ -70,10 +68,8 @@ replchar() {
     done
     _str="${_str%"$IFS$_chars"}"
 
-    # Restore the active state of the pathname expansion flag if appropriate.
-    if [ "$_pn" = 1 ]; then
-        set +f
-    fi
+    # Enable the expansion of `*` (unset `noglob`).
+    set +f
 
     # Restore $IFS.
     IFS="$_old_IFS" 2> /dev/null
