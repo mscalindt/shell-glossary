@@ -2,21 +2,21 @@
 # Process each populated file line with a function
 #! .params:
 # <$1> - read_method(
-#     '-' - read heredoc (stdin)
 #     '-cat' - use `cat`
 #     '-shell' - use shell input redirection
 #     .
 # )
-# ["$2"] - file path
+# <"$2"> - file path
 # <$3> - function name
 # ["$4"]+ - function argument
 #! .uses:
 # [&9]
-# [<<]
 # [<]
 #! .uses.fn:
 # [file_preload] ('-cat' '$2');
 #                Read a file raw
+# [sline_map] ('$_file' "function name" "function argument");
+#             Process each populated string line with a function
 #! .rc:
 # (0) success
 # (*) error
@@ -24,6 +24,7 @@
 #! .rc.fn:
 # ($3) (*) error
 # (file_preload) (*) error
+# (sline_map) (*) error
 #! .desc.ext:
 # Use `cat` to read the file if it is a potential specification of a file
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
@@ -32,30 +33,14 @@
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: exec".
-# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
-#   Subsection: Here-Document".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
 #   Utility: read".
 #.
 fline_map() {
     case "$1" in
-        '-')
-            # Consume stdin using `read`, passing each populated line
-            # to the function ($2).
-            shift; while IFS= read -r _line || [ "$_line" ]; do
-                [ "$_line" ] || continue
-                "$@" "$_line" || return "$?"
-            done
-        ;;
         '-cat')
-            {
-                file_preload -cat "$2" && \
-                shift 2 && \
-                fline_map - "$@" \
-<<_
-$_file
-_
-            } || return "$?"
+            file_preload -cat "$2" && shift 2 && sline_map "$_file" "$@" || \
+            return "$?"
         ;;
         '-shell')
             # Open the file and assign it to file descriptor `9`. The usage of
@@ -63,8 +48,10 @@ _
             # TOCTOU flaws are completely avoided this way.
             { exec 9< "$2"; } || return "$?"
 
-            shift 2 && \
-            fline_map - "$@" <&9 || { set -- "$?"; exec 9<&-; return "$1"; }
+            shift 2 && while IFS= read -r _line || [ "$_line" ]; do
+                [ "$_line" ] || continue
+                "$@" "$_line" || { set -- "$?"; exec 9<&-; return "$1"; }
+            done
 
             # Release file descriptor `9` to close the associated file.
             exec 9<&-
