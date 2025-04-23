@@ -21,6 +21,7 @@
 # (1) false
 #! .ec:
 # (2) bad option argument specification
+# (255) bad input
 #.
 scopt() {
     while [ "$1" ]; do
@@ -75,6 +76,8 @@ scopt() {
 
         shift
     done
+
+    [ "$#" -eq 0 ] || exit 255
 
     return 1
 }
