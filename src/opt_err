@@ -2,8 +2,8 @@
 # Signify option failure
 #! .params:
 # <"$1"> - option string
-# ["$2"] - argument
-# ["$3"]+ - valid argument
+# ["$2"] - option argument
+# ["$3"]+ - valid option argument
 #! .rc:
 # (0) success
 #! .ec:
