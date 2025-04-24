@@ -6,6 +6,9 @@
 # <["$3"]> - RTL mask
 # <$4> - function name
 # ["$5"]+ - function argument
+#! .gives:
+# <"$_segment"> - [string];
+#                 last processed cumulative path segment
 #! .sets:
 # <map_pchunk_rev_> ();
 #! .rc:
@@ -44,6 +47,8 @@
 #.
 map_pchunk_rev() {
     map_pchunk_rev_() { _pchunk="$1" && shift 2 && "$@" "$_pchunk"; }
+
+    _segment=
 
     [ "$#" -ge 4 ] || return 255
 
@@ -121,7 +126,11 @@ map_pchunk_rev() {
     # Process the path using parameter expansion and an optional LTR path mask.
     while [ "${1#"${1%%[!/]*}"}" ] && [ "$2" != "${1%"${1##*[!/]}"}" ]; do
         # Process the path.
-        map_pchunk_rev_ "$@" || return "$?"
+        map_pchunk_rev_ "$@" || {
+            set -- "$1" "$?"; _segment="$1"; return "$2"
+        }
+
+        _segment="$1"
 
         # Strip any trailing slashes in the path, strip the last path segment,
         # strip the last path segment's leading slashes if any, and save the
