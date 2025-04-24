@@ -3,16 +3,19 @@
 #! .params:
 # <"$1"> - function
 # <"$2">+ - argument
+#! .gives:
+# <"$_arg"> - [string];
+#             last processed <[$2]>
 #! .rc:
 # (0) success
 #! .rc.fn:
 # ($2) (*) error
 #.
 map() {
-    while [ "$#" -ge 2 ]; do
-        "$1" "$2" || return "$?"
+    _arg=; while [ "$#" -ge 2 ]; do
+        "$1" "$2" || { set -- "$?" "$2"; _arg="$2"; return "$1"; }
 
-        _i="$1"; shift 2; [ "$#" = 0 ] || set -- "$_i" "$@"
+        _i="$1"; _arg="$2"; shift 2; [ "$#" = 0 ] || set -- "$_i" "$@"
     done
 
     return 0
