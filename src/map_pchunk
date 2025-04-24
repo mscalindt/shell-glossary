@@ -6,6 +6,9 @@
 # <["$3"]> - RTL mask
 # <$4> - function name
 # ["$5"]+ - function argument
+#! .gives:
+# <"$_segment"> - [string];
+#                 last processed cumulative path segment
 #! .sets:
 # <map_pchunk_> ();
 #! .rc:
@@ -44,6 +47,8 @@
 #.
 map_pchunk() {
     map_pchunk_() { _pchunk="$2" && shift 2 && "$@" "$_pchunk"; }
+
+    _segment=
 
     [ "$#" -ge 4 ] || return 255
 
@@ -132,7 +137,7 @@ map_pchunk() {
         _c="${_c%%/*}"
 
         # Break successfully if no path segment is present.
-        [ "$_c" ] || break
+        [ "$_c" ] || { _segment="$2"; break; }
 
         # To properly handle the last path segment, set the whole path as the
         # path mask.
@@ -146,7 +151,7 @@ map_pchunk() {
         set -- "$_path" "$_ltr_mask" "$@"
 
         # Process the path chunk (path mask).
-        map_pchunk_ "$@" || return "$?"
+        map_pchunk_ "$@" || { set -- "$?" "$2"; _segment="$2"; return "$1"; }
     done
 
     return 0
