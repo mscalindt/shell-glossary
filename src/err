@@ -27,7 +27,7 @@
 #        Print formatted text
 #! .rc.fn:
 # (info) (0) success
-# (info) (0) error
+# (info) (*) error
 #! .desc.ext:
 # The colors are bold, foreground text, escape sequences of ANSI.
 #
