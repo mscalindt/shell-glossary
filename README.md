@@ -71,6 +71,8 @@ with optional external utility calls.
 
 - [ARG_SAVE()](src/arg_save):
 Save with single-quote escape an argument into a variable
+- [ARG_SET()](src/arg_set):
+Set with single-quote escape an argument into a variable
 - [CCOUNT()](src/ccount):
 Count the times character(s) appear in a string using IFS
 - [CCOUNT_POSIX()](src/ccount_posix):

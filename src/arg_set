@@ -1,0 +1,46 @@
+#! .desc:
+# Set with single-quote escape an argument into a variable
+#! .params:
+# <$1> - variable name
+# [["$2"]] - argument
+#! .uses.fn:
+# <assert> ('-shell-name' '$1');
+#          Assert a string
+# [replchar_posix] ('\'' '\'\\\'\'' '$2');
+#                  Replace a specific character with character(s) in a string
+#                  using PE
+#! .rc:
+# (0) success
+# (*) error
+#! .rc.fn:
+# (assert) (255) bad input
+# (replchar_posix) (*) error
+#! .desc.ext:
+# If $2 is unspecified/empty, an empty argument will be set in $1.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Quoting".
+#.
+arg_set() {
+    assert -shell-name "$1" || return 255
+
+    # Escape any single quotes in the argument ($2).
+    _str="$2"; case "$_str" in
+        *\'*) replchar_posix \' \'\\\'\' "$_str" || return "$?" ;;
+    esac  # -> $_str
+
+    # The usage of `eval` here is safe. Assuming $_str is `"'\''abc` (we escape
+    # single quotes in $2 before they're passed to `eval`):
+    #
+    # First expansion (current shell):
+    # `eval "$1=\"'\$_str'\""` -> `eval a="'$_str'"` (lit.)
+    #
+    # Second expansion (`eval`):
+    # `eval a="'$_str'"` -> `a = '"'\''abc'` (illust. of meta expansion)
+    #
+    # Key points:
+    # - Due to the sophisticated escaping, single quotes from the first
+    #   expansion carry their significance to the second expansion.
+    eval "$1=\"'\$_str'\""
+}
