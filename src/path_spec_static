@@ -272,7 +272,7 @@ path_spec_static() {
             ;;
         esac
 
-        [ "$?" -eq 0 ] || exit "$?"
+        set -- "$?"; [ "$1" = 0 ] || exit "$1"
     }
 
     # Static leading/trailing slashes strip operations, respectively.
