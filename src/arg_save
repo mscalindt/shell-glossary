@@ -16,7 +16,10 @@
 # (assert) (255) bad input
 # (replchar_posix) (*) error
 #! .desc.ext:
-# If $2 is unspecified/empty, an empty argument will be saved into $1.
+# The argument will be appended to the variable's existing content; arg_save()
+# does not guarantee the variable will get populated only by what is specified
+# as parameters or what is present at its call time. If $2 and the variable's
+# content are unspecified/empty, an empty argument might be saved into $1.
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
