@@ -30,10 +30,18 @@
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
 #
 # For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: File Descriptor".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Command Substitution".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Duplicating an Input File Descriptor".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: exec".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Redirecting Input".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Redirection".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
 #   Utility: read".
 #.
