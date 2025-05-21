@@ -5,7 +5,7 @@
 # <"$2">+ - argument
 #! .gives:
 # <"$_arg"> - [string];
-#             last processed <[$2]>
+#             [last processed <$2>]
 #! .rc:
 # (0) success
 #! .rc.fn:
