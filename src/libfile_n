@@ -1,0 +1,248 @@
+#! .desc:
+# Deterministically modify the line content of a file in-memory
+#! .params:
+# <$1>+ - operation(
+#     '-add' - from line $2 add $3
+#     '-rem' - remove line $2
+#     '-repl' - replace line $2 with $3
+#     .
+# )
+# <"$2"> - natural N
+# ["$3"] - string
+# ["$4"] - file content
+# ["$5"] - log file path
+#! .uses:
+# <&9>
+# <()>
+# <<<>
+# <>>>
+# [>]
+#! .uses.fn:
+# <assert> ('-n' "string");
+#          Assert a string
+# [arg_set] ('_str' "argument");
+#           Set with single-quote escape an argument into a variable
+# [libfile_n_add] ("natural N" "new string");
+#                 For natural N, add line content
+# [libfile_n_rem] ("natural N" "line string");
+#                 For natural N, remove line string
+# [sq_arg] ('1' "single-quotes array of arguments");
+#          Get N evaluated argument in a single-quotes array of arguments
+#! .gives:
+# (0) <"$_file"> - [string];
+#                  [modified <$4>]
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input / bad usage / error
+#! .rc.fn:
+# (arg_set) (*) error
+# (assert) (255) bad input
+# (libfile_n_add) (*) error
+# (libfile_n_rem) (*) error
+# (sq_arg) (*) error
+#! .desc.ext:
+# If a path to a valid file ($5) is given, a diff-style log of any changes
+# will be appended to it. If $5 is specified but not a valid file,
+# error code `255` (bad usage) will be returned.
+#
+# Multiple operations on the same line are not allowed and error code `255`
+# (bad usage) will be returned.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: File Descriptor".
+# > "POSIX.1-2024, Volume: Base Definitions,
+#   Section: Directory Structure and Devices,
+#   Subsection: Directory Structure and Files".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Appending Redirected Output".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Command Substitution".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Duplicating an Output File Descriptor".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: exec".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Here-Document".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Redirecting Output".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Redirection".
+#.
+libfile_n() {
+    [ "$#" -ge 2 ] || return 255
+
+    # Parse the operations into a predictable, shell-performant format.
+    # The original positional parameters will shift by 1.
+    set -- '' "$@"; while :; do
+        case "$2" in
+            '-add' | '-rem' | '-repl')
+                assert -natural-n "$3" || return 255
+
+                # Assert no multiple operations for the same line.
+                case "$1" in
+                    *"'libfile_n_add' '$3'"* | \
+                    *"'libfile_n_rem' '$3'"* | \
+                    *"'libfile_n_repl' '$3'"*)
+                        return 255
+                    ;;
+                esac
+            ;;
+            *)
+                break
+            ;;
+        esac
+
+        case "$2" in
+            '-add')
+                arg_set _str "$4" || return "$?"
+
+                _list="'libfile_n_add' '$3' $_str"
+                _shift=3
+            ;;
+            '-rem')
+                _list="'libfile_n_rem' '$3'"
+                _shift=2
+            ;;
+            '-repl')
+                arg_set _str "$4" || return "$?"
+
+                _list="'libfile_n_repl' '$3' $_str"
+                _shift=3
+            ;;
+        esac
+
+        _op_list="$1"; shift "$((1 + _shift))"
+        set -- "$_op_list $_list" "$@"
+    done
+
+    # Assert the log file if specified.
+    if [ "$3" ] && [ ! -f "$3" ]; then
+        return 255
+    fi
+
+    # Open the log file (or /dev/null) using file descriptor `9`. The usage of
+    # a file descriptor avoids open/close and related syscall overhead,
+    # and also allows us to drop the log file positional parameter.
+    exec 9>> "${3:-/dev/null}" || return "$?"
+
+    # Save the file content into $_str, remove its positional parameter,
+    # and set custom additional required positional parameters.
+    #
+    # The current positional parameters become:
+    # $1 = op_list
+    # $2 = orig_offset
+    # $3 = cur_offset (required for diff/log; tracks current line)
+    # $4 = delta_offset (required for diff/log; tracks consecutive difference)
+    _str="$2"; set -- "$1" 1 1 0
+
+    # Store the output of `printf` in $_file using command substitution.
+    # The custom `x` character at the end and its subsequent removal
+    # outside the command substitution preserves any trailing <newline>
+    # characters stripped by command substitution.
+    _file=$(
+        # Modify the file content.
+        #
+        # Our optimized op_list ($1) is FIFO and the line numbers shall be
+        # asserted against orig_offset ($2).
+        #
+        # Our diff algorithm is by definition streaming and FIFO-driven,
+        # heavily contrasting with a deferred hunk approach and/or LCS
+        # (longest common subsequence; ex. `diff -u`).
+        while IFS= read -r _line; do
+            # Set a default increment value for cur_offset and a default value
+            # for delta_offset *when no functions are called*.
+            _offset=0; _delta=0
+
+            case "$1" in
+                *"'libfile_n_add' '$2'"*)
+                    # Preserve as $5 the current original $_line
+                    # only for the current iteration.
+                    set -- "$1" "$2" "$3" "$4" "$_line"
+
+                    # Acquire the relevant string for our orig_offset line
+                    # into $_arg.
+                    sq_arg 1 "${1#*"'libfile_n_add' '$2'"}" || return "$?"
+
+                    # Gives $_log, $_offset (cur_offset), and $_str.
+                    libfile_n_add "$3" "$_arg" || return "$?"
+
+                    # $_offset (cur_offset) already acts as a delta_offset;
+                    # ensure $_delta is 0.
+                    _delta=0
+
+                    # The log ($_log) and the added string ($_str) always end
+                    # with a <newline> character.
+                    printf "%s" "$_log" >&9
+                    printf "%s\n" "$_str$5"
+                ;;
+                *"'libfile_n_rem' '$2'"*)
+                    # Gives $_log, $_offset (cur_offset), and $_str.
+                    #
+                    # For multiple consecutive removals, delta_offset ($4)
+                    # is used in combination with cur_offset ($3); essentially,
+                    # any consecutive line removal operations become
+                    # offset-aware until an original line remains unchanged.
+                    libfile_n_rem "$(($3 + $4))" "$_line" || return "$?"
+
+                    # Increment delta_offset for any consecutive removals to
+                    # become offset-aware.
+                    _delta="$(($4 + 1))"
+
+                    # The log always ends with a <newline> character.
+                    printf "%s" "$_log" >&9
+                ;;
+                *"'libfile_n_repl' '$2'"*)
+                    # Gives $_log, $_offset (cur_offset), and $_str.
+                    #
+                    # For multiple consecutive removals, delta_offset ($4)
+                    # is used in combination with cur_offset ($3); essentially,
+                    # any consecutive line removal operations become
+                    # offset-aware until an original line remains unchanged.
+                    libfile_n_rem "$(($3 + $4))" "$_line" || return "$?"
+
+                    # Preserve $_log, $_offset, and $_str as $5, $6, and $7,
+                    # respectively.
+                    set -- "$1" "$2" "$3" 0 "$_log" "$_offset" "$_str"
+
+                    # Acquire the relevant string for our orig_offset line
+                    # into $_arg.
+                    sq_arg 1 "${1#*"'libfile_n_repl' '$2'"}" || return "$?"
+
+                    # Gives $_log, $_offset (cur_offset), and $_str.
+                    # The old values always end with a <newline> character.
+                    libfile_n_add "$3" "$_arg" || return "$?"
+                    _log="$5$_log"
+                    _offset="$(($6 + _offset))"
+                    _str="$7$_str"
+
+                    # $_offset (cur_offset) already acts as a delta_offset;
+                    # ensure $_delta is 0.
+                    _delta=0
+
+                    # The log ($_log) and the added string ($_str) always end
+                    # with a <newline> character.
+                    printf "%s" "$_log" >&9
+                    printf "%s" "$_str"
+                ;;
+                *)
+                    printf "%s\n" "$_line"
+                ;;
+            esac
+
+            # $2 = orig_offset
+            # $3 = cur_offset
+            # $4 = delta_offset
+            set -- "$1" "$(($2 + 1))" "$(($3 + 1 + _offset))" "$_delta"
+        done \
+<<EOF
+$_str
+EOF
+
+        printf "%s" x
+    ) && \
+    _file="${_file%?}" && \
+    _file="${_file%?}" && \
+    exec 9>&-
+}

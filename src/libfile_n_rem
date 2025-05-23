@@ -1,0 +1,32 @@
+#! .desc:
+# For natural N, remove line string
+#! .params:
+# <$1> - natural N
+# ["$2"] - line string
+#! .gives:
+# (0) <"$_log"> - string;
+#                 diff-style log guaranteed to end with <newline>
+#! .sets:
+# (0) <_offset> $ - '-1';
+# (0) <_str> $ - '';
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input / error
+#! .desc.ext:
+# $2 cannot be a multiline string and error code `255` (bad input) will be
+# returned.
+#.
+libfile_n_rem() {
+    case "$2" in
+        *'
+'*)
+            return 255
+        ;;
+    esac
+
+    _log="${1}- $2
+"
+    _offset=-1
+    _str=
+}

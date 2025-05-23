@@ -1,0 +1,48 @@
+#! .desc:
+# For natural N, add line content
+#! .params:
+# <$1> - natural N
+# ["$2"] - new string
+#! .uses:
+# <<<>
+#! .gives:
+# (0) <"$_log"> - string;
+#                 diff-style log guaranteed to end with <newline>
+# (0) <"$_offset"> - integer;
+#                    line offset
+# (0) <"$_str"> - string;
+#                 raw $2 guaranteed to end with <newline>
+#! .rc:
+# (0) success
+# (*) error
+#! .desc.ext:
+# $2 can be a multiline string.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Here-Document".
+#.
+libfile_n_add() {
+    _log=
+    _offset=0
+
+    while IFS= read -r _line; do
+        _log="$_log$(($1 + _offset))+ $_line
+"
+        _offset=$((_offset + 1))
+    done \
+<<EOF
+$2
+EOF
+
+    case "$2" in
+        *'
+')
+            _str="$2"
+        ;;
+        *)
+            _str="$2
+"
+        ;;
+    esac
+}
