@@ -83,7 +83,7 @@ libfile_n() {
                 arg_set _str "$3" || return "$?"
 
                 _list="'-' '0' $_str"
-                _shift=3
+                _shift=2
             ;;
             '-a' | '-r' | '-s')
                 assert -natural-n "$3" || return 255
