@@ -1,11 +1,11 @@
 #! .desc:
-# Deterministically modify the line content of a file in-memory
+# Deterministically modify file data in-memory
 #! .params:
 # <$1>+ - operation(
-#     '-' - on EOF add $2
-#     '-add' - from line $2 add $3
-#     '-rem' - remove line $2
-#     '-repl' - replace line $2 with $3
+#     '-' - at EOF add $2
+#     '-a' - at line $2 add $3
+#     '-r' - remove line $2
+#     '-s' - substitute line $2 with $3
 #     .
 # )
 # <"$2"> - natural N / string
@@ -43,15 +43,13 @@
 # (libfile_n_rem) (*) error
 # (sq_arg) (*) error
 #! .desc.ext:
+# Multiple operations on the same line are not allowed and error code `255`
+# (bad usage) will be returned. EOF additions are parsed in FIFO order
+# after all deterministic operations have been executed.
+#
 # If a path to a valid file ($5) is given, a diff-style log of any changes
 # will be appended to it. If $5 is specified but not a valid file,
 # error code `255` (bad usage) will be returned.
-#
-# Multiple operations on the same line are not allowed and error code `255`
-# (bad usage) will be returned.
-#
-# EOF additions are parsed in FIFO order after all deterministic operations
-# have been executed.
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
@@ -87,7 +85,7 @@ libfile_n() {
                 _list="'libfile_add' $_str"
                 _shift=2
             ;;
-            '-add' | '-rem' | '-repl')
+            '-a' | '-r' | '-s')
                 assert -natural-n "$3" || return 255
 
                 # Assert no multiple operations for the same line.
@@ -105,17 +103,17 @@ libfile_n() {
         esac
 
         case "$2" in
-            '-add')
+            '-a')
                 arg_set _str "$4" || return "$?"
 
                 _list="'libfile_n_add' '$3' $_str"
                 _shift=3
             ;;
-            '-rem')
+            '-r')
                 _list="'libfile_n_rem' '$3'"
                 _shift=2
             ;;
-            '-repl')
+            '-s')
                 arg_set _str "$4" || return "$?"
 
                 _list="'libfile_n_repl' '$3' $_str"
