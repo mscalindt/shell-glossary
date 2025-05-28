@@ -92,7 +92,7 @@ libfile_n() {
                 case "$1" in
                     *"'libfile_n_add' '$3'"* | \
                     *"'libfile_n_rem' '$3'"* | \
-                    *"'libfile_n_repl' '$3'"*)
+                    *"'libfile_n_sub' '$3'"*)
                         return 255
                     ;;
                 esac
@@ -116,7 +116,7 @@ libfile_n() {
             '-s')
                 arg_set _str "$4" || return "$?"
 
-                _list="'libfile_n_repl' '$3' $_str"
+                _list="'libfile_n_sub' '$3' $_str"
                 _shift=3
             ;;
         esac
@@ -201,7 +201,7 @@ libfile_n() {
                     # The log always ends with a <newline> character.
                     printf "%s" "$_log" >&9
                 ;;
-                *"'libfile_n_repl' '$2'"*)
+                *"'libfile_n_sub' '$2'"*)
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     #
                     # For multiple consecutive removals, delta_offset ($4)
@@ -216,7 +216,7 @@ libfile_n() {
 
                     # Acquire the relevant string for our orig_offset line
                     # into $_arg.
-                    sq_arg 1 "${1#*"'libfile_n_repl' '$2'"}" || return "$?"
+                    sq_arg 1 "${1#*"'libfile_n_sub' '$2'"}" || return "$?"
 
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     # The old values always end with a <newline> character.
