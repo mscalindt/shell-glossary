@@ -312,6 +312,16 @@ EOF
         printf "%s" x
     ) && \
     _file="${_file%?}" && \
-    _file="${_file%?}" && \
-    exec 9>&-
+    _file="${_file%?}"
+
+    set -- "$?"
+
+    # Release file descriptor `9` to close the associated log file.
+    if [ "$1" = 0 ]; then
+        exec 9>&-; set -- "$?"
+    else
+        exec 9>&-
+    fi
+
+    return "$1"
 }
