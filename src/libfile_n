@@ -152,48 +152,58 @@ libfile_n() {
     _file=$(
         # Modify the file content.
         #
-        # Our optimized op_list ($1) is FIFO and the line numbers shall be
-        # asserted against orig_offset ($2).
+        # Our optimized op_list is FIFO and the line numbers shall be asserted
+        # against orig_offset.
         #
         # Our diff algorithm is by definition streaming and FIFO-driven,
         # heavily contrasting with a deferred hunk approach and/or LCS
         # (longest common subsequence; ex. `diff -u`).
         while IFS= read -r _line; do
-            # Set a default increment value for cur_offset and a default value
-            # for delta_offset *when no functions are called*.
-            _offset=0; _delta=0
-
+            # $1 = op_list
+            # $2 = orig_offset
             case "$1" in
                 *"'-a' '$2'"*)
                     # Preserve as $5 the current original $_line
                     # only for the current iteration.
                     set -- "$1" "$2" "$3" "$4" "$_line"
 
+                    # $1 = op_list
+                    # $2 = orig_offset
+                    #
                     # Acquire the relevant string for our orig_offset line
                     # into $_arg.
                     sq_arg 1 "${1#*"'-a' '$2'"}" || return "$?"
 
+                    # $3 = cur_offset
+                    #
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     libfile_n_add "$3" "$_arg" || return "$?"
 
                     # $_offset (cur_offset) already acts as a delta_offset;
-                    # ensure $_delta is 0.
+                    # set $_delta=0.
                     _delta=0
 
-                    # The log ($_log) and the added string ($_str) always end
-                    # with a <newline> character.
+                    # $5 = $_line
+                    #
+                    # The log ($_log) and the added string ($_str)
+                    # always end with a <newline> character.
                     printf "%s" "$_log" >&9
                     printf "%s\n" "$_str$5"
                 ;;
                 *"'-r' '$2'"*)
+                    # $3 = cur_offset
+                    # $4 = delta_offset
+                    #
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     #
-                    # For multiple consecutive removals, delta_offset ($4)
-                    # is used in combination with cur_offset ($3); essentially,
+                    # For multiple consecutive removals, delta_offset is used
+                    # in combination with cur_offset; essentially,
                     # any consecutive line removal operations become
                     # offset-aware until an original line remains unchanged.
                     libfile_n_rem "$(($3 + $4))" "$_line" || return "$?"
 
+                    # $4 = delta_offset
+                    #
                     # Increment delta_offset for any consecutive removals to
                     # become offset-aware.
                     _delta="$(($4 + 1))"
@@ -202,10 +212,13 @@ libfile_n() {
                     printf "%s" "$_log" >&9
                 ;;
                 *"'-s' '$2'"*)
+                    # $3 = cur_offset
+                    # $4 = delta_offset
+                    #
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     #
-                    # For multiple consecutive removals, delta_offset ($4)
-                    # is used in combination with cur_offset ($3); essentially,
+                    # For multiple consecutive removals, delta_offset is used
+                    # in combination with cur_offset; essentially,
                     # any consecutive line removal operations become
                     # offset-aware until an original line remains unchanged.
                     libfile_n_rem "$(($3 + $4))" "$_line" || return "$?"
@@ -214,10 +227,18 @@ libfile_n() {
                     # respectively.
                     set -- "$1" "$2" "$3" 0 "$_log" "$_offset" "$_str"
 
+                    # $1 = op_list
+                    # $2 = orig_offset
+                    #
                     # Acquire the relevant string for our orig_offset line
                     # into $_arg.
                     sq_arg 1 "${1#*"'-s' '$2'"}" || return "$?"
 
+                    # $3 = cur_offset
+                    # $5 = $_log
+                    # $6 = $_offset
+                    # $7 = $_str
+                    #
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     # The old values always end with a <newline> character.
                     libfile_n_add "$3" "$_arg" || return "$?"
@@ -226,42 +247,50 @@ libfile_n() {
                     _str="$7$_str"
 
                     # $_offset (cur_offset) already acts as a delta_offset;
-                    # ensure $_delta is 0.
+                    # set $_delta=0.
                     _delta=0
 
-                    # The log ($_log) and the added string ($_str) always end
-                    # with a <newline> character.
+                    # The log ($_log) and the replaced string ($_str)
+                    # always end with a <newline> character.
                     printf "%s" "$_log" >&9
                     printf "%s" "$_str"
                 ;;
                 *)
                     printf "%s\n" "$_line"
+
+                    _offset=0; _delta=0
                 ;;
             esac
 
+            # $1 = op_list
             # $2 = orig_offset
             # $3 = cur_offset
-            # $4 = delta_offset
             set -- "$1" "$(($2 + 1))" "$(($3 + 1 + _offset))" "$_delta"
         done \
 <<EOF
 $_str
 EOF
 
-        # Parse EOF additions.
         # $1 = op_list
-        # $2 = cur_offset
-        set -- "$1" "$3" && while :; do
+        # $3 = cur_offset
+        set -- "$1" "$3"
+
+        # Parse EOF additions.
+        while :; do
+            # $1 = op_list
             case " $1" in
                 *"'-' '0'"*)
-                    # Strip and preserve the modified op_list.
-                    _list=" $1"
-                    _list="${_list#*"'-' '0'"}"
-                    set -- "$_list" "$2"
+                    # Strip and set the modified op_list as $1.
+                    _list=" $1"; set -- "${_list#*"'-' '0'"}" "$2"
 
-                    # Acquire the first argument of the modified op_list.
+                    # $1 = op_list
+                    #
+                    # Acquire the first argument of the modified op_list
+                    # into $_arg.
                     sq_arg 1 "$1" || return "$?"
 
+                    # $2 = cur_offset
+                    #
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     libfile_n_add "$2" "$_arg" || return "$?"
 
@@ -275,6 +304,8 @@ EOF
                 ;;
             esac
 
+            # $1 = op_list
+            # $2 = cur_offset
             set -- "$1" "$(($2 + _offset))"
         done
 
