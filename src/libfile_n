@@ -1,5 +1,5 @@
 #! .desc:
-# Deterministically modify file data in-memory
+# Deterministically modify regular file data in-memory
 #! .params:
 # <$1>+ - operation(
 #     '-' - at EOF add $2
@@ -199,7 +199,8 @@ libfile_n() {
                     # For multiple consecutive removals, delta_offset is used
                     # in combination with cur_offset; essentially,
                     # any consecutive line removal operations become
-                    # offset-aware until an original line remains unchanged.
+                    # offset-aware for as long as the removal operations
+                    # span for.
                     libfile_n_rem "$(($3 + $4))" "$_line" || return "$?"
 
                     # $4 = delta_offset
@@ -220,7 +221,8 @@ libfile_n() {
                     # For multiple consecutive removals, delta_offset is used
                     # in combination with cur_offset; essentially,
                     # any consecutive line removal operations become
-                    # offset-aware until an original line remains unchanged.
+                    # offset-aware for as long as the removal operations
+                    # span for.
                     libfile_n_rem "$(($3 + $4))" "$_line" || return "$?"
 
                     # Preserve $_log, $_offset, and $_str as $5, $6, and $7,
@@ -294,8 +296,8 @@ EOF
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     libfile_n_add "$2" "$_arg" || return "$?"
 
-                    # The log ($_log) and the added string ($_str) always end
-                    # with a <newline> character.
+                    # The log ($_log) and the added string ($_str)
+                    # always end with a <newline> character.
                     printf "%s" "$_log" >&9
                     printf "%s" "$_str"
                 ;;

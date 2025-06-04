@@ -108,7 +108,7 @@ Process each populated IFS field split with a function
 - [INFO()](src/info):
 Print formatted text
 - [LIBFILE_N()](src/libfile_n):
-Deterministically modify file data in-memory
+Deterministically modify regular file data in-memory
 - [LIBFILE_N_ADD()](src/libfile_n_add):
 For natural N, add line content
 - [LIBFILE_N_REM()](src/libfile_n_rem):
