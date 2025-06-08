@@ -107,6 +107,8 @@ Identify the type of an object on the filesystem
 Process each populated IFS field split with a function
 - [INFO()](src/info):
 Print formatted text
+- [LIBFILE()](src/libfile):
+Modify regular file data in-memory using a deterministic format
 - [LIBFILE_N()](src/libfile_n):
 Deterministically modify regular file data in-memory
 - [LIBFILE_N_ADD()](src/libfile_n_add):

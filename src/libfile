@@ -1,0 +1,262 @@
+#! .desc:
+# Modify regular file data in-memory using a deterministic format
+#! .params:
+# <["$1"]> - log file path
+# <["$2"]> - file content
+# ["$3"] - operation
+# ["$4"]+ - operation argument
+#! .uses:
+# [&9]
+# [()]
+# [<<]
+# [>>]
+# [>]
+#! .uses.fn:
+# [libfile_n_add] ("natural N" "new string");
+#                 For natural N, add line content
+# [libfile_n_rem] ("natural N" "line string");
+#                 For natural N, remove line string
+#! .gives:
+# (0) <"$_file"> - [string];
+#                  [modified <$2>]
+#! .rc:
+# (0) success
+# (*) error
+# (255) bad input / bad usage / error
+#! .rc.fn:
+# (libfile_n_add) (*) error
+# (libfile_n_rem) (*) error
+#! .desc.ext:
+# The format of operations is as follows (N - natural number):
+# `- X`,    means at EOF add "X" data;
+# `-a N X`, means at "N" line add "X" data;
+# `-r N`,   means remove "N" line;
+# `-s N X`, means substitute "N" line with "X" data.
+#
+# Operations have to be line-sorted (FIFO).
+# Multiple operations on the same line are not specified.
+# EOF operations are only specified after all line operations.
+#
+# If a path to a valid file ($1) is given, a diff-style log of any changes
+# will be appended to it. If $1 is specified but not a valid file,
+# error code `255` (bad usage) will be returned.
+#
+# If an operation fails to apply, error code `255` (bad usage) will be
+# returned.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: File Descriptor".
+# > "POSIX.1-2024, Volume: Base Definitions,
+#   Section: Directory Structure and Devices,
+#   Subsection: Directory Structure and Files".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Appending Redirected Output".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Command Substitution".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Duplicating an Output File Descriptor".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: exec".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Here-Document".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Redirecting Output".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Redirection".
+#.
+libfile() {
+    [ "$#" -ge 2 ] || return 255
+
+    _file=
+
+    [ "$2" ] && [ "$3" ] || return 0
+
+    # Assert the log file if specified.
+    if [ "$1" ] && [ ! -f "$1" ]; then
+        return 255
+    fi
+
+    # Open the log file (or /dev/null) using file descriptor `9`. The usage of
+    # a file descriptor avoids open/close and related syscall overhead,
+    # and also allows us to drop the log file positional parameter.
+    exec 9>> "${1:-/dev/null}" || return "$?"
+
+    # Save the file content into $_str.
+    #
+    # The current positional parameters become:
+    # $1  = orig_offset
+    # $2  = cur_offset (required for diff/log; tracks current line)
+    # $3  = delta_offset (required for diff/log; tracks consecutive difference)
+    # ... = "$@" (operations)
+    _str="$2"; shift 2; set -- 1 1 0 "$@"
+
+    # Store the output of `printf` in $_file using command substitution.
+    # The custom `x` character at the end and its subsequent removal
+    # outside the command substitution preserves any trailing <newline>
+    # characters stripped by command substitution.
+    _file=$(
+        # Modify the file content.
+        #
+        # Our diff algorithm is by definition streaming and FIFO-driven,
+        # heavily contrasting with a deferred hunk approach and/or LCS
+        # (longest common subsequence; ex. `diff -u`).
+        while IFS= read -r _line; do
+            # $1 = orig_offset
+            # $4 = operation
+            # $5 = operation argument (N)
+            case "$4 $5" in
+                "-a $1")
+                    # Save $_line as $1.
+                    set -- "$_line" "$@"
+
+                    # $1 = $_line
+                    # $3 = cur_offset
+                    # $7 = operation argument (X)
+                    #
+                    # Gives $_log, $_offset (cur_offset), and $_str.
+                    libfile_n_add "$3" "$7" || return "$?"
+                    _line="$1"
+                    shift
+
+                    # $_offset (cur_offset) already acts as a delta_offset;
+                    # set $_delta=0.
+                    _delta=0
+
+                    # The log ($_log) and the added string ($_str)
+                    # always end with a <newline> character.
+                    printf "%s" "$_log" >&9
+                    printf "%s\n" "$_str$_line"
+
+                    _shift=3
+                ;;
+                "-r $1")
+                    # $2 = cur_offset
+                    # $3 = delta_offset
+                    #
+                    # Gives $_log, $_offset (cur_offset), and $_str.
+                    #
+                    # For multiple consecutive removals, delta_offset is used
+                    # in combination with cur_offset; essentially,
+                    # any consecutive line removal operations become
+                    # offset-aware for as long as the removal operations
+                    # span for.
+                    libfile_n_rem "$(($2 + $3))" "$_line" || return "$?"
+
+                    # $3 = delta_offset
+                    #
+                    # Increment delta_offset for any consecutive removals to
+                    # become offset-aware.
+                    _delta="$(($3 + 1))"
+
+                    # The log always ends with a <newline> character.
+                    printf "%s" "$_log" >&9
+
+                    _shift=2
+                ;;
+                "-s $1")
+                    # $2 = cur_offset
+                    # $3 = delta_offset
+                    #
+                    # Gives $_log, $_offset (cur_offset), and $_str.
+                    #
+                    # For multiple consecutive removals, delta_offset is used
+                    # in combination with cur_offset; essentially,
+                    # any consecutive line removal operations become
+                    # offset-aware for as long as the removal operations
+                    # span for.
+                    libfile_n_rem "$(($2 + $3))" "$_line" || return "$?"
+
+                    # Preserve $_log, $_offset, and $_str as $1, $2, and $3,
+                    # respectively.
+                    set -- "$_log" "$_offset" "$_str" "$@"
+
+                    # $1 = $_log
+                    # $2 = $_offset
+                    # $3 = $_str
+                    # $5 = cur_offset
+                    # $9 = operation argument (X)
+                    #
+                    # Gives $_log, $_offset (cur_offset), and $_str.
+                    # The old values always end with a <newline> character.
+                    libfile_n_add "$5" "$9" || return "$?"
+                    _log="$1$_log"
+                    _offset="$(($2 + _offset))"
+                    _str="$3$_str"
+                    shift 3
+
+                    # $_offset (cur_offset) already acts as a delta_offset;
+                    # set $_delta=0.
+                    _delta=0
+
+                    # The log ($_log) and the replaced string ($_str)
+                    # always end with a <newline> character.
+                    printf "%s" "$_log" >&9
+                    printf "%s" "$_str"
+
+                    _shift=3
+                ;;
+                *)
+                    printf "%s\n" "$_line"
+
+                    _shift=0; _offset=0; _delta=0
+                ;;
+            esac
+
+            # $1 = orig_offset
+            # $2 = cur_offset
+            _a="$1" && _b="$2" && shift "$((3 + _shift))"
+            set -- "$((_a + 1))" "$(($_b + 1 + _offset))" "$_delta" "$@"
+        done \
+<<EOF
+$_str
+EOF
+
+        # $2 = cur_offset
+        #
+        # Shift/discard orig_offset and delta_offset.
+        _a="$2" && shift 3
+        set -- "$_a" "$@"
+
+        # Parse EOF operations.
+        while :; do
+            # $2 = operation
+            case "$2" in
+                '-') : ;;
+                *) break ;;
+            esac
+
+            # $1 = cur_offset
+            # $3 = operation argument (X)
+            #
+            # Gives $_log, $_offset (cur_offset), and $_str.
+            libfile_n_add "$1" "$3" || return "$?"
+
+            # The log ($_log) and the added string ($_str)
+            # always end with a <newline> character.
+            printf "%s" "$_log" >&9
+            printf "%s" "$_str"
+
+            # $1 = cur_offset
+            _a="$1" && shift 3
+            set -- "$((_a + _offset))" "$@"
+        done
+
+        [ "$#" -eq 1 ] || return 255
+
+        printf "%s" x
+    ) && \
+    _file="${_file%?}" && \
+    _file="${_file%?}"
+
+    set -- "$?"
+
+    # Release file descriptor `9` to close the associated log file.
+    if [ "$1" = 0 ]; then
+        exec 9>&-; set -- "$?"
+    else
+        exec 9>&-
+    fi
+
+    return "$1"
+}
