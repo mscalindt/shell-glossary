@@ -82,8 +82,8 @@ libfile_n() {
             '-')
                 arg_set _str "$3" || return "$?"
 
-                _list="'-' '0' $_str"
-                _shift=2
+                _list="$1 '-' '0' $_str"
+                _shift=3  # <option params (from $2)> + 1
             ;;
             '-a' | '-r' | '-s')
                 assert -natural-n "$3" || return 255
@@ -106,23 +106,23 @@ libfile_n() {
             '-a')
                 arg_set _str "$4" || return "$?"
 
-                _list="'-a' '$3' $_str"
-                _shift=3
+                _list="$1 '-a' '$3' $_str"
+                _shift=4  # <option params (from $2)> + 1
             ;;
             '-r')
-                _list="'-r' '$3'"
-                _shift=2
+                _list="$1 '-r' '$3'"
+                _shift=3  # <option params (from $2)> + 1
             ;;
             '-s')
                 arg_set _str "$4" || return "$?"
 
-                _list="'-s' '$3' $_str"
-                _shift=3
+                _list="$1 '-s' '$3' $_str"
+                _shift=4  # <option params (from $2)> + 1
             ;;
         esac
 
-        _op_list="$1"; shift "$((1 + _shift))"
-        set -- "$_op_list $_list" "$@"
+        shift "$_shift"
+        set -- "$_list" "$@"
     done
 
     # Assert the log file if specified.
