@@ -280,10 +280,10 @@ EOF
         # Parse EOF additions.
         while :; do
             # $1 = op_list
-            case " $1" in
+            case "$1" in
                 *"'-' '0'"*)
                     # Strip and set the modified op_list as $1.
-                    _list=" $1"; set -- "${_list#*"'-' '0'"}" "$2"
+                    set -- "${1#*"'-' '0'"}" "$2"
 
                     # $1 = op_list
                     #
