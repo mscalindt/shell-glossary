@@ -107,7 +107,7 @@ libfile() {
             # $5 = operation argument (N)
             case "$4 $5" in
                 "-a $1")
-                    # Save $_line as $1.
+                    # Preserve $_line as $1.
                     set -- "$_line" "$@"
 
                     # $1 = $_line
@@ -116,19 +116,17 @@ libfile() {
                     #
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     libfile_n_add "$3" "$7" || return "$?"
-                    _line="$1"
-                    shift
-
-                    # $_offset (cur_offset) already acts as a delta_offset;
-                    # set $_delta=0.
+                    _offset="$(($3 + 1 + _offset))"
+                    _str="$_str$1
+"
                     _delta=0
+                    _shift=6  # <op params (from $4)> + 3
+                    shift
 
                     # The log ($_log) and the added string ($_str)
                     # always end with a <newline> character.
                     printf "%s" "$_log" >&9
-                    printf "%s\n" "$_str$_line"
-
-                    _shift=3
+                    printf "%s" "$_str"
                 ;;
                 "-r $1")
                     # $2 = cur_offset
@@ -142,17 +140,12 @@ libfile() {
                     # offset-aware for as long as the removal operations
                     # span for.
                     libfile_n_rem "$(($2 + $3))" "$_line" || return "$?"
-
-                    # $3 = delta_offset
-                    #
-                    # Increment delta_offset for any consecutive removals to
-                    # become offset-aware.
+                    _offset="$(($2 + 1 + _offset))"
                     _delta="$(($3 + 1))"
+                    _shift=5  # <op params (from $4)> + 3
 
                     # The log always ends with a <newline> character.
                     printf "%s" "$_log" >&9
-
-                    _shift=2
                 ;;
                 "-s $1")
                     # $2 = cur_offset
@@ -181,42 +174,35 @@ libfile() {
                     # The old values always end with a <newline> character.
                     libfile_n_add "$5" "$9" || return "$?"
                     _log="$1$_log"
-                    _offset="$(($2 + _offset))"
+                    _offset="$(($2 + $5 + 1 + _offset))"
                     _str="$3$_str"
-                    shift 3
-
-                    # $_offset (cur_offset) already acts as a delta_offset;
-                    # set $_delta=0.
                     _delta=0
+                    _shift=6  # <op params (from $4)> + 3
+                    shift 3
 
                     # The log ($_log) and the replaced string ($_str)
                     # always end with a <newline> character.
                     printf "%s" "$_log" >&9
                     printf "%s" "$_str"
-
-                    _shift=3
                 ;;
                 *)
-                    printf "%s\n" "$_line"
+                    _offset="$(($2 + 1))"; _delta=0; _shift=3
 
-                    _shift=0; _offset=0; _delta=0
+                    printf "%s\n" "$_line"
                 ;;
             esac
 
             # $1 = orig_offset
-            # $2 = cur_offset
-            _a="$1" && _b="$2" && shift "$((3 + _shift))"
-            set -- "$((_a + 1))" "$(($_b + 1 + _offset))" "$_delta" "$@"
+            _a="$1" && shift "$_shift"
+            set -- "$((_a + 1))" "$_offset" "$_delta" "$@"
         done \
 <<EOF
 $_str
 EOF
 
-        # $2 = cur_offset
-        #
-        # Shift/discard orig_offset and delta_offset.
-        _a="$2" && shift 3
-        set -- "$_a" "$@"
+        # Discard orig_offset and delta_offset, but keep cur_offset.
+        shift 3
+        set -- "$_offset" "$@"
 
         # Parse EOF operations.
         while :; do
@@ -231,15 +217,15 @@ EOF
             #
             # Gives $_log, $_offset (cur_offset), and $_str.
             libfile_n_add "$1" "$3" || return "$?"
+            _offset="$(($1 + _offset))"
+            shift 3
 
             # The log ($_log) and the added string ($_str)
             # always end with a <newline> character.
             printf "%s" "$_log" >&9
             printf "%s" "$_str"
 
-            # $1 = cur_offset
-            _a="$1" && shift 3
-            set -- "$((_a + _offset))" "$@"
+            set -- "$_offset" "$@"
         done
 
         [ "$#" -eq 1 ] || return 255
