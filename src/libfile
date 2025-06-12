@@ -70,7 +70,7 @@ libfile() {
 
     _file=
 
-    [ "$2" ] && [ "$3" ] || return 0
+    [ "$2" ] && [ "$#" -ge 3 ] || return 0
 
     # Assert the log file if specified.
     if [ "$1" ] && [ ! -f "$1" ]; then
