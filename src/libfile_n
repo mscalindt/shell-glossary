@@ -11,7 +11,7 @@
 # <"$2"> - natural N / string
 # ["$3"] - string
 # <["$4"]> - file content
-# <["$5"]> - log file path
+# ["$5"] - log file path
 #! .uses:
 # <&9>
 # <()>
@@ -73,11 +73,11 @@
 #   Subsection: Redirection".
 #.
 libfile_n() {
-    [ "$#" -ge 4 ] || return 255
+    [ "$#" -ge 3 ] || return 255
 
     # Parse the operations into a predictable, shell-performant format.
     # The original positional parameters will shift by 1.
-    set -- '' "$@"; while [ "$#" -ge 5 ]; do
+    set -- '' "$@"; while [ "$#" -gt 3 ]; do
         # Assert operation parameters.
         case "$2" in
             '-a' | '-r' | '-s')
