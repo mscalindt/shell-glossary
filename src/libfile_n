@@ -78,46 +78,33 @@ libfile_n() {
     # Parse the operations into a predictable, shell-performant format.
     # The original positional parameters will shift by 1.
     set -- '' "$@"; while [ "$#" -ge 5 ]; do
+        # Assert operation parameters.
         case "$2" in
-            '-')
-                arg_set _str "$3" || return "$?"
-
-                _list="$1 '-' '0' $_str"
-                _shift=3  # <option params (from $2)> + 1
-            ;;
             '-a' | '-r' | '-s')
                 assert -natural-n "$3" || return 255
 
-                # Assert no multiple operations for the same line.
                 case "$1" in
-                    *"'-a' '$3'"* | \
-                    *"'-r' '$3'"* | \
-                    *"'-s' '$3'"*)
-                        return 255
-                    ;;
+                    *"'$2' '$3'"*) return 255 ;;
                 esac
-            ;;
-            *)
-                return 255
             ;;
         esac
 
+        # Parse operation parameters.
         case "$2" in
-            '-a')
-                arg_set _str "$4" || return "$?"
+            '-' | '-r')
+                arg_set _a "$3" || return "$?"
 
-                _list="$1 '-a' '$3' $_str"
-                _shift=4  # <option params (from $2)> + 1
-            ;;
-            '-r')
-                _list="$1 '-r' '$3'"
+                _list="$1 '$2' '-' $_a"
                 _shift=3  # <option params (from $2)> + 1
             ;;
-            '-s')
-                arg_set _str "$4" || return "$?"
+            '-a' | '-s')
+                arg_set _a "$4" || return "$?"
 
-                _list="$1 '-s' '$3' $_str"
+                _list="$1 '$2' '$3' $_a"
                 _shift=4  # <option params (from $2)> + 1
+            ;;
+            *)
+                return 255
             ;;
         esac
 
@@ -187,7 +174,7 @@ libfile_n() {
                     printf "%s" "$_log" >&9
                     printf "%s" "$_str"
                 ;;
-                *"'-r' '$2'"*)
+                *"'-r' '-' '$2'"*)
                     # $3 = cur_offset
                     # $4 = delta_offset
                     #
@@ -272,11 +259,11 @@ EOF
         # Parse EOF additions.
         _offset=0; while :; do
             case "$1" in
-                *"'-' '0'"*) : ;;
+                *"'-' '-'"*) : ;;
                 *) break ;;
             esac
 
-            set -- "${1#*"'-' '0'"}" "$(($2 + _offset))"
+            set -- "${1#*"'-' '-'"}" "$(($2 + _offset))"
 
             # Acquire the first argument of the modified op_list into $_arg.
             sq_arg 1 "$1" || return "$?"
