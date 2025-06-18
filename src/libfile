@@ -173,7 +173,11 @@ libfile() {
                     # Gives $_log, $_offset (cur_offset), and $_str.
                     # The old values always end with a <newline> character.
                     libfile_n_add "$5" "$9" || return "$?"
-                    _log="$1$_log"
+                    # Simplify a lookahead (self) replacement.
+                    case "$_log" in
+                        "${1%%'-'*}+${1#*'-'}"*) _log="${_log#*"${1#*'-'}"}" ;;
+                        *) _log="$1$_log" ;;
+                    esac
                     _offset="$(($2 + $5 + 1 + _offset))"
                     _str="$3$_str"
                     _delta=0
