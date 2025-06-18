@@ -43,6 +43,7 @@
 # FIFO operations take precedence over any additional operations.
 #
 # $3 cannot be a multiline string, except for `-`.
+# For `-n*` operations, $3 is a natural number.
 #.
 fed() {
     fed_() {
