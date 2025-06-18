@@ -1,0 +1,144 @@
+#! .desc:
+# Create a deterministic file data edit format
+#! .params:
+# <["$1"]> - file content
+# <$2>+ - operation(
+#     '-na' - at line $3 add $4
+#     '-nr' - remove line $3
+#     '-ns' - substitute line $3 with $4
+#     '-r' - remove lof $3
+#     '-s' - substitute lof $3 with $4
+#     .
+# )
+# <"$3"> - natural N / string
+# ["$4"] - string
+#! .uses:
+# <()>
+# <<<>
+#! .uses.fn:
+# [arg_set] ("variable name" "argument");
+#           Set with single-quote escape an argument into a variable
+#! .gives:
+# (0) <"$_fmt"> - string;
+#                 shell-parseable evaluable line-sorted operations list
+#! .sets:
+# <fed_> ();
+#! .rc:
+# (0) success
+# (1) no operations to be created / error
+# (*) error
+# (255) bad input / error
+#! .rc.fn:
+# (arg_set) (*) error
+#! .desc.ext:
+# The format of created operations is as follows (N - natural number):
+# `-a N X`, means at "N" line add "X" data;
+# `-r N`,   means remove "N" line;
+# `-s N X`, means substitute "N" line with "X" data.
+#
+# Created operations are line-sorted and FIFO.
+#
+# FIFO operations take precedence over any additional operations.
+#
+# $3 cannot be a multiline string.
+#.
+fed() {
+    fed_() {
+        _line="$1"
+        _orig_offset="$2"
+        shift 2
+
+        # Test all operations against the current line in FIFO manner.
+        while [ "$#" -ge 1 ]; do case "$1" in
+            '-na')  # $2 = natural number; $3 = string
+                case "$_orig_offset" in
+                    "$2") : ;;
+                    *) shift 3 && continue ;;
+                esac
+
+                arg_set _a "$3" || return "$?"
+
+                printf "%s" " '-a' '$2' $_a"
+
+                return 0
+            ;;
+            '-nr')  # $2 = natural number
+                case "$_orig_offset" in
+                    "$2") : ;;
+                    *) shift 2 && continue ;;
+                esac
+
+                printf "%s" " '-r' '$2'"
+
+                return 0
+            ;;
+            '-ns')  # $2 = natural number; $3 = string
+                case "$_orig_offset" in
+                    "$2") : ;;
+                    *) shift 3 && continue ;;
+                esac
+
+                arg_set _a "$3" || return "$?"
+
+                printf "%s" " '-s' '$2' $_a"
+
+                return 0
+            ;;
+            '-r')  # $2 = string
+                case "$_line" in
+                    *"$2"*) : ;;
+                    *) shift 2 && continue ;;
+                esac
+
+                printf "%s" " '-r' '$_orig_offset'"
+
+                return 0
+            ;;
+            '-s')  # $2 = string; $3 = string
+                case "$_line" in
+                    *"$2"*) : ;;
+                    *) shift 3 && continue ;;
+                esac
+
+                set -- '' "$2" "$3" "$_orig_offset"
+
+                arg_set _a "$3" || return "$?"
+
+                # $4 = orig_offset
+                printf "%s" " '-s' '$4' $_a"
+
+                return 0
+            ;;
+            *)
+                return 255
+            ;;
+        esac done
+    }
+
+    [ "$#" -ge 3 ] || return 255
+
+    # Save the file content into $_str.
+    #
+    # The current positional parameters become:
+    # $1  = orig_offset
+    # ... = "$@" (operations)
+    _str="$1"; shift; set -- 1 "$@"
+
+    # Store the output of `printf` in $_fmt using command substitution.
+    _fmt=$(
+        while IFS= read -r _line; do
+            fed_ "$_line" "$@" || return "$?"
+
+            # $1 = orig_offset
+            _a="$1" && shift 1
+            set -- "$((_a + 1))" "$@"
+        done \
+<<EOF
+$_str
+EOF
+    ) && \
+    _fmt="${_fmt# }" || \
+    return "$?"
+
+    [ "$_fmt" ] && return 0 || return 1
+}

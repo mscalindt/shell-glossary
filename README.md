@@ -95,6 +95,8 @@ Count all `.*` (dot/hidden) objects in a directory
 Print formatted text to stderr
 - [ESC_SED()](src/esc_sed):
 Escape a string to be used literally as a POSIX `sed` string
+- [FED()](src/fed):
+Create a deterministic file data edit format
 - [FILE_PRELOAD()](src/file_preload):
 Read a file raw
 - [FLINE()](src/fline):
