@@ -35,14 +35,6 @@ libfile_n_add() {
 $2
 EOF
 
-    case "$2" in
-        *'
-')
-            _str="$2"
-        ;;
-        *)
-            _str="$2
+    _str="$2
 "
-        ;;
-    esac
 }
