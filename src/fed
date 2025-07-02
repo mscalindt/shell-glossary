@@ -4,14 +4,13 @@
 # <["$1"]> - file content
 # <$2>+ - operation(
 #     '-' - EOF add $3
-#     '-na' - at line $3 add $4
-#     '-nr' - remove line $3
-#     '-ns' - substitute line $3 with $4
-#     '-r' - remove lof $3
-#     '-s' - substitute lof $3 with $4
+#     '-m' - apply modifier for `-a`/`-r`/`-s`; see extended description
+#     '-a' - add $3
+#     '-r' - remove $3
+#     '-s' - substitute $3 with $4
 #     .
 # )
-# <"$3"> - natural N / string
+# ["$3"] - string
 # ["$4"] - string
 #! .uses:
 # <()>
@@ -41,9 +40,17 @@
 # Created EOF operations are specified after all line operations.
 #
 # FIFO operations take precedence over any additional operations.
+# Without modifiers, the default modification behavior is "line of".
+# The modifiers are stackable, but may override same-type incompatibility.
 #
-# $3 cannot be a multiline string, except for `-`.
-# For `-n*` operations, $3 is a natural number.
+# $3 cannot be a multiline string, except for `-` and `-a`.
+#
+# Option `-m` offers the following primary type (conditional) modifier(s):
+# ``;
+# the following secondary type (modification behavior) modifier(s):
+# <n>:           a natural number that specifies a line;
+# and the following tertiary type (string matching behavior) modifier(s):
+# ``.
 #.
 fed() {
     fed_() {
@@ -52,73 +59,109 @@ fed() {
         shift 2
 
         # Test all operations against the current line in FIFO manner.
-        while [ "$#" -ge 1 ]; do case "$1" in
-            '-')
-                shift 2 && continue
-            ;;
-            '-na')  # $2 = natural number; $3 = string
-                case "$_orig_offset" in
-                    "$2") : ;;
-                    *) shift 3 && continue ;;
-                esac
+        while [ "$#" -ge 1 ]; do
+            _mod_p=; _mod_s=; _mod_t=
 
-                arg_set _a "$3" || return "$?"
+            # Set modifiers.
+            # `n` -> "<N>" in _mod_s
+            while :; do case "$1 $2" in
+                '-m '*)
+                    # Assert $2 is a natural number (`1`, `2`, ...).
+                    case "${2:-0}${2#*[!0123456789]}" in
+                        0*) return 255 ;;
+                        "$2$2") : ;;
+                        *) return 255 ;;
+                    esac
 
-                printf "%s" " '-a' '$2' $_a"
+                    _mod_s="$_mod_s $2 "; shift 2 && continue
+                ;;
+                *)
+                    break
+                ;;
+            esac done
 
-                return 0
-            ;;
-            '-nr')  # $2 = natural number
-                case "$_orig_offset" in
-                    "$2") : ;;
-                    *) shift 2 && continue ;;
-                esac
+            case "$1" in
+                '-')
+                    case "$#" in 1) return 255 ;; esac
 
-                printf "%s" " '-r' '$2'"
+                    shift 2 && continue
+                ;;
+                '-a')  # $2 = string
+                    case "$#" in 1) return 255 ;; esac
 
-                return 0
-            ;;
-            '-ns')  # $2 = natural number; $3 = string
-                case "$_orig_offset" in
-                    "$2") : ;;
-                    *) shift 3 && continue ;;
-                esac
+                    # Test secondary modifiers.
+                    case "$_mod_s" in
+                        *" $_orig_offset "*)
+                            set -- '-a' "$2" "$_orig_offset"
+                        ;;
+                        *)
+                            [ ! "$_mod_s" ] || { shift 2 && continue; }
 
-                arg_set _a "$3" || return "$?"
+                            # Optimize for <noop>; <noop> is a valid operation,
+                            # hence is the line regarded as parsed.
+                            [ "$2" ] || return 0
 
-                printf "%s" " '-s' '$2' $_a"
+                            set -- '-s' "$_line$2" "$_orig_offset"
+                        ;;
+                    esac
 
-                return 0
-            ;;
-            '-r')  # $2 = string
-                case "$_line" in
-                    *"$2"*) : ;;
-                    *) shift 2 && continue ;;
-                esac
+                    arg_set _a "$2" || return "$?"
 
-                printf "%s" " '-r' '$_orig_offset'"
+                    # $3 = orig_offset
+                    printf "%s" " '$1' '$3' $_a"
 
-                return 0
-            ;;
-            '-s')  # $2 = string; $3 = string
-                case "$_line" in
-                    *"$2"*) : ;;
-                    *) shift 3 && continue ;;
-                esac
+                    return 0
+                ;;
+                '-r')  # $2 = string
+                    case "$#" in 1) return 255 ;; esac
 
-                set -- '' "$2" "$3" "$_orig_offset"
+                    # Test secondary modifiers.
+                    case "$_mod_s" in
+                        *" $_orig_offset "*) : ;;
+                        *) [ ! "$_mod_s" ] || { shift 2 && continue; } ;;
+                    esac
 
-                arg_set _a "$3" || return "$?"
+                    # Test string match.
+                    case "$_line" in
+                        *"$2"*) : ;;
+                        *) shift 2 && continue ;;
+                    esac
 
-                # $4 = orig_offset
-                printf "%s" " '-s' '$4' $_a"
+                    printf "%s" " '-r' '$_orig_offset'"
 
-                return 0
-            ;;
-            *)
-                return 255
-            ;;
-        esac done
+                    return 0
+                ;;
+                '-s')  # $2 = string; $3 = string
+                    case "$#" in 1|2) return 255 ;; esac
+
+                    # Test secondary modifiers.
+                    case "$_mod_s" in
+                        *" $_orig_offset "*) : ;;
+                        *) [ ! "$_mod_s" ] || { shift 3 && continue; } ;;
+                    esac
+
+                    # Test string match. Optimized for <noop>; <noop> is
+                    # a valid operation, hence is the line regarded as parsed.
+                    case "$_line" in
+                        "$3") return 0 ;;
+                        *"$2"*) : ;;
+                        *) shift 3 && continue ;;
+                    esac
+
+                    set -- '' '' "$3" "$_orig_offset"
+
+                    arg_set _a "$3" || return "$?"
+
+                    # $4 = orig_offset
+                    printf "%s" " '-s' '$4' $_a"
+
+                    return 0
+                ;;
+                *)
+                    return 255
+                ;;
+            esac
+        done
     }
 
     [ "$#" -ge 3 ] || return 255
@@ -150,8 +193,8 @@ EOF
         while [ "$#" -ge 1 ]; do
             case "$1" in
                 '-') : ;;
-                '-na' | '-ns' | '-s') shift 3 && continue ;;
-                '-nr' | '-r') shift 2 && continue ;;
+                '-m' | '-a' | '-r') shift 2 && continue ;;
+                '-s') shift 3 && continue ;;
                 *) return 255 ;;
             esac
 
