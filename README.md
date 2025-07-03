@@ -67,8 +67,6 @@ Dimitar Yurukov (mscalindt@protonmail.com)
 A collection of reusable pure and very portable shell functions
 with optional external utility calls.
 
-### Functions List:
-
 - [ARG_SAVE()](src/arg_save):
 Save with single-quote escape an argument into a variable
 - [ARG_SET()](src/arg_set):
@@ -164,8 +162,6 @@ Extract an evaluated argument in a single-quotes array of arguments
 
 A collection of reusable pure and very portable shell functions
 to make shell option parsing a breeze.
-
-### Functions List:
 
 - [ABSPATH()](src/abspath):
 Convert a relative pathname into an absolute pathname
