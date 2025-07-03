@@ -1,0 +1,39 @@
+shell-glossary NEWS
+
+
+2025-05-23 - 2025-06-19
+=======================
+* Added fed(),
+  "Create a deterministic file data edit format".
+
+* Added libfile(),
+  "Modify regular file data in-memory using a deterministic format".
+
+* Added libfile_n(),
+  "Deterministically modify regular file data in-memory".
+
+2024-07-05 - 2024-07-14
+=======================
+* Created tag `pre-merge`.
+
+* `main-functions`[1] has been merged into `shell-glossary/main`.
+  Refer to HISTORY.md for details.
+
+[1] https://github.com/mscalindt/main-functions
+
+
+2023-08-04 - 2023-08-15
+=======================
+* Created tag `pre-split`.
+
+* Major repository reconstruction. Refer to HISTORY.md for details.
+
+
+2021-08-19
+==========
+* Initial commit.
+
+
+========================================================================
+
+Copyright (C) 2021-2025 Dimitar Yurukov <mscalindt@protonmail.com>
