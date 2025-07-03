@@ -50,7 +50,9 @@
 # the following secondary type (modification behavior) modifier(s):
 # <n>:           a natural number that specifies a line;
 # and the following tertiary type (string matching behavior) modifier(s):
-# ``.
+# `e`:           exact string matching assert;
+# `p`:           prefix string matching assert;
+# `s`:           suffix string matching assert.
 #.
 fed() {
     fed_() {
@@ -64,7 +66,19 @@ fed() {
 
             # Set modifiers.
             # `n` -> "<N>" in _mod_s
+            # `e` -> `e` in $_mod_t
+            # `p` -> `p` in $_mod_t
+            # `s` -> `s` in $_mod_t
             while :; do case "$1 $2" in
+                '-m e')
+                    _mod_t=e; shift 2 && continue
+                ;;
+                '-m p')
+                    _mod_t=p; shift 2 && continue
+                ;;
+                '-m s')
+                    _mod_t=s; shift 2 && continue
+                ;;
                 '-m '*)
                     # Assert $2 is a natural number (`1`, `2`, ...).
                     case "${2:-0}${2#*[!0123456789]}" in
@@ -121,10 +135,33 @@ fed() {
                         *) [ ! "$_mod_s" ] || { shift 2 && continue; } ;;
                     esac
 
-                    # Test string match.
-                    case "$_line" in
-                        *"$2"*) : ;;
-                        *) shift 2 && continue ;;
+                    # Test tertiary modifiers.
+                    case "$_mod_t" in
+                        e)
+                            case "$_line" in
+                                "$2") : ;;
+                                *) shift 2 && continue ;;
+                            esac
+                        ;;
+                        p)
+                            case "$_line" in
+                                "$2"*) : ;;
+                                *) shift 2 && continue ;;
+                            esac
+                        ;;
+                        s)
+                            case "$_line" in
+                                *"$2") : ;;
+                                *) shift 2 && continue ;;
+                            esac
+                        ;;
+                        *)
+                            # Test string match.
+                            case "$_line" in
+                                *"$2"*) : ;;
+                                *) shift 2 && continue ;;
+                            esac
+                        ;;
                     esac
 
                     printf "%s" " '-r' '$_orig_offset'"
@@ -140,12 +177,38 @@ fed() {
                         *) [ ! "$_mod_s" ] || { shift 3 && continue; } ;;
                     esac
 
-                    # Test string match. Optimized for <noop>; <noop> is
+                    # Test tertiary modifiers. Optimized for <noop>; <noop> is
                     # a valid operation, hence is the line regarded as parsed.
-                    case "$_line" in
-                        "$3") return 0 ;;
-                        *"$2"*) : ;;
-                        *) shift 3 && continue ;;
+                    case "$_mod_t" in
+                        e)
+                            case "$_line" in
+                                "$3") return 0 ;;
+                                "$2") : ;;
+                                *) shift 3 && continue ;;
+                            esac
+                        ;;
+                        p)
+                            case "$_line" in
+                                "$3") return 0 ;;
+                                "$2"*) : ;;
+                                *) shift 3 && continue ;;
+                            esac
+                        ;;
+                        s)
+                            case "$_line" in
+                                "$3") return 0 ;;
+                                *"$2") : ;;
+                                *) shift 3 && continue ;;
+                            esac
+                        ;;
+                        *)
+                            # Test string match. Optimized for <noop>.
+                            case "$_line" in
+                                "$3") return 0 ;;
+                                *"$2"*) : ;;
+                                *) shift 3 && continue ;;
+                            esac
+                        ;;
                     esac
 
                     set -- '' '' "$3" "$_orig_offset"
