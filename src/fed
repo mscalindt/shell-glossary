@@ -27,7 +27,7 @@
 # (0) success
 # (1) no operations to be created / error
 # (*) error
-# (255) bad input / error
+# (255) bad input / bad usage / error
 #! .rc.fn:
 # (arg_set) (*) error
 #! .desc.ext:
@@ -49,6 +49,7 @@
 # ``;
 # the following secondary type (modification behavior) modifier(s):
 # <n>:           a natural number that specifies a line;
+# `mof`:         substitution modification behavior is "match of";
 # and the following tertiary type (string matching behavior) modifier(s):
 # `e`:           exact string matching assert;
 # `p`:           prefix string matching assert;
@@ -65,11 +66,15 @@ fed() {
             _mod_p=; _mod_s=; _mod_t=
 
             # Set modifiers.
+            # `mof` -> `m` in _mod_s
             # `n` -> "<N>" in _mod_s
             # `e` -> `e` in $_mod_t
             # `p` -> `p` in $_mod_t
             # `s` -> `s` in $_mod_t
             while :; do case "$1 $2" in
+                '-m mof')
+                    _mod_s="m ${_mod_s#'m '}"; shift 2 && continue
+                ;;
                 '-m e')
                     _mod_t=e; shift 2 && continue
                 ;;
@@ -102,6 +107,7 @@ fed() {
                 ;;
                 '-a')  # $2 = string
                     case "$#" in 1) return 255 ;; esac
+                    case "$_mod_s" in 'm '*) return 255 ;; esac
 
                     # Test secondary modifiers.
                     case "$_mod_s" in
@@ -128,6 +134,7 @@ fed() {
                 ;;
                 '-r')  # $2 = string
                     case "$#" in 1) return 255 ;; esac
+                    case "$_mod_s" in 'm '*) return 255 ;; esac
 
                     # Test secondary modifiers.
                     case "$_mod_s" in
@@ -173,8 +180,29 @@ fed() {
 
                     # Test secondary modifiers.
                     case "$_mod_s" in
-                        *" $_orig_offset "*) : ;;
-                        *) [ ! "$_mod_s" ] || { shift 3 && continue; } ;;
+                        *" $_orig_offset "*)
+                            :
+                        ;;
+                        *)
+                            # Test <N> no match.
+                            case "${_mod_s:-m }" in
+                                'm ') : ;;
+                                *) shift 3 && continue ;;
+                            esac
+                        ;;
+                    esac
+                    case "$_mod_s" in
+                        'm '*)
+                            [ "$2" ] || { shift 3 && continue; }
+
+                            case "$_line" in
+                                *"$2"*)
+                                    _a="$2"; _b="$3"; shift 3
+                                    _b="${_line%%"$_a"*}$_b${_line#*"$_a"}"
+                                    set -- '' "$_a" "$_b" "$@"
+                                ;;
+                            esac
+                        ;;
                     esac
 
                     # Test tertiary modifiers. Optimized for <noop>; <noop> is
