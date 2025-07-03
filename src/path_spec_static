@@ -150,7 +150,13 @@ path_spec_static() {
             h)
                 [ -e "$2" ] && [ -h "${2%"${2##*[!/]}"}" ] || return 1
 
-                 _path="$(realpath -- "$2")"
+                # Store the output of `realpath` in $_path using
+                # command substitution. The custom `x` character at the end
+                # and its subsequent removal outside the command substitution
+                # preserves any trailing <newline> characters stripped by
+                # command substitution.
+                _path="$(realpath -- "$2" && printf "%s" x)" && \
+                _path="${_path%?}"
             ;;
             # $2 is a logical directory,
             # (-k)
