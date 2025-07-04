@@ -18,8 +18,6 @@ functions for general use.
 Currently, the state of the functions is considered unstable until certain
 criteria in [Roadmap](#roadmap) are met.
 
-[NEWS](NEWS)
-
 ## Roadmap
 
 * Portable C89 in-house program to follow/resolve symbolic links.
@@ -34,6 +32,8 @@ criteria in [Roadmap](#roadmap) are met.
 * Manpage of `shell-glossary`.
   * Provide manpage equivalents of the function documentation headers.
 * Makefile to build src/ into a `shell-glossary` file.
+
+For updates on recent changes, see the [NEWS](NEWS) file.
 
 ## Contributing
 
