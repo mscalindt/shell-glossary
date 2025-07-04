@@ -3,14 +3,14 @@ shell-glossary NEWS
 
 2025-05-23 - 2025-07-04
 =======================
-* Added fed(),
-  "Create a deterministic file data edit format".
+* Added libfile_n(),
+  "Deterministically modify regular file data in-memory".
 
 * Added libfile(),
   "Modify regular file data in-memory using a deterministic format".
 
-* Added libfile_n(),
-  "Deterministically modify regular file data in-memory".
+* Added fed(),
+  "Create a deterministic file data edit format".
 
 * path_spec_static():
   Fixed bad newline handling of source filenames in resolved
