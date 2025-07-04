@@ -18,6 +18,8 @@ functions for general use.
 Currently, the state of the functions is considered unstable until certain
 criteria in [Roadmap](#roadmap) are met.
 
+[NEWS](NEWS)
+
 ## Roadmap
 
 * Portable C89 in-house program to follow/resolve symbolic links.
