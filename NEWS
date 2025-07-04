@@ -1,7 +1,7 @@
 shell-glossary NEWS
 
 
-2025-05-23 - 2025-07-03
+2025-05-23 - 2025-07-04
 =======================
 * Added fed(),
   "Create a deterministic file data edit format".
@@ -15,6 +15,11 @@ shell-glossary NEWS
 * path_spec_static():
   Fixed bad newline handling of source filenames in resolved
   symbolic links.
+
+* Clarified the code format[1] (<noop> specifically)[2] of fed().
+
+[1] 3cc0b201b9f0
+[2] a7db527285b3
 
 
 2024-07-05 - 2024-07-14

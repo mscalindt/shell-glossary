@@ -66,8 +66,8 @@ fed() {
             _mod_p=; _mod_s=; _mod_t=
 
             # Set modifiers.
-            # `mof` -> `m` in _mod_s
-            # `n` -> "<N>" in _mod_s
+            # `mof` -> `m` in $_mod_s
+            # <n> -> "<n>" in $_mod_s
             # `e` -> `e` in $_mod_t
             # `p` -> `p` in $_mod_t
             # `s` -> `s` in $_mod_t
@@ -88,11 +88,9 @@ fed() {
                     # Assert $2 is a natural number (`1`, `2`, ...).
                     case "${2:-0}${2#*[!0123456789]}" in
                         0*) return 255 ;;
-                        "$2$2") : ;;
+                        "$2$2") _mod_s="$_mod_s $2 "; shift 2 && continue ;;
                         *) return 255 ;;
                     esac
-
-                    _mod_s="$_mod_s $2 "; shift 2 && continue
                 ;;
                 *)
                     break
@@ -109,19 +107,20 @@ fed() {
                     case "$#" in 1) return 255 ;; esac
                     case "$_mod_s" in 'm '*) return 255 ;; esac
 
-                    # Test secondary modifiers.
-                    case "$_mod_s" in
+                    # Test <n> modifier.
+                    case "${_mod_s:-0}" in
                         *" $_orig_offset "*)
                             set -- '-a' "$2" "$_orig_offset"
                         ;;
-                        *)
-                            [ ! "$_mod_s" ] || { shift 2 && continue; }
-
-                            # Optimize for <noop>; <noop> is a valid operation,
+                        0)
+                            # Assert addition <noop>; is a valid operation,
                             # hence is the line regarded as parsed.
                             [ "$2" ] || return 0
 
                             set -- '-s' "$_line$2" "$_orig_offset"
+                        ;;
+                        *)  # Operation <noop>.
+                            shift 2 && continue
                         ;;
                     esac
 
@@ -136,13 +135,13 @@ fed() {
                     case "$#" in 1) return 255 ;; esac
                     case "$_mod_s" in 'm '*) return 255 ;; esac
 
-                    # Test secondary modifiers.
-                    case "$_mod_s" in
-                        *" $_orig_offset "*) : ;;
-                        *) [ ! "$_mod_s" ] || { shift 2 && continue; } ;;
+                    # Assert <n> modifier.
+                    case "${_mod_s:-0}" in
+                        *" $_orig_offset "* | 0) : ;;
+                        *) shift 2 && continue ;;  # Operation <noop>.
                     esac
 
-                    # Test tertiary modifiers.
+                    # Test `e`/`p`/`s` string matching modifiers.
                     case "$_mod_t" in
                         e)
                             case "$_line" in
@@ -163,7 +162,7 @@ fed() {
                             esac
                         ;;
                         *)
-                            # Test string match.
+                            # Test default string match.
                             case "$_line" in
                                 *"$2"*) : ;;
                                 *) shift 2 && continue ;;
@@ -178,21 +177,16 @@ fed() {
                 '-s')  # $2 = string; $3 = string
                     case "$#" in 1|2) return 255 ;; esac
 
-                    # Test secondary modifiers.
-                    case "$_mod_s" in
-                        *" $_orig_offset "*)
-                            :
-                        ;;
-                        *)
-                            # Test <N> no match.
-                            case "${_mod_s:-m }" in
-                                'm ') : ;;
-                                *) shift 3 && continue ;;
-                            esac
-                        ;;
+                    # Assert <n> modifier.
+                    case "${_mod_s:-m }" in
+                        *" $_orig_offset "* | 'm '*) : ;;
+                        *) shift 3 && continue ;;  # Operation <noop>.
                     esac
+
+                    # Test `mof` (`m`) modifier.
                     case "$_mod_s" in
                         'm '*)
+                            # Assert operation <noop>.
                             [ "$2" ] || { shift 3 && continue; }
 
                             case "$_line" in
@@ -205,34 +199,35 @@ fed() {
                         ;;
                     esac
 
-                    # Test tertiary modifiers. Optimized for <noop>; <noop> is
-                    # a valid operation, hence is the line regarded as parsed.
+                    # Test `e`/`p`/`s` string matching modifiers.
+                    # Asserts addition <noop>; is a valid operation,
+                    # hence is the line regarded as parsed.
                     case "$_mod_t" in
                         e)
                             case "$_line" in
-                                "$3") return 0 ;;
+                                "$3") return 0 ;;  # Addition <noop>.
                                 "$2") : ;;
                                 *) shift 3 && continue ;;
                             esac
                         ;;
                         p)
                             case "$_line" in
-                                "$3") return 0 ;;
+                                "$3") return 0 ;;  # Addition <noop>.
                                 "$2"*) : ;;
                                 *) shift 3 && continue ;;
                             esac
                         ;;
                         s)
                             case "$_line" in
-                                "$3") return 0 ;;
+                                "$3") return 0 ;;  # Addition <noop>.
                                 *"$2") : ;;
                                 *) shift 3 && continue ;;
                             esac
                         ;;
                         *)
-                            # Test string match. Optimized for <noop>.
+                            # Test default string match.
                             case "$_line" in
-                                "$3") return 0 ;;
+                                "$3") return 0 ;;  # Addition <noop>.
                                 *"$2"*) : ;;
                                 *) shift 3 && continue ;;
                             esac
