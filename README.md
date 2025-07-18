@@ -2,12 +2,11 @@
 
 1. [Introduction](#introduction)
 2. [Roadmap](#roadmap)
-3. [Contributing](#contributing)
+3. [Contributors](#contributors)
 4. [License](#license)
 5. [Notice](#notice)
-6. [Author](#author)
-7. [Collection 1: General POSIX Shell Functions](#collection-1-general-posix-shell-functions)
-8. [Collection 2: POSIX Shell Functions for Shell Option Parsing](#collection-2-posix-shell-functions-for-shell-option-parsing)
+6. [Collection 1: General POSIX Shell Functions](#collection-1-general-posix-shell-functions)
+7. [Collection 2: POSIX Shell Functions for Shell Option Parsing](#collection-2-posix-shell-functions-for-shell-option-parsing)
 
 ## Introduction
 
@@ -35,7 +34,7 @@ criteria in [Roadmap](#roadmap) are met.
 
 For updates on recent changes, see the [NEWS](NEWS) file.
 
-## Contributing
+## Contributors
 
 Contribution guidelines will be published in the future. At this time,
 external contributions are not accepted.
@@ -57,10 +56,6 @@ There is NO WARRANTY, to the extent permitted by law.
 
 For detailed information on external dependencies,
 see the [DEPENDENCIES](DEPENDENCIES) file.
-
-## Author
-
-Dimitar Yurukov (mscalindt@protonmail.com)
 
 ---
 
