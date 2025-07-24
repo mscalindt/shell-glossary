@@ -9,7 +9,7 @@
 #! .rc:
 # (0) success
 #! .rc.fn:
-# ($2) (*) error
+# ($1) (*) error
 #.
 map() {
     _arg=; while [ "$#" -ge 2 ]; do
