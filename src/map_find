@@ -10,7 +10,7 @@
 # (1) false / error
 # (*) error
 #! .rc.fn:
-# ($2) (0) success
+# ($1) (0) success
 #.
 map_find() {
     while [ "$#" -ge 2 ]; do
