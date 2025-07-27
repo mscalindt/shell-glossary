@@ -6,6 +6,10 @@ shell-glossary NEWS
 * map() is now a better map function (supports multiple function arguments).
   Breaking (backward-incompatible) change; existing code requires adjustment.
 
+* map_find() is now a better map function (supports multiple function
+  arguments).
+  Breaking (backward-incompatible) change; existing code requires adjustment.
+
 
 2025-05-23 - 2025-07-04
 =======================

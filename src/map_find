@@ -1,22 +1,99 @@
 #! .desc:
 # Find success among arguments using a function
 #! .params:
-# <"$1"> - function
-# <"$2">+ - argument
+# <"$1"> - $#
+# <"$2"> - $@
+# <"$3"> - function name
+# <"$4">+ - function argument
 #! .gives:
 # (0) <"$_arg"> - [string];
 #                 successfully processed $2
+#! .sets:
+# <map_find_> ();
 #! .rc:
 # (1) false / error
 # (*) error
 #! .rc.fn:
-# ($1) (0) success
+# ($3) (0) success
 #.
 map_find() {
-    while [ "$#" -ge 2 ]; do
-        "$1" "$2" && { _arg="$2"; return "$?"; } || :
+    map_find_() {
+        if [ "$1" -gt 7 ]; then
+            _a="$2"; _b="$3"; _c="$4"; _d="$5"; _e="$6"; _f="$7"; _g="$8"
+            _h="$9"; _pos=0; shift "$(($1 + 1))"
 
-        _i="$1"; shift 2; [ "$#" = 0 ] || set -- "$_i" "$@"
+            for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f" "$_g" "$_h"; do
+                [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                "$@" "$_arg" && { _pos=1; _len=8; } || _pos=0
+            done
+        else
+            _a="$2"; _b="$3"; _c="$4"; _d="$5"; _e="$6"; _f="$7"; _g="$8"
+            _args="$1"; _pos=0; shift "$(($1 + 1))"
+
+            case "$_args" in
+                7)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f" "$_g"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && { _pos=1; _len=7; } || _pos=0
+                    done
+                ;;
+                6)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && { _pos=1; _len=6; } || _pos=0
+                    done
+                ;;
+                5)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && { _pos=1; _len=5; } || _pos=0
+                    done
+                ;;
+                4)
+                    for _arg in "$_a" "$_b" "$_c" "$_d"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && { _pos=1; _len=4; } || _pos=0
+                    done
+                ;;
+                3)
+                    for _arg in "$_a" "$_b" "$_c"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && { _pos=1; _len=3; } || _pos=0
+                    done
+                ;;
+                2)
+                    for _arg in "$_a" "$_b"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && { _pos=1; _len=2; } || _pos=0
+                    done
+                ;;
+                1)
+                    "$@" "$_a" && { _pos=1; _len=1; } || _pos=0
+                ;;
+            esac
+        fi
+
+        [ "$_pos" = 0 ] && return 1 || return 0
+    }
+
+    # Parse $2/$@ in chunks of 8.
+    # $1/$# reflects their count at all times.
+    _arg=; while [ "$1" -gt 0 ]; do
+        # On success, returns $_len and $_pos.
+        map_find_ "$@" && {
+            shift "$(((_len - _pos) + 1))"; _arg="$1"
+
+            return "$?"
+        } || :
+
+        _a="$1"; shift 9; set -- "$(($_a - 8))" "$@"
     done
 
     return 1
