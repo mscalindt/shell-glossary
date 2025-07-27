@@ -1,21 +1,98 @@
 #! .desc:
 # Process each argument with a function
 #! .params:
-# <"$1"> - function
-# <"$2">+ - argument
+# <"$1"> - $#
+# <"$2"> - $@
+# <"$3"> - function name
+# <"$4">+ - function argument
 #! .gives:
 # <"$_arg"> - [string];
 #             [last processed <$2>]
+#! .sets:
+# <map_> ();
 #! .rc:
 # (0) success
 #! .rc.fn:
-# ($1) (*) error
+# ($3) (*) error
 #.
 map() {
-    _arg=; while [ "$#" -ge 2 ]; do
-        "$1" "$2" || { set -- "$?" "$2"; _arg="$2"; return "$1"; }
+    map_() {
+        if [ "$1" -gt 7 ]; then
+            _a="$2"; _b="$3"; _c="$4"; _d="$5"; _e="$6"; _f="$7"; _g="$8"
+            _h="$9"; _pos=0; _rc=0; shift "$(($1 + 1))"
 
-        _i="$1"; _arg="$2"; shift 2; [ "$#" = 0 ] || set -- "$_i" "$@"
+            for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f" "$_g" "$_h"; do
+                [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                "$@" "$_arg" && _pos=0 || { _rc="$?"; _pos=1; _len=8; }
+            done
+        else
+            _a="$2"; _b="$3"; _c="$4"; _d="$5"; _e="$6"; _f="$7"; _g="$8"
+            _args="$1"; _pos=0; _rc=0; shift "$(($1 + 1))"
+
+            case "$_args" in
+                7)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f" "$_g"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=0 || { _rc="$?"; _pos=1; _len=7; }
+                    done
+                ;;
+                6)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=0 || { _rc="$?"; _pos=1; _len=6; }
+                    done
+                ;;
+                5)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=0 || { _rc="$?"; _pos=1; _len=5; }
+                    done
+                ;;
+                4)
+                    for _arg in "$_a" "$_b" "$_c" "$_d"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=0 || { _rc="$?"; _pos=1; _len=4; }
+                    done
+                ;;
+                3)
+                    for _arg in "$_a" "$_b" "$_c"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=0 || { _rc="$?"; _pos=1; _len=3; }
+                    done
+                ;;
+                2)
+                    for _arg in "$_a" "$_b"; do
+                        [ "$_pos" = 0 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=0 || { _rc="$?"; _pos=1; _len=2; }
+                    done
+                ;;
+                1)
+                    "$@" "$_a" && _pos=0 || { _rc="$?"; _pos=1; _len=1; }
+                ;;
+            esac
+        fi
+
+        [ "$_pos" = 0 ] && return 0 || return "$_rc"
+    }
+
+    # Parse $2/$@ in chunks of 8.
+    # $1/$# reflects the argument count at all times.
+    _arg=; while [ "$1" -gt 0 ]; do
+        # On error, returns $_len, $_pos, and $_rc.
+        map_ "$@" || {
+            shift "$(((_len - _pos) + 1))"; _arg="$1"
+
+            return "$_rc"
+        }
+
+        _a="$1"; shift 9; set -- "$(($_a - 8))" "$@"
     done
 
     return 0

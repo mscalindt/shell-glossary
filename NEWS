@@ -1,6 +1,12 @@
 shell-glossary NEWS
 
 
+2025-07-27 - 2025-07-27
+=======================
+* map() is now a better map function (supports multiple function arguments).
+  Breaking (backward-incompatible) change; existing code requires adjustment.
+
+
 2025-05-23 - 2025-07-04
 =======================
 * Added libfile_n(),
