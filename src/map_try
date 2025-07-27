@@ -1,0 +1,75 @@
+#! .desc:
+# Process each argument with a function irrespective of rc
+#! .params:
+# <"$1"> - $#
+# <"$2"> - $@
+# <"$3"> - function name
+# <"$4">+ - function argument
+#! .sets:
+# <map_try_> ();
+#! .rc:
+# (0) success
+#.
+map_try() {
+    map_try_() {
+        if [ "$1" -gt 7 ]; then
+            _a="$2"; _b="$3"; _c="$4"; _d="$5"; _e="$6"; _f="$7"; _g="$8"
+            _h="$9"; shift "$(($1 + 1))"
+
+            for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f" "$_g" "$_h"; do
+                "$@" "$_arg" || continue
+            done
+        else
+            _a="$2"; _b="$3"; _c="$4"; _d="$5"; _e="$6"; _f="$7"; _g="$8"
+            _args="$1"; shift "$(($1 + 1))"
+
+            case "$_args" in
+                7)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f" "$_g"; do
+                        "$@" "$_arg" || continue
+                    done
+                ;;
+                6)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f"; do
+                        "$@" "$_arg" || continue
+                    done
+                ;;
+                5)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e"; do
+                        "$@" "$_arg" || continue
+                    done
+                ;;
+                4)
+                    for _arg in "$_a" "$_b" "$_c" "$_d"; do
+                        "$@" "$_arg" || continue
+                    done
+                ;;
+                3)
+                    for _arg in "$_a" "$_b" "$_c"; do
+                        "$@" "$_arg" || continue
+                    done
+                ;;
+                2)
+                    for _arg in "$_a" "$_b"; do
+                        "$@" "$_arg" || continue
+                    done
+                ;;
+                1)
+                    "$@" "$_a" || :
+                ;;
+            esac
+        fi
+
+        return 0
+    }
+
+    # Parse $2/$@ in chunks of 8.
+    # $1/$# reflects the argument count at all times.
+    while [ "$1" -gt 0 ]; do
+        map_try_ "$@"
+
+        _a="$1"; shift 9; set -- "$(($_a - 8))" "$@"
+    done
+
+    return 0
+}
