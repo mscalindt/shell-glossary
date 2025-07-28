@@ -85,7 +85,7 @@ map_find() {
 
     # Parse $2/$@ in chunks of 8.
     # $1/$# reflects their count at all times.
-    _arg=; while [ "$1" -gt 0 ]; do
+    while [ "$1" -gt 0 ]; do
         # On success, returns $_len and $_pos.
         map_find_ "$@" && {
             shift "$(((_len - _pos) + 1))"; _arg="$1"
