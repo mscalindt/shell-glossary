@@ -130,6 +130,8 @@ Process each cumulative path segment in reverse with a function
 Process each argument in reverse with a function
 - [MAP_TRY()](src/map_try):
 Process each argument with a function irrespective of rc
+- [MAP_TRY_REV()](src/map_try_rev):
+Process each argument in reverse with a function irrespective of rc
 - [MASK_CHECK()](src/mask_check):
 Assert a bit, the power of 2, in a pseudo-bitmask shell variable
 - [MASK_SET()](src/mask_set):

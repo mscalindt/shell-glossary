@@ -19,6 +19,9 @@ shell-glossary NEWS
 * Added map_find_rev(),
   "Find success among arguments in reverse using a function".
 
+* Added map_try_rev(),
+  "Process each argument in reverse with a function irrespective of rc".
+
 
 2025-05-23 - 2025-07-04
 =======================
