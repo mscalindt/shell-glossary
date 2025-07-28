@@ -1,0 +1,38 @@
+#! .desc:
+# Offset arguments by N for a function call
+#! .params:
+# <[$1]> - N
+# <"$@"> - map()
+#! .uses.fn:
+# <assert> ('-whole-n' "string");
+#          Assert a string
+#! .rc:
+# (0) success
+# (*) error
+#! .rc.fn:
+# (assert) (255) bad input / bad usage
+#! .desc.ext:
+# If the first character of $1 is `-` or value is `0`, no offset will occur.
+#
+# For more information, refer to the documentation of map().
+#.
+offset() {
+    _a="$1" && \
+    _a="${_a%%\-*}" && \
+    _a="${_a:-0}" && \
+    assert -whole-n "$_a" || return 255
+
+    _a="$1" && \
+    _a="${_a%%\-*}" && \
+    _a="${_a:-0}" && \
+    [ "$_a" != 0 ] || { shift && map "$@" && return 0 || return "$?"; }
+
+    # Bad usage: offset exceeds the arguments.
+    [ "$1" -le "$2" ] || return 255
+
+    _a="$1" && \
+    _b="$2" && \
+    shift "$((_a + 2))" && \
+    set -- "$((_b - _a))" "$@" && \
+    map "$@"
+}

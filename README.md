@@ -140,6 +140,8 @@ Set a bit, the power of 2, in a pseudo-bitmask shell variable
 Unset a bit, the power of 2, in a pseudo-bitmask shell variable
 - [NUM_TO_CHAR()](src/num_to_char):
 Create N amount of character(s) using PE
+- [OFFSET()](src/offset):
+Offset arguments by N for a function call
 - [PATH_SPEC()](src/path_spec):
 Lexically normalize a path into an assertable canonical path
 - [PATH_SPEC_FS()](src/path_spec_fs):

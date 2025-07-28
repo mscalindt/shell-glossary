@@ -22,6 +22,9 @@ shell-glossary NEWS
 * Added map_try_rev(),
   "Process each argument in reverse with a function irrespective of rc".
 
+* Added offset(),
+  "Offset arguments by N for a function call".
+
 
 2025-05-23 - 2025-07-04
 =======================
