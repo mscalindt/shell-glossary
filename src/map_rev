@@ -1,0 +1,117 @@
+#! .desc:
+# Process each argument in reverse with a function
+#! .params:
+# <"$1"> - $#
+# <"$2"> - $@
+# <"$3"> - function name
+# <"$4">+ - function argument
+#! .gives:
+# <"$_arg"> - [string];
+#             [last processed <$2>]
+#! .sets:
+# <map_rev_> ();
+#! .rc:
+# (0) success
+#! .rc.fn:
+# ($3) (*) error
+#.
+map_rev() {
+    map_rev_() {
+        if [ "$1" -ge 0 ]; then
+            _offset="$1"; _args="$2"; shift "$((2 + _offset))"
+
+            _a="$9"; _b="$8"; _c="$7"; _d="$6"; _e="$5"; _f="$4"; _g="$3"
+            _h="$2"; _i="$1"; _pos=-1; shift "$((_args - _offset))"
+
+            for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f" "$_g" "$_h" "$_i";
+            do
+                [ "$_pos" = -1 ] || { _pos="$((_pos + 1))"; continue; }
+
+                "$@" "$_arg" && _pos=-1 || { _rc="$?"; _pos=0; }
+            done
+        else
+            _offset="$1"; _args="$2"; shift 2
+
+            _a="$8"; _b="$7"; _c="$6"; _d="$5"; _e="$4"; _f="$3"; _g="$2"
+            _h="$1"; _pos=-1; shift "$_args"
+
+            case "$_offset" in
+                -1)
+                    for _arg in "$_a" "$_b" "$_c" "$_d" "$_e" "$_f" "$_g" \
+                    "$_h"; do
+                        [ "$_pos" = -1 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=-1 || { _rc="$?"; _pos=0; }
+                    done
+                ;;
+                -2)
+                    for _arg in "$_b" "$_c" "$_d" "$_e" "$_f" "$_g" "$_h"; do
+                        [ "$_pos" = -1 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=-1 || { _rc="$?"; _pos=0; }
+                    done
+                ;;
+                -3)
+                    for _arg in "$_c" "$_d" "$_e" "$_f" "$_g" "$_h"; do
+                        [ "$_pos" = -1 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=-1 || { _rc="$?"; _pos=0; }
+                    done
+                ;;
+                -4)
+                    for _arg in "$_d" "$_e" "$_f" "$_g" "$_h"; do
+                        [ "$_pos" = -1 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=-1 || { _rc="$?"; _pos=0; }
+                    done
+                ;;
+                -5)
+                    for _arg in "$_e" "$_f" "$_g" "$_h"; do
+                        [ "$_pos" = -1 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=-1 || { _rc="$?"; _pos=0; }
+                    done
+                ;;
+                -6)
+                    for _arg in "$_f" "$_g" "$_h"; do
+                        [ "$_pos" = -1 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=-1 || { _rc="$?"; _pos=0; }
+                    done
+                ;;
+                -7)
+                    for _arg in "$_g" "$_h"; do
+                        [ "$_pos" = -1 ] || { _pos="$((_pos + 1))"; continue; }
+
+                        "$@" "$_arg" && _pos=-1 || { _rc="$?"; _pos=0; }
+                    done
+                ;;
+                -8)
+                    "$@" "$_h" && _pos=-1 || { _rc="$?"; _pos=0; }
+                ;;
+            esac
+        fi
+
+        [ "$_pos" = -1 ] && return 0 || return "$_rc"
+    }
+
+    # Set additional parameter on $1 to act as an offset.
+    set -- "$1" "$@"
+
+    # Parse $3/$@ in chunks of 9.
+    # $2/$# reflects the original argument count at all times.
+    # $1 reflects the argument offset to parse 9 arguments from.
+    _arg=; while [ "$1" -gt 0 ]; do
+        _a="$1"; shift; set -- "$(($_a - 9))" "$@"
+
+        # On error, returns $_pos and $_rc.
+        map_rev_ "$@" || {
+            # (n>0)*n  ==  max(0,n)  ==  n>0?n:0
+            shift $(((($1 > 0) * $1) + _pos + 2)); _arg="$1"
+
+            return "$_rc"
+        }
+    done
+
+    return 0
+}

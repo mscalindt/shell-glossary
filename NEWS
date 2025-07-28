@@ -13,6 +13,9 @@ shell-glossary NEWS
 * Added map_try(),
   "Process each argument with a function irrespective of rc".
 
+* Added map_rev(),
+  "Process each argument in reverse with a function".
+
 
 2025-05-23 - 2025-07-04
 =======================
