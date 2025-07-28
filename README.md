@@ -116,6 +116,8 @@ For natural N, remove line string
 Process each argument with a function
 - [MAP_FIND()](src/map_find):
 Find success among arguments using a function
+- [MAP_FIND_REV()](src/map_find_rev):
+Find success among arguments in reverse using a function
 - [MAP_PCHUNK()](src/map_pchunk):
 Process each cumulative path segment with a function
 - [MAP_PCHUNK_FIND()](src/map_pchunk_find):
