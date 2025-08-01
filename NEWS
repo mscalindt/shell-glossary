@@ -1,6 +1,11 @@
 shell-glossary NEWS
 
 
+2025-08-01 - 2025-08-01
+=======================
+* Fixed bad map() arg shifting behavior.
+
+
 2025-07-27 - 2025-07-28
 =======================
 * map() is now a better map function (supports multiple function arguments).
