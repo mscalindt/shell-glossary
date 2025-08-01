@@ -93,7 +93,7 @@ map_find() {
             return "$?"
         } || :
 
-        _a="$1"; shift 9; set -- "$(($_a - 8))" "$@"
+        _a="$1"; [ "$#" -ge 9 ] && shift 9 || :; set -- "$(($_a - 8))" "$@"
     done
 
     return 1

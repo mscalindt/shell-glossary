@@ -5,6 +5,8 @@ shell-glossary NEWS
 =======================
 * Fixed bad map() arg shifting behavior.
 
+* Fixed bad map_find() arg shifting behavior.
+
 
 2025-07-27 - 2025-07-28
 =======================
