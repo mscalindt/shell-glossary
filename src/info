@@ -16,6 +16,7 @@
 # <$2> - format(
 #     '-' - raw
 #     '--' - raw; no <newline>
+#     '---' - raw; no <newline>; arg offset
 #     .
 # )
 # <"$3">+ - text
@@ -54,6 +55,7 @@ info() {
     shift 2; case "$_format" in
         '-') printf "%b%s%b\n" "$_color" "$*" "$_reset" ;;
         '--') printf "%b%s%b" "$_color" "$*" "$_reset" ;;
+        '---') printf " %b%s%b" "$_color" "$*" "$_reset" ;;
         *) return 255 ;;
     esac
 }

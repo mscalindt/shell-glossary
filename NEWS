@@ -1,13 +1,16 @@
 shell-glossary NEWS
 
 
-2025-08-01 - 2025-08-01
+2025-08-01 - 2025-08-02
 =======================
 * Fixed bad map() arg shifting behavior.
 
 * Fixed bad map_find() arg shifting behavior.
 
 * Fixed bad map_try() arg shifting behavior.
+
+* info() now supports format `---`,
+  "raw; no <newline>; arg offset".
 
 
 2025-07-27 - 2025-07-28
