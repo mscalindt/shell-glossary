@@ -4,6 +4,7 @@
   The fields are to appear respectively:
   - web address (W)
   - name (N)
+  - copyright notice (C)
   - description (D)
   - version (V)
   - license name (L)
