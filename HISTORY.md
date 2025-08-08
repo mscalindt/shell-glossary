@@ -8,6 +8,7 @@ used to summarize the changes.
 
 1. [Reconstruction of Repository Structure - 2023-08-15](#1-reconstruction-of-repository-structure---2023-08-15)
 2. [Merge of main-functions Repository - 2024-07-14](#2-merge-of-main-functions-repository---2024-07-14)
+3. [Switch to the KEYCLA 1.0 License - 2025-08-08](#3-switch-to-the-keycla-1.0-license---2025-08-08)
 
 ## 1. Reconstruction of Repository Structure - 2023-08-15
 
@@ -84,3 +85,18 @@ structure, a Git tag named
 [`pre-merge`](https://github.com/mscalindt/shell-glossary/releases/tag/pre-merge)
 was created. This tag points to the last commit before the merge of
 `main-functions`.
+
+## 3. Switch to the KEYCLA 1.0 License - 2025-08-08
+
+### Background:
+
+The BSD-2 Clause "Simplified" License has been replaced with
+[the KEYCLA 1.0 License](https://github.com/mscalindt/keycla-license).
+
+### Changes Made:
+
+1. **Git Tagging**: To help users and contributors reference the previous
+structure, a Git tag named
+[`pre-keycla`](https://github.com/mscalindt/shell-glossary/releases/tag/pre-keycla)
+was created. This tag points to the last commit before the switch to
+the KEYCLA license.
