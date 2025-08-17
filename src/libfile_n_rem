@@ -4,8 +4,8 @@
 # <$1> - natural N
 # ["$2"] - line string
 #! .gives:
-# (0) <"$_log"> - string;
-#                 diff-style log guaranteed to end with <newline>
+# (0) <_log> $ - string;
+#                diff-style log guaranteed to end with <newline>
 #! .sets:
 # (0) <_offset> $ - '-1';
 # (0) <_str> $ - '';
