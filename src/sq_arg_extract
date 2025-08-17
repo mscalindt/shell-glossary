@@ -13,8 +13,8 @@
 # <assert> ('-single-quotes-array' '$2');
 #          Assert a string
 #! .gives:
-# (0) <"$_arg"> - string;
-#                 evaluated argument
+# (0) <_arg> $ - string;
+#                evaluated argument
 #! .rc:
 # (0) success
 # (1) argument does not exist
