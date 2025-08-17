@@ -8,12 +8,12 @@
 # <opt_arg> $ - string;
 #               second positional parameter
 #! .gives:
-# (0) <"$opt_arg"> - string;
-#                    option argument
-# (0) <"$opt_match"> - string;
-#                      option string
-# (0) <$opt_shift> - integer;
-#                    shift count for option
+# (0) <opt_arg> $ - string;
+#                   option argument
+# (0) <opt_match> $ - string;
+#                     option string
+# (0) <opt_shift> $ - integer;
+#                     shift count for option
 #! .sets:
 # (0) <opt> $ - '';
 #! .rc:
