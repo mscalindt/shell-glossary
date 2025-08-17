@@ -8,8 +8,8 @@
 # <assert> ('-has-shell-whitespace' '$1');
 #          Assert a string
 #! .gives:
-# (0) <"$_str"> - [string];
-#                 [modified <$3>]
+# (0) <_str> $ - [string];
+#                [modified <$3>]
 #! .sets:
 # (0) <set +f>;
 #! .rc:
