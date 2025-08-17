@@ -19,5 +19,5 @@
 opt_fail() {
     [ "$opt_match" ] || exit 255
 
-    { opt_err "$opt_match" "$opt_arg" "$@" || exit "$?" }; exit 2
+    { opt_err "$opt_match" "$opt_arg" "$@" || exit "$?"; }; exit 2
 }
