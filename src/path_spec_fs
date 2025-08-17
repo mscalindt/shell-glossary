@@ -9,8 +9,8 @@
 # <path_spec_static> ('-abchklmr' '$@');
 #                    Modify a path string
 #! .gives:
-# (0) <"$_path"> - [string];
-#                  [modified <$1>]
+# (0) <_path> $ - [string];
+#                 [modified <$1>]
 #! .rc.fn:
 # (path_spec_static) (0) success
 # (path_spec_static) (*) error
