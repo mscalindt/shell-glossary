@@ -7,8 +7,8 @@
 # <$4> - function name
 # ["$5"]+ - function argument
 #! .gives:
-# <"$_segment"> - [string];
-#                 [last processed cumulative path segment]
+# <_segment> $ - [string];
+#                [last processed cumulative path segment]
 #! .sets:
 # <map_pchunk_> ();
 #! .rc:
