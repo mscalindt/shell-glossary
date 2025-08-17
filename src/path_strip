@@ -12,8 +12,8 @@
 # <assert> ('-whole-n' '$2');
 #          Assert a string
 #! .gives:
-# (0) <"$_path"> - [string];
-#                  [modified <$1>]
+# (0) <_path> $ - [string];
+#                 [modified <$1>]
 #! .rc:
 # (0) success
 # (*) error
