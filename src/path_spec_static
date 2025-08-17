@@ -42,8 +42,8 @@
 # (-h) [realpath] ('--' "file");
 #                 resolve a pathname
 #! .gives:
-# (0) <"$_path"> - [string];
-#                  [modified <$2>]
+# (0) <_path> $ - [string];
+#                 [modified <$2>]
 #! .sets:
 # <path_spec_static_> ();
 #! .rc:
