@@ -9,8 +9,8 @@
 # <assert> ('-natural-n' '$2');
 #          Assert a string
 #! .gives:
-# (0) <"$_line"> - [string];
-#                  specified line
+# (0) <_line> $ - [string];
+#                 specified line
 #! .rc:
 # (0) success
 # (1) line does not exist
