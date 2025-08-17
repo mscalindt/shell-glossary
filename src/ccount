@@ -7,7 +7,7 @@
 # <assert> ('-has-shell-whitespace' '$1');
 #          Assert a string
 #! .gives:
-# (0) <$_count> - integer
+# (0) <_count> $ - integer
 #! .sets:
 # (0) <set +f>;
 #! .rc:
