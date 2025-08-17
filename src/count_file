@@ -10,7 +10,7 @@
 # <count_obj> ('$1' '$2' '$3');
 #             Count all visible objects in a directory
 #! .gives:
-# (0) <$_count> - integer
+# (0) <_count> $ - integer
 #! .rc:
 # (0) success
 # (*) error
