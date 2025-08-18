@@ -1,7 +1,7 @@
 #! .desc:
 # Convert a relative pathname into an absolute pathname
 #! .params:
-# <"$1"> - path
+# <$1> - path
 #! .uses.var:
 # [PWD] $ - environment variable;
 #           absolute pathname of the current working directory
