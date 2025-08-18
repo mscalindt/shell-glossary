@@ -1,9 +1,9 @@
 #! .desc:
 # Count visible file objects in a directory
 #! .params:
-# <"$1"> - directory path
-# ["$2"] - prefix
-# ["$3"] - suffix
+# <$1> - directory path
+# [$2] - prefix
+# [$3] - suffix
 #! .uses.fn:
 # <count_dir> ('$1' '$2' '$3');
 #             Count visible directories in a directory
