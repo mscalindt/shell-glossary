@@ -1,10 +1,10 @@
 #! .desc:
 # Process each argument in reverse with a function irrespective of rc
 #! .params:
-# <"$1"> - $#
-# <"$2"> - $@
-# <"$3"> - function name
-# <"$4">+ - function argument
+# <$1> - $#
+# <$2> - $@
+# <$3> - function name
+# <$4>+ - function argument
 #! .sets:
 # <map_try_rev_> ();
 #! .rc:
