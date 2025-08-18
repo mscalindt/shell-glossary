@@ -1,11 +1,11 @@
 #! .desc:
 # Process each cumulative path segment with a function
 #! .params:
-# <"$1"> - path
-# <["$2"]> - LTR mask
-# <["$3"]> - RTL mask
+# <$1"> - path
+# <[$2]> - LTR mask
+# <[$3]> - RTL mask
 # <$4> - function name
-# ["$5"]+ - function argument
+# [$5]+ - function argument
 #! .gives:
 # <_segment> $ - [string];
 #                [last processed cumulative path segment]
