@@ -1,7 +1,7 @@
 #! .desc:
 # Print formatted text to stderr
 #! .params:
-# <"$@"> - info()
+# <$@> - info()
 #! .desc.ext:
 # For more information, refer to the documentation of info().
 #.
