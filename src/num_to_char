@@ -2,7 +2,7 @@
 # Create N amount of character(s) using PE
 #! .params:
 # [$1] - N
-# ["$2"] - character(s)
+# [$2] - character(s)
 #! .uses.fn:
 # <assert> ('-whole-n' '$1');
 #          Assert a string
