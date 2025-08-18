@@ -8,10 +8,10 @@
 #     '-s' - substitute line $2 with $3
 #     .
 # )
-# <"$2"> - natural N / string
-# ["$3"] - string
-# <["$4"]> - file content
-# ["$5"] - log file path
+# <$2> - natural N / string
+# [$3] - string
+# <[$4]> - file content
+# [$5] - log file path
 #! .uses:
 # <&9>
 # <()>
