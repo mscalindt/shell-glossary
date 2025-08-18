@@ -1,7 +1,7 @@
 #! .desc:
 # Strip a path N segments RTL
 #! .params:
-# ["$1"] - path
+# [$1] - path
 # [$2] - N
 # [$3] - options(
 #     '-floor' - cannot strip the last path segment remaining
