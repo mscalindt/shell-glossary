@@ -26,8 +26,8 @@
 #     '-has-shell-whitespace' - contains "IFS white space" characters
 #     .
 # )
-# <"$2"> - string
-# ["$3"] - string
+# <$2> - string
+# [$3] - string
 #! .uses:
 # [()]
 #! .rc:
