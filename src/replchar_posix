@@ -1,9 +1,9 @@
 #! .desc:
 # Replace a specific character with character(s) in a string using PE
 #! .params:
-# ["$1"] - specific character
-# ["$2"] - character(s)
-# ["$3"] - string
+# [$1] - specific character
+# [$2] - character(s)
+# [$3] - string
 #! .uses.fn:
 # <assert> ('-max' '${#1}' '1');
 #          Assert a string
