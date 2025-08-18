@@ -1,7 +1,7 @@
 #! .desc:
 # Identify the type of an object on the filesystem
 #! .params:
-# <"$1"> - path
+# <$1> - path
 # [$2] - fd(
 #     '-err' - print to stderr; &2
 #     '-info' - print to stdout; &1
