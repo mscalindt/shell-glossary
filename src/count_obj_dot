@@ -1,9 +1,9 @@
 #! .desc:
 # Count all `.*` (dot/hidden) objects in a directory
 #! .params:
-# <"$1"> - directory path
-# ["$2"] - prefix
-# ["$3"] - suffix
+# <$1> - directory path
+# [$2] - prefix
+# [$3] - suffix
 #! .gives:
 # (0) <_count> $ - integer
 #! .rc:
