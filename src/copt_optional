@@ -1,8 +1,8 @@
 #! .desc:
 # Match `-`-delimited short/long option with an optional option argument
 #! .params (<1+>):
-# ["$1"] - -* (short)
-# ["$2"] - --* (long)
+# [$1] - -* (short)
+# [$2] - --* (long)
 #! .uses.var:
 # <opt> $ - string;
 #           first positional parameter
