@@ -1,9 +1,9 @@
 #! .desc:
 # Process each populated string line with a function
 #! .params:
-# <"$1"> - string
+# <$1> - string
 # <$2> - function name
-# ["$3"]+ - function argument
+# [$3]+ - function argument
 #! .uses:
 # <<<>
 #! .rc:
