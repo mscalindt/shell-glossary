@@ -23,7 +23,7 @@
 #     'y' - strip all trailing slashes
 #     .
 # )
-# ["$2"] - path
+# [$2] - path
 #! .uses:
 # (-h) [()]
 #! .uses.var:
