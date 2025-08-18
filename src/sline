@@ -1,7 +1,7 @@
 #! .desc:
 # Get a specific line in a string
 #! .params:
-# <"$1"> - string
+# <$1> - string
 # <$2> - line number
 #! .uses:
 # <<<>
