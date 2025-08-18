@@ -1,7 +1,7 @@
 #! .desc:
 # Signify option incompatibility with a previous option and exit
 #! .params:
-# <"$1"> - incompatible option string
+# <$1> - incompatible option string
 #! .uses.var:
 # <opt_match> $ - string;
 #                 previous option string
