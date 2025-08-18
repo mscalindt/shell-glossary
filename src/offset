@@ -2,7 +2,7 @@
 # Offset arguments by N for a function call
 #! .params:
 # <[$1]> - N
-# <"$@"> - map()
+# <$@> - map()
 #! .uses.fn:
 # <assert> ('-whole-n' "string");
 #          Assert a string
