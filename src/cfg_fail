@@ -1,7 +1,7 @@
 #! .desc:
 # Signify bad configuration file and exit
 #! .params:
-# <"$1"> - path
+# <$1> - path
 #! .ec:
 # (2) bad configuration file
 # (255) bad input
