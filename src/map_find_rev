@@ -1,10 +1,10 @@
 #! .desc:
 # Find success among arguments in reverse using a function
 #! .params:
-# <"$1"> - $#
-# <"$2"> - $@
-# <"$3"> - function name
-# <"$4">+ - function argument
+# <$1> - $#
+# <$2> - $@
+# <$3> - function name
+# <$4>+ - function argument
 #! .gives:
 # (0) <_arg> $ - [string];
 #                successfully processed $2
