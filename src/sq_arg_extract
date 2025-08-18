@@ -1,8 +1,8 @@
 #! .desc:
 # Extract an evaluated argument in a single-quotes array of arguments
 #! .params:
-# <"$1"> - pattern
-# <"$2"> - single-quotes array of arguments
+# <$1> - pattern
+# <$2> - single-quotes array of arguments
 # [$3] - pattern_type(
 #     '-exact' - $1 is the literal argument
 #     '-prefix' - $1 is the prefix of an argument
