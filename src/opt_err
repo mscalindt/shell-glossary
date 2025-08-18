@@ -1,9 +1,9 @@
 #! .desc:
 # Signify option failure
 #! .params:
-# <"$1"> - option string
-# ["$2"] - option argument
-# ["$3"]+ - valid option argument
+# <$1> - option string
+# [$2] - option argument
+# [$3]+ - valid option argument
 #! .rc:
 # (0) success
 #! .ec:
