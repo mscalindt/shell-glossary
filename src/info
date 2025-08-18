@@ -19,7 +19,7 @@
 #     '---' - raw; no <newline>; arg offset
 #     .
 # )
-# <"$3">+ - text
+# <$3>+ - text
 #! .uses.var:
 # [NO_COLOR] $ - environment variable;
 #                disable color
