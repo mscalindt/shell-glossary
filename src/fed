@@ -1,7 +1,7 @@
 #! .desc:
 # Create a deterministic file data edit format
 #! .params:
-# <["$1"]> - file content
+# <[$1]> - file content
 # <$2>+ - operation(
 #     '-' - EOF add $3
 #     '-m' - apply modifier for `-a`/`-r`/`-s`; see extended description
@@ -10,8 +10,8 @@
 #     '-s' - substitute $3 with $4
 #     .
 # )
-# ["$3"] - string
-# ["$4"] - string
+# [$3] - string
+# [$4] - string
 #! .uses:
 # <()>
 # <<<>
