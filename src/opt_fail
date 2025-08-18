@@ -1,7 +1,7 @@
 #! .desc:
 # Signify option failure and exit
 #! .params:
-# ["$1"]+ - valid option argument
+# [$1]+ - valid option argument
 #! .uses.var:
 # <opt_arg> $ - [string];
 #               option argument
