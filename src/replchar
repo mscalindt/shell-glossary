@@ -1,9 +1,9 @@
 #! .desc:
 # Replace specific character(s) with character(s) in a string using IFS
 #! .params:
-# ["$1"] - specific character(s)
-# ["$2"] - character(s)
-# ["$3"] - string
+# [$1] - specific character(s)
+# [$2] - character(s)
+# [$3] - string
 #! .uses.fn:
 # <assert> ('-has-shell-whitespace' '$1');
 #          Assert a string
