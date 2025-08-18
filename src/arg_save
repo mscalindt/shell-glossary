@@ -2,7 +2,7 @@
 # Save with single-quote escape an argument into a variable
 #! .params:
 # <$1> - variable name
-# [["$2"]] - argument
+# [[$2]] - argument
 #! .uses.fn:
 # <assert> ('-shell-name' '$1');
 #          Assert a string
