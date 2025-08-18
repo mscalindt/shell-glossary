@@ -2,7 +2,7 @@
 # For natural N, add line content
 #! .params:
 # <$1> - natural N
-# ["$2"] - new string
+# [$2] - new string
 #! .uses:
 # <<<>
 #! .gives:
