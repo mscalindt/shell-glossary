@@ -5,7 +5,7 @@
 #     '0' - last
 #     .
 # )
-# <"$2"> - single-quotes array of arguments
+# <$2> - single-quotes array of arguments
 #! .uses.fn:
 # <assert> ("type" "string");
 #          Assert a string
