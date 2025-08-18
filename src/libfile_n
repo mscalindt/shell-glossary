@@ -19,10 +19,10 @@
 # <>>>
 # [>]
 #! .uses.fn:
-# <assert> ('-n' "string");
-#          Assert a string
 # [arg_set] ('_str' "argument");
 #           Set with single-quote escape an argument into a variable
+# <assert> ('-n' "string");
+#          Assert a string
 # [libfile_n_add] ("natural N" "new string");
 #                 For natural N, add line content
 # [libfile_n_rem] ("natural N" "line string");
