@@ -1,8 +1,8 @@
 #! .desc:
 # Count the times character(s) appear in a string using IFS
 #! .params:
-# ["$1"] - character(s)
-# ["$2"] - string
+# [$1] - character(s)
+# [$2] - string
 #! .uses.fn:
 # <assert> ('-has-shell-whitespace' '$1');
 #          Assert a string
