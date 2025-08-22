@@ -9,9 +9,9 @@
 #! .uses.fn:
 # <assert> ("type" "string");
 #          Assert a string
-#! .gives:
-# (0) <_arg> $ - [string];
-#                evaluated argument
+#! .gives.var:
+# (0) <_arg> - [string];
+#              evaluated argument
 #! .rc:
 # (0) success
 # (1) argument does not exist
