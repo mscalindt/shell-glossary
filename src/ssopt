@@ -3,8 +3,8 @@
 #! .params:
 # <$1>+ - option string
 #! .uses.var:
-# <opt> $ - string;
-#           first positional parameter
+# <opt> - string;
+#         first positional parameter
 #! .gives:
 # (0) <opt_match> $ - string;
 #                     option string
