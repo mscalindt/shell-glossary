@@ -16,9 +16,9 @@
 #! .uses.util:
 # [cat] ('--' '$2');
 #       concatenate and print files
-#! .gives:
-# (0) <_file> $ - [string];
-#                 raw content of $2/stdin
+#! .gives.var:
+# (0) <_file> - [string];
+#               raw content of $2/stdin
 #! .rc:
 # (0) success
 # (*) error
