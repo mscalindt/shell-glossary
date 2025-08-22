@@ -16,9 +16,9 @@
 #                 For natural N, add line content
 # [libfile_n_rem] ("natural N" "line string");
 #                 For natural N, remove line string
-#! .gives:
-# (0) <_file> $ - [string];
-#                 [modified <$2>]
+#! .gives.var:
+# (0) <_file> - [string];
+#               [modified <$2>]
 #! .rc:
 # (0) success
 # (*) error
