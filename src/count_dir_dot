@@ -4,8 +4,8 @@
 # <$1> - directory path
 # [$2] - prefix
 # [$3] - suffix
-#! .gives:
-# (0) <_count> $ - integer
+#! .gives.var:
+# (0) <_count> - integer
 #! .rc:
 # (0) success
 # (*) error
