@@ -18,9 +18,9 @@
 #! .uses.fn:
 # [arg_set] ("variable name" "argument");
 #           Set with single-quote escape an argument into a variable
-#! .gives:
-# (0) <_fmt> $ - string;
-#                shell-parseable evaluable line-sorted operations list
+#! .gives.var:
+# (0) <_fmt> - string;
+#              shell-parseable evaluable line-sorted operations list
 #! .sets:
 # <fed_> ();
 #! .rc:
