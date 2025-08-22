@@ -27,8 +27,8 @@
 #! .uses:
 # (-h) [()]
 #! .uses.var:
-# (-r) [PWD] $ - environment variable;
-#                absolute pathname of the current working directory
+# (-r) [PWD] - environment variable;
+#              absolute pathname of the current working directory
 #! .uses.fn:
 # [assert] ("type" "string");
 #          Assert a string
