@@ -5,13 +5,13 @@
 # [$2] - new string
 #! .uses:
 # <<<>
-#! .gives:
-# (0) <_log> $ - string;
-#                diff-style log guaranteed to end with <newline>
-# (0) <_offset> $ - integer;
-#                   line offset
-# (0) <_str> $ - string;
-#                raw $2 guaranteed to end with <newline>
+#! .gives.var:
+# (0) <_log> - string;
+#              diff-style log guaranteed to end with <newline>
+# (0) <_offset> - integer;
+#                 line offset
+# (0) <_str> - string;
+#              raw $2 guaranteed to end with <newline>
 #! .rc:
 # (0) success
 # (*) error
