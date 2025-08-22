@@ -6,9 +6,9 @@
 # <[$3]> - RTL mask
 # <$4> - function name
 # [$5]+ - function argument
-#! .gives:
-# <_segment> $ - [string];
-#                [last processed cumulative path segment]
+#! .gives.var:
+# <_segment> - [string];
+#              [last processed cumulative path segment]
 #! .sets:
 # <map_pchunk_rev_> ();
 #! .rc:
