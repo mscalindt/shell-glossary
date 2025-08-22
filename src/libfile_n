@@ -29,9 +29,9 @@
 #                 For natural N, remove line string
 # [sq_arg] ('1' "single-quotes array of arguments");
 #          Get N evaluated argument in a single-quotes array of arguments
-#! .gives:
-# (0) <_file> $ - [string];
-#                 [modified <$4>]
+#! .gives.var:
+# (0) <_file> - [string];
+#               [modified <$4>]
 #! .rc:
 # (0) success
 # (*) error
