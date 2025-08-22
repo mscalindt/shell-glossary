@@ -14,16 +14,16 @@
 # [NO_COLOR] - environment variable;
 #              disable color
 #! .uses.fn:
-# (-err) <err> ('-red' '--' "text");
+# (-err) [err] ('-red' '--' "text");
 #              Print formatted text to stderr
-# (-info) <info> ('-white' '--' "text");
+# (-info) [info] ('-white' '--' "text");
 #                Print formatted text
 #! .sets:
 # (0) <_type> $ - 'B' | 'C' | 'D' | 'F' | 'L' | 'P' | 'S' | '?';
 # (1) <_type> $ - '>';
 #! .rc:
 # (0) success
-# (1) does not exist
+# (1) ENOENT
 # (255) bad input
 #! .rc.fn:
 # (err) (*) error
@@ -43,7 +43,7 @@
 # `F` means "regular file";
 # `D` means "directory";
 # `?` means "unrecognized file type"[2];
-# `>` means "does not exist".
+# `>` means "ENOENT".
 #
 # The usage of color results in undefined behavior. For strict POSIX
 # compatibility, set variable `NO_COLOR` to a non-empty value.
@@ -85,7 +85,7 @@ ftype() {
     elif [ -e "$1" ]; then
         shift; _type='?'; "$@" '?' || return "$?"
     else
-        shift; _type='>'; "$@" '>' || return "$?"; return 1
+        _type='>'; return 1
     fi
 
     return 0
