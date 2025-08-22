@@ -3,8 +3,8 @@
 #! .params:
 # [$1] - path
 #! .uses.var.path_spec_static:
-# [PWD] $ - environment variable;
-#           absolute pathname of the current working directory
+# [PWD] - environment variable;
+#         absolute pathname of the current working directory
 #! .uses.fn:
 # <path_spec_static> ('-abchklmr' '$@');
 #                    Modify a path string
