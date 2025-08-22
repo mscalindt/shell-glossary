@@ -9,8 +9,8 @@
 #             Count visible directories in a directory
 # <count_obj> ('$1' '$2' '$3');
 #             Count all visible objects in a directory
-#! .gives:
-# (0) <_count> $ - integer
+#! .gives.var:
+# (0) <_count> - integer
 #! .rc:
 # (0) success
 # (*) error
