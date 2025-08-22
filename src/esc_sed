@@ -12,9 +12,9 @@
 # <replchar_posix> ("specific character" "character(s)" "string");
 #                  Replace a specific character with character(s) in a string
 #                  using PE
-#! .gives:
-# (0) <_str> $ - [string];
-#                [modified <$3>]
+#! .gives.var:
+# (0) <_str> - [string];
+#              [modified <$3>]
 #! .rc:
 # (0) success
 # (2) bad $2
