@@ -5,8 +5,8 @@
 # <$2> - function name
 # [$3]+ - function argument
 #! .uses.var:
-# <IFS> $ - environment variable;
-#           list of characters that is used for field splitting
+# <IFS> - environment variable;
+#         list of characters that is used for field splitting
 #! .sets:
 # <set +f>;
 #! .rc:
