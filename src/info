@@ -21,8 +21,8 @@
 # )
 # <$3>+ - text
 #! .uses.var:
-# [NO_COLOR] $ - environment variable;
-#                disable color
+# [NO_COLOR] - environment variable;
+#              disable color
 #! .rc:
 # (0) success
 # (*) error
