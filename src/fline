@@ -18,9 +18,9 @@
 #                Read a file raw
 # [sline] ('$_file' '$2');
 #         Get a specific line in a string
-#! .gives:
-# (0) <_line> $ - [string];
-#                 specified line of $3
+#! .gives.var:
+# (0) <_line> - [string];
+#               specified line of $3
 #! .rc:
 # (0) success
 # (1) line does not exist / error
