@@ -4,10 +4,10 @@
 # [$1] - -* (short)
 # [$2] - --* (long)
 #! .uses.var:
-# <opt> $ - string;
-#           first positional parameter
-# <opt_arg> $ - string;
-#               second positional parameter
+# <opt> - string;
+#         first positional parameter
+# <opt_arg> - string;
+#             second positional parameter
 #! .gives:
 # (0) <opt_arg> $ - string;
 #                   option argument
