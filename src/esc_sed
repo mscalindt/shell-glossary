@@ -19,8 +19,7 @@
 # (0) success
 # (2) bad $2
 # (255) bad input
-#! .rc.fn:
-# (replchar_posix) (*) error
+# (*) error
 #! .desc.ext:
 # The delimiter character cannot be a <backslash> or a <newline> character.
 #
