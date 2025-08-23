@@ -11,10 +11,8 @@
 #                  using PE
 #! .rc:
 # (0) success
+# (255) bad input
 # (*) error
-#! .rc.fn:
-# (assert) (255) bad input
-# (replchar_posix) (*) error
 #! .desc.ext:
 # The argument will be appended to the variable's existing content; arg_save()
 # does not guarantee the variable will get populated only by what is specified
