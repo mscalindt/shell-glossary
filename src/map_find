@@ -11,10 +11,9 @@
 #! .sets:
 # <map_find_> ();
 #! .rc:
+# (0) success
 # (1) false / error
 # (*) error
-#! .rc.fn:
-# ($3) (0) success
 #.
 map_find() {
     map_find_() {
