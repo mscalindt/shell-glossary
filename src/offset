@@ -3,9 +3,6 @@
 #! .params:
 # <[$1]> - N
 # <$@> - map()
-#! .uses.fn:
-# <assert> ('-whole-n' "string");
-#          Assert a string
 #! .rc:
 # (0) success
 # (255) bad input / bad usage / error
