@@ -8,9 +8,6 @@
 #     '-posix' - cannot return an empty path (will return: `/`)
 #     .
 # )
-#! .uses.fn:
-# <assert> ('-whole-n' '$2');
-#          Assert a string
 #! .gives.var:
 # (0) <_path> - [string];
 #               [modified <$1>]
