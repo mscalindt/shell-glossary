@@ -6,8 +6,7 @@
 # [$3]+ - function argument
 #! .rc:
 # (0) success
-#! .rc.fn:
-# ($2) (*) error
+# (*) error
 #! .desc.ext:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Here-Document".
