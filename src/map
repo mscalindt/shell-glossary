@@ -12,8 +12,7 @@
 # <map_> ();
 #! .rc:
 # (0) success
-#! .rc.fn:
-# ($3) (*) error
+# (*) error
 #.
 map() {
     map_() {
