@@ -3,9 +3,6 @@
 #! .params:
 # [$1] - N
 # [$2] - character(s)
-#! .uses.fn:
-# <assert> ('-whole-n' '$1');
-#          Assert a string
 #! .gives.var:
 # (0) <_chars> - [string]
 #! .rc:
