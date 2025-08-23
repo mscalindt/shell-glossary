@@ -11,9 +11,8 @@
 #          Assert a string
 #! .rc:
 # (0) success
+# (255) bad input / error
 # (*) error
-#! .rc.fn:
-# (assert) (255) bad input
 #.
 mask_unset() {
     # Remove `0x` from $1 (bit) if present.
