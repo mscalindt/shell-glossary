@@ -13,8 +13,7 @@
 #! .ec:
 # (2) option failure
 # (255) bad usage
-#! .ec.fn:
-# (opt_err) (*) error
+# (*) error
 #.
 opt_fail() {
     [ "$opt_match" ] || exit 255
