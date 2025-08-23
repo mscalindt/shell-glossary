@@ -23,10 +23,8 @@
 #! .rc:
 # (0) success
 # (1) no operations to be created / error
-# (*) error
 # (255) bad input / bad usage / error
-#! .rc.fn:
-# (arg_set) (*) error
+# (*) error
 #! .desc.ext:
 # The format of created operations is as follows (N - natural number):
 # `-a N X`, means at "N" line add "X" data;
