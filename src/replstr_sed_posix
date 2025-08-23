@@ -17,8 +17,6 @@
 # (0) success
 # (255) bad input / bad usage / error
 # (*) error
-#! .rc.util:
-# (sed) (*) error
 #! .desc.ext:
 # The specification of a <newline> character in $1 is not supported
 # and error code `255` (bad usage) will be returned.
