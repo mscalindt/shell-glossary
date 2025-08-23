@@ -17,10 +17,8 @@
 #               raw content of $2/stdin
 #! .rc:
 # (0) success
-# (*) error
 # (255) bad input / error
-#! .rc.util
-# (cat) (*) error
+# (*) error
 #! .desc.ext:
 # Use `-cat` to read the file if it is a potential specification of a file
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
