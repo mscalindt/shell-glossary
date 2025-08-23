@@ -10,9 +10,8 @@
 # (0) <_count> - integer
 #! .rc:
 # (0) success
+# (255) bad input
 # (*) error
-#! .rc.fn:
-# (assert) (255) bad input
 #! .desc.ext:
 # Multi-byte and multiple characters are not supported and error code `255`
 # (bad input) will be returned.
