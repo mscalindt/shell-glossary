@@ -6,9 +6,6 @@
 #     .
 # )
 # <$2> - single-quotes array of arguments
-#! .uses.fn:
-# <assert> ("type" "string");
-#          Assert a string
 #! .gives.var:
 # (0) <_arg> - [string];
 #              evaluated argument
