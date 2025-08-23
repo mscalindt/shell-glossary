@@ -10,9 +10,8 @@
 # (0) <_chars> - [string]
 #! .rc:
 # (0) success
+# (255) bad input / error
 # (*) error
-#! .rc.fn:
-# (assert) (255) bad input
 #! .desc.ext:
 # If the first character of $1 is `-`, nothing will be processed and
 # success will be returned.
