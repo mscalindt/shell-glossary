@@ -14,8 +14,7 @@
 # (0) <set +f>;
 #! .rc:
 # (0) success
-#! .rc.fn:
-# (assert) (255) bad usage
+# (255) bad usage
 #! .desc.ext:
 # The specification of multi-byte characters or multiple characters is allowed,
 # but the former results in undefined behavior, and the latter might be
