@@ -14,9 +14,6 @@
 #! .rc:
 # (0) success
 # (*) error
-#! .rc.fn:
-# (count_dir) (*) error
-# (count_obj) (*) error
 #.
 count_file() {
     count_obj "$1" "$2" "$3" && set -- "$1" "$2" "$3" "$_count" && \
