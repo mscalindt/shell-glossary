@@ -11,10 +11,9 @@
 #! .sets:
 # <map_find_rev_> ();
 #! .rc:
+# (0) success
 # (1) false / error
 # (*) error
-#! .rc.fn:
-# ($3) (0) success
 #.
 map_find_rev() {
     map_find_rev_() {
