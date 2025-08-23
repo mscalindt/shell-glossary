@@ -4,9 +4,6 @@
 # <$1> - substring
 # [$2] - character(s)
 # [$3] - string
-#! .uses.util:
-# [sed] ("script");
-#       stream editor
 #! .gives.var:
 # (0) <_str> - [string];
 #              [modified <$3>]
