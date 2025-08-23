@@ -12,8 +12,7 @@
 #! .rc:
 # (0) success
 # (1) line does not exist
-#! .rc.fn:
-# (assert) (255) bad input
+# (255) bad input
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
