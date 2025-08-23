@@ -4,11 +4,6 @@
 # <$1> - directory path
 # [$2] - prefix
 # [$3] - suffix
-#! .uses.fn:
-# <count_dir_dot> ('$1' '$2' '$3');
-#                 Count `.*` (dot/hidden) directories in a directory
-# <count_obj_dot> ('$1' '$2' '$3');
-#                 Count all `.*` (dot/hidden) objects in a directory
 #! .gives.var:
 # (0) <_count> - integer
 #! .rc:
