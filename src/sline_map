@@ -4,8 +4,6 @@
 # <$1> - string
 # <$2> - function name
 # [$3]+ - function argument
-#! .uses:
-# <<<>
 #! .rc:
 # (0) success
 #! .rc.fn:
