@@ -9,9 +9,6 @@
 #     .
 # )
 # [$2] - file path
-#! .uses.util:
-# [cat] ('--' '$2');
-#       concatenate and print files
 #! .gives.var:
 # (0) <_file> - [string];
 #               raw content of $2/stdin
