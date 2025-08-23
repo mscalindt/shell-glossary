@@ -13,11 +13,6 @@
 #! .uses.var.info:
 # [NO_COLOR] - environment variable;
 #              disable color
-#! .uses.fn:
-# (-err) [err] ('-red' '--' "text");
-#              Print formatted text to stderr
-# (-info) [info] ('-white' '--' "text");
-#                Print formatted text
 #! .sets:
 # (0) <_type> $ - 'B' | 'C' | 'D' | 'F' | 'L' | 'P' | 'S' | '?';
 # (1) <_type> $ - '>';
