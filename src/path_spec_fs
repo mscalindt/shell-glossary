@@ -11,9 +11,9 @@
 #! .gives.var:
 # (0) <_path> - [string];
 #               [modified <$1>]
-#! .rc.fn:
-# (path_spec_static) (0) success
-# (path_spec_static) (*) error
+#! .rc:
+# (0) success
+# (*) error
 #! .desc.ext:
 # The presence of a broken symbolic segment prompts no action and is instead
 # treated as an inexistent segment.
