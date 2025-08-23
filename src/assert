@@ -28,8 +28,6 @@
 # )
 # <$2> - string
 # [$3] - string
-#! .uses:
-# [()]
 #! .rc:
 # (0) true
 # (1) false
