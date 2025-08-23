@@ -3,12 +3,6 @@
 #! .params:
 # <$1> - variable name
 # [[$2"] - argument
-#! .uses.fn:
-# <assert> ('-shell-name' '$1');
-#          Assert a string
-# [replchar_posix] ('\'' '\'\\\'\'' '$2');
-#                  Replace a specific character with character(s) in a string
-#                  using PE
 #! .rc:
 # (0) success
 # (255) bad input
