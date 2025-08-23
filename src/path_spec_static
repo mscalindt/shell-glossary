@@ -24,8 +24,6 @@
 #     .
 # )
 # [$2] - path
-#! .uses:
-# (-h) [()]
 #! .uses.var:
 # (-r) [PWD] - environment variable;
 #              absolute pathname of the current working directory
