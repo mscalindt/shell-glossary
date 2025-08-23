@@ -14,9 +14,6 @@
 #! .rc:
 # (0) success
 # (*) error
-#! .rc.fn:
-# (count_dir_dot) (*) error
-# (count_obj_dot) (*) error
 #! .desc.ext:
 # The presence of characters outside the "Portable Filename Character Set"[1]
 # in $2/$3 results in undefined behavior.
