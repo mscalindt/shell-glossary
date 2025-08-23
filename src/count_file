@@ -4,11 +4,6 @@
 # <$1> - directory path
 # [$2] - prefix
 # [$3] - suffix
-#! .uses.fn:
-# <count_dir> ('$1' '$2' '$3');
-#             Count visible directories in a directory
-# <count_obj> ('$1' '$2' '$3');
-#             Count all visible objects in a directory
 #! .gives.var:
 # (0) <_count> - integer
 #! .rc:
