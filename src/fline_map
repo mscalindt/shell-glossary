@@ -16,12 +16,8 @@
 #             Process each populated string line with a function
 #! .rc:
 # (0) success
-# (*) error
 # (255) bad input / error
-#! .rc.fn:
-# ($3) (*) error
-# (file_preload) (*) error
-# (sline_map) (*) error
+# (*) error
 #! .desc.ext:
 # Use `cat` to read the file if it is a potential specification of a file
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
