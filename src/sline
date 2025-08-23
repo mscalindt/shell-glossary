@@ -3,8 +3,6 @@
 #! .params:
 # <$1> - string
 # <$2> - line number
-#! .uses:
-# <<<>
 #! .uses.fn:
 # <assert> ('-natural-n' '$2');
 #          Assert a string
