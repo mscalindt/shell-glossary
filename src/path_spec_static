@@ -27,15 +27,6 @@
 #! .uses.var:
 # (-r) [PWD] - environment variable;
 #              absolute pathname of the current working directory
-#! .uses.fn:
-# [assert] ("type" "string");
-#          Assert a string
-# <map_pchunk_find> ('$2' '$_path' '' 'path_spec_static_' "function argument");
-#                   Find success among cumulative path segments using a
-#                   function
-# <map_pchunk_find_rev> ('$2' '' '' 'path_spec_static_' '$1' '-h');
-#                       Find success among cumulative path segments in reverse
-#                       using a function
 #! .uses.util:
 # (-h) [realpath] ('--' "file");
 #                 resolve a pathname
