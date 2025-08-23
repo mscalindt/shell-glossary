@@ -12,12 +12,6 @@
 # [$3] - string
 # <[$4]> - file content
 # [$5] - log file path
-#! .uses:
-# <&9>
-# <()>
-# <<<>
-# <>>>
-# [>]
 #! .uses.fn:
 # [arg_set] ('_str' "argument");
 #           Set with single-quote escape an argument into a variable
