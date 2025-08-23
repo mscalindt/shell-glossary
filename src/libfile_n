@@ -28,14 +28,8 @@
 #               [modified <$4>]
 #! .rc:
 # (0) success
-# (*) error
 # (255) bad input / bad usage / error
-#! .rc.fn:
-# (arg_set) (*) error
-# (assert) (255) bad input
-# (libfile_n_add) (*) error
-# (libfile_n_rem) (*) error
-# (sq_arg) (*) error
+# (*) error
 #! .desc.ext:
 # Multiple operations on the same line are not allowed and error code `255`
 # (bad usage) will be returned. EOF additions are parsed in FIFO order
