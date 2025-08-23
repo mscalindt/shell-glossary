@@ -21,12 +21,8 @@
 #! .rc:
 # (0) success
 # (1) line does not exist / error
-# (*) error
 # (255) bad input / error
-#! .rc.fn:
-# (assert) (255) bad input
-# (file_preload) (*) error
-# (sline) (*) error
+# (*) error
 #! .desc.ext:
 # Use `-cat` to read the file if it is a potential specification of a file
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
