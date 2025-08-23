@@ -9,11 +9,6 @@
 # <$2> - file path
 # <$3> - function name
 # [$4]+ - function argument
-#! .uses.fn:
-# [file_preload] ('-cat' '$2');
-#                Read a file raw
-# [sline_map] ('$_file' "function name" "function argument");
-#             Process each populated string line with a function
 #! .rc:
 # (0) success
 # (255) bad input / error
