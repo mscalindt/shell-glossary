@@ -23,11 +23,9 @@
 # (1) <_type> $ - '>';
 #! .rc:
 # (0) success
-# (1) ENOENT
-# (255) bad input
-#! .rc.fn:
-# (err) (*) error
-# (info) (*) error
+# (1) ENOENT / error
+# (255) bad input / error
+# (*) error
 #! .desc.ext:
 # The function denotes the type of the specified object using a letter.
 # File categorization will take precedence over directory categorization,
