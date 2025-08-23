@@ -15,11 +15,8 @@
 #               [modified <$2>]
 #! .rc:
 # (0) success
-# (*) error
 # (255) bad input / bad usage / error
-#! .rc.fn:
-# (libfile_n_add) (*) error
-# (libfile_n_rem) (*) error
+# (*) error
 #! .desc.ext:
 # The format of operations is as follows (N - natural number):
 # `- X`,    means at EOF add "X" data;
