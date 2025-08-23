@@ -4,9 +4,6 @@
 # [$1] - specific character
 # [$2] - character(s)
 # [$3] - string
-#! .uses.fn:
-# <assert> ('-max' '${#1}' '1');
-#          Assert a string
 #! .gives.var:
 # (0) <_str> - [string];
 #              [modified <$3>]
