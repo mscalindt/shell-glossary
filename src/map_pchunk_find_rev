@@ -12,11 +12,10 @@
 #! .sets:
 # <map_pchunk_find_rev_> ();
 #! .rc:
+# (0) success
 # (1) false / error
-# (*) error
 # (255) bad input / error
-#! .rc.fn:
-# ($4) (0) success
+# (*) error
 #! .desc.ext:
 # The path mask(s), a mandatory argument that can be empty, specifies the
 # exclusion of cumulative path segments that match exactly against the given
