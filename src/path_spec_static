@@ -27,9 +27,6 @@
 #! .uses.var:
 # (-r) [PWD] - environment variable;
 #              absolute pathname of the current working directory
-#! .uses.util:
-# (-h) [realpath] ('--' "file");
-#                 resolve a pathname
 #! .gives.var:
 # (0) <_path> - [string];
 #               [modified <$2>]
