@@ -48,10 +48,8 @@
 # (0) success
 # (*) error
 #! .ec:
-# (*) error
 # (255) bad input / error
-#! .ec.util:
-# (realpath) (*) error
+# (*) error
 #! .desc.ext:
 # 'Append/prepend' operations take place after 'strip' operations.
 # 'Unset' operations take place after 'set' operations.
