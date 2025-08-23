@@ -16,10 +16,8 @@
 #               [modified <$1>]
 #! .rc:
 # (0) success
-# (*) error
 # (255) bad input / error
-#! .rc.fn:
-# (assert) (255) bad input
+# (*) error
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
