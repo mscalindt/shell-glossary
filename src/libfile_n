@@ -12,17 +12,6 @@
 # [$3] - string
 # <[$4]> - file content
 # [$5] - log file path
-#! .uses.fn:
-# [arg_set] ('_str' "argument");
-#           Set with single-quote escape an argument into a variable
-# <assert> ('-n' "string");
-#          Assert a string
-# [libfile_n_add] ("natural N" "new string");
-#                 For natural N, add line content
-# [libfile_n_rem] ("natural N" "line string");
-#                 For natural N, remove line string
-# [sq_arg] ('1' "single-quotes array of arguments");
-#          Get N evaluated argument in a single-quotes array of arguments
 #! .gives.var:
 # (0) <_file> - [string];
 #               [modified <$4>]
