@@ -7,9 +7,6 @@
 #             option argument
 # <opt_match> - string;
 #               option string
-#! .uses.fn:
-# <opt_err> ('$opt_match' '$opt_arg' '$@');
-#           Signify option failure
 #! .ec:
 # (2) option failure
 # (255) bad usage
