@@ -3,9 +3,6 @@
 #! .params:
 # [$1] - character(s)
 # [$2] - string
-#! .uses.fn:
-# <assert> ('-has-shell-whitespace' '$1');
-#          Assert a string
 #! .gives.var:
 # (0) <_count> - integer
 #! .sets:
