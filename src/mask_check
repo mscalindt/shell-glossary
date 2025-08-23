@@ -12,9 +12,8 @@
 #! .rc:
 # (0) true
 # (1) false
+# (255) bad input / bad usage / error
 # (*) error
-#! .rc.fn:
-# (assert) (255) bad input / bad usage
 #.
 mask_check() {
     # Remove `0x` from $1 (bit) if present.
