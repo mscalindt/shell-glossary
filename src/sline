@@ -3,9 +3,6 @@
 #! .params:
 # <$1> - string
 # <$2> - line number
-#! .uses.fn:
-# <assert> ('-natural-n' '$2');
-#          Assert a string
 #! .gives.var:
 # (0) <_line> - [string];
 #               specified line
