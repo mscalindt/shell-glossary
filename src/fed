@@ -12,9 +12,6 @@
 # )
 # [$3] - string
 # [$4] - string
-#! .uses:
-# <()>
-# <<<>
 #! .uses.fn:
 # [arg_set] ("variable name" "argument");
 #           Set with single-quote escape an argument into a variable
