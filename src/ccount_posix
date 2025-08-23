@@ -3,9 +3,6 @@
 #! .params:
 # ["$1"] - character
 # ["$2"] - string
-#! .uses.fn:
-# <assert> ('-max' '${#1}' '1');
-#          Assert a string
 #! .gives.var:
 # (0) <_count> - integer
 #! .rc:
