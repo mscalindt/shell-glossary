@@ -4,8 +4,6 @@
 # <$1> - substring
 # [$2] - character(s)
 # [$3] - string
-#! .uses:
-# [()]
 #! .uses.fn:
 # [esc_sed] ("sed_string_type" '/' "string");
 #           Escape a string to be used literally as a POSIX `sed` string
