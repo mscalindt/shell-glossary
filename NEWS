@@ -1,12 +1,14 @@
 shell-glossary NEWS
 
 
-2025-08-03 - 2025-08-08
+2025-08-03 - 2025-08-23
 =======================
 * Created tag `pre-keycla`.
 
 * Switched from BSD 2-Clause "Simplified" License to KEYCLA 1.0[1][2].
   See HISTORY.md and refer to the commit data for more information.
+
+* ftype() no longer outputs on ENOENT.
 
 [1] https://github.com/mscalindt/keycla-license
 [2] https://gitlab.com/mscalindt/keycla-license
