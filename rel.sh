@@ -11,9 +11,9 @@ case "${1:-x}" in
 esac
 
 [ "$#" -eq 3 ] || { echo "Expected exactly 3 arguments; got $#."; exit 2; }
-[ "$1" ] || { echo "$1/REL is empty."; exit 2; }
-[ "$2" ] || { echo "$2/PRE is empty."; exit 2; }
-[ "$3" ] || { echo "$3/CUR is empty."; exit 2; }
+[ "$1" ] || { echo '$1/REL is empty.'; exit 2; }
+[ "$2" ] || { echo '$2/PRE is empty.'; exit 2; }
+[ "$3" ] || { echo '$3/CUR is empty.'; exit 2; }
 
 LOG="$(git log --pretty=format:'%h %s' --no-decorate "$2..$3")"
 
