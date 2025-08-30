@@ -2,11 +2,12 @@
 
 1. [Introduction](#introduction)
 2. [Roadmap](#roadmap)
-3. [Contributors](#contributors)
-4. [License](#license)
-5. [Notice](#notice)
-6. [Collection 1: General POSIX Shell Functions](#collection-1-general-posix-shell-functions)
-7. [Collection 2: POSIX Shell Functions for Shell Option Parsing](#collection-2-posix-shell-functions-for-shell-option-parsing)
+3. [Releases](#releases)
+4. [Contributors](#contributors)
+5. [License](#license)
+6. [Notice](#notice)
+7. [Collection 1: General POSIX Shell Functions](#collection-1-general-posix-shell-functions)
+8. [Collection 2: POSIX Shell Functions for Shell Option Parsing](#collection-2-posix-shell-functions-for-shell-option-parsing)
 
 ## Introduction
 
@@ -31,6 +32,12 @@ criteria in [Roadmap](#roadmap) are met.
 * Manpage of `shell-glossary`.
   * Provide manpage equivalents of the function documentation headers.
 * Makefile to build src/ into a `shell-glossary` file.
+
+## Releases
+
+Source code releases follow the `YYYYMMDD` format.
+
+To list the available releases, check out the available tags or use `git tag`.
 
 For updates on recent changes, see the [NEWS](NEWS) file.
 
