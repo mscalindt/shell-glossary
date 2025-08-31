@@ -35,7 +35,14 @@ SRC_LOG=$(
     }
 )
 
-git tag -m \
+if [ "$SRC_LOG" = "$LOG" ]; then
+    git tag -m \
+"shell-glossary $1
+
+- Complete log between $2 and $3:
+$LOG" -as "$1" "$3"
+elif [ "$LOG" ]; then
+    git tag -m \
 "shell-glossary $1
 
 - Filtered log of core changes:
@@ -43,3 +50,6 @@ $SRC_LOG
 
 - Complete log between $2 and $3:
 $LOG" -as "$1" "$3"
+else
+    git tag -m "shell-glossary $1" -as "$1" "$3"
+fi
