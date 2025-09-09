@@ -1,8 +1,8 @@
 #! .desc:
 # Count the times a character appears in a string using PE
 #! .params:
-# ["$1"] - character
-# ["$2"] - string
+# [$1] - character
+# [$2] - string
 #! .gives.var:
 # (0) <_count> - integer
 #! .rc:
