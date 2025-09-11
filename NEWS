@@ -1,6 +1,11 @@
 shell-glossary NEWS
 
 
+2025-09-11 - 2025-09-11
+=======================
+* Added fmode_octal().
+
+
 2025-08-03 - 2025-08-23
 =======================
 * Created tag `pre-keycla`.
