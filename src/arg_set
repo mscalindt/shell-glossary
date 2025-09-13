@@ -5,8 +5,9 @@
 # [[$2]] - argument
 #! .rc:
 # (0) success
-# (255) bad input
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # If $2 is unspecified/empty, an empty argument will be set in $1.
 #
@@ -15,7 +16,7 @@
 #   Subsection: Quoting".
 #.
 arg_set() {
-    assert -shell-name "$1" || return 255
+    assert -shell-name "$1" || exit 255
 
     # Escape any single quotes in the argument ($2).
     _str="$2"; case "$_str" in
