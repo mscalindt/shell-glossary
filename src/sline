@@ -9,14 +9,15 @@
 #! .rc:
 # (0) success
 # (1) line does not exist
-# (255) bad input
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Here-Document".
 #.
 sline() {
-    assert -natural-n "$2" || return 255
+    assert -natural-n "$2" || exit 255
 
     _i=1; while IFS= read -r _line || [ "$_line" ]; do
         case "$_i" in "$2") return 0 ;; esac
