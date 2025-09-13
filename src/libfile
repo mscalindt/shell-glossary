@@ -10,8 +10,9 @@
 #               [modified <$2>]
 #! .rc:
 # (0) success
-# (255) bad input / bad usage / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The format of operations is as follows (N - natural number):
 # `- X`,    means at EOF add "X" data;
@@ -24,11 +25,10 @@
 # EOF operations are only specified after all line operations.
 #
 # If a path to a valid file ($1) is given, a diff-style log of any changes
-# will be appended to it. If $1 is specified but not a valid file,
-# error code `255` (bad usage) will be returned.
+# will be appended to it. Specification of $1 that is not a valid file will
+# result in error code `255` (input error).
 #
-# If an operation fails to apply, error code `255` (bad usage) will be
-# returned.
+# Operation failure will result in error code `255` (input error).
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
@@ -52,7 +52,7 @@
 #   Subsection: Redirection".
 #.
 libfile() {
-    [ "$#" -ge 2 ] || return 255
+    [ "$#" -ge 2 ] || exit 255
 
     _file=
 
@@ -60,7 +60,7 @@ libfile() {
 
     # Assert the log file if specified.
     if [ "$1" ] && [ ! -f "$1" ]; then
-        return 255
+        exit 255
     fi
 
     # Open the log file (or /dev/null) using file descriptor `9`. The usage of
@@ -218,7 +218,7 @@ EOF
             set -- "$_offset" "$@"
         done
 
-        [ "$#" -eq 1 ] || return 255
+        [ "$#" -eq 1 ] || exit 255
 
         printf "%s" x
     ) && \
