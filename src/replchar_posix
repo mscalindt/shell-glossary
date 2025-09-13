@@ -9,18 +9,18 @@
 #              [modified <$3>]
 #! .rc:
 # (0) success
-# (255) bad input / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
-# Multi-byte and multiple characters are not supported and error code `255`
-# (bad input) will be returned.
+# $1 cannot contain multi-byte and/or multiple characters.
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Parameter Expansion".
 #.
 replchar_posix() {
-    assert -max "${#1}" 1 || return 255
+    assert -max "${#1}" 1 || exit 255
 
     # Traverse $3 (string), replacing the occurrences of $1 with $2.
     _str=; _a="$3"; while [ "$1" ]; do case "$_a" in
