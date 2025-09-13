@@ -19,8 +19,9 @@
 #! .rc:
 # (0) success
 # (1) ENOENT / error
-# (255) bad input / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The function denotes the type of the specified object using a letter.
 # File categorization will take precedence over directory categorization,
@@ -58,7 +59,7 @@ ftype() {
     case "$2" in
         '-err') set -- "$1" 'err' '-red' '--' ;;
         '-info') set -- "$1" 'info' '-white' '--' ;;
-        *) [ ! "$2" ] || return 255; set -- "$1" ':' ;;
+        *) [ ! "$2" ] || exit 255; set -- "$1" ':' ;;
     esac
 
     if [ -h "$1" ]; then
