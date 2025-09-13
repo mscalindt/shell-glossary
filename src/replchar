@@ -11,15 +11,15 @@
 # (0) <set +f>;
 #! .rc:
 # (0) success
-# (255) bad usage
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The specification of multi-byte characters or multiple characters is allowed,
 # but the former results in undefined behavior, and the latter might be
 # unstable, in respect to the locale and platform (shell interpreter);
 # the result might therefore be incorrect.
 #
-# $1 cannot contain characters part of "IFS white space"[1]. The specification
-# of IFS white space results in error code `255` (bad usage).
+# $1 cannot contain characters part of "IFS white space"[1].
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Character Set,
@@ -42,7 +42,7 @@
 #     See the "Field Splitting" POSIX reference for details.
 #.
 replchar() {
-    { ! assert -has-shell-whitespace "$1"; } || return 255
+    { ! assert -has-shell-whitespace "$1"; } || exit 255
 
     # Save $IFS.
     _old_IFS="$IFS" 2> /dev/null
