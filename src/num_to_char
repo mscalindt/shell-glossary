@@ -7,8 +7,9 @@
 # (0) <_chars> - [string]
 #! .rc:
 # (0) success
-# (255) bad input / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # If the first character of $1 is `-`, nothing will be processed and
 # success will be returned.
@@ -17,7 +18,7 @@ num_to_char() {
     set -- "${1%%\-*}" "$2"
     set -- "${1:-0}" "$2"
 
-    assert -whole-n "$1" || return 255
+    assert -whole-n "$1" || exit 255
 
     _chars= && [ "$2" ] || return 0
 
