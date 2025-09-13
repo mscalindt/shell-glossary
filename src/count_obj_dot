@@ -9,7 +9,8 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad usage / error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The presence of characters outside the "Portable Filename Character Set"[1]
 # in $2/$3 results in undefined behavior.
@@ -35,7 +36,7 @@
 #     See the "Portable Filename Character Set" POSIX reference for details.
 #.
 count_obj_dot() {
-    [ -d "$1" ] || return 255
+    [ -d "$1" ] || exit 255
 
     # Use pathname expansion with a glob pattern to match `.*` (dot/hidden)
     # files and directories in $1 (directory), optionally with a prefix ($2)
