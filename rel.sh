@@ -24,7 +24,7 @@ SRC_LOG=$(
                 *'(): [doc]'*)
                     continue
                 ;;
-                *'(): '*)
+                *'src: '* | *'(): '*)
                     printf "%s\n" "$LINE"
                 ;;
                 *)
