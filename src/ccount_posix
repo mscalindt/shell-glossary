@@ -7,18 +7,19 @@
 # (0) <_count> - integer
 #! .rc:
 # (0) success
-# (255) bad input
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
-# Multi-byte and multiple characters are not supported and error code `255`
-# (bad input) will be returned.
+# Multi-byte and multiple characters are not supported and will result in error
+# code `255` (input error).
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Parameter Expansion".
 #.
 ccount_posix() {
-    assert -max "${#1}" 1 || return 255
+    assert -max "${#1}" 1 || exit 255
 
     # Traverse $2 (string), counting the occurrences of $1 (character).
     _count=0; _a="$2"; while [ "$1" ]; do case "$_a" in
