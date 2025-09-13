@@ -14,8 +14,9 @@
 #               raw content of $2/stdin
 #! .rc:
 # (0) success
-# (255) bad input / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # Use `-cat` to read the file if it is a potential specification of a file
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file).
@@ -87,7 +88,7 @@ file_preload() {
             exec 9<&-
         ;;
         *)
-            return 255
+            exit 255
         ;;
     esac
 }
