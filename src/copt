@@ -22,7 +22,7 @@
 # (1) false
 #! .ec:
 # (2) bad option argument specification
-# (255) bad input
+# (255) input error
 #.
 copt() {
     # Assert the usage of the function is appropriate or correct, else
