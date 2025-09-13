@@ -5,7 +5,7 @@
 #! .rc:
 # (0) success
 #! .ec:
-# (255) bad input
+# (255) input error
 #.
 opt_unrecognized() {
     [ "$1" ] || exit 255
