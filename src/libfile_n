@@ -17,16 +17,17 @@
 #               [modified <$4>]
 #! .rc:
 # (0) success
-# (255) bad input / bad usage / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
-# Multiple operations on the same line are not allowed and error code `255`
-# (bad usage) will be returned. EOF additions are parsed in FIFO order
-# after all deterministic operations have been executed.
+# Multiple operations on the same line are not allowed and will result in error
+# code `255` (input error). EOF additions are parsed in FIFO order after all
+# deterministic operations have been executed.
 #
 # If a path to a valid file ($5) is given, a diff-style log of any changes
-# will be appended to it. If $5 is specified but not a valid file,
-# error code `255` (bad usage) will be returned.
+# will be appended to it. Specification of $5 that is not a valid file will
+# result in error code `255` (input error).
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
@@ -50,7 +51,7 @@
 #   Subsection: Redirection".
 #.
 libfile_n() {
-    [ "$#" -ge 3 ] || return 255
+    [ "$#" -ge 3 ] || exit 255
 
     # Parse the operations into a predictable, shell-performant format.
     # The original positional parameters will shift by 1.
@@ -58,10 +59,10 @@ libfile_n() {
         # Assert operation parameters.
         case "$2" in
             '-a' | '-r' | '-s')
-                assert -natural-n "$3" || return 255
+                assert -natural-n "$3" || exit 255
 
                 case "$1" in
-                    *"'$2' '$3'"*) return 255 ;;
+                    *"'$2' '$3'"*) exit 255 ;;
                 esac
             ;;
         esac
@@ -81,7 +82,7 @@ libfile_n() {
                 _shift=4  # <option params (from $2)> + 1
             ;;
             *)
-                return 255
+                exit 255
             ;;
         esac
 
@@ -91,7 +92,7 @@ libfile_n() {
 
     # Assert the log file if specified.
     if [ "$3" ] && [ ! -f "$3" ]; then
-        return 255
+        exit 255
     fi
 
     # Open the log file (or /dev/null) using file descriptor `9`. The usage of
