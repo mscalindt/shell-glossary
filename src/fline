@@ -14,8 +14,9 @@
 #! .rc:
 # (0) success
 # (1) line does not exist / error
-# (255) bad input / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # Use `-cat` to read the file if it is a potential specification of a file
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
@@ -36,7 +37,7 @@
 #   Utility: read".
 #.
 fline() {
-    assert -natural-n "$2" || return 255
+    assert -natural-n "$2" || exit 255
 
     case "$1" in
         '-cat')
@@ -61,7 +62,7 @@ fline() {
             case "$_i" in "$2") return 0 ;; esac
         ;;
         *)
-            return 255
+            exit 255
         ;;
     esac
 
