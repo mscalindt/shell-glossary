@@ -21,9 +21,8 @@
 #! .ec:
 # (255) input error
 #! .desc.ext:
-# Multiple operations on the same line are not allowed and will result in error
-# code `255` (input error). EOF additions are parsed in FIFO order after all
-# deterministic operations have been executed.
+# Multiple operations on the same line are not allowed. EOF additions are
+# parsed in FIFO order after all deterministic operations have been executed.
 #
 # If a path to a valid file ($5) is given, a diff-style log of any changes
 # will be appended to it. Specification of $5 that is not a valid file will
