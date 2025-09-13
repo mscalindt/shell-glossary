@@ -9,11 +9,11 @@
 #              [modified <$3>]
 #! .rc:
 # (0) success
-# (255) bad input / bad usage / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
-# The specification of a <newline> character in $1 is not supported
-# and error code `255` (bad usage) will be returned.
+# $1 cannot contain a <newline> character.
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
@@ -22,13 +22,13 @@
 #   Utility: sed".
 #.
 replstr_sed_posix() {
-    [ "$1" ] || return 255
+    [ "$1" ] || exit 255
 
     # Substring cannot contain <newline>.
     case "$1" in
         *'
 '*)
-            return 255
+            exit 255
         ;;
     esac
 
