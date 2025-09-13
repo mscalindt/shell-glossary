@@ -12,7 +12,7 @@
 # (0) success
 # (*) error
 #! .ec:
-# (255) bad input
+# (255) input error
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
