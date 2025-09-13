@@ -12,11 +12,12 @@
 #! .rc:
 # (0) success
 # (1) argument does not exist
-# (255) bad input
+#! .ec:
+# (255) input error
 #.
 sq_arg() {
-    assert -whole-n "$1" || return 255
-    assert -single-quotes-array "$2" || return 255
+    assert -whole-n "$1" || exit 255
+    assert -single-quotes-array "$2" || exit 255
 
     # Extract the specified evaluated argument. The usage of `eval` here is
     # safe because $2 has been asserted as a strict single-quotes array of
