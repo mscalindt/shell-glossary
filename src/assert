@@ -33,7 +33,7 @@
 # (1) false
 # (2) false due to bad operand(s)
 #! .ec:
-# (255) bad input
+# (255) input error
 #! .desc.ext:
 # Empty input will assert false (return code `1`) by default; on string types
 # with multiple input, `2` might be returned instead.
