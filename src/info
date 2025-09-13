@@ -26,7 +26,8 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input / error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The colors are bold, foreground text, escape sequences of ANSI.
 #
@@ -45,7 +46,7 @@ info() {
         '-magenta') _color='\033[1;35m' ;;
         '-cyan') _color='\033[1;36m' ;;
         '-white') _color='\033[1;37m' ;;
-        *) return 255 ;;
+        *) exit 255 ;;
     esac
 
     _format="$2"
@@ -56,6 +57,6 @@ info() {
         '-') printf "%b%s%b\n" "$_color" "$*" "$_reset" ;;
         '--') printf "%b%s%b" "$_color" "$*" "$_reset" ;;
         '---') printf " %b%s%b" "$_color" "$*" "$_reset" ;;
-        *) return 255 ;;
+        *) exit 255 ;;
     esac
 }
