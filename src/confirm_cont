@@ -15,7 +15,8 @@
 #! .rc:
 # (0) true
 # (1) false
-# (255) bad input
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # $1 specifies the default action to be used in case of empty input.
 # If omitted, the default action is set to 'forbidden'.
@@ -38,7 +39,7 @@ confirm_cont() {
             _prompt='Continue? [Y/n] '
         ;;
         *)
-            return 255
+            exit 255
         ;;
     esac
 
