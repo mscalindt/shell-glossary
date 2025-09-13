@@ -18,7 +18,7 @@
 # (0) true
 # (1) false
 #! .ec:
-# (255) bad input
+# (255) input error
 #.
 sopt() {
     # Assert the usage of the function is appropriate or correct, else
