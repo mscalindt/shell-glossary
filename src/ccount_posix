@@ -7,7 +7,6 @@
 # (0) <_count> - integer
 #! .rc:
 # (0) success
-# (*) error
 #! .ec:
 # (255) input error
 #! .desc.ext:
@@ -38,4 +37,6 @@ ccount_posix() {
             break
         ;;
     esac done
+
+    return 0
 }
