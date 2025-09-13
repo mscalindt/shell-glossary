@@ -5,8 +5,9 @@
 # <$@> - map()
 #! .rc:
 # (0) success
-# (255) bad input / bad usage / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # If the first character of $1 is `-` or value is `0`, no offset will occur.
 #
@@ -16,7 +17,7 @@ offset() {
     _a="$1" && \
     _a="${_a%%\-*}" && \
     _a="${_a:-0}" && \
-    assert -whole-n "$_a" || return 255
+    assert -whole-n "$_a" || exit 255
 
     _a="$1" && \
     _a="${_a%%\-*}" && \
@@ -24,7 +25,7 @@ offset() {
     [ "$_a" != 0 ] || { shift && map "$@" && return 0 || return "$?"; }
 
     # Bad usage: offset exceeds the arguments.
-    [ "$1" -le "$2" ] || return 255
+    [ "$1" -le "$2" ] || exit 255
 
     _a="$1" && \
     _b="$2" && \
