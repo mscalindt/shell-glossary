@@ -7,7 +7,7 @@
 #               previous option string
 #! .ec:
 # (2) incompatible option
-# (255) bad input
+# (255) input error
 #.
 opt_compat_fail() {
     [ "$1" ] || exit 255
