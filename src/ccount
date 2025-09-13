@@ -17,8 +17,7 @@
 # unstable, in respect to the locale and platform (shell interpreter);
 # the result might therefore be incorrect.
 #
-# $1 cannot contain characters part of "IFS white space"[1]. The specification
-# of IFS white space results in error code `255` (input error).
+# $1 cannot contain characters part of "IFS white space"[1].
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Character Set,
