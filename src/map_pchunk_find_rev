@@ -14,8 +14,9 @@
 #! .rc:
 # (0) success
 # (1) false / error
-# (255) bad input / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The path mask(s), a mandatory argument that can be empty, specifies the
 # exclusion of cumulative path segments that match exactly against the given
@@ -47,7 +48,7 @@
 map_pchunk_find_rev() {
     map_pchunk_find_rev_() { _pchunk="$1" && shift 2 && "$@" "$_pchunk"; }
 
-    [ "$#" -ge 4 ] || return 255
+    [ "$#" -ge 4 ] || exit 255
 
     # Determine whether an existing LTR path mask applies. A valid LTR path
     # mask shall not end with trailing slashes.
