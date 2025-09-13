@@ -13,8 +13,9 @@
 #               [modified <$1>]
 #! .rc:
 # (0) success
-# (255) bad input / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: General Concepts,
@@ -23,7 +24,7 @@
 path_strip() {
     set -- "$1" "${2:-0}" "$3"
 
-    assert -whole-n "$2" || return 255
+    assert -whole-n "$2" || exit 255
 
     while [ "$2" -ge 1 ]; do
         # Strip any trailing slashes in the path, strip the last path segment,
@@ -45,6 +46,6 @@ path_strip() {
     _path="$1"; case "$3" in
         '-floor') : ;;
         '-posix') [ "$2" = 0 ] || _path=/ ;;
-        *) [ ! "$3" ] || return 255; [ "$2" = 0 ] || _path= ;;
+        *) [ ! "$3" ] || exit 255; [ "$2" = 0 ] || _path= ;;
     esac
 }
