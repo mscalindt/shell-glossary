@@ -4,7 +4,7 @@
 # <$1> - path
 #! .ec:
 # (2) bad configuration file
-# (255) bad input
+# (255) input error
 #.
 cfg_fail() {
     [ "$1" ] || exit 255
