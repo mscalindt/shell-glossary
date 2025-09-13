@@ -20,8 +20,9 @@
 #! .rc:
 # (0) success
 # (1) no operations to be created / error
-# (255) bad input / bad usage / error
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The format of created operations is as follows (N - natural number):
 # `-a N X`, means at "N" line add "X" data;
@@ -79,9 +80,9 @@ fed() {
                 '-m '*)
                     # Assert $2 is a natural number (`1`, `2`, ...).
                     case "${2:-0}${2#*[!0123456789]}" in
-                        0*) return 255 ;;
+                        0*) exit 255 ;;
                         "$2$2") _mod_s="$_mod_s $2 "; shift 2 && continue ;;
-                        *) return 255 ;;
+                        *) exit 255 ;;
                     esac
                 ;;
                 *)
@@ -91,13 +92,13 @@ fed() {
 
             case "$1" in
                 '-')
-                    case "$#" in 1) return 255 ;; esac
+                    case "$#" in 1) exit 255 ;; esac
 
                     shift 2 && continue
                 ;;
                 '-a')  # $2 = string
-                    case "$#" in 1) return 255 ;; esac
-                    case "$_mod_s" in 'm '*) return 255 ;; esac
+                    case "$#" in 1) exit 255 ;; esac
+                    case "$_mod_s" in 'm '*) exit 255 ;; esac
 
                     # Test <n> modifier.
                     case "${_mod_s:-0}" in
@@ -124,8 +125,8 @@ fed() {
                     return 0
                 ;;
                 '-r')  # $2 = string
-                    case "$#" in 1) return 255 ;; esac
-                    case "$_mod_s" in 'm '*) return 255 ;; esac
+                    case "$#" in 1) exit 255 ;; esac
+                    case "$_mod_s" in 'm '*) exit 255 ;; esac
 
                     # Assert <n> modifier.
                     case "${_mod_s:-0}" in
@@ -167,7 +168,7 @@ fed() {
                     return 0
                 ;;
                 '-s')  # $2 = string; $3 = string
-                    case "$#" in 1|2) return 255 ;; esac
+                    case "$#" in 1|2) exit 255 ;; esac
 
                     # Assert <n> modifier.
                     case "${_mod_s:-m }" in
@@ -236,13 +237,13 @@ fed() {
                     return 0
                 ;;
                 *)
-                    return 255
+                    exit 255
                 ;;
             esac
         done
     }
 
-    [ "$#" -ge 3 ] || return 255
+    [ "$#" -ge 3 ] || exit 255
 
     # Save the file content into $_str.
     #
@@ -273,7 +274,7 @@ EOF
                 '-') : ;;
                 '-m' | '-a' | '-r') shift 2 && continue ;;
                 '-s') shift 3 && continue ;;
-                *) return 255 ;;
+                *) exit 255 ;;
             esac
 
             arg_set _a "$2" || return "$?"
