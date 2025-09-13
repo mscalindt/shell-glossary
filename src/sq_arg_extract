@@ -15,11 +15,12 @@
 #! .rc:
 # (0) success
 # (1) argument does not exist
-# (255) bad input
+#! .ec:
+# (255) input error
 #.
 sq_arg_extract() {
-    [ "$1" ] || return 255
-    assert -single-quotes-array "$2" || return 255
+    [ "$1" ] || exit 255
+    assert -single-quotes-array "$2" || exit 255
 
     # Extract the specified evaluated argument. The usage of `eval` here is
     # safe because $2 has been asserted as a strict single-quotes array of
@@ -53,7 +54,7 @@ sq_arg_extract() {
             done
         ;;
         *)
-            [ ! "$3" ] || return 255
+            [ ! "$3" ] || exit 255
 
             _pattern="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
                 case "$1" in
