@@ -16,7 +16,7 @@
 # (0) true
 # (1) false
 #! .ec:
-# (255) bad input
+# (255) input error
 #.
 ssopt() {
     while [ "$1" ]; do
