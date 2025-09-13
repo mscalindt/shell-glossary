@@ -13,9 +13,9 @@
 #              [modified <$3>]
 #! .rc:
 # (0) success
-# (2) bad $2
-# (255) bad input
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The delimiter character cannot be a <backslash> or a <newline> character.
 #
@@ -30,7 +30,7 @@ esc_sed() {
     case "$2" in
         '\' | '
 ')
-            return 2
+            exit 255
         ;;
     esac
 
@@ -75,7 +75,7 @@ esc_sed() {
             replchar_posix "$2" '\'"$2" "$_str" || return "$?"
         ;;
         *)
-            return 255
+            exit 255
         ;;
     esac
 
