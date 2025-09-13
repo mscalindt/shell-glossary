@@ -12,16 +12,16 @@
 #! .rc:
 # (0) success
 # (*) error
-# (255) bad input / error
+#! .ec:
+# (255) input error
 #! .desc.ext:
-# $2 cannot be a multiline string and error code `255` (bad input) will be
-# returned.
+# $2 cannot be a multiline string.
 #.
 libfile_n_rem() {
     case "$2" in
         *'
 '*)
-            return 255
+            exit 255
         ;;
     esac
 
