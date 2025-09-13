@@ -9,7 +9,7 @@
 #               option string
 #! .ec:
 # (2) option failure
-# (255) bad usage
+# (255) input error
 # (*) error
 #.
 opt_fail() {
