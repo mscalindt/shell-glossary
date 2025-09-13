@@ -8,15 +8,16 @@
 # <$2> - variable name
 #! .rc:
 # (0) success
-# (255) bad input / error
 # (*) error
+#! .ec:
+# (255) input error
 #.
 mask_unset() {
     # Remove `0x` from $1 (bit) if present.
     set -- "${1#0x}" "$2"
 
-    { assert -eq "$1" 0 || assert -bit "$1"; } || return 255
-    assert -shell-name "$2" || return 255
+    { assert -eq "$1" 0 || assert -bit "$1"; } || exit 255
+    assert -shell-name "$2" || exit 255
 
     # Handle value `0` specially by unsetting all bits.
     case "$1" in
