@@ -18,7 +18,7 @@
 # (1) false
 #! .ec:
 # (2) bad option argument specification
-# (255) bad input
+# (255) input error
 #.
 scopt_optional() {
     while [ "$1" ]; do
