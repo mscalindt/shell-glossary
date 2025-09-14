@@ -111,6 +111,4 @@ map_rev() {
             return "$_rc"
         }
     done
-
-    return 0
 }
