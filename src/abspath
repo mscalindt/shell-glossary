@@ -10,7 +10,6 @@
 #           absolute $1
 #! .rc:
 # (0) success
-# (*) error
 #! .ec:
 # (255) input error
 #! .desc.ext:
@@ -33,4 +32,6 @@ abspath() {
         '/'*) _path="$1" ;;
         *) _path="${PWD%/}/$1" ;;
     esac
+
+    return 0
 }
