@@ -2,18 +2,8 @@
 # Semantically normalize a path into an assertable canonical path
 #! .params:
 # [$1] - path
-#! .uses.var.path_spec_static:
-# [PWD] - environment variable;
-#         absolute pathname of the current working directory
-#! .gives.var:
-# (0) <_path> - [string];
-#               [modified <$1>]
-#! .rc:
-# (0) success
-# (*) error
 #! .desc.ext:
-# The presence of a broken symbolic segment prompts no action and is instead
-# treated as an inexistent segment.
+# For more information, refer to the documentation of path_spec_static().
 #.
 path_spec_fs() {
     path_spec_static -abchklmr "$@"  # -> $_path
