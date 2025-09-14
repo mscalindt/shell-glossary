@@ -2,15 +2,8 @@
 # Lexically normalize a path into an assertable canonical path
 #! .params:
 # [$1] - path
-#! .uses.var.path_spec_static:
-# [PWD] - environment variable;
-#         absolute pathname of the current working directory
-#! .gives.var:
-# (0) <_path> - [string];
-#               [modified <$1>]
-#! .rc:
-# (0) success
-# (*) error
+#! .desc.ext:
+# For more information, refer to the documentation of path_spec_static().
 #.
 path_spec() {
     path_spec_static -abcklmr "$@"  # -> $_path
