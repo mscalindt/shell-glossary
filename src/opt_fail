@@ -8,8 +8,8 @@
 # <opt_match> - string;
 #               option string
 #! .ec:
-# (2) option failure
-# (255) input error
+# (2) option failure / error
+# (255) input error / error
 # (*) error
 #.
 opt_fail() {
