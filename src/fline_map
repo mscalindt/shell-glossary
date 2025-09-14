@@ -57,6 +57,4 @@ fline_map() {
             exit 255
         ;;
     esac
-
-    return 0
 }
