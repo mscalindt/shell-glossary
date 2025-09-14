@@ -152,6 +152,4 @@ map_pchunk() {
         # Process the path chunk (path mask).
         map_pchunk_ "$@" || { set -- "$?" "$2"; _segment="$2"; return "$1"; }
     done
-
-    return 0
 }
