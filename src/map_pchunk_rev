@@ -143,6 +143,4 @@ map_pchunk_rev() {
         _path="$_a"; _ltr_mask="$2"; shift 2
         set -- "$_path" "$_ltr_mask" "$@"
     done
-
-    return 0
 }
