@@ -19,6 +19,4 @@ sline_map() {
 <<EOF
 $_str
 EOF
-
-    return 0
 }
