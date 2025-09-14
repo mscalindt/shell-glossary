@@ -21,9 +21,13 @@
 #   Subsection: Shell Variables".
 #.
 ifs_map() {
-    set -f && _str="$1" && shift && for _field in $_str; do
+    set -f || return "$?"
+
+    _str="$1" && shift && for _field in $_str; do
         [ "$_field" ] || continue
 
         "$@" "$_field" || { set -- "$?"; set +f; return "$?"; }
-    done && set +f
+    done
+
+    set +f
 }
