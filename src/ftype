@@ -81,6 +81,4 @@ ftype() {
     else
         _type='>'; return 1
     fi
-
-    return 0
 }
