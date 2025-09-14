@@ -25,7 +25,6 @@
 #              disable color
 #! .rc:
 # (0) success
-# (*) error
 #! .ec:
 # (255) input error
 #! .desc.ext:
@@ -59,4 +58,6 @@ info() {
         '---') printf " %b%s%b" "$_color" "$*" "$_reset" ;;
         *) exit 255 ;;
     esac
+
+    return 0
 }
