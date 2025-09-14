@@ -78,6 +78,4 @@ esc_sed() {
             exit 255
         ;;
     esac
-
-    return 0
 }
