@@ -36,7 +36,7 @@
 # (0) success
 # (*) error
 #! .ec:
-# (255) input error
+# (255) input error / error
 # (*) error
 #! .desc.ext:
 # 'Append/prepend' operations take place after 'strip' operations.
