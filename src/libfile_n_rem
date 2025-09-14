@@ -11,7 +11,6 @@
 # (0) <_str> $ - '';
 #! .rc:
 # (0) success
-# (*) error
 #! .ec:
 # (255) input error
 #! .desc.ext:
@@ -29,4 +28,6 @@ libfile_n_rem() {
 "
     _offset=-1
     _str=
+
+    return 0
 }
