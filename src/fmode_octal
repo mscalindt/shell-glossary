@@ -7,7 +7,6 @@
 #               file mode
 #! .rc:
 # (0) success
-# (*) error
 #! .ec:
 # (255) input error
 #.
