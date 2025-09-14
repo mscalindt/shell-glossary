@@ -7,7 +7,6 @@
 # (0) <_chars> - [string]
 #! .rc:
 # (0) success
-# (*) error
 #! .ec:
 # (255) input error
 #! .desc.ext:
@@ -25,4 +24,6 @@ num_to_char() {
     _i=0; until [ "$_i" = "$1" ]; do
         _chars="$_chars$2"; _i=$((_i + 1))
     done
+
+    return 0
 }
