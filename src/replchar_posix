@@ -9,7 +9,6 @@
 #              [modified <$3>]
 #! .rc:
 # (0) success
-# (*) error
 #! .ec:
 # (255) input error
 #! .desc.ext:
@@ -50,4 +49,6 @@ replchar_posix() {
             _str="$_str$_a"; break
         ;;
     esac done
+
+    return 0
 }
