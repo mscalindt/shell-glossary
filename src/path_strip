@@ -13,7 +13,6 @@
 #               [modified <$1>]
 #! .rc:
 # (0) success
-# (*) error
 #! .ec:
 # (255) input error
 #! .desc.ext:
@@ -48,4 +47,6 @@ path_strip() {
         '-posix') [ "$2" = 0 ] || _path=/ ;;
         *) [ ! "$3" ] || exit 255; [ "$2" = 0 ] || _path= ;;
     esac
+
+    return 0
 }
