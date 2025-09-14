@@ -287,5 +287,5 @@ EOF
     _fmt="${_fmt# }" || \
     return "$?"
 
-    [ "$_fmt" ] && return 0 || return 1
+    [ "$_fmt" ]
 }
