@@ -12,7 +12,6 @@
 #              raw $2 guaranteed to end with <newline>
 #! .rc:
 # (0) success
-# (*) error
 #! .desc.ext:
 # $2 can be a multiline string.
 #
@@ -35,4 +34,6 @@ EOF
 
     _str="$2
 "
+
+    return 0
 }
