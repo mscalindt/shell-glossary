@@ -11,6 +11,8 @@
 #! .desc.ext:
 # If the first character of $1 is `-` or value is `0`, no offset will occur.
 #
+# The offset shall not exceed the arguments.
+#
 # For more information, refer to the documentation of map().
 #.
 offset() {
@@ -24,7 +26,6 @@ offset() {
     _a="${_a:-0}" && \
     [ "$_a" != 0 ] || { shift && map "$@" && return 0 || return "$?"; }
 
-    # Bad usage: offset exceeds the arguments.
     [ "$1" -le "$2" ] || exit 255
 
     _a="$1" && \
