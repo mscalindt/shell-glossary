@@ -10,7 +10,7 @@
 # (0) <_segment> - string;
 #                  successful cumulative path segment
 #! .sets:
-# <map_pchunk_find_rev_> ();
+# <pchunk_map_find_rev_> ();
 #! .rc:
 # (0) success
 # (1) false / error
@@ -45,8 +45,8 @@
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Parameter Expansion".
 #.
-map_pchunk_find_rev() {
-    map_pchunk_find_rev_() { _pchunk="$1" && shift 2 && "$@" "$_pchunk"; }
+pchunk_map_find_rev() {
+    pchunk_map_find_rev_() { _pchunk="$1" && shift 2 && "$@" "$_pchunk"; }
 
     [ "$#" -ge 4 ] || exit 255
 
@@ -124,7 +124,7 @@ map_pchunk_find_rev() {
     # Process the path using parameter expansion and an optional LTR path mask.
     while [ "${1#"${1%%[!/]*}"}" ] && [ "$2" != "${1%"${1##*[!/]}"}" ]; do
         # Process the path.
-        map_pchunk_find_rev_ "$@" && { _segment="$1"; return "$?"; } || :
+        pchunk_map_find_rev_ "$@" && { _segment="$1"; return "$?"; } || :
 
         # Strip any trailing slashes in the path, strip the last path segment,
         # strip the last path segment's leading slashes if any, and save the

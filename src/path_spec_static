@@ -279,7 +279,7 @@ path_spec_static() {
 
     # Resolve the rightmost existing symbolic path segment. This operation
     # shall take priority over the remaining path resolving logic.
-    map_pchunk_find_rev "$2" '' '' path_spec_static_ "$1" -h && {
+    pchunk_map_find_rev "$2" '' '' path_spec_static_ "$1" -h && {
         set -- "$1" "$_path${2#"$_segment"}"
     } || :
 

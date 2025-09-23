@@ -9,6 +9,9 @@ shell-glossary NEWS
 * Renamed map_pchunk_find() to pchunk_map_find().
   Breaking (backward-incompatible) change; existing code requires adjustment.
 
+* Renamed map_pchunk_find_rev() to pchunk_map_find_rev().
+  Breaking (backward-incompatible) change; existing code requires adjustment.
+
 
 2025-09-11 - 2025-09-11
 =======================
