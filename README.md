@@ -127,8 +127,6 @@ Process each argument with a function
 Find success among arguments using a function
 - [MAP_FIND_REV()](src/map_find_rev):
 Find success among arguments in reverse using a function
-- [MAP_PCHUNK()](src/map_pchunk):
-Process each cumulative path segment with a function
 - [MAP_PCHUNK_FIND()](src/map_pchunk_find):
 Find success among cumulative path segments using a function
 - [MAP_PCHUNK_FIND_REV()](src/map_pchunk_find_rev):
@@ -159,6 +157,8 @@ Semantically normalize a path into an assertable canonical path
 Modify a path string
 - [PATH_STRIP()](src/path_strip):
 Strip a path N segments RTL
+- [PCHUNK_MAP()](src/pchunk_map):
+Process each cumulative path segment with a function
 - [REPLCHAR()](src/replchar):
 Replace specific character(s) with character(s) in a string using IFS
 - [REPLCHAR_POSIX()](src/replchar_posix):

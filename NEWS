@@ -1,6 +1,12 @@
 shell-glossary NEWS
 
 
+2025-09-23 - 2025-09-23
+=======================
+* Renamed map_pchunk() to pchunk_map().
+  Breaking (backward-incompatible) change; existing code requires adjustment.
+
+
 2025-09-11 - 2025-09-11
 =======================
 * Added fmode_octal().
