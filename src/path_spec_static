@@ -285,19 +285,19 @@ path_spec_static() {
 
     # Resolve `.`.
     _path=
-    while map_pchunk_find "$2" "$_path" '' path_spec_static_ "$1" -a; do
+    while pchunk_map_find "$2" "$_path" '' path_spec_static_ "$1" -a; do
         set -- "$1" "$_path${2#"$_segment"}"
     done
 
     # Resolve `..`.
     _path=
-    while map_pchunk_find "$2" "$_path" '' path_spec_static_ "$1" -b; do
+    while pchunk_map_find "$2" "$_path" '' path_spec_static_ "$1" -b; do
         set -- "$1" "$_path${2#"$_segment"}"
     done
 
     # Strip consecutive slashes.
     _path=
-    while map_pchunk_find "$2" "$_path" '' path_spec_static_ "$1" -c; do
+    while pchunk_map_find "$2" "$_path" '' path_spec_static_ "$1" -c; do
         set -- "$1" "$_path${2#"$_segment"}"
     done
 
