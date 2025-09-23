@@ -10,7 +10,7 @@
 # <_segment> - [string];
 #              [last processed cumulative path segment]
 #! .sets:
-# <map_pchunk_rev_> ();
+# <pchunk_map_rev_> ();
 #! .rc:
 # (0) success
 # (*) error
@@ -44,8 +44,8 @@
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Parameter Expansion".
 #.
-map_pchunk_rev() {
-    map_pchunk_rev_() { _pchunk="$1" && shift 2 && "$@" "$_pchunk"; }
+pchunk_map_rev() {
+    pchunk_map_rev_() { _pchunk="$1" && shift 2 && "$@" "$_pchunk"; }
 
     _segment=
 
@@ -125,7 +125,7 @@ map_pchunk_rev() {
     # Process the path using parameter expansion and an optional LTR path mask.
     while [ "${1#"${1%%[!/]*}"}" ] && [ "$2" != "${1%"${1##*[!/]}"}" ]; do
         # Process the path.
-        map_pchunk_rev_ "$@" || {
+        pchunk_map_rev_ "$@" || {
             set -- "$1" "$?"; _segment="$1"; return "$2"
         }
 

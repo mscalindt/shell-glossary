@@ -127,8 +127,6 @@ Process each argument with a function
 Find success among arguments using a function
 - [MAP_FIND_REV()](src/map_find_rev):
 Find success among arguments in reverse using a function
-- [MAP_PCHUNK_REV()](src/map_pchunk_rev):
-Process each cumulative path segment in reverse with a function
 - [MAP_REV()](src/map_rev):
 Process each argument in reverse with a function
 - [MAP_TRY()](src/map_try):
@@ -159,6 +157,8 @@ Process each cumulative path segment with a function
 Find success among cumulative path segments using a function
 - [PCHUNK_MAP_FIND_REV()](src/pchunk_map_find_rev):
 Find success among cumulative path segments in reverse using a function
+- [PCHUNK_MAP_REV()](src/pchunk_map_rev):
+Process each cumulative path segment in reverse with a function
 - [REPLCHAR()](src/replchar):
 Replace specific character(s) with character(s) in a string using IFS
 - [REPLCHAR_POSIX()](src/replchar_posix):
