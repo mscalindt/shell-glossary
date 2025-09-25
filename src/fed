@@ -13,13 +13,12 @@
 # [$3] - string
 # [$4] - string
 #! .gives.var:
-# (0) <_fmt> - string;
+# (0) <_fmt> - [string];
 #              shell-parseable evaluable line-sorted operations list
 #! .sets:
 # <fed_> ();
 #! .rc:
 # (0) success
-# (1) no operations to be created / error
 # (*) error
 #! .ec:
 # (255) input error
@@ -286,6 +285,4 @@ EOF
     ) && \
     _fmt="${_fmt# }" || \
     return "$?"
-
-    [ "$_fmt" ]
 }
