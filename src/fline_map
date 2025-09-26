@@ -48,7 +48,7 @@ fline_map() {
             shift 2 && while IFS= read -r _line || [ "$_line" ]; do
                 [ "$_line" ] || continue
                 "$@" "$_line" || { set -- "$?"; exec 9<&-; return "$1"; }
-            done
+            done <&9
 
             # Release file descriptor `9` to close the associated file.
             exec 9<&-
