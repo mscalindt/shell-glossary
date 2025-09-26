@@ -26,8 +26,7 @@
 #
 # If the log file ($1) does not already exist, it will be created. If it exists
 # and is a regular file, a diff-style log of any changes will be appended to
-# it. Specification of $1 that is not a valid file will result in error code
-# `255` (input error).
+# it.
 #
 # Operation failure will result in error code `255` (input error).
 #
@@ -60,9 +59,11 @@ libfile() {
     [ "$2" ] && [ "$#" -ge 3 ] || return 0
 
     # Assert the log file if specified.
-    if [ "$1" ] && [ ! -f "$1" ]; then
-        if [ -e "$1" ] || [ -h "$1" ]; then
-            exit 255
+    if [ "$1" ]; then
+        if [ -f "$1" ]; then
+            :
+        elif [ -e "$1" ] || [ -h "$1" ]; then
+            shift; set -- '' "$@"
         fi
     fi
 
