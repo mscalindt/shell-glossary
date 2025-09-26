@@ -24,9 +24,10 @@
 # Multiple operations on the same line are not specified.
 # EOF operations are only specified after all line operations.
 #
-# If a path to a valid file ($1) is given, a diff-style log of any changes
-# will be appended to it. Specification of $1 that is not a valid file will
-# result in error code `255` (input error).
+# If the log file ($1) does not already exist, it will be created. If it exists
+# and is a regular file, a diff-style log of any changes will be appended to
+# it. Specification of $1 that is not a valid file will result in error code
+# `255` (input error).
 #
 # Operation failure will result in error code `255` (input error).
 #
@@ -60,7 +61,9 @@ libfile() {
 
     # Assert the log file if specified.
     if [ "$1" ] && [ ! -f "$1" ]; then
-        exit 255
+        if [ -e "$1" ] || [ -h "$1" ]; then
+            exit 255
+        fi
     fi
 
     # Open the log file (or /dev/null) using file descriptor `9`. The usage of
