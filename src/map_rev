@@ -106,7 +106,7 @@ map_rev() {
         # On error, returns $_pos and $_rc.
         map_rev_ "$@" || {
             # (n>0)*n  ==  max(0,n)  ==  n>0?n:0
-            shift $(((($1 > 0) * $1) + _pos + 2)); _arg="$1"
+            shift "$(((($1 > 0) * $1) + _pos + 2))"; _arg="$1"
 
             return "$_rc"
         }

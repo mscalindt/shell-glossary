@@ -5,6 +5,8 @@ shell-glossary NEWS
 =======================
 * Fixed possible word splitting in map_find_rev().
 
+* Fixed possible word splitting in map_rev().
+
 
 2025-09-26 - 2025-09-26
 =======================
