@@ -16,7 +16,7 @@ of reusable POSIX shell functions. It features collections of optimized
 functions for general use; or about ~5K portable LOC with powerful
 capabilities, precisely.
 
-```sh
+```
 $ git describe
 20250929
 $ pwd
