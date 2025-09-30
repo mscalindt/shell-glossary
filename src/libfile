@@ -202,7 +202,7 @@ EOF
         while :; do
             # $2 = operation
             case "$2" in
-                '-') : ;;
+                '-') ;;
                 *) break ;;
             esac
 
