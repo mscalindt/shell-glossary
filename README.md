@@ -89,6 +89,8 @@ see the [DEPENDENCIES](DEPENDENCIES) file.
 A collection of reusable pure and very portable shell functions
 with optional external utility calls.
 
+- [ABSPATH()](src/abspath):
+Convert a relative pathname into an absolute pathname
 - [ARG_SAVE()](src/arg_save):
 Save with single-quote escape an argument into a variable
 - [ARG_SET()](src/arg_set):
@@ -199,8 +201,6 @@ Extract an evaluated argument in a single-quotes array of arguments
 A collection of reusable pure and very portable shell functions
 to make shell option parsing a breeze.
 
-- [ABSPATH()](src/abspath):
-Convert a relative pathname into an absolute pathname
 - [CFG_FAIL()](src/cfg_fail):
 Signify bad configuration file and exit
 - [COPT()](src/copt):
