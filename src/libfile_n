@@ -244,7 +244,7 @@ EOF
         # Parse EOF additions.
         _offset=0; while :; do
             case "$1" in
-                *"'-' '-'"*) : ;;
+                *"'-' '-'"*) ;;
                 *) break ;;
             esac
 
