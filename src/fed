@@ -129,7 +129,7 @@ fed() {
 
                     # Assert <n> modifier.
                     case "${_mod_s:-0}" in
-                        *" $_orig_offset "* | 0) : ;;
+                        *" $_orig_offset "* | 0) ;;
                         *) shift 2 && continue ;;  # Operation <noop>.
                     esac
 
@@ -137,26 +137,26 @@ fed() {
                     case "$_mod_t" in
                         e)
                             case "$_line" in
-                                "$2") : ;;
+                                "$2") ;;
                                 *) shift 2 && continue ;;
                             esac
                         ;;
                         p)
                             case "$_line" in
-                                "$2"*) : ;;
+                                "$2"*) ;;
                                 *) shift 2 && continue ;;
                             esac
                         ;;
                         s)
                             case "$_line" in
-                                *"$2") : ;;
+                                *"$2") ;;
                                 *) shift 2 && continue ;;
                             esac
                         ;;
                         *)
                             # Test default string match.
                             case "$_line" in
-                                *"$2"*) : ;;
+                                *"$2"*) ;;
                                 *) shift 2 && continue ;;
                             esac
                         ;;
@@ -171,7 +171,7 @@ fed() {
 
                     # Assert <n> modifier.
                     case "${_mod_s:-m }" in
-                        *" $_orig_offset "* | 'm '*) : ;;
+                        *" $_orig_offset "* | 'm '*) ;;
                         *) shift 3 && continue ;;  # Operation <noop>.
                     esac
 
@@ -198,21 +198,21 @@ fed() {
                         e)
                             case "$_line" in
                                 "$3") return 0 ;;  # Addition <noop>.
-                                "$2") : ;;
+                                "$2") ;;
                                 *) shift 3 && continue ;;
                             esac
                         ;;
                         p)
                             case "$_line" in
                                 "$3") return 0 ;;  # Addition <noop>.
-                                "$2"*) : ;;
+                                "$2"*) ;;
                                 *) shift 3 && continue ;;
                             esac
                         ;;
                         s)
                             case "$_line" in
                                 "$3") return 0 ;;  # Addition <noop>.
-                                *"$2") : ;;
+                                *"$2") ;;
                                 *) shift 3 && continue ;;
                             esac
                         ;;
@@ -220,7 +220,7 @@ fed() {
                             # Test default string match.
                             case "$_line" in
                                 "$3") return 0 ;;  # Addition <noop>.
-                                *"$2"*) : ;;
+                                *"$2"*) ;;
                                 *) shift 3 && continue ;;
                             esac
                         ;;
@@ -270,7 +270,7 @@ EOF
         # Parse EOF operations.
         while [ "$#" -ge 1 ]; do
             case "$1" in
-                '-') : ;;
+                '-') ;;
                 '-m' | '-a' | '-r') shift 2 && continue ;;
                 '-s') shift 3 && continue ;;
                 *) exit 255 ;;
