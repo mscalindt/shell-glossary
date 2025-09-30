@@ -43,7 +43,7 @@ path_strip() {
     # `-floor`: Keep the path segment.
     # `-posix`: Strip to root (`/`).
     _path="$1"; case "$3" in
-        '-floor') : ;;
+        '-floor') ;;
         '-posix') [ "$2" = 0 ] || _path=/ ;;
         *) [ ! "$3" ] || exit 255; [ "$2" = 0 ] || _path= ;;
     esac
