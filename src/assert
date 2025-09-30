@@ -326,7 +326,7 @@ assert() {
 
             case "$1" in
                 *'//'*) return 1 ;;
-                '/'*) : ;;
+                '/'*) ;;
                 *) return 1 ;;
             esac
 
