@@ -1,21 +1,16 @@
 #! .desc:
 # Match specific option(s) with a mandatory option argument
 #! .params:
-# <$1>+ - option string
-#! .uses.var:
-# <opt> - string;
-#         first positional parameter
-# <opt_arg> - string;
-#             second positional parameter
+# <[$1]> - option
+# <[$2]> - option argument
+# <[$3]>+ - string
 #! .gives.var:
 # (0) <opt_arg> - string;
 #                 option argument
-# (0) <opt_match> - string;
+# (0) <opt_match> - [string];
 #                   option string
 # (0) <opt_shift> - integer;
 #                   shift count for option
-#! .sets:
-# (0) <opt> $ - '';
 #! .rc:
 # (0) true
 # (1) false
@@ -24,51 +19,46 @@
 # (255) input error
 #.
 scopt() {
-    while [ "$1" ]; do
-        # Try to match an option. The second positional parameter is presumably
-        # its argument.
-        case "$opt" in
+    [ "$#" -ge 3 ] || exit 255
+
+    opt_match="$1"
+    opt_arg="$2"
+
+    shift 2
+
+    while [ "$#" -ge 1 ]; do
+        # Assert $opt_match fully matches $1; $opt_arg is presumably
+        # the option argument.
+        case "$opt_match" in
             "$1")
-                # Assert the second positional parameter is present.
                 if [ ! "$opt_arg" ]; then
                     printf "%s: Option '%s' requires an argument.\n" \
-                        "${0##*/}" "$1" >&2
+                        "${0##*/}" "$opt_match" >&2
                     printf "%s: Try '%s --help' for more information.\n" \
                         "${0##*/}" "${0##*/}" >&2
 
                     exit 2
                 fi
 
-                opt_match="$1"
                 opt_shift=2
-                opt=
 
                 return 0
             ;;
         esac
 
-        # Assert any potential option argument specification is valid.
-        # An option cannot end with `=` after being matched,
-        # otherwise it's invalid; example: `foo=`.
-        case "$opt" in
+        # Assert $opt_match matches $1 with an argument.
+        case "$opt_match" in
             "$1"'=')
                 printf "%s: Invalid argument specification for: '%s'\n" \
-                    "${0##*/}" "$1" >&2
+                    "${0##*/}" "$opt_match" >&2
                 printf "%s: Try '%s --help' for more information.\n" \
                     "${0##*/}" "${0##*/}" >&2
 
                 exit 2
             ;;
-        esac
-
-        # Try to match an option with an argument separated by `=`
-        # on the same positional parameter; example: `foo=bar`.
-        case "$opt" in
             "$1"'='*)
-                opt_arg="${opt#"$1"=}"
-                opt_match="$1"
+                opt_arg="${opt_match#"$1"=}"
                 opt_shift=1
-                opt=
 
                 return 0
             ;;
@@ -76,8 +66,6 @@ scopt() {
 
         shift
     done
-
-    [ "$#" -eq 0 ] || exit 255
 
     return 1
 }

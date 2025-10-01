@@ -1,7 +1,7 @@
 shell-glossary NEWS
 
 
-2025-10-01 - 2025-10-01
+2025-10-01 - 2025-10-02
 =======================
 * copt() will now accept option arguments only as parameters,
   and will not give/set $opt_match/$opt.
@@ -9,6 +9,10 @@ shell-glossary NEWS
 
 * copt_optional() will now accept option arguments only as parameters,
   and will not give/set $opt, $opt_match, and $opt_shift.
+  Breaking (backward-incompatible) change.
+
+* scopt() will now accept option arguments only as parameters,
+  will not set $opt, and will accept empty option strings.
   Breaking (backward-incompatible) change.
 
 
