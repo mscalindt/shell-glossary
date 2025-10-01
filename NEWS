@@ -7,6 +7,10 @@ shell-glossary NEWS
   and will not give/set $opt_match/$opt.
   Breaking (backward-incompatible) change.
 
+* copt_optional() will now accept option arguments only as parameters,
+  and will not give/set $opt, $opt_match, and $opt_shift.
+  Breaking (backward-incompatible) change.
+
 
 2025-09-29 - 2025-09-29
 =======================
