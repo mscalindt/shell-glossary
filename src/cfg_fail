@@ -1,15 +1,15 @@
 #! .desc:
-# Signify bad configuration file and exit
+# Signify invalid configuration file and exit
 #! .params:
 # <$1> - path
 #! .ec:
-# (2) bad configuration file
+# (2) invalid configuration file
 # (255) input error
 #.
 cfg_fail() {
     [ "$1" ] || exit 255
 
-    printf "%s: Bad configuration file: '%s'\n" \
+    printf "%s: Invalid configuration file: '%s'\n" \
         "${0##*/}" "$1" >&2
 
     printf "%s: Try '%s --help' for more information.\n" \
