@@ -13,7 +13,7 @@ opt_err() {
     [ "$1" ] || exit 255
 
     if [ "$2" ]; then
-        printf "%s: Bad argument '%s' for '%s'\n" \
+        printf "%s: Invalid argument '%s' for '%s'\n" \
             "${0##*/}" "$2" "$1" >&2
         shift 2
     else
