@@ -12,7 +12,7 @@
 # (0) true
 # (1) false
 #! .ec:
-# (2) bad option argument specification
+# (2) invalid option argument specification
 # (255) input error
 #.
 scopt_optional() {
