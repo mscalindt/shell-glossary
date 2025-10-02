@@ -1,9 +1,10 @@
 #! .desc:
-# Signify invalid configuration file and exit
+# Signify invalid configuration file
 #! .params:
 # <$1> - path
+#! .rc:
+# (0) success
 #! .ec:
-# (2) invalid configuration file
 # (255) input error
 #.
 cfg_fail() {
@@ -15,5 +16,5 @@ cfg_fail() {
     printf "%s: Try '%s --help' for more information.\n" \
         "${0##*/}" "${0##*/}" >&2
 
-    exit 2
+    return 0
 }

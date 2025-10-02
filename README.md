@@ -202,7 +202,7 @@ A collection of reusable pure and very portable shell functions
 to make shell option parsing a breeze.
 
 - [CFG_FAIL()](src/cfg_fail):
-Signify invalid configuration file and exit
+Signify invalid configuration file
 - [COPT()](src/copt):
 Match `-`-delimited short/long option with a mandatory option argument
 - [COPT_OPTIONAL()](src/copt_optional):
