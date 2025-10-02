@@ -211,7 +211,7 @@ Match `-`-delimited short/long option with an optional option argument
 Signify operand count exceeds maximum allowed
 - [OPD_MIN()](src/opd_min):
 Signify operand count below minimum required
-- [OPT_COMPAT_FAIL()](src/opt_compat_fail):
+- [OPT_COMPAT_ERR()](src/opt_compat_err):
 Signify option incompatibility with a previous option
 - [OPT_ERR()](src/opt_err):
 Signify option failure

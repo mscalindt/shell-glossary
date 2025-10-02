@@ -43,6 +43,10 @@ shell-glossary NEWS
 * opt_compat_fail() will not execute `exit` anymore.
   Breaking (backward-incompatible) change.
 
+* Following the recent change, opt_compat_fail() has been renamed to
+  opt_compat_err().
+  Breaking (backward-incompatible) change.
+
 
 2025-09-29 - 2025-09-29
 =======================
