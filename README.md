@@ -212,7 +212,7 @@ Signify operand count exceeds maximum allowed
 - [OPD_MIN()](src/opd_min):
 Signify operand count below minimum required
 - [OPT_COMPAT_FAIL()](src/opt_compat_fail):
-Signify option incompatibility with a previous option and exit
+Signify option incompatibility with a previous option
 - [OPT_ERR()](src/opt_err):
 Signify option failure
 - [OPT_INVALID()](src/opt_invalid):
