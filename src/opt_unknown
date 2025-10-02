@@ -8,7 +8,7 @@
 # (255) input error
 #.
 opt_unknown() {
-    [ "$1" ] || exit 255
+    [ "$#" -eq 1 ] || exit 255
 
     printf "%s: Unknown option: '%s'\n" "${0##*/}" "$1" >&2
 
