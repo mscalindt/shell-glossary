@@ -31,7 +31,7 @@
 #! .rc:
 # (0) true
 # (1) false
-# (2) false due to bad operand(s)
+# (2) false due to invalid operand(s)
 #! .ec:
 # (255) input error
 #! .desc.ext:
