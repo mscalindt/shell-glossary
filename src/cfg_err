@@ -7,7 +7,7 @@
 #! .ec:
 # (255) input error
 #.
-cfg_fail() {
+cfg_err() {
     [ "$1" ] || exit 255
 
     printf "%s: Invalid configuration file: '%s'\n" \

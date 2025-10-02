@@ -201,7 +201,7 @@ Extract an evaluated argument in a single-quotes array of arguments
 A collection of reusable pure and very portable shell functions
 to make shell option parsing a breeze.
 
-- [CFG_FAIL()](src/cfg_fail):
+- [CFG_ERR()](src/cfg_err):
 Signify invalid configuration file
 - [COPT()](src/copt):
 Match `-`-delimited short/long option with a mandatory option argument
