@@ -19,6 +19,10 @@ shell-glossary NEWS
   will not set $opt and $opt_shift, and will accept empty option strings.
   Breaking (backward-incompatible) change.
 
+* sopt() will now accept option arguments only as parameters,
+  and will not give/set any variables.
+  Breaking (backward-incompatible) change.
+
 
 2025-09-29 - 2025-09-29
 =======================
