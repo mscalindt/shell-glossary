@@ -9,11 +9,11 @@
 # (255) input error
 #.
 opd_max() {
-    [ "$1" ] || exit 255
+    [ "$#" -ge 1 ] || exit 255
 
     printf "%s: Too many operands: %s\n" "${0##*/}" "$1" >&2
 
-    if [ "$2" ]; then
+    if [ "$#" -ge 2 ]; then
         printf " > max allowed: %s\n" "$2" >&2
     fi
 
