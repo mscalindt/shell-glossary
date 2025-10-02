@@ -1,19 +1,17 @@
 #! .desc:
 # Signify option incompatibility with a previous option and exit
 #! .params:
-# <$1> - incompatible option string
-#! .uses.var:
-# <opt_match> - string;
-#               previous option string
+# <$1> - previous option string
+# <$2> - incompatible option string
 #! .ec:
 # (2) incompatible option
 # (255) input error
 #.
 opt_compat_fail() {
-    [ "$1" ] || exit 255
+    [ "$#" -eq 2 ] || exit 255
 
     printf "%s: '%s': Incompatible with: '%s'\n" \
-        "${0##*/}" "$opt_match" "$1" >&2
+        "${0##*/}" "$1" "$2" >&2
 
     printf "%s: Try '%s --help' for more information.\n" \
         "${0##*/}" "${0##*/}" >&2

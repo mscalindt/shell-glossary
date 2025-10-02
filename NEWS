@@ -28,6 +28,9 @@ shell-glossary NEWS
   strings.
   Breaking (backward-incompatible) change.
 
+* opt_compat_fail() will now accept option arguments only as parameters.
+  Breaking (backward-incompatible) change.
+
 
 2025-09-29 - 2025-09-29
 =======================
