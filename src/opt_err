@@ -1,7 +1,7 @@
 #! .desc:
 # Signify option failure
 #! .params:
-# <$1> - option string
+# <$1> - option
 # [$2] - option argument
 # [$3]+ - valid option argument
 #! .rc:
