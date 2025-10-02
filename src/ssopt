@@ -1,17 +1,11 @@
 #! .desc:
 # Match specific option(s) without an option argument
 #! .params:
-# <$1>+ - option string
-#! .uses.var:
-# <opt> - string;
-#         first positional parameter
+# <[$1]> - option
+# <[$2]>+ - string
 #! .gives.var:
-# (0) <opt_match> - string;
+# (0) <opt_match> - [string];
 #                   option string
-#! .sets:
-# (0) <opt> $ - '';
-# (0) <opt_arg> $ - '';
-# (0) <opt_shift> $ - '1';
 #! .rc:
 # (0) true
 # (1) false
@@ -19,23 +13,20 @@
 # (255) input error
 #.
 ssopt() {
-    while [ "$1" ]; do
-        # Try to match an option without an argument.
-        case "$opt" in
-            "$1")
-                opt_arg=
-                opt_match="$1"
-                opt_shift=1
-                opt=
+    [ "$#" -ge 2 ] || exit 255
 
-                return 0
-            ;;
+    opt_match="$1"
+
+    shift
+
+    while [ "$#" -ge 1 ]; do
+        # Assert $opt_match fully matches $1.
+        case "$opt_match" in
+            "$1") return 0 ;;
         esac
 
         shift
     done
-
-    [ "$#" -eq 0 ] || exit 255
 
     return 1
 }

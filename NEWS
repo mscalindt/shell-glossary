@@ -23,6 +23,11 @@ shell-glossary NEWS
   and will not give/set any variables.
   Breaking (backward-incompatible) change.
 
+* ssopt() will now accept option arguments only as parameters,
+  will not set $opt, $opt_arg, and $opt_shift, and will accept empty option
+  strings.
+  Breaking (backward-incompatible) change.
+
 
 2025-09-29 - 2025-09-29
 =======================
