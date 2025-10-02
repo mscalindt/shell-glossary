@@ -3,9 +3,8 @@
 #! .params:
 # <[$1]> - option
 # <[$2]>+ - string
-#! .gives.var:
-# (0) <opt_match> - [string];
-#                   option string
+#! .sets:
+# (0) <opt_match> $ - "$1";
 #! .rc:
 # (0) true
 # (1) false
