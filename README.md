@@ -215,8 +215,6 @@ Signify operand count below minimum required
 Signify option incompatibility with a previous option and exit
 - [OPT_ERR()](src/opt_err):
 Signify option failure
-- [OPT_FAIL()](src/opt_fail):
-Signify option failure and exit
 - [OPT_INVALID()](src/opt_invalid):
 Signify invalid short option
 - [OPT_UNKNOWN()](src/opt_unknown):
