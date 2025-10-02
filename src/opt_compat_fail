@@ -1,8 +1,8 @@
 #! .desc:
 # Signify option incompatibility with a previous option and exit
 #! .params:
-# <$1> - previous option string
-# <$2> - incompatible option string
+# <$1> - previous option
+# <$2> - incompatible option
 #! .ec:
 # (2) incompatible option
 # (255) input error
