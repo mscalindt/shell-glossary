@@ -96,6 +96,7 @@ copt() {
                     return 0
                 ;;
             esac
+        ;;
         '-'*)
             case "$1" in
                 "$3"*)
