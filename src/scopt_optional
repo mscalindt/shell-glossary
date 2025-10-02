@@ -1,18 +1,13 @@
 #! .desc:
 # Match specific option(s) with an optional option argument
 #! .params:
-# <$1>+ - option string
-#! .uses.var:
-# <opt> - string;
-#         first positional parameter
+# <[$1]> - option
+# <[$2]>+ - string
 #! .gives.var:
 # (0) <opt_arg> - [string];
 #                 option argument
-# (0) <opt_match> - string;
+# (0) <opt_match> - [string];
 #                   option string
-#! .sets:
-# (0) <opt> $ - '';
-# (0) <opt_shift> $ - '1';
 #! .rc:
 # (0) true
 # (1) false
@@ -21,41 +16,34 @@
 # (255) input error
 #.
 scopt_optional() {
-    while [ "$1" ]; do
-        # Try to match an option without an argument.
-        case "$opt" in
+    [ "$#" -ge 2 ] || exit 255
+
+    opt_match="$1"
+
+    shift
+
+    while [ "$#" -ge 1 ]; do
+        # Assert $opt_match fully matches $1; no option argument.
+        case "$opt_match" in
             "$1")
                 opt_arg=
-                opt_match="$1"
-                opt_shift=1
-                opt=
 
                 return 0
             ;;
         esac
 
-        # Assert any potential option argument specification is valid.
-        # An option cannot end with `=` after being matched,
-        # otherwise it's invalid; example: `foo=`.
-        case "$opt" in
+        # Assert $opt_match matches $1 with an argument.
+        case "$opt_match" in
             "$1"'=')
                 printf "%s: Invalid argument specification for: '%s'\n" \
-                    "${0##*/}" "$1" >&2
+                    "${0##*/}" "$opt_match" >&2
                 printf "%s: Try '%s --help' for more information.\n" \
                     "${0##*/}" "${0##*/}" >&2
 
                 exit 2
             ;;
-        esac
-
-        # Try to match an option with an argument separated by `=`
-        # on the same positional parameter; example: `foo=bar`.
-        case "$opt" in
             "$1"'='*)
-                opt_arg="${opt#"$1"=}"
-                opt_match="$1"
-                opt_shift=1
-                opt=
+                opt_arg="${opt_match#"$1"=}"
 
                 return 0
             ;;
@@ -63,8 +51,6 @@ scopt_optional() {
 
         shift
     done
-
-    [ "$#" -eq 0 ] || exit 255
 
     return 1
 }

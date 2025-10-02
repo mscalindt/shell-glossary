@@ -15,6 +15,10 @@ shell-glossary NEWS
   will not set $opt, and will accept empty option strings.
   Breaking (backward-incompatible) change.
 
+* scopt_optional() will now accept option arguments only as parameters,
+  will not set $opt and $opt_shift, and will accept empty option strings.
+  Breaking (backward-incompatible) change.
+
 
 2025-09-29 - 2025-09-29
 =======================
