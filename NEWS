@@ -9,6 +9,9 @@ shell-glossary NEWS
 * Removed opt_unrecognized().
   Breaking (backward-incompatible) change.
 
+* Removed opt_compat_err().
+  Breaking (backward-incompatible) change.
+
 
 2025-10-01 - 2025-10-02
 =======================
