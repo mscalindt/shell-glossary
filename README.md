@@ -57,7 +57,10 @@ Source code releases follow the `YYYYMMDD` format.
 
 To list the available releases, check out the available tags or use `git tag`.
 
-For updates on recent changes, see the [NEWS](NEWS) file.
+For updates on recent changes, see the [NEWS](NEWS) file. Changes that break
+backward compatibility will always be mentioned and will additionally end with
+the `Breaking (backward-incompatible) change.` string to allow for a seamless,
+automated parse.
 
 ## Contributors
 
