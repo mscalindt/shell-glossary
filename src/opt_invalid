@@ -1,5 +1,5 @@
 #! .desc:
-# Signify invalid short option
+# Signify invalid option
 #! .params:
 # <$1> - option
 #! .rc:
