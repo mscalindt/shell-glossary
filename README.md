@@ -217,8 +217,6 @@ Signify option incompatibility with a previous option
 Signify option failure
 - [OPT_INVALID()](src/opt_invalid):
 Signify invalid short option
-- [OPT_UNKNOWN()](src/opt_unknown):
-Signify unknown option
 - [OPT_UNRECOGNIZED()](src/opt_unrecognized):
 Signify unrecognized long option
 - [SCOPT()](src/scopt):

@@ -1,6 +1,12 @@
 shell-glossary NEWS
 
 
+2025-10-06 - 2025-10-06
+=======================
+* Removed opt_unknown().
+  Breaking (backward-incompatible) change.
+
+
 2025-10-01 - 2025-10-02
 =======================
 * copt() will now accept option arguments only as parameters,
