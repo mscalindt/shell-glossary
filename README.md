@@ -40,7 +40,6 @@ criteria in [Roadmap](#roadmap) are met.
 
 * Portable C89 in-house program to follow/resolve symbolic links.
 * Unit tests (`wunit`).
-  * Transition to versioned release tags.
   * Makefile to run the unit tests.
 * Benchmarks in `bash`, `dash`, `ksh`.
 * Shell code style guide.
