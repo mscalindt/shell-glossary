@@ -26,7 +26,7 @@ opt_err() {
         echo "Valid option arguments are:"
 
         while [ "$#" -ge 1 ]; do
-            printf " > '%s'\n" "$1" >&2; shift
+            printf "'%s'\n" "$1" >&2; shift
         done
     fi
 

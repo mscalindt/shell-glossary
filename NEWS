@@ -1,6 +1,11 @@
 shell-glossary NEWS
 
 
+2025-10-12 - 2025-10-12
+=======================
+* Improved the output of opt_err() for valid arguments.
+
+
 2025-10-06 - 2025-10-06
 =======================
 * Removed opt_unknown().
