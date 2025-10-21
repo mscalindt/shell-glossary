@@ -1,9 +1,12 @@
 shell-glossary NEWS
 
 
-2025-10-12 - 2025-10-12
+2025-10-12 - 2025-10-21
 =======================
 * Improved the output of opt_err() for valid arguments.
+
+* Removed copt().
+  Breaking (backward-incompatible) change.
 
 
 2025-10-06 - 2025-10-06
