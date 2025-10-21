@@ -8,6 +8,9 @@ shell-glossary NEWS
 * Removed copt().
   Breaking (backward-incompatible) change.
 
+* Removed copt_optional().
+  Breaking (backward-incompatible) change.
+
 
 2025-10-06 - 2025-10-06
 =======================

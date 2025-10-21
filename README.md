@@ -197,8 +197,6 @@ Extract an evaluated argument in a single-quotes array of arguments
 A collection of reusable pure and very portable shell functions
 to make shell option parsing a breeze.
 
-- [COPT_OPTIONAL()](src/copt_optional):
-Match `-`-delimited short/long option with an optional option argument
 - [OPD_MAX()](src/opd_max):
 Signify operand count exceeds maximum allowed
 - [OPD_MIN()](src/opd_min):
