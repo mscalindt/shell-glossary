@@ -11,13 +11,13 @@
 # )
 # <$4> - short form
 #! .gives.var:
-# (0) <opt> - [string];
-#             parsed $1
-# (0) <opt_arg> - [string];
-#                 option argument
+# (0) <_opt> - [string];
+#              parsed $1
+# (0) <_arg> - [string];
+#              option argument
 #! .sets:
-# (0) <opt_match> $ - "$4";
-# (0) <opt_shift> $ - '0' | '1' | '2';
+# (0) <_match> $ - "$4";
+# (0) <_shift> $ - '0' | '1' | '2';
 #! .rc:
 # (0) true
 # (1) false
@@ -70,19 +70,19 @@ opt() {
     esac
 
     case "$1" in
-        "-$4"*) opt="${1#"-$4"}" ;;
+        "-$4"*) _opt="${1#"-$4"}" ;;
         *) return 1 ;;
     esac
 
     case "$3" in
         '-c')
-            if [ "$opt" ]; then
-                opt_arg="$opt"
-                opt_shift=1
-                opt=
+            if [ "$_opt" ]; then
+                _arg="$_opt"
+                _shift=1
+                _opt=
             elif [ "$2" ]; then
-                opt_arg="$2"
-                opt_shift=2
+                _arg="$2"
+                _shift=2
             else
                 printf "%s: Option '%s' requires an argument.\n" \
                     "${0##*/}" "-$4" >&2
@@ -92,31 +92,31 @@ opt() {
                 exit 2
             fi
 
-            opt_match="$4"; return 0
+            _match="$4"; return 0
         ;;
         '-o')
-            if [ "$opt" ]; then
-                opt_arg="$opt"
-                opt_shift=1
-                opt=
+            if [ "$_opt" ]; then
+                _arg="$_opt"
+                _shift=1
+                _opt=
             else
-                opt_arg=
-                opt_shift=1
+                _arg=
+                _shift=1
             fi
 
-            opt_match="$4"; return 0
+            _match="$4"; return 0
         ;;
         '-s')
-            opt_arg=
+            _arg=
 
-            if [ "$opt" ]; then
-                opt_shift=0
-                opt="-$opt"
+            if [ "$_opt" ]; then
+                _shift=0
+                _opt="-$_opt"
             else
-                opt_shift=1
+                _shift=1
             fi
 
-            opt_match="$4"; return 0
+            _match="$4"; return 0
         ;;
         *)
             exit 255

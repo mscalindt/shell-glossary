@@ -1,7 +1,7 @@
 shell-glossary NEWS
 
 
-2025-10-12 - 2025-10-23
+2025-10-12 - 2025-10-24
 =======================
 * Improved the output of opt_err() for valid arguments.
 
@@ -13,6 +13,8 @@ shell-glossary NEWS
 
 * Added opt(),
   "Match a POSIX option".
+
+* opt() now gives/sets `_`-prefixed variables.
 
 
 2025-10-06 - 2025-10-06
