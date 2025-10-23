@@ -1,0 +1,127 @@
+#! .desc:
+# Match a POSIX option
+#! .params:
+# <[$1]> - option
+# <[$2]> - option argument
+# <$3> - type(
+#     '-c' - complex (option with a mandatory option argument)
+#     '-o' - complex/simple (optional option argument)
+#     '-s' - simple (option without an option argument)
+#     .
+# )
+# <$4> - short form
+#! .gives.var:
+# (0) <opt> - [string];
+#             parsed $1
+# (0) <opt_arg> - [string];
+#                 option argument
+#! .sets:
+# (0) <opt_match> $ - "$4";
+# (0) <opt_shift> $ - '0' | '1' | '2';
+#! .rc:
+# (0) true
+# (1) false
+#! .ec:
+# (2) missing option argument
+# (255) input error
+#! .desc.ext:
+# POSIX options consist of a "short form" that spans exactly 1 alnum[1]
+# character from the portable character set, prefixed with a hyphen (`-`).
+# Multiple options can be specified with a single hyphen, a supported construct
+# referred to as "group of options"; only a single complex option can be
+# specified at the end of such a construct.
+#
+# Option type `-o` is an extension over the POSIX guidelines that only supports
+# the option argument (if any) being in the same positional parameter ($1),
+# adjacent to its option. See the "Option-Argument" POSIX reference for
+# details.
+#
+# The parser does not account for locales different than POSIX.
+# The parser does not account for a prefix of multiple hyphen characters.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Character Class".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Locale".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Option-Argument".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Portable Character Set".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Utility Conventions,
+#   Subsection: Utility Argument Syntax".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Utility Conventions,
+#   Subsection: Utility Syntax Guidelines".
+#
+# [1] The following characters are part of the alnum class:
+#     A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+#     a b c d e f g h i j k l m n o p q r s t u v w x y z
+#     0 1 2 3 4 5 6 7 8 9
+#     See the "Character Class" POSIX reference for details.
+#.
+opt() {
+    [ "$#" = 4 ] || exit 255
+    [ "${#4}" = 1 ] || exit 255
+
+    case "$4" in
+        *[!0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]*)
+            exit 255
+        ;;
+    esac
+
+    case "$1" in
+        "-$4"*) opt="${1#"-$4"}" ;;
+        *) return 1 ;;
+    esac
+
+    case "$3" in
+        '-c')
+            if [ "$opt" ]; then
+                opt_arg="$opt"
+                opt_shift=1
+                opt=
+            elif [ "$2" ]; then
+                opt_arg="$2"
+                opt_shift=2
+            else
+                printf "%s: Option '%s' requires an argument.\n" \
+                    "${0##*/}" "-$4" >&2
+                printf "%s: Try '%s --help' for more information.\n" \
+                    "${0##*/}" "${0##*/}" >&2
+
+                exit 2
+            fi
+
+            opt_match="$4"; return 0
+        ;;
+        '-o')
+            if [ "$opt" ]; then
+                opt_arg="$opt"
+                opt_shift=1
+                opt=
+            else
+                opt_arg=
+                opt_shift=1
+            fi
+
+            opt_match="$4"; return 0
+        ;;
+        '-s')
+            opt_arg=
+
+            if [ "$opt" ]; then
+                opt_shift=0
+                opt="-$opt"
+            else
+                opt_shift=1
+            fi
+
+            opt_match="$4"; return 0
+        ;;
+        *)
+            exit 255
+        ;;
+    esac
+
+    return 1
+}

@@ -1,7 +1,7 @@
 shell-glossary NEWS
 
 
-2025-10-12 - 2025-10-21
+2025-10-12 - 2025-10-23
 =======================
 * Improved the output of opt_err() for valid arguments.
 
@@ -10,6 +10,9 @@ shell-glossary NEWS
 
 * Removed copt_optional().
   Breaking (backward-incompatible) change.
+
+* Added opt(),
+  "Match a POSIX option".
 
 
 2025-10-06 - 2025-10-06

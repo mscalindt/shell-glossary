@@ -201,6 +201,8 @@ to make shell option parsing a breeze.
 Signify operand count exceeds maximum allowed
 - [OPD_MIN()](src/opd_min):
 Signify operand count below minimum required
+- [OPT()](src/opt):
+Match a POSIX option
 - [OPT_ERR()](src/opt_err):
 Signify option failure
 - [OPT_INVALID()](src/opt_invalid):
