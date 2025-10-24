@@ -209,7 +209,5 @@ Signify option failure
 Signify invalid option
 - [OPT_LONG()](src/opt_long):
 Match a GNU/long option
-- [SOPT()](src/sopt):
-Match `-`-delimited short/long option without an option argument
 - [SSOPT()](src/ssopt):
 Match specific option(s) without an option argument

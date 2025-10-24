@@ -25,6 +25,9 @@ shell-glossary NEWS
 * Removed scopt_optional().
   Breaking (backward-incompatible) change.
 
+* Removed sopt().
+  Breaking (backward-incompatible) change.
+
 
 2025-10-06 - 2025-10-06
 =======================
