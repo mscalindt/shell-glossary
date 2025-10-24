@@ -16,7 +16,7 @@
 # (0) <_arg> - [string];
 #              option argument
 #! .sets:
-# (0) <_match> $ - "$4";
+# (0) <_match> $ - "-$4";
 # (0) <_shift> $ - '0' | '1' | '2';
 #! .rc:
 # (0) true
@@ -117,5 +117,5 @@ opt() {
         ;;
     esac
 
-    _match="$4"; return 0
+    _match="-$4"; return 0
 }
