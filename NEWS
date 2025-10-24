@@ -19,6 +19,9 @@ shell-glossary NEWS
 * Added opt_long(),
   "Match a GNU/long option".
 
+* Removed scopt().
+  Breaking (backward-incompatible) change.
+
 
 2025-10-06 - 2025-10-06
 =======================
