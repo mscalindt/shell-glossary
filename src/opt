@@ -91,8 +91,6 @@ opt() {
 
                 exit 2
             fi
-
-            _match="$4"; return 0
         ;;
         '-o')
             if [ "$_opt" ]; then
@@ -103,8 +101,6 @@ opt() {
                 _arg=
                 _shift=1
             fi
-
-            _match="$4"; return 0
         ;;
         '-s')
             _arg=
@@ -115,13 +111,11 @@ opt() {
             else
                 _shift=1
             fi
-
-            _match="$4"; return 0
         ;;
         *)
             exit 255
         ;;
     esac
 
-    return 1
+    _match="$4"; return 0
 }
