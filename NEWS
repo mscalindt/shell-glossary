@@ -16,6 +16,9 @@ shell-glossary NEWS
 
 * opt() now gives/sets `_`-prefixed variables.
 
+* Added opt_long(),
+  "Match a GNU/long option".
+
 
 2025-10-06 - 2025-10-06
 =======================

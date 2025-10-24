@@ -1,0 +1,99 @@
+#! .desc:
+# Match a GNU/long option
+#! .params:
+# <[$1]> - option
+# <[$2]> - option argument
+# <$3> - type(
+#     '-c' - complex (option with a mandatory option argument)
+#     '-o' - complex/simple (optional option argument)
+#     '-s' - simple (option without an option argument)
+#     .
+# )
+# <$4> - long form
+#! .gives.var:
+# (0) <_opt> - [string];
+#              parsed $1
+# (0) <_arg> - [string];
+#              option argument
+#! .sets:
+# (0) <_match> $ - "$4";
+# (0) <_shift> $ - '1' | '2';
+#! .rc:
+# (0) true
+# (1) false
+#! .ec:
+# (2) missing option argument
+# (255) input error
+#! .desc.ext:
+# GNU/long options consist of a "long form" that is at least one character
+# long, prefixed with two hyphen (`-`) characters. Only one option can be
+# specified per one positional parameter ($1).
+#
+# Option arguments are separated by an equal sign (`=`) character in the same
+# positional parameter as the option when $2 cannot be used (option type `-o`);
+# mandatory option arguments support either mechanism and prioritize any `=`
+# specification over $2, incomplete (resulting in fatal error `2`) or not.
+# The prioritization of an incomplete `=` over $2 reflects GNU behavior.
+#
+# The parser does not account for locales different than POSIX.
+# The parser only accounts for a prefix of two hyphen characters.
+# The parser does not support any form of concatenation not specified here.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
+#   Subsection: Locale".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Utility Conventions,
+#   Subsection: Utility Argument Syntax".
+# > "POSIX.1-2024, Volume: Base Definitions, Section: Utility Conventions,
+#   Subsection: Utility Syntax Guidelines".
+#.
+opt_long() {
+    [ "$#" = 4 ] || exit 255
+    [ "${#4}" -ge 1 ] || exit 255
+
+    case "$3" in
+        '-c')
+            case "$1" in
+                "--$4") _arg="$2"; _shift=2 ;;
+                "--$4="*) _arg="${1#"--$4="}"; _shift=1 ;;
+                *) return 1 ;;
+            esac
+
+            if [ ! "$_arg" ]; then
+                printf "%s: Option '%s' requires an argument.\n" \
+                    "${0##*/}" "--$4" >&2
+                printf "%s: Try '%s --help' for more information.\n" \
+                    "${0##*/}" "${0##*/}" >&2
+
+                exit 2
+            fi
+
+            _opt=
+        ;;
+        '-o')
+            case "$1" in
+                "--$4" | "--$4=") _opt= ;;
+                "--$4="*) _opt="${1#"--$4="}" ;;
+                *) return 1 ;;
+            esac
+
+            _arg="$_opt"
+            _shift=1
+            _opt=
+        ;;
+        '-s')
+            case "$1" in
+                "--$4") _opt= ;;
+                *) return 1 ;;
+            esac
+
+            _arg=
+            _shift=1
+        ;;
+        *)
+            exit 255
+        ;;
+    esac
+
+    _match="$4"; return 0
+}

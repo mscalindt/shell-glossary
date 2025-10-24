@@ -207,6 +207,8 @@ Match a POSIX option
 Signify option failure
 - [OPT_INVALID()](src/opt_invalid):
 Signify invalid option
+- [OPT_LONG()](src/opt_long):
+Match a GNU/long option
 - [SCOPT()](src/scopt):
 Match specific option(s) with a mandatory option argument
 - [SCOPT_OPTIONAL()](src/scopt_optional):
