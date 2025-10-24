@@ -33,6 +33,8 @@ shell-glossary NEWS
 
 * opt() now sets `-`-prefixed $_match.
 
+* opt_long() now sets `--`-prefixed $_match.
+
 
 2025-10-06 - 2025-10-06
 =======================
