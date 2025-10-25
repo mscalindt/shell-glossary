@@ -13,24 +13,23 @@
 
 [`shell-glossary`](https://github.com/mscalindt/shell-glossary) is a glossary
 of reusable POSIX shell functions. It features collections of optimized
-functions for general use; or about ~5K portable LOC with powerful
-capabilities, precisely.
+functions for general use; or about ~4K portable (and documented) LOC
+with powerful capabilities, precisely.
 
 ```
-$ git describe
-20250929
-$ pwd
-/home/mscalindt/shell-glossary
-$ for f in src/*; do . ./"$f"; done
-$ cnt() { cnt="$((${cnt:-0}+1))"; }
-$ time -p { for f in src/*; do fline_map -shell ./"$f" cnt; done; }
+$ bash showcase.sh "$PWD"/src
+20251024
 real 0.05
 user 0.05
 sys 0.00
-$ printf "%s\n" "$cnt"
-4780
-$ printf "%s\n" "$SHELL $BASH_VERSION"
-/bin/bash 5.3.3(1)-release
+4379 LOC
+
+$ cat showcase.sh
+git describe
+for f in "$1"/*; do . "$f"; done
+c() { c="$((${c:-0}+1))"; }
+time -p { for f in "$1"/*; do fline_map -shell "$f" c; done; }
+printf "%s\n" "$c LOC"
 ```
 
 Currently, the state of the functions is considered unstable until certain
