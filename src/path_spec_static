@@ -139,7 +139,7 @@ path_spec_static() {
                 # and its subsequent removal outside the command substitution
                 # preserves any trailing <newline> characters stripped by
                 # command substitution.
-                _path="$(realpath -- "$2" && printf "%s" x)" && \
+                _path=$(realpath -- "$2" && printf "%s" x) && \
                 _path="${_path%??}"
             ;;
             # $2 is a logical directory,
