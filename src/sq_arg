@@ -22,10 +22,8 @@ sq_arg() {
     # Extract the specified evaluated argument. The usage of `eval` here is
     # safe because $2 has been asserted as a strict single-quotes array of
     # arguments.
-    _i=1; _n="$1"; eval set -- "$2"; while [ "$#" -ge 1 ]; do
-        [ "$_i" = "$_n" ] || { _i=$((_i + 1)); shift && continue; }
-
-        _arg="$1"; return 0
+    _i=1; _n="$1"; eval set -- "$2"; for _arg in "$@"; do
+        [ "$_i" = "$_n" ] && return 0 || _i=$((_i + 1))
     done
 
     return 1
