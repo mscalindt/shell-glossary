@@ -61,8 +61,8 @@ replchar() {
     # as aforementioned; they will be stripped for the final field),
     # effectively replacing any occurences of $1 with $2.
     IFS="$1"; _chars="$2"; set -- $3"$IFS"
-    _str=; while [ "$#" -ge 1 ]; do
-        _str="$_str$1$_chars"; shift
+    _str=; for _arg in "$@"; do
+        _str="$_str$_arg$_chars"
     done
     _str="${_str%"$IFS$_chars"}"
 
