@@ -1,6 +1,11 @@
 shell-glossary NEWS
 
 
+2025-10-29 - 2025-10-29
+=======================
+* Improved the output of opd_max().
+
+
 2025-10-12 - 2025-10-24
 =======================
 * Improved the output of opt_err() for valid arguments.

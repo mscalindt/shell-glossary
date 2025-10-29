@@ -14,7 +14,7 @@ opd_max() {
     printf "%s: Too many operands: %s\n" "${0##*/}" "$1" >&2
 
     if [ "$#" -ge 2 ]; then
-        printf " > max allowed: %s\n" "$2" >&2
+        printf "Maximum allowed: %s\n" "$2" >&2
     fi
 
     printf "%s: Try '%s --help' for more information.\n" \
