@@ -5,6 +5,8 @@ shell-glossary NEWS
 =======================
 * Improved the output of opd_max().
 
+* Improved the output of opd_min().
+
 
 2025-10-12 - 2025-10-24
 =======================

@@ -14,7 +14,7 @@ opd_min() {
     printf "%s: Insufficient operands: %s\n" "${0##*/}" "$1" >&2
 
     if [ "$#" -ge 2 ]; then
-        printf " > min required: %s\n" "$2" >&2
+        printf "Minimum required: %s\n" "$2" >&2
     fi
 
     printf "%s: Try '%s --help' for more information.\n" \
