@@ -15,8 +15,6 @@
 #! .gives.var:
 # (0) <_fmt> - [string];
 #              shell-parseable evaluable line-sorted operations list
-#! .sets:
-# <fed_> ();
 #! .rc:
 # (0) success
 # (*) error
