@@ -9,8 +9,6 @@
 #! .gives.var:
 # <_segment> - [string];
 #              [last processed cumulative path segment]
-#! .sets:
-# <pchunk_map_rev_> ();
 #! .rc:
 # (0) success
 # (*) error
