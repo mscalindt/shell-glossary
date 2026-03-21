@@ -8,8 +8,6 @@
 #! .gives.var:
 # (0) <_arg> - [string];
 #              successfully processed $2
-#! .sets:
-# <map_find_rev_> ();
 #! .rc:
 # (0) success
 # (1) false / error
