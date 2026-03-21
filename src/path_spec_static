@@ -30,8 +30,6 @@
 #! .gives.var:
 # (0) <_path> - [string];
 #               [modified <$2>]
-#! .sets:
-# <path_spec_static_> ();
 #! .rc:
 # (0) success
 # (*) error
