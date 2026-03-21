@@ -7,8 +7,6 @@
 #! .gives.var:
 # (0) <_str> - [string];
 #              [modified <$3>]
-#! .sets:
-# (0) <set +f>;
 #! .rc:
 # (0) success
 #! .ec:
@@ -20,6 +18,8 @@
 # the result might therefore be incorrect.
 #
 # $1 cannot contain characters part of "IFS white space"[1].
+#
+# The function will execute `set +f` (enable the expansion of `*`).
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Character Set,
