@@ -9,8 +9,6 @@
 #! .gives.var:
 # (0) <_segment> - string;
 #                  successful cumulative path segment
-#! .sets:
-# <pchunk_map_find_> ();
 #! .rc:
 # (0) success
 # (1) false / error
