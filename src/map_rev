@@ -8,8 +8,6 @@
 #! .gives.var:
 # <_arg> - [string];
 #          [last processed <$2>]
-#! .sets:
-# <map_rev_> ();
 #! .rc:
 # (0) success
 # (*) error
