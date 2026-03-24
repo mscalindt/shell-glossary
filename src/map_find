@@ -12,6 +12,8 @@
 # (0) success
 # (1) false / error
 # (*) error
+#! .desc.ext:
+# The function can access the argument using $_arg.
 #.
 map_find() {
     map_find_() {
