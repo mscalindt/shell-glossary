@@ -11,6 +11,8 @@
 #! .rc:
 # (0) success
 # (*) error
+#! .desc.ext:
+# The function can access the argument using $_arg.
 #.
 map() {
     map_() {
