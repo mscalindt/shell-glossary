@@ -7,6 +7,9 @@ shell-glossary NEWS
   (c0ea36f, febff86, eb408b9, 60eefe5, 024339a, 41ec167, 4dd26d1, 63edb26,
   7f103ac, 63d3ccd, 9cb2354, 48bd348, a198c56)
 
+* Removed offset().
+  Breaking (backward-incompatible) change.
+
 
 2025-10-29 - 2025-10-29
 =======================
