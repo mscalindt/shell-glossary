@@ -1,6 +1,13 @@
 shell-glossary NEWS
 
 
+2026-03-24 - 2026-03-24
+=======================
+* Documented how the element of a map function can be accessed by its variable.
+  (c0ea36f, febff86, eb408b9, 60eefe5, 024339a, 41ec167, 4dd26d1, 63edb26,
+  7f103ac, 63d3ccd, 9cb2354, 48bd348, a198c56)
+
+
 2025-10-29 - 2025-10-29
 =======================
 * Improved the output of opd_max().
