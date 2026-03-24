@@ -19,7 +19,7 @@
 #
 # $1 cannot contain characters part of "IFS white space"[1].
 #
-# The function will execute `set +f` (enable the expansion of `*`).
+# Will execute `set +f` (enable the expansion of `*`).
 #
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Character Set,
