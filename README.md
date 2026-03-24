@@ -124,6 +124,8 @@ Convert octal to "file mode" string
 Process each populated file line with a function
 - [FOR_IFS()](src/for_ifs):
 Process each populated IFS field split with a function
+- [FOR_PCHUNK()](src/for_pchunk):
+Process each cumulative path segment with a function
 - [FTYPE()](src/ftype):
 Identify the type of an object on the filesystem
 - [INFO()](src/info):
@@ -164,8 +166,6 @@ Semantically normalize a path into an assertable canonical path
 Modify a path string
 - [PATH_STRIP()](src/path_strip):
 Strip a path N segments RTL
-- [PCHUNK_MAP()](src/pchunk_map):
-Process each cumulative path segment with a function
 - [PCHUNK_MAP_FIND()](src/pchunk_map_find):
 Find success among cumulative path segments using a function
 - [PCHUNK_MAP_FIND_REV()](src/pchunk_map_find_rev):

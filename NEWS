@@ -16,6 +16,9 @@ shell-glossary NEWS
 * Renamed ifs_map() to for_ifs().
   Breaking (backward-incompatible) change.
 
+* Renamed pchunk_map() to for_pchunk().
+  Breaking (backward-incompatible) change.
+
 
 2025-10-29 - 2025-10-29
 =======================
