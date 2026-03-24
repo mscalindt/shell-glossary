@@ -35,7 +35,7 @@
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Utilities,
 #   Utility: read".
 #.
-fline_map() {
+for_fline() {
     case "$1" in
         '-cat')
             file_preload -cat "$2" && shift 2 && sline_map "$_file" "$@" || \

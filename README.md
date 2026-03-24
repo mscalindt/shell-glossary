@@ -118,10 +118,10 @@ Create a deterministic file data edit format
 Read a file raw
 - [FLINE()](src/fline):
 Get a specific line in a file
-- [FLINE_MAP()](src/fline_map):
-Process each populated file line with a function
 - [FMODE_OCTAL()](src/fmode_octal):
 Convert octal to "file mode" string
+- [FOR_FLINE()](src/for_fline):
+Process each populated file line with a function
 - [FTYPE()](src/ftype):
 Identify the type of an object on the filesystem
 - [IFS_MAP()](src/ifs_map):

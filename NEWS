@@ -10,6 +10,9 @@ shell-glossary NEWS
 * Removed offset().
   Breaking (backward-incompatible) change.
 
+* Renamed fline_map() to for_fline().
+  Breaking (backward-incompatible) change.
+
 
 2025-10-29 - 2025-10-29
 =======================
