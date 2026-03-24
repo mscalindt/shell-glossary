@@ -11,6 +11,8 @@
 # (0) success
 # (*) error
 #! .desc.ext:
+# The function can access the field using $_field.
+#
 # Will execute `set +f` (enable the expansion of `*`).
 #
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
