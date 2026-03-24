@@ -7,6 +7,8 @@
 # <$4>+ - function argument
 #! .rc:
 # (0) success
+#! .desc.ext:
+# The function can access the argument using $_arg.
 #.
 map_try_rev() {
     map_try_rev_() {
