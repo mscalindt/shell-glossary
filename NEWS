@@ -13,6 +13,9 @@ shell-glossary NEWS
 * Renamed fline_map() to for_fline().
   Breaking (backward-incompatible) change.
 
+* Renamed ifs_map() to for_ifs().
+  Breaking (backward-incompatible) change.
+
 
 2025-10-29 - 2025-10-29
 =======================

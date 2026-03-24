@@ -122,10 +122,10 @@ Get a specific line in a file
 Convert octal to "file mode" string
 - [FOR_FLINE()](src/for_fline):
 Process each populated file line with a function
+- [FOR_IFS()](src/for_ifs):
+Process each populated IFS field split with a function
 - [FTYPE()](src/ftype):
 Identify the type of an object on the filesystem
-- [IFS_MAP()](src/ifs_map):
-Process each populated IFS field split with a function
 - [INFO()](src/info):
 Print formatted text
 - [LIBFILE()](src/libfile):
