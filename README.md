@@ -128,6 +128,8 @@ Process each populated IFS field split with a function
 Process each cumulative path segment with a function
 - [FOR_PCHUNK_FIND()](src/for_pchunk_find):
 Find success among cumulative path segments using a function
+- [FOR_PCHUNK_FIND_REV()](src/for_pchunk_find_rev):
+Find success among cumulative path segments in reverse using a function
 - [FTYPE()](src/ftype):
 Identify the type of an object on the filesystem
 - [INFO()](src/info):
@@ -168,8 +170,6 @@ Semantically normalize a path into an assertable canonical path
 Modify a path string
 - [PATH_STRIP()](src/path_strip):
 Strip a path N segments RTL
-- [PCHUNK_MAP_FIND_REV()](src/pchunk_map_find_rev):
-Find success among cumulative path segments in reverse using a function
 - [PCHUNK_MAP_REV()](src/pchunk_map_rev):
 Process each cumulative path segment in reverse with a function
 - [REPLCHAR()](src/replchar):

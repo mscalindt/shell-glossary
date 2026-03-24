@@ -45,8 +45,8 @@
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Parameter Expansion".
 #.
-pchunk_map_find_rev() {
-    pchunk_map_find_rev_() { _pchunk="$1" && shift 2 && "$@" "$_pchunk"; }
+for_pchunk_find_rev() {
+    for_pchunk_find_rev_() { _pchunk="$1" && shift 2 && "$@" "$_pchunk"; }
 
     [ "$#" -ge 4 ] || exit 255
 
@@ -124,7 +124,7 @@ pchunk_map_find_rev() {
     # Process the path using parameter expansion and an optional LTR path mask.
     while [ "${1#"${1%%[!/]*}"}" ] && [ "$2" != "${1%"${1##*[!/]}"}" ]; do
         # Process the path.
-        pchunk_map_find_rev_ "$@" && { _segment="$1"; return "$?"; } || :
+        for_pchunk_find_rev_ "$@" && { _segment="$1"; return "$?"; } || :
 
         # Strip any trailing slashes in the path, strip the last path segment,
         # strip the last path segment's leading slashes if any, and save the
