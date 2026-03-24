@@ -11,7 +11,7 @@
 # (0) success
 # (*) error
 #! .desc.ext:
-# The function will execute `set +f` (enable the expansion of `*`).
+# Will execute `set +f` (enable the expansion of `*`).
 #
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Field Splitting".
