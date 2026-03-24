@@ -132,6 +132,8 @@ Find success among cumulative path segments using a function
 Find success among cumulative path segments in reverse using a function
 - [FOR_PCHUNK_REV()](src/for_pchunk_rev):
 Process each cumulative path segment in reverse with a function
+- [FOR_SLINE()](src/for_sline):
+Process each populated string line with a function
 - [FTYPE()](src/ftype):
 Identify the type of an object on the filesystem
 - [INFO()](src/info):
@@ -180,8 +182,6 @@ Replace a specific character with character(s) in a string using PE
 Replace a substring with character(s) in a string using `sed`
 - [SLINE()](src/sline):
 Get a specific line in a string
-- [SLINE_MAP()](src/sline_map):
-Process each populated string line with a function
 - [SQ_ARG()](src/sq_arg):
 Get N evaluated argument in a single-quotes array of arguments
 - [SQ_ARG_EXTRACT()](src/sq_arg_extract):

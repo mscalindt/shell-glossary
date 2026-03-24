@@ -28,6 +28,9 @@ shell-glossary NEWS
 * Renamed pchunk_map_rev() to for_pchunk_rev().
   Breaking (backward-incompatible) change.
 
+* Renamed sline_map() to for_sline().
+  Breaking (backward-incompatible) change.
+
 
 2025-10-29 - 2025-10-29
 =======================

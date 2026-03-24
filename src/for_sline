@@ -13,7 +13,7 @@
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Here-Document".
 #.
-sline_map() {
+for_sline() {
     _str="$1"; shift; while IFS= read -r _line; do
         [ "$_line" ] || continue
         "$@" "$_line" || return "$?"
