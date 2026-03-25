@@ -16,7 +16,8 @@
 #! .ec:
 # (255) input error
 #! .desc.ext:
-# The function can access the path segment using $_pchunk.
+# The function can access the path segment using $_pchunk. Additionally,
+# $_pchunk will be passed as the last argument.
 #
 # The path mask(s), a mandatory argument that can be empty, specifies the
 # exclusion of cumulative path segments that match exactly against the given
