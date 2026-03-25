@@ -8,7 +8,8 @@
 # (0) success
 # (*) error
 #! .desc.ext:
-# The function can access the string line using $_line.
+# The function can access the string line using $_line. Additionally, $_line
+# will be passed as the last argument.
 #
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Here-Document".
