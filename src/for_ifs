@@ -11,7 +11,8 @@
 # (0) success
 # (*) error
 #! .desc.ext:
-# The function can access the field using $_field.
+# The function can access the field using $_field. Additionally, $_field
+# will be passed as the last argument.
 #
 # Will execute `set +f` (enable the expansion of `*`).
 #
