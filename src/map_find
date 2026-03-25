@@ -13,7 +13,8 @@
 # (1) false / error
 # (*) error
 #! .desc.ext:
-# The function can access the argument using $_arg.
+# The function can access the argument using $_arg. Additionally, $_arg
+# will be passed as the last argument.
 #.
 map_find() {
     map_find_() {
