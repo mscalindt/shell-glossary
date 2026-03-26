@@ -44,6 +44,8 @@
 # `e`:           exact string matching assert;
 # `p`:           prefix string matching assert;
 # `s`:           suffix string matching assert.
+#
+# For more information, see also libfile().
 #.
 fed() {
     fed_() {
