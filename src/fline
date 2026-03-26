@@ -30,6 +30,8 @@
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: exec".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Here-Document".
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Redirecting Input".
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Redirection".
@@ -41,7 +43,15 @@ fline() {
 
     case "$1" in
         '-cat')
-            file_preload -cat "$3" && sline "$_file" "$2" && return 0
+            file_preload -cat "$3" || return "$?"
+
+            _i=1; while IFS= read -r _line; do
+                case "$_i" in "$2") return 0 ;; esac
+                _i=$((_i + 1))
+            done \
+<<EOF
+$_file
+EOF
         ;;
         '-shell')
             # Open the file and assign it to file descriptor `9`. The usage of
