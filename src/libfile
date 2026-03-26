@@ -30,7 +30,7 @@
 #
 # Operation failure will result in error code `255` (input error).
 #
-# For more information, refer to:
+# For more information, see also fed(), and refer to:
 # > "POSIX.1-2024, Volume: Base Definitions, Section: Definitions,
 #   Subsection: File Descriptor".
 # > "POSIX.1-2024, Volume: Base Definitions,
