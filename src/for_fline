@@ -18,7 +18,7 @@
 # The function can access the file line using $_line. Additionally, $_line
 # will be passed as the last argument.
 #
-# Use `cat` to read the file if it is a potential specification of a file
+# Use `-cat` to read the file if it is a potential specification of a file
 # in `/dev`, `/proc`, or `/sys` (kernel-created virtual file). Otherwise,
 # use the shell.
 #
