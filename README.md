@@ -140,8 +140,6 @@ Identify the type of an object on the filesystem
 Print formatted text
 - [LIBFILE()](src/libfile):
 Modify regular file data in-memory using a deterministic format
-- [LIBFILE_N()](src/libfile_n):
-Deterministically modify regular file data in-memory
 - [LIBFILE_N_ADD()](src/libfile_n_add):
 For natural N, add line content
 - [LIBFILE_N_REM()](src/libfile_n_rem):

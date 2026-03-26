@@ -1,7 +1,7 @@
 shell-glossary NEWS
 
 
-2026-03-24 - 2026-03-25
+2026-03-24 - 2026-03-27
 =======================
 * Documented how the element of a map function can be accessed by its variable.
   (c0ea36f, febff86, eb408b9, 60eefe5, 024339a, 41ec167, 4dd26d1, 63edb26,
@@ -34,6 +34,9 @@ shell-glossary NEWS
 * Documented how map and map-like functions pass the element. (a5a6952,
   b5e8227, 4c8a01f, eba4a41, 1af4cab, c794a09, 75aaa8b, 400fad8, 75427cf,
   500da02, 16f132c, 413d393, 1e41ef6)
+
+* Removed libfile_n().
+  Breaking (backward-incompatible) change.
 
 
 2025-10-29 - 2025-10-29
