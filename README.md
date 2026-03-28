@@ -18,17 +18,17 @@ with powerful capabilities, precisely.
 
 ```
 $ bash showcase.sh "$PWD"/src
-20251024
+20260328
 real 0.05
 user 0.05
 sys 0.00
-4379 LOC
+4127 LOC
 
 $ cat showcase.sh
 git describe
 for f in "$1"/*; do . "$f"; done
 c() { c="$((${c:-0}+1))"; }
-time -p { for f in "$1"/*; do fline_map -shell "$f" c; done; }
+time -p { for f in "$1"/*; do for_fline -shell "$f" c; done; }
 printf "%s\n" "$c LOC"
 ```
 
