@@ -1,5 +1,5 @@
 #! .desc:
-# Read a file raw
+# Read a file into a variable
 #! .params:
 # <$1> - method(
 #     '-' - read heredoc (stdin) with command substitution

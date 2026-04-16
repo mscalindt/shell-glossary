@@ -115,7 +115,7 @@ Escape a string to be used literally as a POSIX `sed` string
 - [FED()](src/fed):
 Create a deterministic file data edit format
 - [FILE_PRELOAD()](src/file_preload):
-Read a file raw
+Read a file into a variable
 - [FLINE()](src/fline):
 Get a specific line in a file
 - [FMODE_OCTAL()](src/fmode_octal):
