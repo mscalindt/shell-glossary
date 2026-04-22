@@ -282,5 +282,6 @@ EOF
 
             shift 2
         done
-    )
+    ) && \
+    _fmt="${_fmt# }"
 }

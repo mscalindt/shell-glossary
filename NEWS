@@ -1,6 +1,14 @@
 shell-glossary NEWS
 
 
+2026-04-22 - 2026-04-22
+=======================
+* Reverted a9cc8d1 ("fed(): Do not polish the $_fmt string"). The change was
+  backward-incompatible, but not marked as one. $_fmt is now being normalized
+  again, as it might be expected.
+  Breaking (backward-incompatible) change.
+
+
 2026-03-24 - 2026-03-27
 =======================
 * Documented how the element of a map function can be accessed by its variable.
