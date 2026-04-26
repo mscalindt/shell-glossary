@@ -4,3 +4,6 @@ rel:
 	@test -n "$(CUR)" || { echo 'CUR is empty'; exit 2; }
 	@test -n "$(NEWS)" || { echo 'NEWS is empty'; exit 2; }
 	sh ./scripts/rel.sh "$(REL)" "$(PRE)" "$(CUR)" "$(NEWS)"
+
+srcs:
+	sh ./scripts/srcs.sh
