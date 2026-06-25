@@ -7,6 +7,8 @@ shell-glossary NEWS
   as it is a wrapper of info().
   Breaking (backward-incompatible) change.
 
+* Clarified info() is affected by $IFS and $3 is optional. (32aa27e, e72637e)
+
 
 2026-04-22 - 2026-04-22
 =======================
