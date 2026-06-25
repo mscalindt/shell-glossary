@@ -20,6 +20,8 @@
 # )
 # <$3>+ - text
 #! .uses.var:
+# <IFS> - environment variable;
+#         list of characters that is used for field splitting
 # [NO_COLOR] - environment variable;
 #              disable color
 #! .rc:
@@ -27,12 +29,19 @@
 #! .ec:
 # (255) input error
 #! .desc.ext:
+# The text parameters will be spliced according to rules ($IFS) surrounding
+# the $* variable. See the "Special Parameters" POSIX reference for details.
+#
 # The colors are bold, foreground text, escape sequences of ANSI, compliant
 # with ECMA-48.
 #
 # The usage of color results in undefined behavior. For strict POSIX
 # compatibility, specify `-` for $1 or set variable `NO_COLOR`
 # to a non-empty value.
+#
+# For more information, refer to:
+# > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
+#   Subsection: Special Parameters".
 #.
 info() {
     _reset='\033[0m'; case $1 in
