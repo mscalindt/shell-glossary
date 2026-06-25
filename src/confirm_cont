@@ -22,7 +22,7 @@
 # If omitted, the default action is set to 'forbidden'.
 #
 # By default, bold (`1;`) foreground (`3X`) white (`7`) color
-# escape sequence of ANSI is used in the prompt.
+# escape sequence of ANSI is used in the prompt, which is ECMA-48 compliant.
 #
 # The usage of color results in undefined behavior. For strict POSIX
 # compatibility, set variable `NO_COLOR` to a non-empty value.
