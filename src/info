@@ -18,7 +18,7 @@
 #     '--' - raw; no <newline>
 #     .
 # )
-# <$3>+ - text
+# [$3]+ - text
 #! .uses.var:
 # <IFS> - environment variable;
 #         list of characters that is used for field splitting
@@ -30,7 +30,8 @@
 # (255) input error
 #! .desc.ext:
 # The text parameters will be spliced according to rules ($IFS) surrounding
-# the $* variable. See the "Special Parameters" POSIX reference for details.
+# the $* variable [1]. Even if the text is effectively none, the format will be
+# executed and a <newline> character may be printed regardless.
 #
 # The colors are bold, foreground text, escape sequences of ANSI, compliant
 # with ECMA-48.
@@ -42,6 +43,8 @@
 # For more information, refer to:
 # > "POSIX.1-2024, Volume: Shell & Utilities, Section: Shell Command Language,
 #   Subsection: Special Parameters".
+#
+# [1] See the "Special Parameters" POSIX reference for details.
 #.
 info() {
     _reset='\033[0m'; case $1 in
