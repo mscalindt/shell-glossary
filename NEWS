@@ -1,6 +1,13 @@
 shell-glossary NEWS
 
 
+2026-06-25 - 2026-06-25
+=======================
+* Removed the `---` format option of info(). This also applies to err(),
+  as it is a wrapper of info().
+  Breaking (backward-incompatible) change.
+
+
 2026-04-22 - 2026-04-22
 =======================
 * Reverted a9cc8d1 ("fed(): Do not polish the $_fmt string"). The change was
