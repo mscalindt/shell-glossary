@@ -27,7 +27,8 @@
 #! .ec:
 # (255) input error
 #! .desc.ext:
-# The colors are bold, foreground text, escape sequences of ANSI.
+# The colors are bold, foreground text, escape sequences of ANSI, compliant
+# with ECMA-48.
 #
 # The usage of color results in undefined behavior. For strict POSIX
 # compatibility, specify `-` for $1 or set variable `NO_COLOR`
