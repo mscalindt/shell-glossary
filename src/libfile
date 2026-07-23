@@ -227,7 +227,7 @@ EOF
         printf "%s" .
     ) && \
     _file="${_file%.}" && \
-    _file="${_file%?}"
+    _file="${_file%?}"  # Separate PE, because `?.` can fail.
 
     set -- "$?"
 
