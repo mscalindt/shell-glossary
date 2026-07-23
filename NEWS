@@ -1,6 +1,13 @@
 shell-glossary NEWS
 
 
+2026-07-23 - 2026-07-23
+=======================
+* Fixed locale-specific cases where file_preload(), libfile(), and
+  replstr_sed_posix() could strip the last arbitrary character in the data.
+  (23bc53c, 5c025d4, 330416b)
+
+
 2026-06-25 - 2026-06-25
 =======================
 * Removed the `---` format option of info(). This also applies to err(),
