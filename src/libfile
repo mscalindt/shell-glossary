@@ -82,7 +82,7 @@ libfile() {
     _str="$2"; shift 2; set -- 1 1 0 "$@"
 
     # Store the output of `printf` in $_file using command substitution.
-    # The custom `x` character at the end and its subsequent removal
+    # The custom `.` character at the end and its subsequent removal
     # outside the command substitution preserves any trailing <newline>
     # characters stripped by command substitution.
     _file=$(
@@ -224,9 +224,9 @@ EOF
 
         [ "$#" -eq 1 ] || exit 255
 
-        printf "%s" x
+        printf "%s" .
     ) && \
-    _file="${_file%?}" && \
+    _file="${_file%.}" && \
     _file="${_file%?}"
 
     set -- "$?"
