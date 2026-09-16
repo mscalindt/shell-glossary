@@ -11,6 +11,8 @@
 #! .rc:
 # (0) success
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The function can access the argument using $_arg. Additionally, $_arg
 # will be passed as the last argument.
@@ -94,6 +96,10 @@ map_rev() {
 
         [ "$_pos" = -1 ] && return 0 || return "$_rc"
     }
+
+    # Assert $1 is a whole number to prevent a fatal expansion error
+    # (decimal treated as octal) in PE.
+    assert -whole-n "$1" || exit 255
 
     # Set additional parameter on $1 to act as an offset.
     set -- "$1" "$@"
