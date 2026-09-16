@@ -1,6 +1,17 @@
 shell-glossary NEWS
 
 
+2026-09-16 - 2026-09-16
+=======================
+* Removed libfile_n_add() and libfile_n_rem(). The former used user input
+  without asserting it, which could result in an expansion error (decimals
+  interpreted as octal) that causes the shell to terminate. Since adding
+  assert() to a hot path is not satisfactory, libfile() has been refactored
+  with the functions inlined altogether. Besides code clarity, the refactor
+  also results in a measurable performance gain.
+  Breaking (backward-incompatible) change.
+
+
 2026-07-23 - 2026-07-23
 =======================
 * Fixed locale-specific cases where file_preload(), libfile(), and

@@ -68,18 +68,18 @@ libfile() {
     fi
 
     # Open the log file (or /dev/null) using file descriptor `9`. The usage of
-    # a file descriptor avoids open/close and related syscall overhead,
-    # and also allows us to drop the log file positional parameter.
+    # a file descriptor avoids open/close and related syscall overhead.
     exec 9>> "${1:-/dev/null}" || return "$?"
 
-    # Save the file content into $_str.
-    #
-    # The current positional parameters become:
-    # $1  = orig_offset
-    # $2  = cur_offset (required for diff/log; tracks current line)
-    # $3  = delta_offset (required for diff/log; tracks consecutive difference)
-    # ... = "$@" (operations)
-    _str="$2"; shift 2; set -- 1 1 0 "$@"
+    # Save the file content into $_str and discard the first two positional
+    # parameters. What remains of the positional parameters is the operations
+    # list, essentially.
+    _str="$2"; shift 2
+
+    # Define offsets:
+    _orig_ofs=1
+    _cur_ofs=1  # (required for diff/log; tracks current line)
+    _delta_ofs=0  # (required for diff/log; tracks consecutive difference)
 
     # Store the output of `printf` in $_file using command substitution.
     # The custom `.` character at the end and its subsequent removal
@@ -92,137 +92,106 @@ libfile() {
         # heavily contrasting with a deferred hunk approach and/or LCS
         # (longest common subsequence; ex. `diff -u`).
         while IFS= read -r _line; do
-            # $1 = orig_offset
-            # $4 = operation
-            # $5 = operation argument (N)
-            case "$4 $5" in
-                "-a $1")
-                    # Preserve $_line as $1.
-                    set -- "$_line" "$@"
-
-                    # $1 = $_line
-                    # $3 = cur_offset
-                    # $7 = operation argument (X)
-                    #
-                    # Gives $_log, $_offset (cur_offset), and $_str.
-                    libfile_n_add "$3" "$7" || return "$?"
-                    _offset="$(($3 + 1 + _offset))"
-                    _str="$_str$1
+            case "$1 $2" in
+                "-a $_orig_ofs")
+                    _log=; while IFS= read -r _x; do
+                        _log="$_log$_cur_ofs+ $_x
 "
-                    _delta=0
-                    _shift=6  # <op params (from $4)> + 3
-                    shift
+                        _cur_ofs=$((_cur_ofs + 1))
+                    done \
+<<EOF
+$3
+EOF
+                    _cur_ofs=$((_cur_ofs + 1))
+                    _delta_ofs=0
+                    _shift=3
 
-                    # The log ($_log) and the added string ($_str)
-                    # always end with a <newline> character.
                     printf "%s" "$_log" >&9
-                    printf "%s" "$_str"
+                    printf "%s\n%s\n" "$3" "$_line"
                 ;;
-                "-r $1")
-                    # $2 = cur_offset
-                    # $3 = delta_offset
-                    #
-                    # Gives $_log, $_offset (cur_offset), and $_str.
-                    #
-                    # For multiple consecutive removals, delta_offset is used
-                    # in combination with cur_offset; essentially,
-                    # any consecutive line removal operations become
-                    # offset-aware for as long as the removal operations
-                    # span for.
-                    libfile_n_rem "$(($2 + $3))" "$_line" || return "$?"
-                    _offset="$(($2 + 1 + _offset))"
-                    _delta="$(($3 + 1))"
-                    _shift=5  # <op params (from $4)> + 3
+                "-r $_orig_ofs")
+                    # $_delta_ofs is used in combination with $_cur_ofs;
+                    # this way, any consecutive line removals essentially
+                    # become offset-aware.
+                    _log="$((_cur_ofs + _delta_ofs))- $_line
+"
+                    _delta_ofs=$((_delta_ofs + 1))
+                    _shift=2
 
-                    # The log always ends with a <newline> character.
                     printf "%s" "$_log" >&9
                 ;;
-                "-s $1")
-                    # $2 = cur_offset
-                    # $3 = delta_offset
-                    #
-                    # Gives $_log, $_offset (cur_offset), and $_str.
-                    #
-                    # For multiple consecutive removals, delta_offset is used
-                    # in combination with cur_offset; essentially,
-                    # any consecutive line removal operations become
-                    # offset-aware for as long as the removal operations
-                    # span for.
-                    libfile_n_rem "$(($2 + $3))" "$_line" || return "$?"
+                "-s $_orig_ofs")
+                    # $_delta_ofs is used in combination with $_cur_ofs;
+                    # this way, the line replacement (removal) is offset-aware.
+                    _log="$((_cur_ofs + _delta_ofs))- $_line
+"
 
-                    # Preserve $_log, $_offset, and $_str as $1, $2, and $3,
-                    # respectively.
-                    set -- "$_log" "$_offset" "$_str" "$@"
+                    while IFS= read -r _x; do
+                        _log="$_log$_cur_ofs+ $_x
+"
+                        _cur_ofs=$((_cur_ofs + 1))
+                    done \
+<<EOF
+$3
+EOF
+                    _delta_ofs=0
+                    _shift=3
 
-                    # $1 = $_log
-                    # $2 = $_offset
-                    # $3 = $_str
-                    # $5 = cur_offset
-                    # $9 = operation argument (X)
-                    #
-                    # Gives $_log, $_offset (cur_offset), and $_str.
-                    # The old values always end with a <newline> character.
-                    libfile_n_add "$5" "$9" || return "$?"
-                    # Simplify a lookahead (self) replacement.
-                    case "$_log" in
-                        "${1%%'-'*}+${1#*'-'}"*) _log="${_log#*"${1#*'-'}"}" ;;
-                        *) _log="$1$_log" ;;
+                    # Treat a self replacement as a no-op diff for itself.
+                    # $_log could end up being empty altogether.
+                    case "$3
+" in
+                        "$_line
+"*)
+                            _log="${_log#*
+}"
+                            _log="${_log#*
+}"
+                        ;;
                     esac
-                    _offset="$(($2 + $5 + 1 + _offset))"
-                    _str="$3$_str"
-                    _delta=0
-                    _shift=6  # <op params (from $4)> + 3
-                    shift 3
 
-                    # The log ($_log) and the replaced string ($_str)
-                    # always end with a <newline> character.
                     printf "%s" "$_log" >&9
-                    printf "%s" "$_str"
+                    printf "%s\n" "$3"
                 ;;
                 *)
-                    _offset="$(($2 + 1))"; _delta=0; _shift=3
+                    _cur_ofs=$((_cur_ofs + 1))
+                    _delta_ofs=0
+                    _shift=0
 
                     printf "%s\n" "$_line"
                 ;;
             esac
 
-            # $1 = orig_offset
-            _a="$1" && shift "$_shift"
-            set -- "$((_a + 1))" "$_offset" "$_delta" "$@"
+            shift "$_shift"
+            _orig_ofs=$((_orig_ofs + 1))
         done \
 <<EOF
 $_str
 EOF
 
-        # Discard orig_offset and delta_offset, but keep cur_offset.
-        shift 3
-        set -- "$_offset" "$@"
-
         # Parse EOF operations.
         while :; do
-            # $2 = operation
-            case "$2" in
+            case "$1" in
                 '-') ;;
-                *) break ;;
+                *) break ;;  # Not EOF operation.
             esac
 
-            # $1 = cur_offset
-            # $3 = operation argument (X)
-            #
-            # Gives $_log, $_offset (cur_offset), and $_str.
-            libfile_n_add "$1" "$3" || return "$?"
-            _offset="$(($1 + _offset))"
-            shift 3
+            _log=; while IFS= read -r _x; do
+                _log="$_log$_cur_ofs+ $_x
+"
+                _cur_ofs=$((_cur_ofs + 1))
+            done \
+<<EOF
+$2
+EOF
 
-            # The log ($_log) and the added string ($_str)
-            # always end with a <newline> character.
             printf "%s" "$_log" >&9
-            printf "%s" "$_str"
+            printf "%s\n" "$2"
 
-            set -- "$_offset" "$@"
+            shift 2
         done
 
-        [ "$#" -eq 1 ] || exit 255
+        [ "$#" -eq 0 ] || exit 255
 
         printf "%s" .
     ) && \
