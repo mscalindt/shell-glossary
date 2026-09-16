@@ -11,10 +11,12 @@
 
 ## Introduction
 
-[`shell-glossary`](https://github.com/mscalindt/shell-glossary) is a glossary
-of reusable POSIX shell functions. It features collections of optimized
-functions for general use; or about ~4K portable (and documented) LOC
-with powerful capabilities, precisely.
+[`shell-glossary`](https://github.com/mscalindt/shell-glossary)
+is a glossary of reusable
+[POSIX](https://pubs.opengroup.org/onlinepubs/9799919799.2024edition/)
+shell functions. It features collections of optimized functions for general
+use; or about ~4K portable (and documented) LOC with powerful capabilities,
+precisely.
 
 ```
 $ bash showcase.sh "$PWD"/src
