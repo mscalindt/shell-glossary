@@ -7,6 +7,8 @@
 # <$4>+ - function argument
 #! .rc:
 # (0) success
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The function can access the argument using $_arg. Additionally, $_arg
 # will be passed as the last argument.
@@ -63,6 +65,10 @@ map_try() {
 
         return 0
     }
+
+    # Assert $1 is a whole number to prevent a fatal expansion error
+    # (decimal treated as octal) in PE.
+    assert -whole-n "$1" || exit 255
 
     # Parse $2/$@ in chunks of 8.
     # $1/$# reflects the argument count at all times.
