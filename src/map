@@ -11,6 +11,8 @@
 #! .rc:
 # (0) success
 # (*) error
+#! .ec:
+# (255) input error
 #! .desc.ext:
 # The function can access the argument using $_arg. Additionally, $_arg
 # will be passed as the last argument.
@@ -81,6 +83,10 @@ map() {
 
         [ "$_pos" = 0 ] && return 0 || return "$_rc"
     }
+
+    # Assert $1 is a whole number to prevent a fatal expansion error
+    # (decimal treated as octal) in PE.
+    assert -whole-n "$1" || exit 255
 
     # Parse $2/$@ in chunks of 8.
     # $1/$# reflects the argument count at all times.
