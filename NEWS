@@ -11,6 +11,10 @@ shell-glossary NEWS
   also results in a measurable performance gain.
   Breaking (backward-incompatible) change.
 
+* Added asserts for user-supplied input to prevent shell termination by PE
+  expansion error (decimal treated as octal) in the map functions. (0d5188e,
+  357e115, 91df184, 0ecfa58, 19c2d89, b2d825e)
+
 
 2026-07-23 - 2026-07-23
 =======================
